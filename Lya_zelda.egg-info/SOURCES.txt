@@ -1,0 +1,10 @@
+MANIFEST.in
+README.md
+setup.cfg
+setup.py
+Lya_zelda/__init__.py
+Lya_zelda.egg-info/PKG-INFO
+Lya_zelda.egg-info/SOURCES.txt
+Lya_zelda.egg-info/dependency_links.txt
+Lya_zelda.egg-info/requires.txt
+Lya_zelda.egg-info/top_level.txt

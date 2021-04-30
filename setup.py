@@ -15,7 +15,7 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/sidgurun/LyaRT-Grid",
-    download_url = 'https://github.com/sidgurun/zELDA/archive/refs/tags/0.0.01.tar.gz',
+    download_url = 'https://github.com/sidgurun/Lya_zelda/archive/refs/tags/0.0.01.tar.gz',
     packages=setuptools.find_packages(),
     #install_requires=[ 'sklearn>=20.0' ],
     #scikit-learn==0.22.1
