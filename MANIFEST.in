@@ -1,0 +1,2 @@
+include zELDA/DATA/List_of_DATA_files
+include zELDA/DATA/nn_*.sav
