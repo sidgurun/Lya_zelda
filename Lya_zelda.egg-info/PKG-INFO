@@ -1,12 +1,12 @@
 Metadata-Version: 2.1
 Name: Lya-zelda
-Version: 0.0.2
+Version: 0.0.3
 Summary: Fast Lyman alpha Radiative Transfer for everyone!
 Home-page: https://github.com/sidgurun/LyaRT-Grid
 Author: Siddhartha Gurung Lopez
 Author-email: gurung.lopez@gmail.com
 License: UNKNOWN
-Download-URL: https://github.com/sidgurun/Lya_zelda/archive/refs/tags/0.0.02.tar.gz
+Download-URL: https://github.com/sidgurun/Lya_zelda/archive/refs/tags/0.0.03.tar.gz
 Description: # `FLaREON`
         
         In this Universe everything is neat, even stochasticity.
