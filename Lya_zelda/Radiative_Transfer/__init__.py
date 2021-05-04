@@ -18,6 +18,8 @@ from .fesc_of_ta_Thin_and_Wind import fesc_of_ta_Thin_and_Wind
 
 from .fesc_of_ta_Bicone import fesc_of_ta_Bicone
 
+from .RT_f_esc_Machine_Parameter import RT_f_esc_Machine_Parameter
+
 
 
 ##====================================================================================#
