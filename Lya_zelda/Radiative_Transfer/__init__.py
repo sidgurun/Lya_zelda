@@ -20,7 +20,8 @@ from .fesc_of_ta_Bicone import fesc_of_ta_Bicone
 
 from .RT_f_esc_Machine_Parameter import RT_f_esc_Machine_Parameter
 
-
+global __Data_location__ 
+__Data_location__ = 'LoLOL'
 
 ##====================================================================================#
 if __name__ == '__main__':

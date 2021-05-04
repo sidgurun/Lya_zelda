@@ -4,10 +4,12 @@
 
 import os
 
-def Check_if_DATA_files_are_found( Data_location ):
+def Check_if_DATA_files_are_found( ):
     """
         Check if the data files are found
     """
+
+    #global __Data_location__
 
     this_dir, this_filename = os.path.split(__file__)
     
@@ -21,7 +23,7 @@ def Check_if_DATA_files_are_found( Data_location ):
     
             arxiv_name = line.strip('\n')
     
-            Bool_1 = Bool_1 * os.path.isfile( Data_location + '/' + arxiv_name )
+            Bool_1 = Bool_1 * os.path.isfile( __Data_location__ + '/' + arxiv_name )
     
     return Bool_1
 
