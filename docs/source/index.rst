@@ -8,8 +8,9 @@ Welcome to Lya_zelda's documentation!
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
 
+   install
+   support
 
 
 Indices and tables
