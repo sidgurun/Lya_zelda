@@ -10,6 +10,9 @@ Welcome to zELDA's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+intro
+Lya_zelda
+examples
 
 
 Indices and tables
