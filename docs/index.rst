@@ -9,9 +9,9 @@ Welcome to zELDA's documentation!
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
-    intro
-    Lya_zelda
-    examples
+   intro
+   Lya_zelda
+   examples
 
 
 Indices and tables
