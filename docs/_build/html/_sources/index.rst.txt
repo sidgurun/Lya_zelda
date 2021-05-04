@@ -13,6 +13,8 @@ Welcome to zELDA's documentation! 12_28
    intro
    Lya_zelda
    examples
+   test
+   funcs
 
 Indices and tables
 ==================
