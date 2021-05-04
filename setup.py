@@ -8,7 +8,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="Lya_zelda",
-    version="0.0.03",
+    version="0.0.04",
     author="Siddhartha Gurung Lopez",
     author_email="gurung.lopez@gmail.com",
     description="Fast Lyman alpha Radiative Transfer for everyone!",
