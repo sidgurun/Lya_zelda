@@ -17,8 +17,6 @@ from sklearn.neighbors import KNeighborsRegressor
 
 import pickle
 
-from scipy.stats import norm
-
 from scipy.optimize import curve_fit
 
 from scipy.ndimage import gaussian_filter1d
@@ -28,6 +26,10 @@ import emcee
 from sklearn.neural_network import MLPRegressor
 
 from pyswarms.single.global_best import GlobalBestPSO
+#====================================================================#
+#====================================================================#
+#====================================================================#
+Data_location = '/global/users/sidgurung/PROMARE/Grids/'
 #====================================================================#
 #====================================================================#
 #====================================================================#
@@ -45,56 +47,55 @@ def Check_if_DATA_files_are_found():
 
             arxiv_name = line.strip('\n')
 
-            Bool_1 = Bool_1 * os.path.isfile( this_dir + '/DATA/' + arxiv_name )
+            Bool_1 = Bool_1 * os.path.isfile( Data_location + arxiv_name )
 
     return Bool_1
 #====================================================================#
 #====================================================================#
 #====================================================================#
-def Download_data():
-
-    this_dir, this_filename = os.path.split(__file__)
-
-    arxiv_with_file_names = this_dir + '/DATA/List_of_DATA_files'
-
-    file_where_to_store_data = this_dir + '/DATA/'
-
-    print( 'This package is stored in ', this_dir , '(Please, note that we are not spying you.)' )
-
-    print( 'Saving data in...' , file_where_to_store_data )
-
-    http_url = 'http://www.cefca.es/people/~sidgurung/ShouT/ShouT/DATA/'
-
-
-    testfile = urllib.request.URLopener()
-
-    with open( arxiv_with_file_names ) as fd:
-
-        for line in fd.readlines():
-
-            arxiv_name = line.strip('\n')
-
-            print( 'Downloaing...' , http_url + arxiv_name )
-
-            testfile.retrieve( http_url + arxiv_name , arxiv_name )
-
-            print( '--> Done!' )
-
-            print( 'Moving Downloaded file to' , file_where_to_store_data )
-
-            shutil.move( arxiv_name , file_where_to_store_data + arxiv_name )
-
-            print( '--> Done' )
-
-    if Check_if_DATA_files_are_found():
-        print( '\nHey man, looks like everything is done! That is brilliant!' )
-
-    else:
-        print( 'This is weird... We just downloaded everthing but the files are not found...Exiting...')
-        print( 'Error. Human is dead. Mismatch.')
-        sys.exit()
-
-    return
+#def Download_data():
+#
+#    this_dir, this_filename = os.path.split(__file__)
+#
+#    arxiv_with_file_names = this_dir + '/DATA/List_of_DATA_files'
+#
+#    file_where_to_store_data = Data_location #+ '/DATA/'
+#
+#    print( 'This package is stored in ', this_dir , '(Please, note that we are not spying you.)' )
+#
+#    print( 'Saving data in...' , file_where_to_store_data )
+#
+#    http_url = 'http://www.cefca.es/people/~sidgurung/ShouT/ShouT/DATA/'
+#
+#    testfile = urllib.request.URLopener()
+#
+#    with open( arxiv_with_file_names ) as fd:
+#
+#        for line in fd.readlines():
+#
+#            arxiv_name = line.strip('\n')
+#
+#            print( 'Downloaing...' , http_url + arxiv_name )
+#
+#            testfile.retrieve( http_url + arxiv_name , arxiv_name )
+#
+#            print( '--> Done!' )
+#
+#            print( 'Moving Downloaded file to' , file_where_to_store_data )
+#
+#            shutil.move( arxiv_name , file_where_to_store_data + arxiv_name )
+#
+#            print( '--> Done' )
+#
+#    if Check_if_DATA_files_are_found():
+#        print( '\nHey man, looks like everything is done! That is brilliant!' )
+#
+#    else:
+#        print( 'This is weird... We just downloaded everthing but the files are not found...Exiting...')
+#        print( 'Error. Human is dead. Mismatch.')
+#        sys.exit()
+#
+#    return
 #====================================================================#
 #====================================================================#
 #====================================================================#
@@ -123,7 +124,7 @@ def load_machine_fesc( Machine , property_name , Geometry ):#, INSIDE_BICONE=Tru
     print( 'HARDCORING PATH TO GRIDS!!!!' )
     #this_dir = '/global/users/sidgurung/PROMARE/Grids/'
 
-    this_dir = '/global/users/sidgurung/PROMARE/Grids/'
+    #this_dir = '/global/users/sidgurung/PROMARE/Grids/'
 
     #filename_root = 'DATA/finalized_model_'+ geo_code[index] +'_f_esc_' + Machine + '_' + property_name
 
@@ -137,7 +138,7 @@ def load_machine_fesc( Machine , property_name , Geometry ):#, INSIDE_BICONE=Tru
 
     filename = filename_root + '.sav'
 
-    filename = os.path.join(this_dir, filename)
+    filename = os.path.join( Data_location , filename)
 
     loaded_model = pickle.load(open(filename, 'rb'))
 
@@ -411,13 +412,13 @@ def load_Grid_fesc( Geometry , MODE ):#, INSIDE_BICONE=True ):
 
     filename = filename_root + '.npy'
 
-    this_dir, this_filename = os.path.split(__file__)
+    #this_dir, this_filename = os.path.split(__file__)
 
     print( 'HARDCORING PATH TO GRIDS!!!!' )
     #this_dir = '/global/users/sidgurung/PROMARE/Grids/'
-    this_dir = '/global/users/sidgurung/PROMARE/Grids/'
+    #this_dir = '/global/users/sidgurung/PROMARE/Grids/'
 
-    filename = os.path.join(this_dir, filename)
+    filename = os.path.join( Data_location , filename)
 
     loaded_model = np.load( filename , allow_pickle=True , encoding='latin1' ).item()
 
@@ -757,11 +758,11 @@ def load_Grid_Line( Geometry ):
 
     geo_code     = [ 'Thin_Shell'  , 'Wind'           , 'Bicone_X_Slab' , 'Bicone_X_Slab' ]
 
-    this_dir, this_filename = os.path.split(__file__)
+    #this_dir, this_filename = os.path.split(__file__)
 
-    print( 'HARDCORING PATH TO GRIDS!!!!' )
+    #print( 'HARDCORING PATH TO GRIDS!!!!' )
     #this_dir = '/global/users/sidgurung/PROMARE/Grids/'
-    this_dir = '/global/users/sidgurung/PROMARE/Grids/'
+    #this_dir = '/global/users/sidgurung/PROMARE/Grids/'
 
     if Geometry != 'Thin_Shell_Cont' :
 
@@ -776,7 +777,7 @@ def load_Grid_Line( Geometry ):
 
         filename = filename_root + '.npy'
 
-        filename = os.path.join(this_dir, filename)
+        filename = os.path.join( Data_location , filename)
 
         loaded_model = np.load( filename , allow_pickle=True , encoding='latin1' ).item()
 
@@ -794,8 +795,8 @@ def load_Grid_Line( Geometry ):
 
         loaded_model = {}
     
-        tmp_1 = np.load( this_dir + 'GRID_info_' + t_name , allow_pickle=True ).item()
-        GRID  = np.load( this_dir + 'GRID_data_' + t_name  )
+        tmp_1 = np.load( Data_location + '/GRID_info_' + t_name , allow_pickle=True ).item()
+        GRID  = np.load( Data_location + '/GRID_data_' + t_name  )
 
         loaded_model['Grid']      = GRID
         loaded_model['V_Arr']     = tmp_1['V']
