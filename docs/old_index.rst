@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to zELDA's documentation! 12_15
+Welcome to zELDA's documentation! 12_12
 =================================
 
 .. toctree::
