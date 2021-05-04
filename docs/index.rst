@@ -14,7 +14,6 @@ Welcome to zELDA's documentation! 12_28
    Lya_zelda
    examples
 
-
 Indices and tables
 ==================
 

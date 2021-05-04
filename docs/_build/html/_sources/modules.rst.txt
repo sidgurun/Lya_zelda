@@ -1,7 +1,7 @@
-Lya_zelda
-=========
+TEST_doc
+========
 
 .. toctree::
    :maxdepth: 4
 
-   Lya_zelda
+   my_module
