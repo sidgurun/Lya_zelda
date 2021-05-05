@@ -167,7 +167,7 @@
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">shutil</span>
 
-<span class="kn">import</span> <span class="nn">urllib</span>
+<span class="c1">#import urllib</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
@@ -1033,13 +1033,6 @@
 <span class="sd">                   The outflow geometry to use: Options: &#39;Thins_Shell&#39;,</span>
 <span class="sd">                   &#39;Galactic_Wind&#39; , &#39;Bicone_X_Slab&#39;.</span>
 
-
-<span class="sd">        wavelength_Arr : 1-D sequence of floats</span>
-<span class="sd">                         Array with the wavelength vales where the line</span>
-<span class="sd">                         profile is computed. The units are meters, i.e.,</span>
-<span class="sd">                         amstrongs * 1.e-10.</span>
-
-
 <span class="sd">        V_Arr : 1-D sequence of float</span>
 <span class="sd">                Array with the expansion velocity of the outflow. The unit</span>
 <span class="sd">                are km/s. </span>
@@ -1051,13 +1044,6 @@
 
 <span class="sd">        ta_Arr : 1-D sequence of float</span>
 <span class="sd">                 Array with the dust optic depth of the outflow. </span>
-
-<span class="sd">        Inside_Bicone_Arr : optional 1-D sequence of bool</span>
-<span class="sd">                            An Array with booleans, indicating if the bicone is face-on</span>
-<span class="sd">                            or edge-on. If True then the bicone is face-on. If false the</span>
-<span class="sd">                            bicone is edge-on. The probability of being face on is</span>
-<span class="sd">                            np.cos( np.pi/4 ).</span>
-
 
 <span class="sd">        MODE : optional string</span>
 <span class="sd">               Set the mode in which the escape fraction is computed. It can be:</span>
@@ -1086,8 +1072,6 @@
 <span class="sd">                Default = &#39;Tree&#39;</span>
 
 
-<span class="sd">            .. versionadded:: 0.0.3</span>
-
 <span class="sd">        **Output**</span>
 
 <span class="sd">        lines_Arr : 1-D sequence of float</span>
@@ -1102,6 +1086,8 @@
     <span class="k">assert</span> <span class="n">Geometry</span> <span class="ow">in</span> <span class="p">[</span> <span class="s1">&#39;Thin_Shell&#39;</span> <span class="p">,</span> <span class="s1">&#39;Galactic_Wind&#39;</span> <span class="p">,</span> <span class="s1">&#39;Bicone_X_Slab_In&#39;</span> <span class="p">,</span> <span class="s1">&#39;Bicone_X_Slab_Out&#39;</span> <span class="p">]</span> <span class="p">,</span> <span class="s1">&#39;The requested geoemtry &#39;</span> <span class="o">+</span> <span class="n">Geometry</span> <span class="o">+</span> <span class="s1">&#39; is not available. The geometries supported are : Thin_Shell , Galactic_Wind , Bicone_X_Slab&#39;</span>
     
     <span class="n">mask_good</span> <span class="o">=</span> <span class="n">pre_treatment_f_esc</span><span class="p">(</span> <span class="n">Geometry</span> <span class="p">,</span> <span class="n">V_Arr</span> <span class="p">,</span> <span class="n">logNH_Arr</span> <span class="p">,</span> <span class="n">ta_Arr</span> <span class="p">,</span> <span class="n">MODE</span> <span class="p">)</span> 
+
+    <span class="c1">#print( &#39;fraction good confs = &#39; , np.sum(mask_good) * 1. / len(mask_good)  )</span>
 
     <span class="n">f_esc_Arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span> <span class="nb">len</span><span class="p">(</span> <span class="n">mask_good</span> <span class="p">)</span> <span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
 
@@ -1399,7 +1385,9 @@
 
     <span class="n">aux_line</span> <span class="o">=</span> <span class="n">Linear_ND_interpolator</span><span class="p">(</span> <span class="mi">3</span> <span class="p">,</span> <span class="n">Coor_list</span> <span class="p">,</span> <span class="n">Coor_Arr_list</span> <span class="p">,</span> <span class="n">Grid_Line</span> <span class="p">)</span>
 
-    <span class="n">axu_line_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span> <span class="n">x_Arr</span> <span class="p">,</span> <span class="n">x_Arr_Grid</span> <span class="p">,</span> <span class="n">aux_line</span> <span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="n">aux_line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="p">)</span>
+    <span class="c1">#print( aux_line[0] , right=[-1] )</span>
+
+    <span class="n">axu_line_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span> <span class="n">x_Arr</span> <span class="p">,</span> <span class="n">x_Arr_Grid</span> <span class="p">,</span> <span class="n">aux_line</span> <span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="n">aux_line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="n">aux_line</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="p">)</span>
 
     <span class="n">Integral</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">(</span> <span class="n">axu_line_1</span> <span class="p">,</span> <span class="n">x_Arr</span> <span class="p">)</span>
 
@@ -1870,69 +1858,14 @@
 <span class="c1">#====================================================================#</span>
 <span class="c1">#====================================================================#</span>
 <span class="c1">#====================================================================#</span>
-<div class="viewcode-block" id="Print_the_grid_edges"><a class="viewcode-back" href="../funcs.html#funcs.Print_the_grid_edges">[docs]</a><span class="k">def</span> <span class="nf">Print_the_grid_edges</span><span class="p">():</span>
-
-    <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;    Hi,&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;    The expanssion velocity V_exp and neutral hydrogen column density logNH are the same in the escape fraction and line profile grids. However, the optical depth of dust tau_a is different.&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;&#39;</span> <span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;    V_exp [ km/s ] = [ 0 , 10 , ... , 90 , 100 , 150 , 200 , ... , 950 , 1000 ]&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;    Bicone_X_Slab :&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;         For V_exp &lt;  100 km/s the logNH [ cm**-2 ] = [ 17.0 , 17.25 , ... , 20.25 , 20.5 ]&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;    &#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;         For V_exp &gt;= 100 km/s the logNH [ cm**-2 ] = [ 17.0 , 17.25 , ... , 21.75 , 22.0 ]&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;    Thin_Shell and Galactic_Wind :&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;         logNH [ cm**-2 ] = [ 17.0 , 17.25 , ... , 21.75 , 22.0 ]&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;    &#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;    For the escape fraction : tau_a = [ -3. , -2. , -1.5 , -1.0 , -0.75 , -0.5 , -0.25 , -0.0 ]&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;    &#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;    For the line profile    : tau_a = [  -0.125 , -0.25 , -0.375 , -0.5 , -0.625 , -0.75 , -0.875 , -1.0 , -1.125 , -1.25 , -1.375 , -1.5 , -1.75 , -2.0 , -2.25 , -2.5 , -2.75 , -3.0 , -3.25 , -3.5 , -3.75 ]&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;    Have a nice day!&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;    El. PSY. CONGROO.&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
-
-    <span class="k">return</span></div>
-<span class="c1">#====================================================================#</span>
-<span class="c1">#====================================================================#</span>
-<span class="c1">#====================================================================#</span>
 <div class="viewcode-block" id="Test_1"><a class="viewcode-back" href="../funcs.html#funcs.Test_1">[docs]</a><span class="k">def</span> <span class="nf">Test_1</span><span class="p">(</span> <span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Checking if all the files are found...&#39;</span><span class="p">,)</span>
-
-    <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">SKIPPING&#39;</span><span class="p">,)</span>
-    <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">SKIPPING&#39;</span><span class="p">,)</span>
-    <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">SKIPPING&#39;</span><span class="p">,)</span>
-    <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">SKIPPING&#39;</span><span class="p">,)</span>
-    <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">SKIPPING&#39;</span><span class="p">,)</span>
-    <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">SKIPPING&#39;</span><span class="p">,)</span>
-    <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">SKIPPING&#39;</span><span class="p">,)</span>
-    <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">SKIPPING&#39;</span><span class="p">,)</span>
-    <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">SKIPPING&#39;</span><span class="p">,)</span>
-    
-    <span class="c1">#bool_files = Check_if_DATA_files_are_found()</span>
-    <span class="c1">#</span>
-    <span class="c1">#print (&#39;Done!&#39;)</span>
-    <span class="c1">#</span>
-    <span class="c1">#if bool_files :</span>
-    <span class="c1">#    print( &#39;    Every file was found. that is great!&#39;)</span>
-    <span class="c1">#if not bool_files :</span>
-    <span class="c1">#    print( &#39;    Missing files.... Let us download them... ;)&#39;)</span>
-    <span class="c1">#</span>
-    <span class="c1">#    Download_data()</span>
-   
-    <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1"> Now that we are sure that the data is downloaded in your machine...&#39;</span><span class="p">)</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Script to test if everything is working fine.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1"> Let us check every different configuration for computing the escape fraction and the line profiles.&#39;</span><span class="p">)</span>
  
-    <span class="n">Geometry_set</span> <span class="o">=</span> <span class="p">[</span> <span class="s1">&#39;Thin_Shell&#39;</span> <span class="p">,</span> <span class="s1">&#39;Galactic_Wind&#39;</span> <span class="p">,</span> <span class="s1">&#39;Bicone_X_Slab&#39;</span> <span class="p">]</span>
-    <span class="c1">#Geometry_set = [ &#39;Thin_Shell&#39; , &#39;Galactic_Wind&#39; ]#, &#39;Bicone_X_Slab&#39; ]</span>
-    <span class="c1">#Geometry_set = [ &#39;Galactic_Wind&#39;  ]#, &#39;Galactic_Wind&#39; , &#39;Bicone_X_Slab&#39; ]</span>
+    <span class="n">Geometry_set</span> <span class="o">=</span> <span class="p">[</span> <span class="s1">&#39;Thin_Shell&#39;</span> <span class="p">,</span> <span class="s1">&#39;Galactic_Wind&#39;</span> <span class="p">,</span> <span class="s1">&#39;Bicone_X_Slab_In&#39;</span> <span class="p">,</span> <span class="s1">&#39;Bicone_X_Slab_Out&#39;</span> <span class="p">,</span> <span class="s1">&#39;Thin_Shell_Cont&#39;</span><span class="p">]</span>
     
     <span class="n">ML_codes_set</span> <span class="o">=</span> <span class="p">[</span> <span class="s1">&#39;Tree&#39;</span> <span class="p">,</span> <span class="s1">&#39;Forest&#39;</span> <span class="p">,</span> <span class="s1">&#39;KN&#39;</span> <span class="p">]</span>
     
@@ -1944,16 +1877,22 @@
     
     <span class="n">N_points</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span> <span class="mf">1e4</span> <span class="p">)</span>
     
-    <span class="n">V_Arr</span>     <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span> <span class="n">N_points</span> <span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span>   <span class="o">+</span> <span class="mf">0.0</span>
-    <span class="n">logNH_Arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span> <span class="n">N_points</span> <span class="p">)</span> <span class="o">*</span>   <span class="mi">5</span>   <span class="o">+</span> <span class="mf">17.0</span>
-    <span class="n">logta_Arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span> <span class="n">N_points</span> <span class="p">)</span> <span class="o">*</span>   <span class="mf">4.5</span> <span class="o">-</span>  <span class="mf">4.0</span>
-    
-    <span class="n">In_Arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span> <span class="n">N_points</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="mf">0.5</span>
-    
+    <span class="n">V_Arr</span>     <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span> <span class="n">N_points</span> <span class="p">)</span> <span class="o">*</span> <span class="mi">989</span> <span class="o">+</span> <span class="mf">10.0</span>
+    <span class="n">logNH_Arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span> <span class="n">N_points</span> <span class="p">)</span> <span class="o">*</span>   <span class="mi">5</span> <span class="o">+</span> <span class="mf">17.0</span>
+    <span class="n">logta_Arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span> <span class="n">N_points</span> <span class="p">)</span> <span class="o">*</span>   <span class="mi">2</span> <span class="o">-</span> <span class="mf">2.5</span>  
+   
+    <span class="n">mask_bad_bicone</span> <span class="o">=</span> <span class="p">(</span> <span class="n">V_Arr</span> <span class="o">&lt;=</span> <span class="mi">100</span> <span class="p">)</span> <span class="o">*</span> <span class="p">(</span> <span class="n">logNH_Arr</span> <span class="o">&gt;=</span> <span class="mf">20.5</span> <span class="p">)</span> 
+
+    <span class="n">V_Arr</span>     <span class="o">=</span>     <span class="n">V_Arr</span><span class="p">[</span> <span class="o">~</span><span class="n">mask_bad_bicone</span> <span class="p">]</span>
+    <span class="n">logNH_Arr</span> <span class="o">=</span> <span class="n">logNH_Arr</span><span class="p">[</span> <span class="o">~</span><span class="n">mask_bad_bicone</span> <span class="p">]</span>
+    <span class="n">logta_Arr</span> <span class="o">=</span> <span class="n">logta_Arr</span><span class="p">[</span> <span class="o">~</span><span class="n">mask_bad_bicone</span> <span class="p">]</span>
+ 
     <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Computing&#39;</span><span class="p">,</span> <span class="n">N_points</span> <span class="p">,</span> <span class="s1">&#39;random configurations of escape fraction with each algorithms...</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
     
     <span class="k">for</span> <span class="n">Geo</span> <span class="ow">in</span> <span class="n">Geometry_set</span><span class="p">:</span>
-    
+   
+        <span class="k">if</span> <span class="n">Geo</span> <span class="o">==</span> <span class="s1">&#39;Thin_Shell_Cont&#39;</span> <span class="p">:</span> <span class="k">continue</span>
+ 
         <span class="k">for</span> <span class="n">Mod</span> <span class="ow">in</span> <span class="n">MODE_set</span> <span class="p">:</span>
     
             <span class="k">if</span> <span class="ow">not</span> <span class="n">Mod</span> <span class="ow">in</span> <span class="p">[</span> <span class="s1">&#39;Analytic&#39;</span> <span class="p">]:</span>
@@ -1966,21 +1905,20 @@
     
                             <span class="k">for</span> <span class="n">machine</span> <span class="ow">in</span> <span class="n">ML_codes_set</span> <span class="p">:</span>
     
-    
-                                <span class="c1">#try:</span>
+                                <span class="k">try</span><span class="p">:</span>
                                     <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;      Running : &#39;</span> <span class="p">,</span> <span class="n">Geo</span> <span class="p">,</span> <span class="n">Mod</span> <span class="p">,</span> <span class="n">Algo</span> <span class="p">,</span> <span class="n">machine</span> <span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="p">)</span>
-                                    <span class="n">fff</span> <span class="o">=</span> <span class="n">RT_f_esc</span><span class="p">(</span> <span class="n">Geo</span> <span class="p">,</span> <span class="n">V_Arr</span> <span class="p">,</span> <span class="n">logNH_Arr</span> <span class="p">,</span> <span class="mi">10</span><span class="o">**</span><span class="n">logta_Arr</span> <span class="p">,</span> <span class="n">Inside_Bicone_Arr</span><span class="o">=</span><span class="n">In_Arr</span> <span class="p">,</span> <span class="n">MODE</span><span class="o">=</span><span class="n">Mod</span> <span class="p">,</span> <span class="n">Algorithm</span><span class="o">=</span><span class="n">Algo</span> <span class="p">,</span> <span class="n">Machine_Learning_Algorithm</span><span class="o">=</span><span class="n">machine</span><span class="p">)</span>
+                                    <span class="n">fff</span> <span class="o">=</span> <span class="n">RT_f_esc</span><span class="p">(</span> <span class="n">Geo</span> <span class="p">,</span> <span class="n">V_Arr</span> <span class="p">,</span> <span class="n">logNH_Arr</span> <span class="p">,</span> <span class="mi">10</span><span class="o">**</span><span class="n">logta_Arr</span> <span class="p">,</span> <span class="n">MODE</span><span class="o">=</span><span class="n">Mod</span> <span class="p">,</span> <span class="n">Algorithm</span><span class="o">=</span><span class="n">Algo</span> <span class="p">,</span> <span class="n">Machine_Learning_Algorithm</span><span class="o">=</span><span class="n">machine</span><span class="p">)</span>
                                     <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span> <span class="n">fff</span> <span class="p">)</span> <span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
                                     <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;--&gt; Success!!&#39;</span><span class="p">)</span>
-                                <span class="c1">#except:</span>
-                                <span class="c1">#    print( &#39;--&gt; ERROR.. MISMATCH!!&#39;)</span>
+                                <span class="k">except</span><span class="p">:</span>
+                                    <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;--&gt; ERROR.. MISMATCH!!&#39;</span><span class="p">)</span>
     
                         <span class="k">if</span> <span class="n">Algo</span> <span class="o">!=</span> <span class="s1">&#39;Machine_Learning&#39;</span> <span class="p">:</span>
     
     
                                 <span class="k">try</span><span class="p">:</span>
                                     <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;      Running : &#39;</span> <span class="p">,</span> <span class="n">Geo</span> <span class="p">,</span> <span class="n">Mod</span> <span class="p">,</span> <span class="n">Algo</span> <span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="p">)</span>
-                                    <span class="n">fff</span> <span class="o">=</span> <span class="n">RT_f_esc</span><span class="p">(</span> <span class="n">Geo</span> <span class="p">,</span> <span class="n">V_Arr</span> <span class="p">,</span> <span class="n">logNH_Arr</span> <span class="p">,</span> <span class="mi">10</span><span class="o">**</span><span class="n">logta_Arr</span> <span class="p">,</span> <span class="n">Inside_Bicone_Arr</span><span class="o">=</span><span class="n">In_Arr</span> <span class="p">,</span> <span class="n">MODE</span><span class="o">=</span><span class="n">Mod</span> <span class="p">,</span> <span class="n">Algorithm</span><span class="o">=</span><span class="n">Algo</span> <span class="p">)</span>
+                                    <span class="n">fff</span> <span class="o">=</span> <span class="n">RT_f_esc</span><span class="p">(</span> <span class="n">Geo</span> <span class="p">,</span> <span class="n">V_Arr</span> <span class="p">,</span> <span class="n">logNH_Arr</span> <span class="p">,</span> <span class="mi">10</span><span class="o">**</span><span class="n">logta_Arr</span> <span class="p">,</span> <span class="n">MODE</span><span class="o">=</span><span class="n">Mod</span> <span class="p">,</span> <span class="n">Algorithm</span><span class="o">=</span><span class="n">Algo</span> <span class="p">)</span>
                                     <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span> <span class="n">fff</span> <span class="p">)</span> <span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
                                     <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;--&gt; Success!!&#39;</span><span class="p">)</span>
     
@@ -1997,7 +1935,7 @@
                                     <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;--&gt; Success!!&#39;</span><span class="p">)</span>
     
                                 <span class="k">except</span><span class="p">:</span>
-                                    <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;--&gt; ERROR. HUMAN IS DEAD. MISMATCH!!&#39;</span><span class="p">)</span>
+                                    <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;--&gt; ERROR. MISMATCH!!&#39;</span><span class="p">)</span>
     
     
     
@@ -2005,42 +1943,36 @@
     
     <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Computing&#39;</span><span class="p">,</span> <span class="n">N_points</span> <span class="p">,</span> <span class="s1">&#39;random configurations of line profile  with each algorithms...</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
     
-    <span class="n">V_Arr</span>     <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span> <span class="n">N_points</span> <span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span>   <span class="o">+</span> <span class="mi">50</span>
-    <span class="n">logNH_Arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span> <span class="n">N_points</span> <span class="p">)</span> <span class="o">*</span>   <span class="mi">5</span>   <span class="o">+</span> <span class="mf">17.0</span>
-    <span class="n">logta_Arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span> <span class="n">N_points</span> <span class="p">)</span> <span class="o">*</span>   <span class="mf">5.5</span> <span class="o">-</span>  <span class="mf">4.75</span>
-    
-    <span class="n">In_Arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span> <span class="n">N_points</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="mf">0.5</span>
-    
+    <span class="n">V_Arr</span>     <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span> <span class="n">N_points</span> <span class="p">)</span> <span class="o">*</span> <span class="mi">900</span>  <span class="o">+</span> <span class="mi">100</span>
+    <span class="n">logNH_Arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span> <span class="n">N_points</span> <span class="p">)</span> <span class="o">*</span>   <span class="mf">4.5</span> <span class="o">+</span> <span class="mf">17.0</span>
+    <span class="n">logta_Arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span> <span class="n">N_points</span> <span class="p">)</span> <span class="o">*</span>   <span class="mf">2.</span>  <span class="o">-</span>  <span class="mf">2.5</span>
+   
+    <span class="n">logEW_Arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span> <span class="n">N_points</span> <span class="p">)</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">-</span> <span class="mf">1.</span>
+    <span class="n">Wi_Arr</span>    <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span> <span class="n">N_points</span> <span class="p">)</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="mf">0.1</span> 
+ 
     <span class="n">wavelength_Arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span> <span class="mf">1215.68</span> <span class="o">-</span> <span class="mi">20</span> <span class="p">,</span> <span class="mf">1215.68</span> <span class="o">+</span> <span class="mi">20</span> <span class="p">,</span> <span class="mi">1000</span> <span class="p">)</span> <span class="o">*</span> <span class="mf">1e-10</span>
     
     <span class="n">RUN_TEST_Lines</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="k">if</span> <span class="n">RUN_TEST_Lines</span> <span class="p">:</span>
         <span class="k">for</span> <span class="n">Geo</span> <span class="ow">in</span> <span class="n">Geometry_set</span><span class="p">:</span>
     
-    
-            <span class="c1">#try:</span>
+            <span class="k">try</span><span class="p">:</span> 
                 <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;      Running : &#39;</span> <span class="p">,</span> <span class="n">Geo</span> <span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="p">)</span>
 
-                <span class="n">qq</span> <span class="o">=</span> <span class="n">RT_Line_Profile</span><span class="p">(</span> <span class="n">Geo</span> <span class="p">,</span> <span class="n">wavelength_Arr</span> <span class="p">,</span> <span class="n">V_Arr</span> <span class="p">,</span> <span class="n">logNH_Arr</span> <span class="p">,</span> <span class="mi">10</span><span class="o">**</span><span class="n">logta_Arr</span> <span class="p">,</span> <span class="n">Inside_Bicone_Arr</span><span class="o">=</span><span class="n">In_Arr</span> <span class="p">)</span>
+                <span class="n">qq</span> <span class="o">=</span> <span class="n">RT_Line_Profile</span><span class="p">(</span> <span class="n">Geo</span> <span class="p">,</span> <span class="n">wavelength_Arr</span> <span class="p">,</span> <span class="n">V_Arr</span> <span class="p">,</span> <span class="n">logNH_Arr</span> <span class="p">,</span> <span class="mi">10</span><span class="o">**</span><span class="n">logta_Arr</span> <span class="p">,</span> <span class="n">logEW_Arr</span><span class="o">=</span><span class="n">logEW_Arr</span> <span class="p">,</span> <span class="n">Wi_Arr</span><span class="o">=</span><span class="n">Wi_Arr</span> <span class="p">)</span>
                 <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span> <span class="n">qq</span> <span class="p">)</span> <span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
                 <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;--&gt; Success!!&#39;</span><span class="p">)</span>
-    
-            <span class="c1">#except:</span>
-            <span class="c1">#    print( &#39;--&gt; ERROR.. MISMATCH!!&#39;)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;--&gt; ERROR. MISMATCH!!&#39;</span> <span class="p">)</span>
 
     <span class="k">return</span></div>
 <span class="c1">#====================================================================#</span>
 <span class="c1">#====================================================================#</span>
 <span class="c1">#====================================================================#</span>
 <div class="viewcode-block" id="Test_2"><a class="viewcode-back" href="../funcs.html#funcs.Test_2">[docs]</a><span class="k">def</span> <span class="nf">Test_2</span><span class="p">(</span> <span class="p">):</span>
-
-    <span class="c1">#from pylab import *</span>
-
-    <span class="c1">#import matplotlib as plt</span>
-
-    <span class="c1">#import matplotlib</span>
-    <span class="c1">## see http://matplotlib.org/faq/usage_faq.html#what-is-a-backend</span>
-    <span class="c1">#matplotlib.use(&#39;Svg&#39;)</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Script to test if everything looks fine.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
@@ -2058,13 +1990,16 @@
 
     <span class="n">logta_Arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span> <span class="p">[</span> <span class="o">-</span><span class="mf">1.</span> <span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span> <span class="n">V_Arr</span> <span class="p">)</span> <span class="p">)</span>
 
+    <span class="n">Wi_Arr</span>    <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span> <span class="p">[</span> <span class="mf">0.4</span> <span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span> <span class="n">V_Arr</span> <span class="p">)</span> <span class="p">)</span>
+    <span class="n">logEW_Arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span> <span class="p">[</span> <span class="mf">1.5</span> <span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span> <span class="n">V_Arr</span> <span class="p">)</span> <span class="p">)</span>
+
     <span class="n">Inside_Bicone_Arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span> <span class="nb">len</span><span class="p">(</span><span class="n">V_Arr</span><span class="p">)</span> <span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
 
     <span class="n">cm</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span> <span class="s1">&#39;rainbow&#39;</span> <span class="p">)</span>
     
-    <span class="k">for</span> <span class="n">geo</span> <span class="ow">in</span> <span class="p">[</span> <span class="s1">&#39;Thin_Shell&#39;</span> <span class="p">,</span> <span class="s1">&#39;Galactic_Wind&#39;</span> <span class="p">,</span> <span class="s1">&#39;Bicone_X_Slab&#39;</span> <span class="p">]:</span>
+    <span class="k">for</span> <span class="n">geo</span> <span class="ow">in</span> <span class="p">[</span> <span class="s1">&#39;Thin_Shell&#39;</span> <span class="p">,</span> <span class="s1">&#39;Galactic_Wind&#39;</span> <span class="p">,</span> <span class="s1">&#39;Bicone_X_Slab_In&#39;</span> <span class="p">,</span> <span class="s1">&#39;Bicone_X_Slab_Out&#39;</span> <span class="p">,</span> <span class="s1">&#39;Thin_Shell_Cont&#39;</span> <span class="p">]:</span>
 
-        <span class="n">qq</span> <span class="o">=</span> <span class="n">RT_Line_Profile</span><span class="p">(</span> <span class="n">geo</span> <span class="p">,</span> <span class="n">wavelength_Arr</span> <span class="p">,</span> <span class="n">V_Arr</span> <span class="p">,</span> <span class="n">logNH_Arr</span> <span class="p">,</span> <span class="mf">10.</span><span class="o">**</span><span class="n">logta_Arr</span> <span class="p">,</span> <span class="n">Inside_Bicone_Arr</span><span class="o">=</span><span class="n">Inside_Bicone_Arr</span> <span class="p">)</span> 
+        <span class="n">qq</span> <span class="o">=</span> <span class="n">RT_Line_Profile</span><span class="p">(</span> <span class="n">geo</span> <span class="p">,</span> <span class="n">wavelength_Arr</span> <span class="p">,</span> <span class="n">V_Arr</span> <span class="p">,</span> <span class="n">logNH_Arr</span> <span class="p">,</span> <span class="mf">10.</span><span class="o">**</span><span class="n">logta_Arr</span> <span class="p">,</span> <span class="n">logEW_Arr</span><span class="o">=</span><span class="n">logEW_Arr</span> <span class="p">,</span> <span class="n">Wi_Arr</span><span class="o">=</span><span class="n">Wi_Arr</span> <span class="p">)</span> 
 
         <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
 
@@ -2072,18 +2007,12 @@
 
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span> <span class="mi">0</span> <span class="p">,</span><span class="nb">len</span><span class="p">(</span> <span class="n">V_Arr</span> <span class="p">)</span> <span class="p">):</span>
 
-            <span class="c1">#ax_ax.plot( wavelength_Arr*1e10 , qq[i] , color=cm( i*1./( len(V_Arr) -1 ) ) , label=r&#39;$\rm V_{exp} = &#39;+ str(V_Arr[i]) +&#39;km/s$ &#39; , lw=2 )</span>
             <span class="n">ax_ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span> <span class="n">wavelength_Arr</span><span class="o">*</span><span class="mf">1e10</span> <span class="p">,</span> <span class="n">qq</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">cm</span><span class="p">(</span> <span class="n">i</span><span class="o">*</span><span class="mf">1.</span><span class="o">/</span><span class="p">(</span> <span class="nb">len</span><span class="p">(</span><span class="n">V_Arr</span><span class="p">)</span> <span class="o">-</span><span class="mi">1</span> <span class="p">)</span> <span class="p">)</span> <span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span> <span class="p">)</span>
-
-        <span class="c1">#texto = r&#39;$\rm N_{H} = 10^{20} cm^{-2}$&#39; + &#39;\n&#39; + r&#39;$\rm \tau_{a} = 0.1$&#39;</span>
-
-        <span class="c1">#ax_ax.text( .95 , 0.45 , texto , verticalalignment=&#39;top&#39;, horizontalalignment=&#39;right&#39;, transform=ax_ax.transAxes, fontsize=20 )</span>
-        
-        <span class="c1">#ax_ax.set_title( r&#39;$\rm Geometry = $&#39; + geo , size=20 )</span>
-        <span class="c1">#ax_ax.set_title( r&#39;Geometry = &#39; + geo , size=20 )</span>
 
         <span class="n">ax_ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span> <span class="sa">r</span><span class="s1">&#39;Flux [a.u.]&#39;</span> <span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">20</span> <span class="p">)</span>
         <span class="n">ax_ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span> <span class="sa">r</span><span class="s1">&#39;Wavelength [AA]&#39;</span> <span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">20</span> <span class="p">)</span>
+
+        <span class="n">ax_ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span> <span class="sa">r</span><span class="s1">&#39;Geometry = &#39;</span> <span class="o">+</span> <span class="n">geo</span> <span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">20</span> <span class="p">)</span>
 
         <span class="n">ax_ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span> <span class="mf">1212.5</span> <span class="p">,</span> <span class="mf">1222.5</span> <span class="p">)</span>
 
@@ -2093,57 +2022,30 @@
 
     <span class="n">logta_Arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span> <span class="o">-</span><span class="mi">2</span> <span class="p">,</span> <span class="mf">0.5</span> <span class="p">,</span> <span class="mi">20</span> <span class="p">)</span>
 
-    <span class="n">logNH_Arr</span> <span class="o">=</span> <span class="p">[</span><span class="mf">20.0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span> <span class="n">logta_Arr</span> <span class="p">)</span>
+    <span class="n">logNH_Arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span> <span class="p">[</span><span class="mf">20.0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span> <span class="n">logta_Arr</span> <span class="p">)</span> <span class="p">)</span>
 
-    <span class="k">for</span> <span class="n">geo</span> <span class="ow">in</span> <span class="p">[</span> <span class="s1">&#39;Thin_Shell&#39;</span> <span class="p">,</span> <span class="s1">&#39;Galactic_Wind&#39;</span> <span class="p">,</span> <span class="s1">&#39;Bicone_X_Slab&#39;</span> <span class="p">]</span>  <span class="p">:</span>
+    <span class="k">for</span> <span class="n">geo</span> <span class="ow">in</span> <span class="p">[</span> <span class="s1">&#39;Thin_Shell&#39;</span> <span class="p">,</span> <span class="s1">&#39;Galactic_Wind&#39;</span> <span class="p">,</span> <span class="s1">&#39;Bicone_X_Slab_In&#39;</span> <span class="p">,</span> <span class="s1">&#39;Bicone_X_Slab_Out&#39;</span> <span class="p">]</span>  <span class="p">:</span>
 
         <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
 
-        <span class="n">ax_ax</span> <span class="o">=</span> <span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+        <span class="n">ax_ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span> <span class="mi">0</span> <span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">V_Arr</span><span class="p">)</span> <span class="p">):</span>
 
-            <span class="n">V_Arr_tmp</span> <span class="o">=</span> <span class="p">[</span> <span class="n">V_Arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span> <span class="n">logta_Arr</span> <span class="p">)</span>
+            <span class="n">V_Arr_tmp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span> <span class="p">[</span> <span class="n">V_Arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span> <span class="n">logta_Arr</span> <span class="p">)</span> <span class="p">)</span>
 
-            <span class="n">Inside_Bicone_Arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span> <span class="nb">len</span><span class="p">(</span> <span class="n">logta_Arr</span> <span class="p">)</span> <span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
-
-            <span class="n">f_esc</span> <span class="o">=</span> <span class="n">RT_f_esc</span><span class="p">(</span> <span class="n">geo</span> <span class="p">,</span> <span class="n">V_Arr_tmp</span> <span class="p">,</span> <span class="n">logNH_Arr</span> <span class="p">,</span> <span class="mi">10</span><span class="o">**</span><span class="n">logta_Arr</span> <span class="p">,</span> <span class="n">Inside_Bicone_Arr</span><span class="o">=</span><span class="n">Inside_Bicone_Arr</span><span class="p">)</span>
-        
-            <span class="c1">#ax_ax.plot( logta_Arr , f_esc , color=cm( i*1./( len(V_Arr) -1 ) ) , label=r&#39;$\rm V_{exp} = &#39;+ str(V_Arr[i]) +&#39;km/s$ &#39; , lw=2 )</span>
-            <span class="n">ax_ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span> <span class="n">logta_Arr</span> <span class="p">,</span> <span class="n">f_esc</span> <span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">cm</span><span class="p">(</span> <span class="n">i</span><span class="o">*</span><span class="mf">1.</span><span class="o">/</span><span class="p">(</span> <span class="nb">len</span><span class="p">(</span><span class="n">V_Arr</span><span class="p">)</span> <span class="o">-</span><span class="mi">1</span> <span class="p">)</span> <span class="p">)</span> <span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span> <span class="p">)</span>
-
-            <span class="n">Inside_Bicone_Arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span> <span class="nb">len</span><span class="p">(</span> <span class="n">logta_Arr</span> <span class="p">)</span> <span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
-
-            <span class="n">f_esc</span> <span class="o">=</span> <span class="n">RT_f_esc</span><span class="p">(</span> <span class="n">geo</span> <span class="p">,</span> <span class="n">V_Arr_tmp</span> <span class="p">,</span> <span class="n">logNH_Arr</span> <span class="p">,</span> <span class="mi">10</span><span class="o">**</span><span class="n">logta_Arr</span> <span class="p">,</span> <span class="n">Inside_Bicone_Arr</span><span class="o">=</span><span class="n">Inside_Bicone_Arr</span><span class="p">)</span>
+            <span class="n">f_esc</span> <span class="o">=</span> <span class="n">RT_f_esc</span><span class="p">(</span> <span class="n">geo</span> <span class="p">,</span> <span class="n">V_Arr_tmp</span> <span class="p">,</span> <span class="n">logNH_Arr</span> <span class="p">,</span> <span class="mi">10</span><span class="o">**</span><span class="n">logta_Arr</span> <span class="p">)</span>
 
             <span class="n">ax_ax</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span> <span class="n">logta_Arr</span> <span class="p">,</span> <span class="n">f_esc</span> <span class="p">,</span> <span class="s1">&#39;--&#39;</span> <span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">cm</span><span class="p">(</span> <span class="n">i</span><span class="o">*</span><span class="mf">1.</span><span class="o">/</span><span class="p">(</span> <span class="nb">len</span><span class="p">(</span><span class="n">V_Arr</span><span class="p">)</span> <span class="o">-</span><span class="mi">1</span> <span class="p">)</span> <span class="p">)</span> <span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span> <span class="p">)</span>
 
         <span class="n">ax_ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span> <span class="sa">r</span><span class="s1">&#39;log tau a&#39;</span> <span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">20</span> <span class="p">)</span>
         <span class="n">ax_ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span> <span class="sa">r</span><span class="s1">&#39;f esc Ly alpha &#39;</span> <span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">20</span> <span class="p">)</span>
 
-        <span class="c1">#texto = r&#39; N_{H} = 10^{20} cm^{-2}&#39;</span>
-
-        <span class="c1">#ax_ax.text( .5 , 0.05 , texto , verticalalignment=&#39;bottom&#39;, horizontalalignment=&#39;left&#39;, transform=ax_ax.transAxes, fontsize=20 )</span>
-
-        <span class="c1">#ax_ax.set_title( r&#39;Geometry = &#39; + geo , size=20 )</span>
-        <span class="n">ax_ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span> <span class="sa">r</span><span class="s1">&#39;Geometry = &#39;</span> <span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">20</span> <span class="p">)</span>
+        <span class="n">ax_ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span> <span class="sa">r</span><span class="s1">&#39;Geometry = &#39;</span> <span class="o">+</span> <span class="n">geo</span> <span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">20</span> <span class="p">)</span>
 
         <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span> <span class="n">loc</span><span class="o">=</span><span class="mi">0</span> <span class="p">)</span>
 
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-
-    <span class="k">return</span></div>
-<span class="c1">#====================================================================#</span>
-<span class="c1">#====================================================================#</span>
-<span class="c1">#====================================================================#</span>
-<div class="viewcode-block" id="Test_Installation"><a class="viewcode-back" href="../funcs.html#funcs.Test_Installation">[docs]</a><span class="k">def</span> <span class="nf">Test_Installation</span><span class="p">(</span> <span class="n">Make_Plots</span><span class="o">=</span><span class="kc">False</span> <span class="p">):</span>
-
-    <span class="kn">import</span> <span class="nn">warnings</span>
-    <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
-
-    <span class="n">Test_1</span><span class="p">()</span>
-
-    <span class="c1">#if Make_Plots : Test_2()</span>
 
     <span class="k">return</span></div>
 <span class="c1">#====================================================================#</span>
@@ -2160,13 +2062,13 @@
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        This function computes the sigma of a gaussian from its FWHM.</span>
 
-<span class="sd">        **Input**:</span>
+<span class="sd">        **Input**</span>
 
 <span class="sd">        FWHM_Arr : 1-D sequence of float</span>
 <span class="sd">                   Array with the Full Width Half Maximum that you </span>
 <span class="sd">                   want to convert</span>
 
-<span class="sd">        **Output**:</span>
+<span class="sd">        **Output**</span>
 
 <span class="sd">        sigma_Arr : 1-D sequence of float</span>
 <span class="sd">                    The width of the FWHM_Arr</span>
@@ -2184,8 +2086,8 @@
 <span class="sd">        This functions dilutes a given spectrum by convolving with a gaussian </span>
 <span class="sd">        filter.</span>
 
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
+<span class="sd">        **Input**</span>
+
 <span class="sd">        wave_Arr : 1-D sequence of float</span>
 <span class="sd">                   Array with the Wavelength where the spectrum is evaluated.</span>
 <span class="sd">                   Same units as FWHM_Arr. This has to be sorted.</span>
@@ -2205,10 +2107,8 @@
 <span class="sd">        same_norm : optional bool.</span>
 <span class="sd">                    If true return a line with the same normalization as the input</span>
 
-<span class="sd">            .. versionadded:: 1.0.1</span>
+<span class="sd">        **Output**</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
 <span class="sd">        new_Line : 1-D sequence of float</span>
 <span class="sd">                   Spectrum after the convolution</span>
 <span class="sd">    &#39;&#39;&#39;</span>
@@ -2228,8 +2128,8 @@
 <span class="sd">        This functions dilutes a given spectrum by convolving with a gaussian</span>
 <span class="sd">        filter.</span>
 
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
+<span class="sd">        **Input**</span>
+
 <span class="sd">        wave_Arr : 1-D sequence of float</span>
 <span class="sd">                   Array with the Wavelength where the spectrum is evaluated.</span>
 <span class="sd">                   Same units as FWHM_Arr. This has to be sorted.</span>
@@ -2249,10 +2149,8 @@
 <span class="sd">        same_norm : optional bool.</span>
 <span class="sd">                    If true return a line with the same normalization as the input</span>
 
-<span class="sd">            .. versionadded:: 1.0.1</span>
+<span class="sd">        **Output**</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
 <span class="sd">        new_Line : 1-D sequence of float</span>
 <span class="sd">                   Spectrum after the convolution</span>
 <span class="sd">    &#39;&#39;&#39;</span>
@@ -2268,6 +2166,33 @@
 <span class="c1">#====================================================================#</span>
 <span class="c1">#====================================================================#</span>
 <div class="viewcode-block" id="bin_one_line"><a class="viewcode-back" href="../funcs.html#funcs.bin_one_line">[docs]</a><span class="k">def</span> <span class="nf">bin_one_line</span><span class="p">(</span> <span class="n">wave_Arr_line</span> <span class="p">,</span> <span class="n">Line_Prob_Arr</span> <span class="p">,</span> <span class="n">new_wave_Arr</span> <span class="p">,</span> <span class="n">Bin</span> <span class="p">,</span> <span class="n">same_norm</span><span class="o">=</span><span class="kc">False</span> <span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        This functions bins the line profile mimicking the pixelization in a CCD.</span>
+
+<span class="sd">        **Input**</span>
+
+<span class="sd">        wave_Arr_line : 1-D sequence of float</span>
+<span class="sd">                   Array with the Wavelength where the spectrum is evaluated.</span>
+<span class="sd">                   Same units as Bin. This has to be sorted.</span>
+
+<span class="sd">        Line_Prob_Arr : 1-D sequence of float</span>
+<span class="sd">                   Arrays with the flux of the spectrum.</span>
+
+<span class="sd">        new_wave_Arr : 1-D sequence of float</span>
+<span class="sd">                   Array with the nex wavelgnth where the fline profile will be</span>
+<span class="sd">                   interpolated </span>
+
+<span class="sd">        Bin : float</span>
+<span class="sd">                   Bin size.</span>
+
+<span class="sd">        same_norm : optional bool.</span>
+<span class="sd">                    If true return a line with the same normalization as the input</span>
+
+<span class="sd">        **Output**</span>
+
+<span class="sd">        binned_line : 1-D sequence of float</span>
+<span class="sd">                   Spectrum after the convolution</span>
+<span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">RES</span> <span class="o">=</span> <span class="mi">100</span>
 
@@ -2299,6 +2224,29 @@
 <span class="c1">#====================================================================#</span>
 <span class="c1">#====================================================================#</span>
 <div class="viewcode-block" id="plot_a_rebinned_line"><a class="viewcode-back" href="../funcs.html#funcs.plot_a_rebinned_line">[docs]</a><span class="k">def</span> <span class="nf">plot_a_rebinned_line</span><span class="p">(</span> <span class="n">new_wave_Arr</span> <span class="p">,</span> <span class="n">binned_line</span> <span class="p">,</span> <span class="n">Bin</span> <span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        This functions is used to plot line profiles. It transforms the line</span>
+<span class="sd">        line in a histogram.</span>
+
+<span class="sd">        **Input**</span>
+
+<span class="sd">        new_wave_Arr : 1-D sequence of float</span>
+<span class="sd">                   Array with the Wavelength where the spectrum is evaluated.</span>
+
+<span class="sd">        binned_line : 1-D sequence of float</span>
+<span class="sd">                   Arrays with the flux of the spectrum.</span>
+
+<span class="sd">        Bin : float</span>
+<span class="sd">                   Bin size.</span>
+
+<span class="sd">        **Output**</span>
+
+<span class="sd">        XX_Arr : 1-D sequence of float</span>
+<span class="sd">                   Wavelength where the new line is evaluated</span>
+
+<span class="sd">        YY_Arr : 1-D sequence of float</span>
+<span class="sd">                   Flux density array</span>
+<span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">DD</span> <span class="o">=</span> <span class="n">Bin</span>  <span class="o">*</span> <span class="mf">1e-10</span>
 
@@ -2321,7 +2269,32 @@
 <span class="c1">#====================================================================#</span>
 <span class="c1">#====================================================================#</span>
 <div class="viewcode-block" id="Add_noise_to_line"><a class="viewcode-back" href="../funcs.html#funcs.Add_noise_to_line">[docs]</a><span class="k">def</span> <span class="nf">Add_noise_to_line</span><span class="p">(</span> <span class="n">wave_Arr_line</span> <span class="p">,</span> <span class="n">Line_Prob_Arr</span> <span class="p">,</span> <span class="n">SN</span> <span class="p">,</span> <span class="n">same_norm</span><span class="o">=</span><span class="kc">False</span> <span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        This functions adds noise to a line profile.</span>
 
+<span class="sd">        **Input**</span>
+
+<span class="sd">        wave_Arr_line : 1-D sequence of float</span>
+<span class="sd">                   Array with the Wavelength where the spectrum is evaluated.</span>
+<span class="sd">                   Same units as Bin. This has to be sorted.</span>
+
+<span class="sd">        Line_Prob_Arr : 1-D sequence of float</span>
+<span class="sd">                   Arrays with the flux of the spectrum.</span>
+
+<span class="sd">        SN : float</span>
+<span class="sd">                   Signal to noise of the desire line.</span>
+
+<span class="sd">        same_norm : optional bool.</span>
+<span class="sd">                    If true return a line with the same normalization as the input</span>
+
+<span class="sd">        **Output**</span>
+
+<span class="sd">         Noisy_Line_Arr : 1-D sequence of float</span>
+<span class="sd">                   Spectrum with the noise</span>
+
+<span class="sd">        Noise_Arr : 1-D sequence of float</span>
+<span class="sd">                   Particular flux density of the noise applyed</span>
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">mask</span> <span class="o">=</span> <span class="n">Line_Prob_Arr</span> <span class="o">&gt;</span> <span class="mf">0.05</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span> <span class="n">Line_Prob_Arr</span> <span class="p">)</span>
 
     <span class="n">SS</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span> <span class="n">Line_Prob_Arr</span><span class="p">[</span> <span class="n">mask</span> <span class="p">]</span> <span class="p">)</span>
@@ -2345,13 +2318,55 @@
 <span class="c1">#====================================================================#</span>
 <span class="c1">#====================================================================#</span>
 <div class="viewcode-block" id="gaus"><a class="viewcode-back" href="../funcs.html#funcs.gaus">[docs]</a><span class="k">def</span> <span class="nf">gaus</span><span class="p">(</span> <span class="n">x_Arr</span> <span class="p">,</span> <span class="n">A</span> <span class="p">,</span> <span class="n">mu</span> <span class="p">,</span> <span class="n">sigma</span> <span class="p">):</span>
-
-    <span class="k">return</span> <span class="n">A</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span> <span class="o">-</span><span class="mi">1</span><span class="o">*</span><span class="p">(</span> <span class="n">x_Arr</span> <span class="o">-</span> <span class="n">mu</span> <span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="mf">1.</span> <span class="o">/</span> <span class="p">(</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">sigma</span><span class="o">**</span><span class="mi">2</span> <span class="p">)</span> <span class="p">)</span></div>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Retruns a gaussian evaluated in x_Arr.</span>
+<span class="sd">        </span>
+<span class="sd">        **Input**</span>
+<span class="sd">        </span>
+<span class="sd">        x_Arr : 1-D sequence of float</span>
+<span class="sd">                   Where the gaussian has to be evaluated.</span>
+<span class="sd">        </span>
+<span class="sd">        A : float</span>
+<span class="sd">            Amplitude</span>
+<span class="sd">        </span>
+<span class="sd">        mu : float</span>
+<span class="sd">            Mean</span>
+<span class="sd">        </span>
+<span class="sd">        sigma : float</span>
+<span class="sd">            width</span>
+<span class="sd">        </span>
+<span class="sd">        **Output**</span>
+<span class="sd">        </span>
+<span class="sd">        gauss_Arr : 1-D sequence of float</span>
+<span class="sd">                   Gaussian</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    
+    <span class="n">gauss_Arr</span> <span class="o">=</span>  <span class="n">A</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span> <span class="o">-</span><span class="mi">1</span><span class="o">*</span><span class="p">(</span> <span class="n">x_Arr</span> <span class="o">-</span> <span class="n">mu</span> <span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="mf">1.</span> <span class="o">/</span> <span class="p">(</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">sigma</span><span class="o">**</span><span class="mi">2</span> <span class="p">)</span> <span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">gauss_Arr</span></div>
 <span class="c1">#====================================================================#</span>
 <span class="c1">#====================================================================#</span>
 <span class="c1">#====================================================================#</span>
 <div class="viewcode-block" id="Signal_to_noise_estimator"><a class="viewcode-back" href="../funcs.html#funcs.Signal_to_noise_estimator">[docs]</a><span class="k">def</span> <span class="nf">Signal_to_noise_estimator</span><span class="p">(</span> <span class="n">w_Arr</span> <span class="p">,</span> <span class="n">Line_Arr</span> <span class="p">,</span> <span class="n">w_line</span> <span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Estimates the signal to noise of a line profile</span>
 
+<span class="sd">        **Input**</span>
+
+<span class="sd">        w_Arr : 1-D sequence of float</span>
+<span class="sd">                wavelgnth array</span>
+
+<span class="sd">        Line_Arr : 1-D sequence float</span>
+<span class="sd">                   Flux density of the line profile.</span>
+
+<span class="sd">        w_line : float</span>
+<span class="sd">                 wavelgnth of the line</span>
+
+<span class="sd">        **Output**</span>
+
+<span class="sd">        SNR : float</span>
+<span class="sd">              Signal to noise ratio.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">popt</span> <span class="p">,</span> <span class="n">pcov</span> <span class="o">=</span> <span class="n">curve_fit</span><span class="p">(</span> <span class="n">gaus</span> <span class="p">,</span> <span class="n">w_Arr</span> <span class="p">,</span> <span class="n">Line_Arr</span> <span class="p">,</span> <span class="n">p0</span><span class="o">=</span><span class="p">[</span> <span class="mf">1e-17</span> <span class="p">,</span> <span class="n">w_line</span> <span class="p">,</span> <span class="mf">5.0</span> <span class="p">]</span> <span class="p">)</span>
 
     <span class="n">sigma_line</span> <span class="o">=</span> <span class="n">popt</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
@@ -2369,7 +2384,49 @@
 <span class="c1">#====================================================================#</span>
 <span class="c1">#====================================================================#</span>
 <div class="viewcode-block" id="generate_a_obs_line"><a class="viewcode-back" href="../funcs.html#funcs.generate_a_obs_line">[docs]</a><span class="k">def</span> <span class="nf">generate_a_obs_line</span><span class="p">(</span> <span class="n">z_f</span> <span class="p">,</span> <span class="n">V_f</span> <span class="p">,</span> <span class="n">logNH_f</span> <span class="p">,</span> <span class="n">ta_f</span> <span class="p">,</span> <span class="n">DATA_LyaRT</span> <span class="p">,</span> <span class="n">Geometry</span> <span class="p">,</span> <span class="n">logEW_f</span><span class="o">=</span><span class="kc">None</span> <span class="p">,</span> <span class="n">Wi_f</span><span class="o">=</span><span class="kc">None</span> <span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Moves in redshift a line profile.</span>
 
+<span class="sd">        **Input**</span>
+
+<span class="sd">        z_f : float</span>
+<span class="sd">              Redshift</span>
+
+<span class="sd">        V_f : float</span>
+<span class="sd">              Outflow expansion velocity [km/s]</span>
+
+<span class="sd">        logNH_f : float</span>
+<span class="sd">                  logarithmic of the neutral hydrogen column density in cm**-2</span>
+
+<span class="sd">        ta_f : float</span>
+<span class="sd">               Dust optical depth</span>
+
+<span class="sd">        DATA_LyaRT : python dictionary</span>
+<span class="sd">                     Contains the grid information. </span>
+
+<span class="sd">        Geometry : string</span>
+<span class="sd">                   Outflow geometry to use.</span>
+
+<span class="sd">        logEW_f : optional, float</span>
+<span class="sd">                  Logarithmic of the rest frame intrisic equivalent width of the line [A]</span>
+<span class="sd">                  Requiered if Geometry == &#39;Thin_Shell_Cont&#39; </span>
+
+<span class="sd">        Wi_f : optional, float</span>
+<span class="sd">               Rest frame intrisic width of the Lyman-alpha line [A]</span>
+<span class="sd">               Requiered if Geometry == &#39;Thin_Shell_Cont&#39; </span>
+
+<span class="sd">        **Output**</span>
+
+<span class="sd">        w_rest_Arr : 1-D sequence of float</span>
+<span class="sd">                     Wavelgnth array where the line is evaluated in the rest frame.</span>
+
+<span class="sd">        wavelength_Arr : 1-D sequence of float</span>
+<span class="sd">                     Wavelgnth array where the line is evaluated in the observed frame.</span>
+
+<span class="sd">        line_Arr : 1-D sequence of float</span>
+<span class="sd">                   Line profile flux density in arbitrary units.</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">w_Lya</span> <span class="o">=</span> <span class="mf">1215.67</span>
 
     <span class="n">w_rest_Arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span> <span class="mf">1215.68</span> <span class="o">-</span> <span class="mi">30</span> <span class="p">,</span> <span class="mf">1215.68</span> <span class="o">+</span> <span class="mi">30</span> <span class="p">,</span> <span class="mi">2000</span> <span class="p">)</span>
@@ -2383,7 +2440,74 @@
 <span class="c1">#====================================================================#</span>
 <span class="c1">#====================================================================#</span>
 <div class="viewcode-block" id="generate_a_REAL_line_Noise_w"><a class="viewcode-back" href="../funcs.html#funcs.generate_a_REAL_line_Noise_w">[docs]</a><span class="k">def</span> <span class="nf">generate_a_REAL_line_Noise_w</span><span class="p">(</span> <span class="n">z_f</span> <span class="p">,</span> <span class="n">V_f</span> <span class="p">,</span> <span class="n">logNH_f</span> <span class="p">,</span> <span class="n">ta_f</span> <span class="p">,</span> <span class="n">F_line_f</span> <span class="p">,</span> <span class="n">logEW_f</span> <span class="p">,</span> <span class="n">Wi_f</span> <span class="p">,</span> <span class="n">Noise_w_Arr</span> <span class="p">,</span> <span class="n">Noise_Arr</span> <span class="p">,</span> <span class="n">FWHM_f</span> <span class="p">,</span> <span class="n">PIX_f</span> <span class="p">,</span> <span class="n">w_min</span> <span class="p">,</span> <span class="n">w_max</span> <span class="p">,</span> <span class="n">DATA_LyaRT</span> <span class="p">,</span> <span class="n">Geometry</span> <span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Makes a mock line profile for the Thin_Shell_Cont geometry.</span>
 
+<span class="sd">        **Input**</span>
+
+<span class="sd">        z_f : float</span>
+<span class="sd">              Redshift</span>
+
+<span class="sd">        V_f : float</span>
+<span class="sd">              Outflow expansion velocity [km/s]</span>
+
+<span class="sd">        logNH_f : float</span>
+<span class="sd">                  logarithmic of the neutral hydrogen column density in cm**-2</span>
+
+<span class="sd">        ta_f : float</span>
+<span class="sd">               Dust optical depth</span>
+
+<span class="sd">        logEW_f : optional, float</span>
+<span class="sd">                  Logarithmic of the rest frame intrisic equivalent width of the line [A]</span>
+<span class="sd">                  Requiered if Geometry == &#39;Thin_Shell_Cont&#39;</span>
+
+<span class="sd">        Wi_f : optional, float</span>
+<span class="sd">               Rest frame intrisic width of the Lyman-alpha line [A]</span>
+<span class="sd">               Requiered if Geometry == &#39;Thin_Shell_Cont&#39;</span>
+
+<span class="sd">        Noise_w_Arr : 1-D sequence of float</span>
+<span class="sd">                      wavelength array where the noise pattern is evaluated.</span>
+
+<span class="sd">        Noise_Arr : 1-D sequence of float</span>
+<span class="sd">                    Noise pattern. Evolution of the noise as a function of wavelength (Noise_w_Arr)</span>
+<span class="sd">       </span>
+<span class="sd">        FWHM_f : float</span>
+<span class="sd">                 Full width half maximum [A] of the experiment. This dilutes the line profile.  </span>
+
+<span class="sd">        PIX_f : float</span>
+<span class="sd">                Pixel size in wavelgnth [A] of the experiment. This binnes the line profile.  </span>
+
+<span class="sd">        w_min : float</span>
+<span class="sd">                minimum wavelength in the observed frame [A] to use. This matches the minimum</span>
+<span class="sd">                wavelgnth of wave_pix_Arr (see below).</span>
+
+<span class="sd">        w_max : float</span>
+<span class="sd">                maximum  wavelength in the observed frame [A] to use. This might not be exactly</span>
+<span class="sd">                the maximum wavelgnth of wave_pix_Arr (see below) due to pixelization. </span>
+
+<span class="sd">        DATA_LyaRT : python dictionary</span>
+<span class="sd">                     Contains the grid information.</span>
+
+<span class="sd">        Geometry : string</span>
+<span class="sd">                   Outflow geometry to use.</span>
+
+<span class="sd">        **Output**</span>
+
+<span class="sd">        wave_pix_Arr : 1-D sequence of float</span>
+<span class="sd">                     Wavelgnth array where the line is evaluated in the observed frame.</span>
+
+<span class="sd">        noisy_Line_Arr : 1-D sequence of float</span>
+<span class="sd">                   Line profile flux density in arbitrary units.</span>
+
+<span class="sd">        dic : python dictionaty.</span>
+<span class="sd">              Contains all the meta data used to get the line profiles:</span>
+<span class="sd">                &#39;w_rest&#39;    : restframe wavelength of line before reducing quality</span>
+<span class="sd">                &#39;w_obs&#39;     : wavelength of line before reducing quality</span>
+<span class="sd">                &#39;Intrinsic&#39; : line profile before quality reduction</span>
+<span class="sd">                &#39;Diluted&#39;   : Line profile after the FWHM has been applyed.</span>
+<span class="sd">                &#39;Pixelated&#39; : Line profile after the FWHM and PIX have been applyed</span>
+<span class="sd">                &#39;Noise&#39;     : Particular noise patern used.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">w_rest_Arr</span> <span class="p">,</span> <span class="n">wavelength_Arr</span> <span class="p">,</span> <span class="n">line_Arr</span> <span class="o">=</span> <span class="n">generate_a_obs_line</span><span class="p">(</span> <span class="n">z_f</span> <span class="p">,</span> <span class="n">V_f</span> <span class="p">,</span> <span class="n">logNH_f</span> <span class="p">,</span> <span class="n">ta_f</span> <span class="p">,</span> <span class="n">DATA_LyaRT</span> <span class="p">,</span> <span class="n">Geometry</span> <span class="p">,</span> <span class="n">logEW_f</span><span class="o">=</span><span class="n">logEW_f</span> <span class="p">,</span> <span class="n">Wi_f</span><span class="o">=</span><span class="n">Wi_f</span> <span class="p">)</span>
 
     <span class="n">diluted_Arr</span> <span class="o">=</span> <span class="n">dilute_line</span><span class="p">(</span> <span class="n">wavelength_Arr</span> <span class="p">,</span> <span class="n">line_Arr</span> <span class="p">,</span> <span class="n">FWHM_f</span> <span class="p">)</span>
@@ -2416,6 +2540,60 @@
 <span class="c1">#====================================================================#</span>
 <span class="c1">#====================================================================#</span>
 <div class="viewcode-block" id="Generate_a_real_line"><a class="viewcode-back" href="../funcs.html#funcs.Generate_a_real_line">[docs]</a><span class="k">def</span> <span class="nf">Generate_a_real_line</span><span class="p">(</span> <span class="n">z_t</span> <span class="p">,</span> <span class="n">V_t</span><span class="p">,</span> <span class="n">log_N_t</span><span class="p">,</span> <span class="n">t_t</span><span class="p">,</span> <span class="n">F_t</span><span class="p">,</span> <span class="n">log_EW_t</span><span class="p">,</span> <span class="n">W_t</span> <span class="p">,</span> <span class="n">PNR_t</span><span class="p">,</span> <span class="n">FWHM_t</span><span class="p">,</span> <span class="n">PIX_t</span><span class="p">,</span> <span class="n">DATA_LyaRT</span><span class="p">,</span> <span class="n">Geometry</span> <span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Makes a mock line profile for the Thin_Shell_Cont geometry.</span>
+
+<span class="sd">        **Input**</span>
+
+<span class="sd">        z_t : float</span>
+<span class="sd">              Redshift</span>
+
+<span class="sd">        V_t : float</span>
+<span class="sd">              Outflow expansion velocity [km/s]</span>
+
+<span class="sd">        log_N_t : float</span>
+<span class="sd">                  logarithmic of the neutral hydrogen column density in cm**-2</span>
+
+<span class="sd">        t_t : float</span>
+<span class="sd">              Dust optical depth</span>
+
+<span class="sd">        F_t : float</span>
+<span class="sd">              Total flux of the line. You can pass 1.</span>
+
+<span class="sd">        log_EW_t : optional, float</span>
+<span class="sd">                   Logarithmic of the rest frame intrisic equivalent width of the line [A]</span>
+<span class="sd">                   Requiered if Geometry == &#39;Thin_Shell_Cont&#39;</span>
+
+<span class="sd">        W_t : optional, float</span>
+<span class="sd">               Rest frame intrisic width of the Lyman-alpha line [A]</span>
+<span class="sd">               Requiered if Geometry == &#39;Thin_Shell_Cont&#39;</span>
+
+<span class="sd">        PNR_t : float</span>
+<span class="sd">                Signal to noise ratio of the global maximum of the line profile.</span>
+
+<span class="sd">        FWHM_t : float</span>
+<span class="sd">                 Full width half maximum [A] of the experiment. This dilutes the line profile.</span>
+
+<span class="sd">        PIX_t : float</span>
+<span class="sd">                Pixel size in wavelgnth [A] of the experiment. This binnes the line profile.</span>
+
+<span class="sd">        DATA_LyaRT : python dictionary</span>
+<span class="sd">                     Contains the grid information.</span>
+
+<span class="sd">        Geometry : string</span>
+<span class="sd">                   Outflow geometry to use.</span>
+
+<span class="sd">        **Output**</span>
+
+<span class="sd">        w_Arr : 1-D sequence of float</span>
+<span class="sd">                     Wavelgnth array where the line is evaluated in the observed frame.</span>
+
+<span class="sd">        f_Arr : 1-D sequence of float</span>
+<span class="sd">                   Line profile flux density in arbitrary units.</span>
+
+<span class="sd">        noise_Amplitude_Arr : 1-D sequence of float</span>
+<span class="sd">                              1-sigma level of the applyed noise.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">w_min</span> <span class="o">=</span> <span class="p">(</span> <span class="mf">1215.67</span> <span class="o">-</span> <span class="mf">25.5</span> <span class="p">)</span> <span class="o">*</span> <span class="p">(</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">z_t</span> <span class="p">)</span>
     <span class="n">w_max</span> <span class="o">=</span> <span class="p">(</span> <span class="mf">1215.67</span> <span class="o">+</span> <span class="mf">25.5</span> <span class="p">)</span> <span class="o">*</span> <span class="p">(</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">z_t</span> <span class="p">)</span>
@@ -2439,7 +2617,36 @@
 <span class="c1">#====================================================================#</span>
 <span class="c1">#====================================================================#</span>
 <div class="viewcode-block" id="Define_wavelength_for_NN"><a class="viewcode-back" href="../funcs.html#funcs.Define_wavelength_for_NN">[docs]</a><span class="k">def</span> <span class="nf">Define_wavelength_for_NN</span><span class="p">(</span> <span class="n">Delta_min</span><span class="o">=-</span><span class="mf">18.5</span> <span class="p">,</span> <span class="n">Delta_max</span><span class="o">=</span><span class="mf">18.5</span> <span class="p">,</span> <span class="n">Nbins_tot</span><span class="o">=</span><span class="mi">1000</span> <span class="p">,</span> <span class="n">Denser_Center</span><span class="o">=</span><span class="kc">True</span> <span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        This function defines the wavelength used in for the neural netwroks.</span>
 
+<span class="sd">        **Input**</span>
+
+<span class="sd">        Delta_min : optional float</span>
+<span class="sd">              Defines the minimum rest frame wavelegnth with respecto to Lyman-alpha.</span>
+
+<span class="sd">              Default = -18.5</span>
+
+<span class="sd">        Delta_min : optional float</span>
+<span class="sd">              Defines the maximum rest frame wavelegnth with respecto to Lyman-alpha.</span>
+
+<span class="sd">              Default = +18.5</span>
+
+<span class="sd">        Nbins_tot : optional int</span>
+<span class="sd">              Total number of wvelgnths bins.</span>
+<span class="sd">              </span>
+<span class="sd">              Default = 1000</span>
+
+<span class="sd">        Denser_Center : optional bool</span>
+<span class="sd">              Populates denser the regions close to Lyman-alpha</span>
+<span class="sd">              </span>
+<span class="sd">              Default = True</span>
+
+<span class="sd">        **Output**</span>
+
+<span class="sd">        rest_w_Arr : 1-D sequence of float</span>
+<span class="sd">                     Wavelgnth array where the line is evaluated in the rest frame.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">Denser_Center</span><span class="p">:</span>
     
         <span class="n">rest_w_Arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span> <span class="mf">1215.67</span><span class="o">+</span><span class="n">Delta_min</span> <span class="p">,</span> <span class="mf">1215.67</span><span class="o">+</span><span class="n">Delta_max</span> <span class="p">,</span> <span class="n">Nbins_tot</span> <span class="p">)</span>
@@ -2482,7 +2689,65 @@
 <span class="c1">#====================================================================#</span>
 <span class="c1">#====================================================================#</span>
 <div class="viewcode-block" id="Treat_A_Line_To_NN_Input"><a class="viewcode-back" href="../funcs.html#funcs.Treat_A_Line_To_NN_Input">[docs]</a><span class="k">def</span> <span class="nf">Treat_A_Line_To_NN_Input</span><span class="p">(</span> <span class="n">w_Arr</span> <span class="p">,</span> <span class="n">f_Arr</span> <span class="p">,</span> <span class="n">PIX</span> <span class="p">,</span> <span class="n">FWHM</span> <span class="p">,</span> <span class="n">Delta_min</span><span class="o">=-</span><span class="mf">18.5</span> <span class="p">,</span> <span class="n">Delta_max</span><span class="o">=</span><span class="mf">18.5</span> <span class="p">,</span> <span class="n">Nbins_tot</span><span class="o">=</span><span class="mi">1000</span> <span class="p">,</span> <span class="n">Denser_Center</span><span class="o">=</span><span class="kc">True</span> <span class="p">,</span> <span class="n">normed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">scaled</span><span class="o">=</span><span class="kc">False</span> <span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Convert a line profile and the usefull information into the INPUT of the NN.</span>
 
+<span class="sd">        **Input**</span>
+
+<span class="sd">        w_Arr : 1-D sequence of floats</span>
+<span class="sd">              Wavelgnth of the line profile in the observed frame. [A]</span>
+
+<span class="sd">        f_Arr : 1-D sequence of floats</span>
+<span class="sd">              Flux density of the observed line profile in arbitrary units.</span>
+
+<span class="sd">        FWHM : float</span>
+<span class="sd">              Full width half maximum [A] of the experiment.</span>
+
+<span class="sd">        PIX : float</span>
+<span class="sd">              Pixel size in wavelgnth [A] of the experiment. </span>
+<span class="sd">        </span>
+
+<span class="sd">        Delta_min : optional float</span>
+<span class="sd">              Defines the minimum rest frame wavelegnth with respecto to Lyman-alpha.</span>
+
+<span class="sd">              Default = -18.5</span>
+
+<span class="sd">        Delta_min : optional float</span>
+<span class="sd">              Defines the maximum rest frame wavelegnth with respecto to Lyman-alpha.</span>
+
+<span class="sd">              Default = +18.5</span>
+
+<span class="sd">        Nbins_tot : optional int</span>
+<span class="sd">              Total number of wvelgnths bins.</span>
+
+<span class="sd">              Default = 1000</span>
+
+<span class="sd">        Denser_Center : optional bool</span>
+<span class="sd">              Populates denser the regions close to Lyman-alpha</span>
+
+<span class="sd">              Default = True</span>
+
+<span class="sd">        normed : optional bool</span>
+<span class="sd">              If True, nomalizes the line profile.</span>
+
+<span class="sd">        scaled : optinal bool</span>
+<span class="sd">              If True, divides the line profile by its maximum.</span>
+
+<span class="sd">        **Output**</span>
+
+<span class="sd">        rest_w_Arr : 1-D sequence of float</span>
+<span class="sd">              Wavelgnth array where the line is evaluated in the rest frame.</span>
+
+<span class="sd">        NN_line : 1-D sequence of float</span>
+<span class="sd">              Line profile evaluated in rest_w_Arr after normalization or scaling.</span>
+
+<span class="sd">        z_max_i : float</span>
+<span class="sd">              Redshift of the source if the global maximum of the spectrum is the</span>
+<span class="sd">              Lyman-alpha wavelegth.</span>
+
+<span class="sd">        INPUT: 1-D secuence of float</span>
+<span class="sd">              The actuall input to use in the Neural networks.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">rest_w_Arr</span> <span class="o">=</span> <span class="n">Define_wavelength_for_NN</span><span class="p">(</span> <span class="n">Delta_min</span><span class="o">=</span><span class="n">Delta_min</span> <span class="p">,</span> <span class="n">Delta_max</span><span class="o">=</span><span class="n">Delta_max</span> <span class="p">,</span> <span class="n">Nbins_tot</span><span class="o">=</span><span class="n">Nbins_tot</span> <span class="p">,</span> <span class="n">Denser_Center</span><span class="o">=</span><span class="n">Denser_Center</span> <span class="p">)</span> 
 
     <span class="n">w_r_i_Arr</span> <span class="p">,</span> <span class="n">Delta_r_i_Arr</span> <span class="p">,</span> <span class="n">f_r_i_Arr</span> <span class="p">,</span> <span class="n">z_max_i</span> <span class="o">=</span> <span class="n">NN_convert_Obs_Line_to_proxy_rest_line</span><span class="p">(</span> <span class="n">w_Arr</span><span class="p">,</span> <span class="n">f_Arr</span><span class="p">,</span> <span class="n">normed</span><span class="o">=</span><span class="n">normed</span> <span class="p">,</span> <span class="n">scaled</span><span class="o">=</span><span class="n">scaled</span><span class="p">)</span>
@@ -2498,6 +2763,92 @@
 <span class="c1">#====================================================================#</span>
 <span class="c1">#====================================================================#</span>
 <div class="viewcode-block" id="Generate_a_line_for_training"><a class="viewcode-back" href="../funcs.html#funcs.Generate_a_line_for_training">[docs]</a><span class="k">def</span> <span class="nf">Generate_a_line_for_training</span><span class="p">(</span> <span class="n">z_t</span> <span class="p">,</span> <span class="n">V_t</span><span class="p">,</span> <span class="n">log_N_t</span><span class="p">,</span> <span class="n">t_t</span><span class="p">,</span> <span class="n">F_t</span><span class="p">,</span> <span class="n">log_EW_t</span><span class="p">,</span> <span class="n">W_t</span><span class="p">,</span> <span class="n">PNR_t</span><span class="p">,</span> <span class="n">FWHM_t</span><span class="p">,</span> <span class="n">PIX_t</span><span class="p">,</span> <span class="n">DATA_LyaRT</span><span class="p">,</span> <span class="n">Geometry</span><span class="p">,</span> <span class="n">normed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">scaled</span><span class="o">=</span><span class="kc">False</span> <span class="p">,</span> <span class="n">Delta_min</span> <span class="o">=</span> <span class="o">-</span><span class="mf">18.5</span> <span class="p">,</span> <span class="n">Delta_max</span><span class="o">=</span><span class="mf">18.5</span> <span class="p">,</span> <span class="n">Denser_Center</span><span class="o">=</span><span class="kc">True</span> <span class="p">,</span> <span class="n">Nbins_tot</span><span class="o">=</span><span class="mi">1000</span> <span class="p">):</span>
+    
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Creates a mock line profile at the desired redshift and returns all the NN</span>
+<span class="sd">        products.</span>
+
+<span class="sd">        **Input**</span>
+
+<span class="sd">        z_t : float</span>
+<span class="sd">              Redshift</span>
+
+<span class="sd">        V_t : float</span>
+<span class="sd">              Outflow expansion velocity [km/s]</span>
+
+<span class="sd">        log_N_t : float</span>
+<span class="sd">                  logarithmic of the neutral hydrogen column density in cm**-2</span>
+
+<span class="sd">        t_t : float</span>
+<span class="sd">              Dust optical depth</span>
+
+<span class="sd">        F_t : float</span>
+<span class="sd">              Total flux of the line. You can pass 1.</span>
+
+<span class="sd">        log_EW_t : optional, float</span>
+<span class="sd">                   Logarithmic of the rest frame intrisic equivalent width of the line [A]</span>
+<span class="sd">                   Requiered if Geometry == &#39;Thin_Shell_Cont&#39;</span>
+
+<span class="sd">        W_t : optional, float</span>
+<span class="sd">               Rest frame intrisic width of the Lyman-alpha line [A]</span>
+<span class="sd">               Requiered if Geometry == &#39;Thin_Shell_Cont&#39;</span>
+
+<span class="sd">        PNR_t : float</span>
+<span class="sd">                Signal to noise ratio of the global maximum of the line profile.</span>
+
+<span class="sd">        FWHM_t : float</span>
+<span class="sd">                 Full width half maximum [A] of the experiment. This dilutes the line profile.</span>
+
+<span class="sd">        PIX_t : float</span>
+<span class="sd">                Pixel size in wavelgnth [A] of the experiment. This binnes the line profile.</span>
+
+<span class="sd">        DATA_LyaRT : python dictionary</span>
+<span class="sd">                     Contains the grid information.</span>
+
+<span class="sd">        Geometry : string</span>
+<span class="sd">                   Outflow geometry to use.</span>
+
+<span class="sd">        Delta_min : optional float</span>
+<span class="sd">              Defines the minimum rest frame wavelegnth with respecto to Lyman-alpha.</span>
+
+<span class="sd">              Default = -18.5</span>
+
+<span class="sd">        Delta_min : optional float</span>
+<span class="sd">              Defines the maximum rest frame wavelegnth with respecto to Lyman-alpha.</span>
+
+<span class="sd">              Default = +18.5</span>
+
+<span class="sd">        Nbins_tot : optional int</span>
+<span class="sd">              Total number of wvelgnths bins.</span>
+
+<span class="sd">              Default = 1000</span>
+
+<span class="sd">        Denser_Center : optional bool</span>
+<span class="sd">              Populates denser the regions close to Lyman-alpha</span>
+
+<span class="sd">              Default = True</span>
+
+<span class="sd">        normed : optional bool</span>
+<span class="sd">              If True, nomalizes the line profile.</span>
+
+<span class="sd">        scaled : optinal bool</span>
+<span class="sd">              If True, divides the line profile by its maximum.</span>
+
+<span class="sd">        **Output**</span>
+
+<span class="sd">        rest_w_Arr : 1-D sequence of float</span>
+<span class="sd">              Wavelgnth array where the line is evaluated in the rest frame.</span>
+
+<span class="sd">        train_line : 1-D sequence of float</span>
+<span class="sd">              Line profile.</span>
+
+<span class="sd">        z_max_i : float</span>
+<span class="sd">              Redshift of the source if the global maximum of the spectrum is the</span>
+<span class="sd">              Lyman-alpha wavelegth.</span>
+
+<span class="sd">        INPUT: 1-D secuence of float</span>
+<span class="sd">              The actuall input to use in the Neural networks.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">w_t_Arr</span> <span class="p">,</span> <span class="n">f_t_Arr</span> <span class="p">,</span> <span class="n">Noise_t_Arr</span> <span class="o">=</span> <span class="n">Generate_a_real_line</span><span class="p">(</span> <span class="n">z_t</span> <span class="p">,</span> <span class="n">V_t</span><span class="p">,</span> <span class="n">log_N_t</span><span class="p">,</span> <span class="n">t_t</span><span class="p">,</span> <span class="n">F_t</span><span class="p">,</span> <span class="n">log_EW_t</span><span class="p">,</span> <span class="n">W_t</span> <span class="p">,</span> <span class="n">PNR_t</span><span class="p">,</span> <span class="n">FWHM_t</span><span class="p">,</span> <span class="n">PIX_t</span><span class="p">,</span> <span class="n">DATA_LyaRT</span><span class="p">,</span> <span class="n">Geometry</span> <span class="p">)</span>
 
@@ -2508,6 +2859,58 @@
 <span class="c1">#====================================================================#</span>
 <span class="c1">#====================================================================#</span>
 <div class="viewcode-block" id="generate_a_REAL_line_SN"><a class="viewcode-back" href="../funcs.html#funcs.generate_a_REAL_line_SN">[docs]</a><span class="k">def</span> <span class="nf">generate_a_REAL_line_SN</span><span class="p">(</span> <span class="n">z_f</span> <span class="p">,</span> <span class="n">V_f</span> <span class="p">,</span> <span class="n">logNH_f</span> <span class="p">,</span> <span class="n">ta_f</span> <span class="p">,</span> <span class="n">F_line_f</span> <span class="p">,</span> <span class="n">SN_f</span> <span class="p">,</span> <span class="n">FWHM_f</span> <span class="p">,</span> <span class="n">PIX_f</span> <span class="p">,</span> <span class="n">w_min</span> <span class="p">,</span> <span class="n">w_max</span> <span class="p">,</span> <span class="n">DATA_LyaRT</span> <span class="p">,</span> <span class="n">Geometry</span> <span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Makes a mock line profile for the other geometries that are not Thin_Shell_Cont geometry.</span>
+
+<span class="sd">        **Input**</span>
+
+<span class="sd">        z_t : float</span>
+<span class="sd">              Redshift</span>
+
+<span class="sd">        V_t : float</span>
+<span class="sd">              Outflow expansion velocity [km/s]</span>
+
+<span class="sd">        log_N_t : float</span>
+<span class="sd">                  logarithmic of the neutral hydrogen column density in cm**-2</span>
+
+<span class="sd">        t_t : float</span>
+<span class="sd">              Dust optical depth</span>
+
+<span class="sd">        F_line_f : float</span>
+<span class="sd">              Total flux of the line. You can pass 1.</span>
+
+<span class="sd">        SN_t : float</span>
+<span class="sd">                Signal to noise ratio.</span>
+
+<span class="sd">        FWHM_t : float</span>
+<span class="sd">                 Full width half maximum [A] of the experiment. This dilutes the line profile.</span>
+
+<span class="sd">        PIX_t : float</span>
+<span class="sd">                Pixel size in wavelgnth [A] of the experiment. This binnes the line profile.</span>
+
+<span class="sd">        DATA_LyaRT : python dictionary</span>
+<span class="sd">                     Contains the grid information.</span>
+
+<span class="sd">        Geometry : string</span>
+<span class="sd">                   Outflow geometry to use.</span>
+
+<span class="sd">        **Output**</span>
+
+<span class="sd">        wave_pix_Arr : 1-D sequence of float</span>
+<span class="sd">                     Wavelgnth array where the line is evaluated in the observed frame.</span>
+
+<span class="sd">        noisy_Line_Arr : 1-D sequence of float</span>
+<span class="sd">                   Line profile flux density in arbitrary units.</span>
+
+<span class="sd">        dic : python dictionaty.</span>
+<span class="sd">              Contains all the meta data used to get the line profiles:</span>
+<span class="sd">                &#39;w_rest&#39;    : restframe wavelength of line before reducing quality</span>
+<span class="sd">                &#39;w_obs&#39;     : wavelength of line before reducing quality</span>
+<span class="sd">                &#39;Intrinsic&#39; : line profile before quality reduction</span>
+<span class="sd">                &#39;Diluted&#39;   : Line profile after the FWHM has been applyed.</span>
+<span class="sd">                &#39;Pixelated&#39; : Line profile after the FWHM and PIX have been applyed</span>
+<span class="sd">                &#39;Noise&#39;     : Particular noise patern used.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">w_rest_Arr</span> <span class="p">,</span> <span class="n">wavelength_Arr</span> <span class="p">,</span> <span class="n">line_Arr</span> <span class="o">=</span> <span class="n">generate_a_obs_line</span><span class="p">(</span> <span class="n">z_f</span> <span class="p">,</span> <span class="n">V_f</span> <span class="p">,</span> <span class="n">logNH_f</span> <span class="p">,</span> <span class="n">ta_f</span> <span class="p">,</span> <span class="n">DATA_LyaRT</span> <span class="p">,</span> <span class="n">Geometry</span> <span class="p">)</span>
 

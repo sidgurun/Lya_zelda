@@ -162,7 +162,31 @@
 <dl class="function">
 <dt id="funcs.Add_noise_to_line">
 <code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Add_noise_to_line</code><span class="sig-paren">(</span><em class="sig-param">wave_Arr_line</em>, <em class="sig-param">Line_Prob_Arr</em>, <em class="sig-param">SN</em>, <em class="sig-param">same_norm=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#Add_noise_to_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.Add_noise_to_line" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>This functions adds noise to a line profile.</p>
+<p><strong>Input</strong></p>
+<dl class="simple">
+<dt>wave_Arr_line<span class="classifier">1-D sequence of float</span></dt><dd><p>Array with the Wavelength where the spectrum is evaluated.
+Same units as Bin. This has to be sorted.</p>
+</dd>
+<dt>Line_Prob_Arr<span class="classifier">1-D sequence of float</span></dt><dd><p>Arrays with the flux of the spectrum.</p>
+</dd>
+<dt>SN<span class="classifier">float</span></dt><dd><p>Signal to noise of the desire line.</p>
+</dd>
+<dt>same_norm<span class="classifier">optional bool.</span></dt><dd><p>If true return a line with the same normalization as the input</p>
+</dd>
+</dl>
+<p><strong>Output</strong></p>
+<blockquote>
+<div><dl class="simple">
+<dt>Noisy_Line_Arr<span class="classifier">1-D sequence of float</span></dt><dd><p>Spectrum with the noise</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="simple">
+<dt>Noise_Arr<span class="classifier">1-D sequence of float</span></dt><dd><p>Particular flux density of the noise applyed</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="function">
 <dt id="funcs.Analytic_f_esc_Thin_Shell">
@@ -242,17 +266,136 @@ outflow</p>
 <dl class="function">
 <dt id="funcs.Define_wavelength_for_NN">
 <code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Define_wavelength_for_NN</code><span class="sig-paren">(</span><em class="sig-param">Delta_min=-18.5</em>, <em class="sig-param">Delta_max=18.5</em>, <em class="sig-param">Nbins_tot=1000</em>, <em class="sig-param">Denser_Center=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#Define_wavelength_for_NN"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.Define_wavelength_for_NN" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>This function defines the wavelength used in for the neural netwroks.</p>
+<p><strong>Input</strong></p>
+<dl>
+<dt>Delta_min<span class="classifier">optional float</span></dt><dd><p>Defines the minimum rest frame wavelegnth with respecto to Lyman-alpha.</p>
+<p>Default = -18.5</p>
+</dd>
+<dt>Delta_min<span class="classifier">optional float</span></dt><dd><p>Defines the maximum rest frame wavelegnth with respecto to Lyman-alpha.</p>
+<p>Default = +18.5</p>
+</dd>
+<dt>Nbins_tot<span class="classifier">optional int</span></dt><dd><p>Total number of wvelgnths bins.</p>
+<p>Default = 1000</p>
+</dd>
+<dt>Denser_Center<span class="classifier">optional bool</span></dt><dd><p>Populates denser the regions close to Lyman-alpha</p>
+<p>Default = True</p>
+</dd>
+</dl>
+<p><strong>Output</strong></p>
+<dl class="simple">
+<dt>rest_w_Arr<span class="classifier">1-D sequence of float</span></dt><dd><p>Wavelgnth array where the line is evaluated in the rest frame.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="function">
 <dt id="funcs.Generate_a_line_for_training">
 <code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Generate_a_line_for_training</code><span class="sig-paren">(</span><em class="sig-param">z_t</em>, <em class="sig-param">V_t</em>, <em class="sig-param">log_N_t</em>, <em class="sig-param">t_t</em>, <em class="sig-param">F_t</em>, <em class="sig-param">log_EW_t</em>, <em class="sig-param">W_t</em>, <em class="sig-param">PNR_t</em>, <em class="sig-param">FWHM_t</em>, <em class="sig-param">PIX_t</em>, <em class="sig-param">DATA_LyaRT</em>, <em class="sig-param">Geometry</em>, <em class="sig-param">normed=False</em>, <em class="sig-param">scaled=False</em>, <em class="sig-param">Delta_min=-18.5</em>, <em class="sig-param">Delta_max=18.5</em>, <em class="sig-param">Denser_Center=True</em>, <em class="sig-param">Nbins_tot=1000</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#Generate_a_line_for_training"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.Generate_a_line_for_training" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Creates a mock line profile at the desired redshift and returns all the NN
+products.</p>
+<p><strong>Input</strong></p>
+<dl>
+<dt>z_t<span class="classifier">float</span></dt><dd><p>Redshift</p>
+</dd>
+<dt>V_t<span class="classifier">float</span></dt><dd><p>Outflow expansion velocity [km/s]</p>
+</dd>
+<dt>log_N_t<span class="classifier">float</span></dt><dd><p>logarithmic of the neutral hydrogen column density in cm**-2</p>
+</dd>
+<dt>t_t<span class="classifier">float</span></dt><dd><p>Dust optical depth</p>
+</dd>
+<dt>F_t<span class="classifier">float</span></dt><dd><p>Total flux of the line. You can pass 1.</p>
+</dd>
+<dt>log_EW_t<span class="classifier">optional, float</span></dt><dd><p>Logarithmic of the rest frame intrisic equivalent width of the line [A]
+Requiered if Geometry == ‘Thin_Shell_Cont’</p>
+</dd>
+<dt>W_t<span class="classifier">optional, float</span></dt><dd><p>Rest frame intrisic width of the Lyman-alpha line [A]
+Requiered if Geometry == ‘Thin_Shell_Cont’</p>
+</dd>
+<dt>PNR_t<span class="classifier">float</span></dt><dd><p>Signal to noise ratio of the global maximum of the line profile.</p>
+</dd>
+<dt>FWHM_t<span class="classifier">float</span></dt><dd><p>Full width half maximum [A] of the experiment. This dilutes the line profile.</p>
+</dd>
+<dt>PIX_t<span class="classifier">float</span></dt><dd><p>Pixel size in wavelgnth [A] of the experiment. This binnes the line profile.</p>
+</dd>
+<dt>DATA_LyaRT<span class="classifier">python dictionary</span></dt><dd><p>Contains the grid information.</p>
+</dd>
+<dt>Geometry<span class="classifier">string</span></dt><dd><p>Outflow geometry to use.</p>
+</dd>
+<dt>Delta_min<span class="classifier">optional float</span></dt><dd><p>Defines the minimum rest frame wavelegnth with respecto to Lyman-alpha.</p>
+<p>Default = -18.5</p>
+</dd>
+<dt>Delta_min<span class="classifier">optional float</span></dt><dd><p>Defines the maximum rest frame wavelegnth with respecto to Lyman-alpha.</p>
+<p>Default = +18.5</p>
+</dd>
+<dt>Nbins_tot<span class="classifier">optional int</span></dt><dd><p>Total number of wvelgnths bins.</p>
+<p>Default = 1000</p>
+</dd>
+<dt>Denser_Center<span class="classifier">optional bool</span></dt><dd><p>Populates denser the regions close to Lyman-alpha</p>
+<p>Default = True</p>
+</dd>
+<dt>normed<span class="classifier">optional bool</span></dt><dd><p>If True, nomalizes the line profile.</p>
+</dd>
+<dt>scaled<span class="classifier">optinal bool</span></dt><dd><p>If True, divides the line profile by its maximum.</p>
+</dd>
+</dl>
+<p><strong>Output</strong></p>
+<dl class="simple">
+<dt>rest_w_Arr<span class="classifier">1-D sequence of float</span></dt><dd><p>Wavelgnth array where the line is evaluated in the rest frame.</p>
+</dd>
+<dt>train_line<span class="classifier">1-D sequence of float</span></dt><dd><p>Line profile.</p>
+</dd>
+<dt>z_max_i<span class="classifier">float</span></dt><dd><p>Redshift of the source if the global maximum of the spectrum is the
+Lyman-alpha wavelegth.</p>
+</dd>
+<dt>INPUT: 1-D secuence of float</dt><dd><p>The actuall input to use in the Neural networks.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="function">
 <dt id="funcs.Generate_a_real_line">
 <code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Generate_a_real_line</code><span class="sig-paren">(</span><em class="sig-param">z_t</em>, <em class="sig-param">V_t</em>, <em class="sig-param">log_N_t</em>, <em class="sig-param">t_t</em>, <em class="sig-param">F_t</em>, <em class="sig-param">log_EW_t</em>, <em class="sig-param">W_t</em>, <em class="sig-param">PNR_t</em>, <em class="sig-param">FWHM_t</em>, <em class="sig-param">PIX_t</em>, <em class="sig-param">DATA_LyaRT</em>, <em class="sig-param">Geometry</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#Generate_a_real_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.Generate_a_real_line" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Makes a mock line profile for the Thin_Shell_Cont geometry.</p>
+<p><strong>Input</strong></p>
+<dl class="simple">
+<dt>z_t<span class="classifier">float</span></dt><dd><p>Redshift</p>
+</dd>
+<dt>V_t<span class="classifier">float</span></dt><dd><p>Outflow expansion velocity [km/s]</p>
+</dd>
+<dt>log_N_t<span class="classifier">float</span></dt><dd><p>logarithmic of the neutral hydrogen column density in cm**-2</p>
+</dd>
+<dt>t_t<span class="classifier">float</span></dt><dd><p>Dust optical depth</p>
+</dd>
+<dt>F_t<span class="classifier">float</span></dt><dd><p>Total flux of the line. You can pass 1.</p>
+</dd>
+<dt>log_EW_t<span class="classifier">optional, float</span></dt><dd><p>Logarithmic of the rest frame intrisic equivalent width of the line [A]
+Requiered if Geometry == ‘Thin_Shell_Cont’</p>
+</dd>
+<dt>W_t<span class="classifier">optional, float</span></dt><dd><p>Rest frame intrisic width of the Lyman-alpha line [A]
+Requiered if Geometry == ‘Thin_Shell_Cont’</p>
+</dd>
+<dt>PNR_t<span class="classifier">float</span></dt><dd><p>Signal to noise ratio of the global maximum of the line profile.</p>
+</dd>
+<dt>FWHM_t<span class="classifier">float</span></dt><dd><p>Full width half maximum [A] of the experiment. This dilutes the line profile.</p>
+</dd>
+<dt>PIX_t<span class="classifier">float</span></dt><dd><p>Pixel size in wavelgnth [A] of the experiment. This binnes the line profile.</p>
+</dd>
+<dt>DATA_LyaRT<span class="classifier">python dictionary</span></dt><dd><p>Contains the grid information.</p>
+</dd>
+<dt>Geometry<span class="classifier">string</span></dt><dd><p>Outflow geometry to use.</p>
+</dd>
+</dl>
+<p><strong>Output</strong></p>
+<dl class="simple">
+<dt>w_Arr<span class="classifier">1-D sequence of float</span></dt><dd><p>Wavelgnth array where the line is evaluated in the observed frame.</p>
+</dd>
+<dt>f_Arr<span class="classifier">1-D sequence of float</span></dt><dd><p>Line profile flux density in arbitrary units.</p>
+</dd>
+<dt>noise_Amplitude_Arr<span class="classifier">1-D sequence of float</span></dt><dd><p>1-sigma level of the applyed noise.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="function">
 <dt id="funcs.Interpolate_Lines_Arrays_3D_grid">
@@ -496,11 +639,6 @@ For example [ X , Y , Z ]</p>
 <dd></dd></dl>
 
 <dl class="function">
-<dt id="funcs.Print_the_grid_edges">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Print_the_grid_edges</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#Print_the_grid_edges"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.Print_the_grid_edges" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
 <dt id="funcs.Prior_f">
 <code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Prior_f</code><span class="sig-paren">(</span><em class="sig-param">theta</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#Prior_f"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.Prior_f" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -595,10 +733,6 @@ load_Grid_Line, for example:</p>
 <dt>Geometry<span class="classifier">string</span></dt><dd><p>The outflow geometry to use: Options: ‘Thins_Shell’,
 ‘Galactic_Wind’ , ‘Bicone_X_Slab’.</p>
 </dd>
-<dt>wavelength_Arr<span class="classifier">1-D sequence of floats</span></dt><dd><p>Array with the wavelength vales where the line
-profile is computed. The units are meters, i.e.,
-amstrongs * 1.e-10.</p>
-</dd>
 <dt>V_Arr<span class="classifier">1-D sequence of float</span></dt><dd><p>Array with the expansion velocity of the outflow. The unit
 are km/s.</p>
 </dd>
@@ -607,11 +741,6 @@ column density. The units of the colum density are in c.g.s,
 i.e, cm**-2.</p>
 </dd>
 <dt>ta_Arr<span class="classifier">1-D sequence of float</span></dt><dd><p>Array with the dust optic depth of the outflow.</p>
-</dd>
-<dt>Inside_Bicone_Arr<span class="classifier">optional 1-D sequence of bool</span></dt><dd><p>An Array with booleans, indicating if the bicone is face-on
-or edge-on. If True then the bicone is face-on. If false the
-bicone is edge-on. The probability of being face on is
-np.cos( np.pi/4 ).</p>
 </dd>
 <dt>MODE<span class="classifier">optional string</span></dt><dd><dl>
 <dt>Set the mode in which the escape fraction is computed. It can be:</dt><dd><blockquote>
@@ -633,18 +762,13 @@ Machine_Learning : uses machine learning algorithms</p>
 </dl>
 <p>Default = ‘Intrepolation’</p>
 </dd>
-<dt>Machine_Learning_Algorithm<span class="classifier">optial string</span></dt><dd><blockquote>
-<div><dl class="simple">
+<dt>Machine_Learning_Algorithm<span class="classifier">optial string</span></dt><dd><dl class="simple">
 <dt>Set the machine learning algorith used. Available:</dt><dd><p>Tree   : decision tree
 Forest : random forest
 KN     : KN</p>
 </dd>
 </dl>
 <p>Default = ‘Tree’</p>
-</div></blockquote>
-<div class="versionadded">
-<p><span class="versionmodified added">New in version 0.0.3.</span></p>
-</div>
 </dd>
 </dl>
 <p><strong>Output</strong></p>
@@ -795,44 +919,117 @@ the escape fraction.</p>
 <dl class="function">
 <dt id="funcs.Signal_to_noise_estimator">
 <code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Signal_to_noise_estimator</code><span class="sig-paren">(</span><em class="sig-param">w_Arr</em>, <em class="sig-param">Line_Arr</em>, <em class="sig-param">w_line</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#Signal_to_noise_estimator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.Signal_to_noise_estimator" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Estimates the signal to noise of a line profile</p>
+<p><strong>Input</strong></p>
+<dl class="simple">
+<dt>w_Arr<span class="classifier">1-D sequence of float</span></dt><dd><p>wavelgnth array</p>
+</dd>
+<dt>Line_Arr<span class="classifier">1-D sequence float</span></dt><dd><p>Flux density of the line profile.</p>
+</dd>
+<dt>w_line<span class="classifier">float</span></dt><dd><p>wavelgnth of the line</p>
+</dd>
+</dl>
+<p><strong>Output</strong></p>
+<dl class="simple">
+<dt>SNR<span class="classifier">float</span></dt><dd><p>Signal to noise ratio.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="function">
 <dt id="funcs.Test_1">
 <code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Test_1</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#Test_1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.Test_1" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Script to test if everything is working fine.</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="funcs.Test_2">
 <code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Test_2</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#Test_2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.Test_2" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="funcs.Test_Installation">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Test_Installation</code><span class="sig-paren">(</span><em class="sig-param">Make_Plots=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#Test_Installation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.Test_Installation" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Script to test if everything looks fine.</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="funcs.Treat_A_Line_To_NN_Input">
 <code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Treat_A_Line_To_NN_Input</code><span class="sig-paren">(</span><em class="sig-param">w_Arr</em>, <em class="sig-param">f_Arr</em>, <em class="sig-param">PIX</em>, <em class="sig-param">FWHM</em>, <em class="sig-param">Delta_min=-18.5</em>, <em class="sig-param">Delta_max=18.5</em>, <em class="sig-param">Nbins_tot=1000</em>, <em class="sig-param">Denser_Center=True</em>, <em class="sig-param">normed=False</em>, <em class="sig-param">scaled=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#Treat_A_Line_To_NN_Input"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.Treat_A_Line_To_NN_Input" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Convert a line profile and the usefull information into the INPUT of the NN.</p>
+<p><strong>Input</strong></p>
+<dl>
+<dt>w_Arr<span class="classifier">1-D sequence of floats</span></dt><dd><p>Wavelgnth of the line profile in the observed frame. [A]</p>
+</dd>
+<dt>f_Arr<span class="classifier">1-D sequence of floats</span></dt><dd><p>Flux density of the observed line profile in arbitrary units.</p>
+</dd>
+<dt>FWHM<span class="classifier">float</span></dt><dd><p>Full width half maximum [A] of the experiment.</p>
+</dd>
+<dt>PIX<span class="classifier">float</span></dt><dd><p>Pixel size in wavelgnth [A] of the experiment.</p>
+</dd>
+<dt>Delta_min<span class="classifier">optional float</span></dt><dd><p>Defines the minimum rest frame wavelegnth with respecto to Lyman-alpha.</p>
+<p>Default = -18.5</p>
+</dd>
+<dt>Delta_min<span class="classifier">optional float</span></dt><dd><p>Defines the maximum rest frame wavelegnth with respecto to Lyman-alpha.</p>
+<p>Default = +18.5</p>
+</dd>
+<dt>Nbins_tot<span class="classifier">optional int</span></dt><dd><p>Total number of wvelgnths bins.</p>
+<p>Default = 1000</p>
+</dd>
+<dt>Denser_Center<span class="classifier">optional bool</span></dt><dd><p>Populates denser the regions close to Lyman-alpha</p>
+<p>Default = True</p>
+</dd>
+<dt>normed<span class="classifier">optional bool</span></dt><dd><p>If True, nomalizes the line profile.</p>
+</dd>
+<dt>scaled<span class="classifier">optinal bool</span></dt><dd><p>If True, divides the line profile by its maximum.</p>
+</dd>
+</dl>
+<p><strong>Output</strong></p>
+<dl class="simple">
+<dt>rest_w_Arr<span class="classifier">1-D sequence of float</span></dt><dd><p>Wavelgnth array where the line is evaluated in the rest frame.</p>
+</dd>
+<dt>NN_line<span class="classifier">1-D sequence of float</span></dt><dd><p>Line profile evaluated in rest_w_Arr after normalization or scaling.</p>
+</dd>
+<dt>z_max_i<span class="classifier">float</span></dt><dd><p>Redshift of the source if the global maximum of the spectrum is the
+Lyman-alpha wavelegth.</p>
+</dd>
+<dt>INPUT: 1-D secuence of float</dt><dd><p>The actuall input to use in the Neural networks.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="function">
 <dt id="funcs.bin_one_line">
 <code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">bin_one_line</code><span class="sig-paren">(</span><em class="sig-param">wave_Arr_line</em>, <em class="sig-param">Line_Prob_Arr</em>, <em class="sig-param">new_wave_Arr</em>, <em class="sig-param">Bin</em>, <em class="sig-param">same_norm=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#bin_one_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.bin_one_line" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>This functions bins the line profile mimicking the pixelization in a CCD.</p>
+<p><strong>Input</strong></p>
+<dl class="simple">
+<dt>wave_Arr_line<span class="classifier">1-D sequence of float</span></dt><dd><p>Array with the Wavelength where the spectrum is evaluated.
+Same units as Bin. This has to be sorted.</p>
+</dd>
+<dt>Line_Prob_Arr<span class="classifier">1-D sequence of float</span></dt><dd><p>Arrays with the flux of the spectrum.</p>
+</dd>
+<dt>new_wave_Arr<span class="classifier">1-D sequence of float</span></dt><dd><p>Array with the nex wavelgnth where the fline profile will be
+interpolated</p>
+</dd>
+<dt>Bin<span class="classifier">float</span></dt><dd><p>Bin size.</p>
+</dd>
+<dt>same_norm<span class="classifier">optional bool.</span></dt><dd><p>If true return a line with the same normalization as the input</p>
+</dd>
+</dl>
+<p><strong>Output</strong></p>
+<dl class="simple">
+<dt>binned_line<span class="classifier">1-D sequence of float</span></dt><dd><p>Spectrum after the convolution</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="function">
 <dt id="funcs.convert_gaussian_FWHM_to_sigma">
 <code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">convert_gaussian_FWHM_to_sigma</code><span class="sig-paren">(</span><em class="sig-param">FWHM_Arr</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#convert_gaussian_FWHM_to_sigma"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.convert_gaussian_FWHM_to_sigma" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function computes the sigma of a gaussian from its FWHM.</p>
-<p><strong>Input</strong>:</p>
+<p><strong>Input</strong></p>
 <dl class="simple">
 <dt>FWHM_Arr<span class="classifier">1-D sequence of float</span></dt><dd><p>Array with the Full Width Half Maximum that you 
 want to convert</p>
 </dd>
 </dl>
-<p><strong>Output</strong>:</p>
+<p><strong>Output</strong></p>
 <dl class="simple">
 <dt>sigma_Arr<span class="classifier">1-D sequence of float</span></dt><dd><p>The width of the FWHM_Arr</p>
 </dd>
@@ -903,7 +1100,8 @@ T4 = T[k] / 10**4</p>
 <code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">dilute_line</code><span class="sig-paren">(</span><em class="sig-param">wave_Arr</em>, <em class="sig-param">Spec_Arr</em>, <em class="sig-param">FWHM</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#dilute_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.dilute_line" title="Permalink to this definition">¶</a></dt>
 <dd><p>This functions dilutes a given spectrum by convolving with a gaussian
 filter.</p>
-<dl>
+<p><strong>Input</strong></p>
+<dl class="simple">
 <dt>wave_Arr<span class="classifier">1-D sequence of float</span></dt><dd><p>Array with the Wavelength where the spectrum is evaluated.
 Same units as FWHM_Arr. This has to be sorted.</p>
 </dd>
@@ -917,14 +1115,10 @@ If FWHM is a 1-D sequence, a different value of width of
 the gaussian is used. In this case, the length of this array
 has to be the same as wave_Arr and Spec_Arr.</p>
 </dd>
-<dt>same_norm<span class="classifier">optional bool.</span></dt><dd><blockquote>
-<div><p>If true return a line with the same normalization as the input</p>
-</div></blockquote>
-<div class="versionadded">
-<p><span class="versionmodified added">New in version 1.0.1.</span></p>
-</div>
+<dt>same_norm<span class="classifier">optional bool.</span></dt><dd><p>If true return a line with the same normalization as the input</p>
 </dd>
 </dl>
+<p><strong>Output</strong></p>
 <dl class="simple">
 <dt>new_Line<span class="classifier">1-D sequence of float</span></dt><dd><p>Spectrum after the convolution</p>
 </dd>
@@ -936,7 +1130,8 @@ has to be the same as wave_Arr and Spec_Arr.</p>
 <code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">dilute_line_changing_FWHM</code><span class="sig-paren">(</span><em class="sig-param">wave_Arr</em>, <em class="sig-param">Spec_Arr</em>, <em class="sig-param">FWHM_Arr</em>, <em class="sig-param">same_norm=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#dilute_line_changing_FWHM"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.dilute_line_changing_FWHM" title="Permalink to this definition">¶</a></dt>
 <dd><p>This functions dilutes a given spectrum by convolving with a gaussian 
 filter.</p>
-<dl>
+<p><strong>Input</strong></p>
+<dl class="simple">
 <dt>wave_Arr<span class="classifier">1-D sequence of float</span></dt><dd><p>Array with the Wavelength where the spectrum is evaluated.
 Same units as FWHM_Arr. This has to be sorted.</p>
 </dd>
@@ -950,14 +1145,10 @@ If FWHM is a 1-D sequence, a different value of width of
 the gaussian is used. In this case, the length of this array
 has to be the same as wave_Arr and Spec_Arr.</p>
 </dd>
-<dt>same_norm<span class="classifier">optional bool.</span></dt><dd><blockquote>
-<div><p>If true return a line with the same normalization as the input</p>
-</div></blockquote>
-<div class="versionadded">
-<p><span class="versionmodified added">New in version 1.0.1.</span></p>
-</div>
+<dt>same_norm<span class="classifier">optional bool.</span></dt><dd><p>If true return a line with the same normalization as the input</p>
 </dd>
 </dl>
+<p><strong>Output</strong></p>
 <dl class="simple">
 <dt>new_Line<span class="classifier">1-D sequence of float</span></dt><dd><p>Spectrum after the convolution</p>
 </dd>
@@ -1011,22 +1202,164 @@ dust optical depth (Gurung-lopez et al. 2019a)</p>
 <dl class="function">
 <dt id="funcs.gaus">
 <code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">gaus</code><span class="sig-paren">(</span><em class="sig-param">x_Arr</em>, <em class="sig-param">A</em>, <em class="sig-param">mu</em>, <em class="sig-param">sigma</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#gaus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.gaus" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Retruns a gaussian evaluated in x_Arr.</p>
+<p><strong>Input</strong></p>
+<dl class="simple">
+<dt>x_Arr<span class="classifier">1-D sequence of float</span></dt><dd><p>Where the gaussian has to be evaluated.</p>
+</dd>
+<dt>A<span class="classifier">float</span></dt><dd><p>Amplitude</p>
+</dd>
+<dt>mu<span class="classifier">float</span></dt><dd><p>Mean</p>
+</dd>
+<dt>sigma<span class="classifier">float</span></dt><dd><p>width</p>
+</dd>
+</dl>
+<p><strong>Output</strong></p>
+<dl class="simple">
+<dt>gauss_Arr<span class="classifier">1-D sequence of float</span></dt><dd><p>Gaussian</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="function">
 <dt id="funcs.generate_a_REAL_line_Noise_w">
 <code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">generate_a_REAL_line_Noise_w</code><span class="sig-paren">(</span><em class="sig-param">z_f</em>, <em class="sig-param">V_f</em>, <em class="sig-param">logNH_f</em>, <em class="sig-param">ta_f</em>, <em class="sig-param">F_line_f</em>, <em class="sig-param">logEW_f</em>, <em class="sig-param">Wi_f</em>, <em class="sig-param">Noise_w_Arr</em>, <em class="sig-param">Noise_Arr</em>, <em class="sig-param">FWHM_f</em>, <em class="sig-param">PIX_f</em>, <em class="sig-param">w_min</em>, <em class="sig-param">w_max</em>, <em class="sig-param">DATA_LyaRT</em>, <em class="sig-param">Geometry</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#generate_a_REAL_line_Noise_w"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.generate_a_REAL_line_Noise_w" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Makes a mock line profile for the Thin_Shell_Cont geometry.</p>
+<p><strong>Input</strong></p>
+<dl class="simple">
+<dt>z_f<span class="classifier">float</span></dt><dd><p>Redshift</p>
+</dd>
+<dt>V_f<span class="classifier">float</span></dt><dd><p>Outflow expansion velocity [km/s]</p>
+</dd>
+<dt>logNH_f<span class="classifier">float</span></dt><dd><p>logarithmic of the neutral hydrogen column density in cm**-2</p>
+</dd>
+<dt>ta_f<span class="classifier">float</span></dt><dd><p>Dust optical depth</p>
+</dd>
+<dt>logEW_f<span class="classifier">optional, float</span></dt><dd><p>Logarithmic of the rest frame intrisic equivalent width of the line [A]
+Requiered if Geometry == ‘Thin_Shell_Cont’</p>
+</dd>
+<dt>Wi_f<span class="classifier">optional, float</span></dt><dd><p>Rest frame intrisic width of the Lyman-alpha line [A]
+Requiered if Geometry == ‘Thin_Shell_Cont’</p>
+</dd>
+<dt>Noise_w_Arr<span class="classifier">1-D sequence of float</span></dt><dd><p>wavelength array where the noise pattern is evaluated.</p>
+</dd>
+<dt>Noise_Arr<span class="classifier">1-D sequence of float</span></dt><dd><p>Noise pattern. Evolution of the noise as a function of wavelength (Noise_w_Arr)</p>
+</dd>
+<dt>FWHM_f<span class="classifier">float</span></dt><dd><p>Full width half maximum [A] of the experiment. This dilutes the line profile.</p>
+</dd>
+<dt>PIX_f<span class="classifier">float</span></dt><dd><p>Pixel size in wavelgnth [A] of the experiment. This binnes the line profile.</p>
+</dd>
+<dt>w_min<span class="classifier">float</span></dt><dd><p>minimum wavelength in the observed frame [A] to use. This matches the minimum
+wavelgnth of wave_pix_Arr (see below).</p>
+</dd>
+<dt>w_max<span class="classifier">float</span></dt><dd><p>maximum  wavelength in the observed frame [A] to use. This might not be exactly
+the maximum wavelgnth of wave_pix_Arr (see below) due to pixelization.</p>
+</dd>
+<dt>DATA_LyaRT<span class="classifier">python dictionary</span></dt><dd><p>Contains the grid information.</p>
+</dd>
+<dt>Geometry<span class="classifier">string</span></dt><dd><p>Outflow geometry to use.</p>
+</dd>
+</dl>
+<p><strong>Output</strong></p>
+<dl class="simple">
+<dt>wave_pix_Arr<span class="classifier">1-D sequence of float</span></dt><dd><p>Wavelgnth array where the line is evaluated in the observed frame.</p>
+</dd>
+<dt>noisy_Line_Arr<span class="classifier">1-D sequence of float</span></dt><dd><p>Line profile flux density in arbitrary units.</p>
+</dd>
+<dt>dic<span class="classifier">python dictionaty.</span></dt><dd><dl class="simple">
+<dt>Contains all the meta data used to get the line profiles:</dt><dd><p>‘w_rest’    : restframe wavelength of line before reducing quality
+‘w_obs’     : wavelength of line before reducing quality
+‘Intrinsic’ : line profile before quality reduction
+‘Diluted’   : Line profile after the FWHM has been applyed.
+‘Pixelated’ : Line profile after the FWHM and PIX have been applyed
+‘Noise’     : Particular noise patern used.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="function">
 <dt id="funcs.generate_a_REAL_line_SN">
 <code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">generate_a_REAL_line_SN</code><span class="sig-paren">(</span><em class="sig-param">z_f</em>, <em class="sig-param">V_f</em>, <em class="sig-param">logNH_f</em>, <em class="sig-param">ta_f</em>, <em class="sig-param">F_line_f</em>, <em class="sig-param">SN_f</em>, <em class="sig-param">FWHM_f</em>, <em class="sig-param">PIX_f</em>, <em class="sig-param">w_min</em>, <em class="sig-param">w_max</em>, <em class="sig-param">DATA_LyaRT</em>, <em class="sig-param">Geometry</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#generate_a_REAL_line_SN"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.generate_a_REAL_line_SN" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Makes a mock line profile for the other geometries that are not Thin_Shell_Cont geometry.</p>
+<p><strong>Input</strong></p>
+<dl class="simple">
+<dt>z_t<span class="classifier">float</span></dt><dd><p>Redshift</p>
+</dd>
+<dt>V_t<span class="classifier">float</span></dt><dd><p>Outflow expansion velocity [km/s]</p>
+</dd>
+<dt>log_N_t<span class="classifier">float</span></dt><dd><p>logarithmic of the neutral hydrogen column density in cm**-2</p>
+</dd>
+<dt>t_t<span class="classifier">float</span></dt><dd><p>Dust optical depth</p>
+</dd>
+<dt>F_line_f<span class="classifier">float</span></dt><dd><p>Total flux of the line. You can pass 1.</p>
+</dd>
+<dt>SN_t<span class="classifier">float</span></dt><dd><p>Signal to noise ratio.</p>
+</dd>
+<dt>FWHM_t<span class="classifier">float</span></dt><dd><p>Full width half maximum [A] of the experiment. This dilutes the line profile.</p>
+</dd>
+<dt>PIX_t<span class="classifier">float</span></dt><dd><p>Pixel size in wavelgnth [A] of the experiment. This binnes the line profile.</p>
+</dd>
+<dt>DATA_LyaRT<span class="classifier">python dictionary</span></dt><dd><p>Contains the grid information.</p>
+</dd>
+<dt>Geometry<span class="classifier">string</span></dt><dd><p>Outflow geometry to use.</p>
+</dd>
+</dl>
+<p><strong>Output</strong></p>
+<dl class="simple">
+<dt>wave_pix_Arr<span class="classifier">1-D sequence of float</span></dt><dd><p>Wavelgnth array where the line is evaluated in the observed frame.</p>
+</dd>
+<dt>noisy_Line_Arr<span class="classifier">1-D sequence of float</span></dt><dd><p>Line profile flux density in arbitrary units.</p>
+</dd>
+<dt>dic<span class="classifier">python dictionaty.</span></dt><dd><dl class="simple">
+<dt>Contains all the meta data used to get the line profiles:</dt><dd><p>‘w_rest’    : restframe wavelength of line before reducing quality
+‘w_obs’     : wavelength of line before reducing quality
+‘Intrinsic’ : line profile before quality reduction
+‘Diluted’   : Line profile after the FWHM has been applyed.
+‘Pixelated’ : Line profile after the FWHM and PIX have been applyed
+‘Noise’     : Particular noise patern used.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="function">
 <dt id="funcs.generate_a_obs_line">
 <code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">generate_a_obs_line</code><span class="sig-paren">(</span><em class="sig-param">z_f</em>, <em class="sig-param">V_f</em>, <em class="sig-param">logNH_f</em>, <em class="sig-param">ta_f</em>, <em class="sig-param">DATA_LyaRT</em>, <em class="sig-param">Geometry</em>, <em class="sig-param">logEW_f=None</em>, <em class="sig-param">Wi_f=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#generate_a_obs_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.generate_a_obs_line" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Moves in redshift a line profile.</p>
+<p><strong>Input</strong></p>
+<dl class="simple">
+<dt>z_f<span class="classifier">float</span></dt><dd><p>Redshift</p>
+</dd>
+<dt>V_f<span class="classifier">float</span></dt><dd><p>Outflow expansion velocity [km/s]</p>
+</dd>
+<dt>logNH_f<span class="classifier">float</span></dt><dd><p>logarithmic of the neutral hydrogen column density in cm**-2</p>
+</dd>
+<dt>ta_f<span class="classifier">float</span></dt><dd><p>Dust optical depth</p>
+</dd>
+<dt>DATA_LyaRT<span class="classifier">python dictionary</span></dt><dd><p>Contains the grid information.</p>
+</dd>
+<dt>Geometry<span class="classifier">string</span></dt><dd><p>Outflow geometry to use.</p>
+</dd>
+<dt>logEW_f<span class="classifier">optional, float</span></dt><dd><p>Logarithmic of the rest frame intrisic equivalent width of the line [A]
+Requiered if Geometry == ‘Thin_Shell_Cont’</p>
+</dd>
+<dt>Wi_f<span class="classifier">optional, float</span></dt><dd><p>Rest frame intrisic width of the Lyman-alpha line [A]
+Requiered if Geometry == ‘Thin_Shell_Cont’</p>
+</dd>
+</dl>
+<p><strong>Output</strong></p>
+<dl class="simple">
+<dt>w_rest_Arr<span class="classifier">1-D sequence of float</span></dt><dd><p>Wavelgnth array where the line is evaluated in the rest frame.</p>
+</dd>
+<dt>wavelength_Arr<span class="classifier">1-D sequence of float</span></dt><dd><p>Wavelgnth array where the line is evaluated in the observed frame.</p>
+</dd>
+<dt>line_Arr<span class="classifier">1-D sequence of float</span></dt><dd><p>Line profile flux density in arbitrary units.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="function">
 <dt id="funcs.get_solutions_from_flat_chain">
@@ -1140,7 +1473,25 @@ loaded_model[‘logta_Arr’][k]</p>
 <dl class="function">
 <dt id="funcs.plot_a_rebinned_line">
 <code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">plot_a_rebinned_line</code><span class="sig-paren">(</span><em class="sig-param">new_wave_Arr</em>, <em class="sig-param">binned_line</em>, <em class="sig-param">Bin</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#plot_a_rebinned_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.plot_a_rebinned_line" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>This functions is used to plot line profiles. It transforms the line
+line in a histogram.</p>
+<p><strong>Input</strong></p>
+<dl class="simple">
+<dt>new_wave_Arr<span class="classifier">1-D sequence of float</span></dt><dd><p>Array with the Wavelength where the spectrum is evaluated.</p>
+</dd>
+<dt>binned_line<span class="classifier">1-D sequence of float</span></dt><dd><p>Arrays with the flux of the spectrum.</p>
+</dd>
+<dt>Bin<span class="classifier">float</span></dt><dd><p>Bin size.</p>
+</dd>
+</dl>
+<p><strong>Output</strong></p>
+<dl class="simple">
+<dt>XX_Arr<span class="classifier">1-D sequence of float</span></dt><dd><p>Wavelength where the new line is evaluated</p>
+</dd>
+<dt>YY_Arr<span class="classifier">1-D sequence of float</span></dt><dd><p>Flux density array</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="function">
 <dt id="funcs.pre_treatment_Line_profile">

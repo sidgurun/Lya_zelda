@@ -2162,37 +2162,37 @@ def Add_noise_to_line( wave_Arr_line , Line_Prob_Arr , SN , same_norm=False ):
 #====================================================================#
 #====================================================================#
 def gaus( x_Arr , A , mu , sigma ):
-        '''
+    '''
         Retruns a gaussian evaluated in x_Arr.
-
+        
         **Input**
-
+        
         x_Arr : 1-D sequence of float
                    Where the gaussian has to be evaluated.
-
+        
         A : float
             Amplitude
-
+        
         mu : float
             Mean
-
+        
         sigma : float
             width
-
+        
         **Output**
-
+        
         gauss_Arr : 1-D sequence of float
                    Gaussian
     '''
-
+    
     gauss_Arr =  A * np.exp( -1*( x_Arr - mu )**2 * 1. / ( 2 * sigma**2 ) )
-
+    
     return gauss_Arr
 #====================================================================#
 #====================================================================#
 #====================================================================#
 def Signal_to_noise_estimator( w_Arr , Line_Arr , w_line ):
-     '''
+    '''
         Estimates the signal to noise of a line profile
 
         **Input**
@@ -2228,7 +2228,7 @@ def Signal_to_noise_estimator( w_Arr , Line_Arr , w_line ):
 #====================================================================#
 #====================================================================#
 def generate_a_obs_line( z_f , V_f , logNH_f , ta_f , DATA_LyaRT , Geometry , logEW_f=None , Wi_f=None ):
-     '''
+    '''
         Moves in redshift a line profile.
 
         **Input**
@@ -2284,7 +2284,7 @@ def generate_a_obs_line( z_f , V_f , logNH_f , ta_f , DATA_LyaRT , Geometry , lo
 #====================================================================#
 #====================================================================#
 def generate_a_REAL_line_Noise_w( z_f , V_f , logNH_f , ta_f , F_line_f , logEW_f , Wi_f , Noise_w_Arr , Noise_Arr , FWHM_f , PIX_f , w_min , w_max , DATA_LyaRT , Geometry ):
-     '''
+    '''
         Makes a mock line profile for the Thin_Shell_Cont geometry.
 
         **Input**
@@ -2384,8 +2384,7 @@ def generate_a_REAL_line_Noise_w( z_f , V_f , logNH_f , ta_f , F_line_f , logEW_
 #====================================================================#
 #====================================================================#
 def Generate_a_real_line( z_t , V_t, log_N_t, t_t, F_t, log_EW_t, W_t , PNR_t, FWHM_t, PIX_t, DATA_LyaRT, Geometry ):
-    
-     '''
+    '''
         Makes a mock line profile for the Thin_Shell_Cont geometry.
 
         **Input**
@@ -2704,7 +2703,7 @@ def Generate_a_line_for_training( z_t , V_t, log_N_t, t_t, F_t, log_EW_t, W_t, P
 #====================================================================#
 #====================================================================#
 def generate_a_REAL_line_SN( z_f , V_f , logNH_f , ta_f , F_line_f , SN_f , FWHM_f , PIX_f , w_min , w_max , DATA_LyaRT , Geometry ):
-     '''
+    '''
         Makes a mock line profile for the other geometries that are not Thin_Shell_Cont geometry.
 
         **Input**
