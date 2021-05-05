@@ -1759,16 +1759,6 @@ def Test_1( ):
     print( '\nSKIPPING',)
     print( '\nSKIPPING',)
     
-    #bool_files = Check_if_DATA_files_are_found()
-    #
-    #print ('Done!')
-    #
-    #if bool_files :
-    #    print( '    Every file was found. that is great!')
-    #if not bool_files :
-    #    print( '    Missing files.... Let us download them... ;)')
-    #
-    #    Download_data()
    
     print( '\n Now that we are sure that the data is downloaded in your machine...')
 
