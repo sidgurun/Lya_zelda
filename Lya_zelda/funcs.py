@@ -2790,11 +2790,34 @@ def generate_a_REAL_line_SN( z_f , V_f , logNH_f , ta_f , F_line_f , SN_f , FWHM
 #====================================================================#
 def log_likelihood( w_obs_Arr , f_obs_Arr , s_obs_Arr , w_model_Arr , f_model_Arr ):
 
+    '''
+        Logarithm of the likelihood between an observed spectrum and a model spectrum.
+
+        **Input**
+
+        w_obs_Arr : 1-D sequence of float
+                    wavelength where the observed density flux is evaluated.
+
+        f_obs_Arr : 1-D sequence of float
+                    Observed flux density
+
+        s_obs_Arr : 1-D sequence of float
+                    Uncertanty in the observed flux density.
+
+        w_model_Arr : 1-D sequence of float
+                      wavelength where the model density flux is evaluated
+
+        f_model_Arr : 1-D sequence of float
+                      Model flux density
+
+        **Output**
+
+        log_like : float
+                   Logarithm of the likelihood
+    '''
     f_my_Arr = np.interp( w_obs_Arr , w_model_Arr , f_model_Arr )
 
     mask = np.isfinite( f_my_Arr )
-
-    #print( f_my_Arr )
 
     sigma2 = s_obs_Arr ** 2
 
@@ -2811,6 +2834,23 @@ def log_likelihood( w_obs_Arr , f_obs_Arr , s_obs_Arr , w_model_Arr , f_model_Ar
 #====================================================================#
 #====================================================================#
 def Prior_f( theta ):
+    '''
+        Decides when a walker from the MCMC is out for the Thin_Shell,
+        Galactic wind and bicones.
+
+        **Input**
+
+        theta : 1-D sequence of float
+                Contains the parameters of the mode:
+                    theta[0] = logarithim of the expansion velocity
+                    theta[1] = logarithim of the neutral hydrogen column density
+                    theta[2] = logarithim of the dust optical depth
+
+        **Output**
+
+        True  if the walker is  inside
+        False if the walker is outside
+    '''
 
     log_V , log_N , log_t , redshift = theta
 
@@ -2839,8 +2879,26 @@ def Prior_f( theta ):
 #====================================================================#
 #====================================================================#
 def Prior_f_5( theta ):
+    '''
+        Decides when a walker from the MCMC is out for the Thin_Shell_Cont,
 
-    #log_V , log_N , log_t , redshift , log_F , log_EW , Wi = theta
+        **Input**
+
+        theta : 1-D sequence of float
+                Contains the parameters of the mode:
+                    theta[0] = logarithim of the expansion velocity
+                    theta[1] = logarithim of the neutral hydrogen column density
+                    theta[2] = logarithim of the dust optical depth
+                    theta[3] = redshift
+                    theta[4] = logarithm of the intrinsic equivalent width
+                    theta[5] = intrinsic width
+
+        **Output**
+
+        True  if the walker is  inside
+        False if the walker is outside
+    '''
+
     log_V , log_N , log_t , redshift , log_EW , Wi = theta
 
     log_V_min = -1. 
@@ -2852,9 +2910,6 @@ def Prior_f_5( theta ):
     log_t_min = -4.00
     log_t_max =  0.000
 
-    #log_F_min = -22.00
-    #log_F_max = -3.000
-
     log_EW_min = -1.
     log_EW_max =  3.
 
@@ -2864,12 +2919,9 @@ def Prior_f_5( theta ):
     z_min =   0.0
     z_max =   7.0
 
-    #if log_V < np.log10( 40 ) : log_N_max = 20.5
- 
     if log_V  < log_V_min  or log_V  > log_V_max  : return False
     if log_N  < log_N_min  or log_N  > log_N_max  : return False
     if log_t  < log_t_min  or log_t  > log_t_max  : return False
-    #if log_F  < log_F_min  or log_F  > log_F_max  : return False
     if log_EW < log_EW_min or log_EW > log_EW_max : return False
     if Wi     <     Wi_min or     Wi >     Wi_max : return False
 
@@ -2880,6 +2932,63 @@ def Prior_f_5( theta ):
 #====================================================================#
 #====================================================================#
 def log_likeliehood_of_model_5( theta , w_obs_Arr , f_obs_Arr , s_obs_Arr , FWHM, PIX, w_min, w_max, DATA_LyaRT, Geometry , z_in , FORCE_z=False ):
+    '''
+        Logarithm of the likelihood between an observed spectrum and a model 
+        configuration defined in theta
+
+        **Input**
+
+        theta : 1-D sequence of float
+                Contains the parameters of the mode:
+                    theta[0] = logarithim of the expansion velocity
+                    theta[1] = logarithim of the neutral hydrogen column density
+                    theta[2] = logarithim of the dust optical depth
+                    theta[3] = redshift
+                    theta[4] = logarithm of the intrinsic equivalent width
+                    theta[5] = intrinsic width
+
+        w_obs_Arr : 1-D sequence of float
+                    wavelength where the observed density flux is evaluated.
+
+        f_obs_Arr : 1-D sequence of float
+                    Observed flux density
+
+        s_obs_Arr : 1-D sequence of float
+                    Uncertanty in the observed flux density.
+
+        FWHM : float
+              Full width half maximum [A] of the experiment.
+
+        PIX : float
+              Pixel size in wavelgnth [A] of the experiment.
+
+        w_min : float
+                minimum wavelength in the observed frame [A] to use. This matches the minimum
+                wavelgnth of wave_pix_Arr (see below).
+
+        w_max : float
+                maximum  wavelength in the observed frame [A] to use. This might not be exactly
+                the maximum wavelgnth of wave_pix_Arr (see below) due to pixelization.
+
+        DATA_LyaRT : python dictionary
+                     Contains the grid information.
+
+        Geometry : string
+                   Outflow geometry to use.
+
+        z_in : 1-D sequence of floats.
+               Redshift range to be considered. In principle the redshift can be outside
+               z_in[0] is the minimum redshift 
+               z_in[1] is the maximum redshift 
+
+        FORCE_z : optional bool
+                  If True, force the redshift to be inside z_in 
+
+        **Output**
+
+        log_like : float
+                   Logarithm of the likelihood
+    '''
 
     if not Prior_f_5( theta ):
         return -np.inf
@@ -2909,7 +3018,59 @@ def log_likeliehood_of_model_5( theta , w_obs_Arr , f_obs_Arr , s_obs_Arr , FWHM
 #====================================================================#
 #====================================================================#
 def init_walkers_5( N_walkers , N_dim , log_V_in , log_N_in , log_t_in , z_in , log_E_in , W_in ):
+    '''
+        Creates the initial position for the walkers
 
+        **Input**
+
+        N_walkers : int
+                    Number of walkers
+
+        N_dim : int
+                Number of dimensions (6)
+        
+        log_V_in : 1-D sequence of floats.
+               Range of the logarithm of the bulk velocity
+               log_V_in[0] is the minimum 
+               log_V_in[1] is the maximum
+
+        log_N_in : 1-D sequence of floats.
+               Range of the logarithm of the neutral hydrogen column density
+               log_N_in[0] is the minimum 
+               log_N_in[1] is the maximum
+ 
+        log_t_in : 1-D sequence of floats.
+               Range of the logarithm of the dust optical depth
+               log_t_in[0] is the minimum 
+               log_t_in[1] is the maximum
+
+        z_in : 1-D sequence of floats.
+               Redshift range to be considered. 
+               z_in[0] is the minimum redshift
+               z_in[1] is the maximum redshift
+
+        log_E_in : 1-D sequence of floats.
+               Range of the logarithm of the intrinsic equivalent width
+               log_E_in[0] is the minimum 
+               log_E_in[1] is the maximum
+
+        W_in : 1-D sequence of floats.
+               Instrinsic line width range to be considered. 
+               W_in[0] is the minimum redshift
+               W_in[1] is the maximum redshift
+
+        **Output**
+
+        theta_0 : 1-D sequence of float
+                Contains the parameters of the mode:
+                    theta_0[:,0] = logarithim of the expansion velocity
+                    theta_0[:,1] = logarithim of the neutral hydrogen column density
+                    theta_0[:,2] = logarithim of the dust optical depth
+                    theta_0[:,3] = redshift
+                    theta_0[:,4] = logarithm of the intrinsic equivalent width
+                    theta_0[:,5] = intrinsic width
+
+    '''
     init_V_Arr = np.random.rand( N_walkers ) * ( log_V_in[1] - log_V_in[0] ) + log_V_in[0]
     init_N_Arr = np.random.rand( N_walkers ) * ( log_N_in[1] - log_N_in[0] ) + log_N_in[0]
     init_t_Arr = np.random.rand( N_walkers ) * ( log_t_in[1] - log_t_in[0] ) + log_t_in[0]
@@ -2946,7 +3107,80 @@ def init_walkers_5( N_walkers , N_dim , log_V_in , log_N_in , log_t_in , z_in , 
 #====================================================================#
 #====================================================================#
 def MCMC_get_region_6D( MODE , w_tar_Arr , f_tar_Arr , s_tar_Arr , FWHM , PIX , DATA_LyaRT , Geometry , Geometry_Mode='Outflow'):
+    '''
+        Computes the region of where the walkers are initialize
 
+        **Input**
+
+        MODE : string
+               Method, DNN or PSO
+
+        w_tar_Arr : 1-D sequence of floats
+                    wavelength where the densit flux is evaluated
+
+        f_tar_Arr : 1-D sequence of floats
+                    Densit flux is evaluated
+
+        s_tar_Arr : 1-D sequence of floats
+                    Uncertainty of the densit flux is evaluated
+
+        FWHM : float
+              Full width half maximum [A] of the experiment.
+
+        PIX : float
+              Pixel size in wavelgnth [A] of the experiment.
+
+        w_min : float
+                minimum wavelength in the observed frame [A] to use. This matches the minimum
+                wavelgnth of wave_pix_Arr (see below).
+
+        w_max : float
+                maximum  wavelength in the observed frame [A] to use. This might not be exactly
+                the maximum wavelgnth of wave_pix_Arr (see below) due to pixelization.
+
+        DATA_LyaRT : python dictionary
+                     Contains the grid information.
+
+        Geometry : string
+                   Outflow geometry to use.
+
+
+        Geometry_Mode : optinal string
+                        Changes from inflow ('Inflow') to outflow ('Outflow')
+                        Default: 'Outflow'
+
+        **Output**
+
+        log_V_in : 1-D sequence of floats.
+               Range of the logarithm of the bulk velocity
+               log_V_in[0] is the minimum
+               log_V_in[1] is the maximum
+
+        log_N_in : 1-D sequence of floats.
+               Range of the logarithm of the neutral hydrogen column density
+               log_N_in[0] is the minimum
+               log_N_in[1] is the maximum
+
+        log_t_in : 1-D sequence of floats.
+               Range of the logarithm of the dust optical depth
+               log_t_in[0] is the minimum
+               log_t_in[1] is the maximum
+
+        z_in : 1-D sequence of floats.
+               Redshift range to be considered.
+               z_in[0] is the minimum redshift
+               z_in[1] is the maximum redshift
+
+        log_E_in : 1-D sequence of floats.
+               Range of the logarithm of the intrinsic equivalent width
+               log_E_in[0] is the minimum
+               log_E_in[1] is the maximum
+
+        W_in : 1-D sequence of floats.
+               Instrinsic line width range to be considered.
+               W_in[0] is the minimum redshift
+               W_in[1] is the maximum redshift
+    '''
     if MODE == 'PSO' :
 
         n_particles = 400
@@ -3012,6 +3246,89 @@ def MCMC_get_region_6D( MODE , w_tar_Arr , f_tar_Arr , s_tar_Arr , FWHM , PIX , 
 #====================================================================#
 def MCMC_Analysis_sampler_5( w_target_Arr , f_target_Arr , s_target_Arr , FWHM , N_walkers , N_burn , N_steps , Geometry , DATA_LyaRT , log_V_in=None , log_N_in=None , log_t_in=None , z_in=None , log_E_in=None , W_in=None , progress=True , FORCE_z=False ):
 
+    '''
+        Full MCMC anaylsis for the Thin_Shell_Cont
+
+        **Input**
+
+        w_tar_Arr : 1-D sequence of floats
+                    wavelength where the densit flux is evaluated
+
+        f_tar_Arr : 1-D sequence of floats
+                    Densit flux is evaluated
+
+        s_tar_Arr : 1-D sequence of floats
+                    Uncertainty of the densit flux is evaluated
+
+        FWHM : float
+              Full width half maximum [A] of the experiment.
+
+        N_walkers : int
+                    Number of walkers
+
+        N_dim : int
+                Number of dimensions (6)
+
+        N_burn : int
+                 Number of steps in the burnin-in phase
+
+        N_steps : int
+                  Number of steps 
+
+        Geometry : string
+                   Outflow geometry to use.
+
+        DATA_LyaRT : python dictionary
+                     Contains the grid information.
+
+        Geometry_Mode : optinal string
+                        Changes from inflow ('Inflow') to outflow ('Outflow')
+                        Default: 'Outflow'
+
+        log_V_in : optional 1-D sequence of floats.
+               Range of the logarithm of the bulk velocity
+               log_V_in[0] is the minimum
+               log_V_in[1] is the maximum
+
+        log_N_in : optional 1-D sequence of floats.
+               Range of the logarithm of the neutral hydrogen column density
+               log_N_in[0] is the minimum
+               log_N_in[1] is the maximum
+
+        log_t_in : optional 1-D sequence of floats.
+               Range of the logarithm of the dust optical depth
+               log_t_in[0] is the minimum
+               log_t_in[1] is the maximum
+
+        z_in : optional 1-D sequence of floats.
+               Redshift range to be considered.
+               z_in[0] is the minimum redshift
+               z_in[1] is the maximum redshift
+
+        log_E_in : optional 1-D sequence of floats.
+               Range of the logarithm of the intrinsic equivalent width
+               log_E_in[0] is the minimum
+               log_E_in[1] is the maximum
+
+        W_in : optional 1-D sequence of floats.
+               Instrinsic line width range to be considered.
+               W_in[0] is the minimum redshift
+               W_in[1] is the maximum redshift
+
+        progress : optional bool
+              If True shows the MCMC progress.
+              Default True
+        
+        
+        FORCE_z : optional bool
+                  If True, force the redshift to be inside z_in
+
+        **Output**
+
+        samples : emcee python packge object.
+                  Contains the information of the MCMC.
+
+    '''
     N_dim = 6
 
     if log_V_in is None : log_V_in =  [  1.   ,  3.  ]
@@ -3050,7 +3367,36 @@ def MCMC_Analysis_sampler_5( w_target_Arr , f_target_Arr , s_target_Arr , FWHM ,
 #====================================================================#
 #====================================================================#
 def get_solutions_from_sampler( sampler , N_walkers , N_burn , N_steps , Q_Arr ):
+    '''
+        function to get the solution from the emcee sampler sin some given
+        percentiles.
 
+        **Input**
+
+        sampler : emcee python packge object.
+                  Contains the information of the MCMC.
+
+        N_walkers : int
+                    Number of walkers
+
+        N_burn : int
+                 Number of steps in the burnin-in phase
+
+        N_steps : int
+                  Number of steps
+
+        Q_Arr : 1-D list of floats
+                List of the percentiles that will be computed, for 
+                example [ 16.0 , 50.0 , 84.0 ]
+
+        **Output**
+
+        matrix_sol: 2-D sequence of floats
+                    The percentiles of each of the 6 properties.
+
+        flat_samples : 2-D sequence of floats
+                       The MCMC chains but flat.
+    '''
     chains = sampler.get_chain()
 
     print( 'chains_shape = ' , chains.shape )
@@ -3077,19 +3423,9 @@ def get_solutions_from_sampler( sampler , N_walkers , N_burn , N_steps , Q_Arr )
     
     matrix_sol = np.zeros( N_dim * N_Q ).reshape( N_dim , N_Q )
     
-    #mask_log = flat_log_prob > np.percentile( flat_log_prob , 50 )
-
-    #flat_samples = flat_samples[ mask_log ]
-
     for i in range( 0 , N_dim ):
         for j in range( 0 , N_Q ):
 
-            #bool_1 = flat_samples[ : , i ] > np.percentile( flat_samples[ : , i ] ,  5 )  
-            #bool_2 = flat_samples[ : , i ] < np.percentile( flat_samples[ : , i ] , 95 )  
-
-            #mask_per = bool_1 * bool_2
-
-            #matrix_sol[i,j] = np.percentile( flat_samples[ : , i ][ mask_per ] , Q_Arr[j] )
             matrix_sol[i,j] = np.percentile( flat_samples[ : , i ] , Q_Arr[j] )
 
     return matrix_sol , flat_samples
@@ -3098,6 +3434,31 @@ def get_solutions_from_sampler( sampler , N_walkers , N_burn , N_steps , Q_Arr )
 #====================================================================#
 def get_solutions_from_sampler_mean( sampler , N_walkers , N_burn , N_steps ):
 
+    '''
+        function to get the solution from the emcee sampler as the mean.
+
+        **Input**
+
+        sampler : emcee python packge object.
+                  Contains the information of the MCMC.
+
+        N_walkers : int
+                    Number of walkers
+
+        N_burn : int
+                 Number of steps in the burnin-in phase
+
+        N_steps : int
+                  Number of steps
+
+        **Output**
+
+        matrix_sol: 1-D sequence of floats
+                    Mean of each of the 6 properties.
+
+        flat_samples : 2-D sequence of floats
+                       The MCMC chains but flat.
+    '''
     chains = sampler.get_chain()
 
     N_dim = len( chains[0,0] )
@@ -3122,6 +3483,34 @@ def get_solutions_from_sampler_mean( sampler , N_walkers , N_burn , N_steps ):
 #====================================================================#
 def get_solutions_from_sampler_peak( sampler , N_walkers , N_burn , N_steps , N_hist_steps ):
 
+    '''
+        function to get the solution from the emcee sampler as the
+        global maximum of the distribution of the posteriors.
+
+        **Input**
+
+        sampler : emcee python packge object.
+                  Contains the information of the MCMC.
+
+        N_walkers : int
+                    Number of walkers
+
+        N_burn : int
+                 Number of steps in the burnin-in phase
+
+        N_steps : int
+                  Number of steps
+
+        N_hist_steps : int 
+                     Number of bins to sample the PDF of all properties
+        **Output**
+
+        matrix_sol: 1-D sequence of floats
+                    Mean of each of the 6 properties.
+
+        flat_samples : 2-D sequence of floats
+                       The MCMC chains but flat.
+    '''
     chains = sampler.get_chain()
 
     N_dim = len( chains[0,0] )
@@ -3162,7 +3551,25 @@ def get_solutions_from_sampler_peak( sampler , N_walkers , N_burn , N_steps , N_
 #====================================================================#
 #====================================================================#
 def get_solutions_from_flat_chain( flat_chains , Q_Arr ):
+    '''
+        function to get the solution from the emcee sampler sin some given
+        percentiles.
 
+        **Input**
+
+        flat_samples : 2-D sequence of floats
+                       The MCMC chains but flat.
+
+        Q_Arr : 1-D list of floats
+                List of the percentiles that will be computed, for
+                example [ 16.0 , 50.0 , 84.0 ]
+
+        **Output**
+
+        matrix_sol: 2-D sequence of floats
+                    The percentiles of each of the 6 properties.
+
+    '''
     N_dim = flat_chains.shape[1]
 
     N_Q = len( Q_Arr )
@@ -3185,7 +3592,24 @@ def get_solutions_from_flat_chain( flat_chains , Q_Arr ):
 #====================================================================#
 #====================================================================#
 def Load_NN_model( Mode , iteration=1 ):
+    '''
+        Loads the saved parameters of the deep neural networks
 
+        **Input**
+
+        Mode : string
+               'Inflow' or 'Outflow'
+
+        iteration : optional int
+                    Number of the iteration. Currently only 1
+                    Default 1
+
+        **Output**
+
+        machine_data : python dictionaty
+                       Contains all the info for the DNN
+
+    '''
     this_dir, this_filename = os.path.split(__file__) 
 
     if Mode == 'Inflow' : my_str = 'INFLOWS'
@@ -3202,7 +3626,46 @@ def Load_NN_model( Mode , iteration=1 ):
 #====================================================================#
 #====================================================================#
 def NN_convert_Obs_Line_to_proxy_rest_line( w_obs_Arr , f_obs_Arr , s_obs_Arr=None , normed=False , scaled=False ):
+    '''
+        Converts an observed line profile to the rest frame of the maximum
+        of the line profile.
 
+        **Input**
+
+        w_obs_Arr : 1-D sequence of floats
+                    wavelength where the line profile is evaluated.
+
+        f_obs_Arr : 1-D sequence of floats
+                    Flux density of the observed line profile.
+
+        s_obs_Arr : optional 1-D sequence of floats
+                    Uncertainty in the flux density of the observed line profile.
+
+        normed : optional bool
+              If True, nomalizes the line profile.
+
+        scaled : optinal bool
+              If True, divides the line profile by its maximum.
+
+        **Output**
+
+        w_rest_Arr : 1-D sequence of floats
+                    wavelength where the line profile is evaluated in the rest frame
+                    of the global maximum
+
+        Delta_rest_Arr : 1-D sequence of floats
+                         w_rest_Arr - Lyman-alpha.
+
+        f_rest_Arr : 1-D sequence of floats
+                    Flux density in the rest frame of the global maximum
+
+        z_max : float
+                Redshift if the global maximum is the Lyaman-alpha wavelength
+
+        if s_obs_Arr is not None it also returns:
+        s_rest_Arr : 1-D sequence of floats
+                    Uncertainty of the flux density in the rest frame of the global maximum
+    '''
     w_Lya = 1215.67
 
     w_obs_max = w_obs_Arr[ f_obs_Arr == np.amax( f_obs_Arr ) ]
@@ -3255,6 +3718,47 @@ def NN_convert_Obs_Line_to_proxy_rest_line( w_obs_Arr , f_obs_Arr , s_obs_Arr=No
 #====================================================================#
 def NN_generate_random_outflow_props( N_walkers , log_V_in , log_N_in , log_t_in , Allow_Inflows=True ):
 
+    '''
+        Generates random poperties for the Thin_Shell, Galactic_Wind, etc. 
+        (Not for Thin_Shell_Cont)        
+
+        **Input**
+
+        N_walkers : int
+                    Number of walkers
+
+        log_V_in : optional 1-D sequence of floats.
+               Range of the logarithm of the bulk velocity
+               log_V_in[0] is the minimum
+               log_V_in[1] is the maximum
+
+        log_N_in : optional 1-D sequence of floats.
+               Range of the logarithm of the neutral hydrogen column density
+               log_N_in[0] is the minimum
+               log_N_in[1] is the maximum
+
+        log_t_in : optional 1-D sequence of floats.
+               Range of the logarithm of the dust optical depth
+               log_t_in[0] is the minimum
+               log_t_in[1] is the maximum
+
+        Allow_Inflows : optional Bool
+               If True it also return negative values of V in the same range.
+               Default True           
+ 
+        **Output**
+
+        init_V_Arr : 1-D sequence of floats
+                     Expansion velocity
+
+        init_log_N_Arr : 1-D sequence of floats
+                     Logarithms of the column density  
+
+        init_log_t_Arr : 1-D sequence of floats
+                     Logarithms of the dust optical depth
+
+
+    '''
     init_log_V_Arr = np.random.rand( N_walkers ) * ( log_V_in[1] - log_V_in[0] ) + log_V_in[0]
     init_log_N_Arr = np.random.rand( N_walkers ) * ( log_N_in[1] - log_N_in[0] ) + log_N_in[0]
     init_log_t_Arr = np.random.rand( N_walkers ) * ( log_t_in[1] - log_t_in[0] ) + log_t_in[0]
@@ -3285,8 +3789,59 @@ def NN_generate_random_outflow_props( N_walkers , log_V_in , log_N_in , log_t_in
 #====================================================================#
 #====================================================================#
 def NN_generate_random_outflow_props_5D( N_walkers , log_V_in , log_N_in , log_t_in , log_E_in , log_W_in , MODE='Outflow' ):
+    '''
+        Generates random poperties for the Thin_Shell_Cont
 
-    # MODE = Outflow , Inflow , Mixture
+        **Input**
+
+        N_walkers : int
+                    Number of walkers
+
+        log_V_in : optional 1-D sequence of floats.
+               Range of the logarithm of the bulk velocity
+               log_V_in[0] is the minimum
+               log_V_in[1] is the maximum
+
+        log_N_in : optional 1-D sequence of floats.
+               Range of the logarithm of the neutral hydrogen column density
+               log_N_in[0] is the minimum
+               log_N_in[1] is the maximum
+
+        log_t_in : optional 1-D sequence of floats.
+               Range of the logarithm of the dust optical depth
+               log_t_in[0] is the minimum
+               log_t_in[1] is the maximum
+
+        log_E_in : optional 1-D sequence of floats.
+               Range of the logarithm of the instrinsic equivalent width
+               log_E_in[0] is the minimum
+               log_E_in[1] is the maximum
+
+        log_W_in : optional 1-D sequence of floats.
+               Range of the logarithm of the intrinsic width of the line
+               log_W_in[0] is the minimum
+               log_W_in[1] is the maximum
+
+        MODE : optional string
+               'Outflow' for outflows 'Inflow' for inflows
+
+        **Output**
+
+        init_V_Arr : 1-D sequence of floats
+                     Expansion velocity
+
+        init_log_N_Arr : 1-D sequence of floats
+                     Logarithms of the column density
+
+        init_log_t_Arr : 1-D sequence of floats
+                     Logarithms of the dust optical depth
+
+        init_log_E_Arr : 1-D sequence of floats
+                     Logarithms of the instrinsic equivalent width
+
+        init_log_W_Arr : 1-D sequence of floats
+                     Logarithms of the intrinsic width of the line
+    '''
 
     if MODE not in [ 'Outflow' , 'Inflow' , 'Mixture' ]:
 
@@ -3332,7 +3887,95 @@ def NN_generate_random_outflow_props_5D( N_walkers , log_V_in , log_N_in , log_t
 #====================================================================#
 #====================================================================#
 def NN_measure( w_tar_Arr , f_tar_Arr , s_tar_Arr , FWHM_tar , PIX_tar , loaded_model , w_rest_Machine_Arr , N_iter=None , normed=False , scaled=False , Delta_min=-18.5 , Delta_max=18.5 , Nbins_tot=1000 , Denser_Center=True ):
+    '''
+        Generates random poperties for the Thin_Shell_Cont
 
+        **Input**
+
+        w_tar_Arr : 1-D sequence of floats
+                    wavelength where the densit flux is evaluated
+
+        f_tar_Arr : 1-D sequence of floats
+                    Densit flux is evaluated
+
+        s_tar_Arr : 1-D sequence of floats
+                    Uncertainty of the densit flux is evaluated
+
+        FWHM : float
+              Full width half maximum [A] of the experiment.
+
+        PIX_tar : float
+                  Pixelization of the line profiles due to the experiment [A]
+
+        loaded_model : python dictionaty
+                       Contains all the info for the DNN form Load_NN_model()
+
+        w_rest_Machine_Arr : 1-D sequence of floats
+                             wavelength used by the INPUT of the DNN       
+                           
+        N_iter : optional int
+                 Number of Monte Carlo iterations of the observed espectrum.
+                 If None, no iteration is done.
+                 Default None
+ 
+        Delta_min : optional float
+              Defines the minimum rest frame wavelegnth with respecto to Lyman-alpha.
+
+              Default = -18.5
+
+        Delta_min : optional float
+              Defines the maximum rest frame wavelegnth with respecto to Lyman-alpha.
+
+              Default = +18.5
+
+        Nbins_tot : optional int
+              Total number of wvelgnths bins.
+
+              Default = 1000
+
+        Denser_Center : optional bool
+              Populates denser the regions close to Lyman-alpha
+
+              Default = True
+
+        normed : optional bool
+              If True, nomalizes the line profile.
+
+        scaled : optinal bool
+              If True, divides the line profile by its maximum. 
+
+        **Output**
+
+        if N_iter is None: 
+            Sol : 1-D sequence of float
+                  Array with the solution of the observed spectrum. No Monte Carlo perturbation.
+
+            z_Sol : float
+                    Best resdhift
+
+        if N_iter is a float:
+            Sol and z_sol and
+
+            log_V_sol_2_Arr : 1-D sequence
+                              Logarithm of the expasion velocity
+
+            log_N_sol_2_Arr : 1-D sequence
+                              Logarithm of the neutral hydrogen column density
+
+            log_t_sol_2_Arr : 1-D sequence
+                              Logarithm of the dust optical depth
+
+            z_sol_2_Arr : 1-D sequence
+                              redshift
+
+            log_E_sol_2_Arr : 1-D sequence
+                              Logarithm of the intrinsic equivalent width
+
+            log_W_sol_2_Arr : 1-D sequence
+                              Logarithm of the instrinsic width of the line
+
+
+    '''
     w_rest_tar_Arr , f_rest_tar_Arr , z_max_tar , INPUT = Treat_A_Line_To_NN_Input( w_tar_Arr , f_tar_Arr , PIX_tar , FWHM_tar , Delta_min=Delta_min , Delta_max=Delta_max , Nbins_tot=Nbins_tot , Denser_Center=Denser_Center , normed=normed, scaled=scaled )
 
     assert np.sum( w_rest_tar_Arr - w_rest_Machine_Arr) == 0 , 'wavelength array of machine and measure dont match. Check that Delta_min, Delta_max, Nbins_tot and Denser_Center are the same in the model and the imput here.'
@@ -3377,65 +4020,55 @@ def NN_measure( w_tar_Arr , f_tar_Arr , s_tar_Arr , FWHM_tar , PIX_tar , loaded_
 #====================================================================#
 #====================================================================#
 #====================================================================#
-####def NN_measure_3_no_tau( w_tar_Arr , f_tar_Arr , s_tar_Arr , FWHM_tar , PIX_tar , loaded_model , w_rest_Machine_Arr , N_iter=0 , normed=False , scaled=False ):
-####
-####    w_rest_tar_Arr , Delta_rest_tar_Arr , f_rest_tar_Arr , z_max_tar , s_rest_tar_Arr = NN_convert_Obs_Line_to_proxy_rest_line( w_tar_Arr , f_tar_Arr , s_obs_Arr=s_tar_Arr , normed=normed , scaled=scaled)
-####
-####    f_rest_tar_Arr = np.interp( w_rest_Machine_Arr , w_rest_tar_Arr , f_rest_tar_Arr )
-####
-####    INPUT =  [ np.hstack( ( f_rest_tar_Arr , z_max_tar , np.log10( FWHM_tar )  , np.log10( PIX_tar )  ) ) ]
-####
-####    Sol = loaded_model.predict( INPUT )
-####
-####    w_Lya = 1215.673123 #A
-####
-####    z_sol = ( w_Lya + Sol[0,3] ) * ( 1 + z_max_tar ) * 1. / ( w_Lya ) - 1.
-####
-####    if not N_iter > 0 :
-####        return Sol , z_sol
-####
-####    if N_iter > 0 :
-####        log_V_sol_2_Arr = np.zeros( N_iter )
-####        log_N_sol_2_Arr = np.zeros( N_iter )
-####        log_E_sol_2_Arr = np.zeros( N_iter )
-####        log_W_sol_2_Arr = np.zeros( N_iter )
-####
-####        z_sol_2_Arr = np.zeros( N_iter )
-####
-####        for i in range( 0 , N_iter ) :
-####
-####            f_obs_i_Arr = f_tar_Arr + np.random.randn( len( f_tar_Arr ) ) * s_tar_Arr
-####
-####            w_rest_i_Arr , Delta_rest_i_Arr , f_rest_i_Arr , z_max_i = NN_convert_Obs_Line_to_proxy_rest_line( w_tar_Arr , f_obs_i_Arr , normed=normed , scaled=scaled)
-####
-####            f_rest_i_Arr = np.interp( w_rest_Machine_Arr , w_rest_i_Arr , f_rest_i_Arr )
-####
-####            INPUT_i =  [ np.hstack( ( f_rest_i_Arr , z_max_i , np.log10( FWHM_tar )  , np.log10( PIX_tar )  ) ) ]
-####
-####            Sol_i = loaded_model.predict( INPUT_i )
-####
-####            #print( Sol_i )
-####
-####            z_sol_i = ( w_Lya + Sol_i[0,0] ) * ( 1 + z_max_i ) * 1. / ( w_Lya ) - 1.
-####
-####            log_V_sol_2_Arr[i] = Sol_i[0,1]
-####            log_N_sol_2_Arr[i] = Sol_i[0,2]
-####            log_E_sol_2_Arr[i] = Sol_i[0,3]
-####            log_W_sol_2_Arr[i] = Sol_i[0,4]
-####
-####            z_sol_2_Arr[i] = z_sol_i
-####
-####        return Sol , z_sol , log_V_sol_2_Arr , log_N_sol_2_Arr , z_sol_2_Arr , log_E_sol_2_Arr , log_W_sol_2_Arr
-#====================================================================#
-#====================================================================#
-#====================================================================#
 # PSO
 #====================================================================#
 #====================================================================#
 #====================================================================#
-
 def PSO_compute_xi_2_ONE_6D( x , w_tar_Arr , f_tar_Arr , FWHM , PIX , DATA_LyaRT, Geometry ):
+    '''
+        Compute the chi esquare for the PSO analysis
 
+        **Input**
+
+        x: 1-D sequence of float
+                Contains the parameters of the mode:
+                    x[0] = logarithim of the expansion velocity
+                    x[1] = logarithim of the neutral hydrogen column density
+                    x[2] = logarithim of the dust optical depth
+                    x[3] = redshift
+                    x[4] = logarithm of the intrinsic equivalent width
+                    x[5] = intrinsic width
+
+        w_tar_Arr : 1-D sequence of float
+                    wavelength where the observed density flux is evaluated.
+
+        f_tar_Arr : 1-D sequence of float
+                    Observed flux density
+
+        FWHM : float
+              Full width half maximum [A] of the experiment.
+
+        PIX : float
+              Pixel size in wavelgnth [A] of the experiment.
+
+        DATA_LyaRT : python dictionary
+                     Contains the grid information.
+
+        Geometry : string
+                   Outflow geometry to use.
+
+        **Output**
+
+        xi_2 : float
+               Chi square of the configuration
+
+        w_pso_Arr : 1-D sequence of floats
+                    Wavelgnth of the line profile computed by the PSO 
+
+        my_f_pso_Arr : 1-D sequence of floats
+                       Flux density of the line profile computed by the PSO 
+
+    '''
     my_f_tar_Arr = ( f_tar_Arr - np.amin( f_tar_Arr ) ) * 1. / np.amax( f_tar_Arr )
 
     w_min = np.amin( w_tar_Arr )
@@ -3453,8 +4086,6 @@ def PSO_compute_xi_2_ONE_6D( x , w_tar_Arr , f_tar_Arr , FWHM , PIX , DATA_LyaRT
 
     F_pso = 1.0
 
-    # z_f , V_f , logNH_f , ta_f , F_line_f , logEW_f , Wi_f , Noise_w_Arr , Noise_Arr , FWHM_f , PIX_f , w_min , w_max , DATA_LyaRT , Geometry
-
     w_pso_Arr , f_pso_Arr , dic = generate_a_REAL_line_Noise_w( redshift      , 10**log_V_pso, log_N_pso  , 
                                                                 10**log_t_pso , F_pso        , log_E_pso  , 
                                                                 10**log_W_pso , w_s_tar_Arr ,
@@ -3462,15 +4093,11 @@ def PSO_compute_xi_2_ONE_6D( x , w_tar_Arr , f_tar_Arr , FWHM , PIX , DATA_LyaRT
                                                                  w_min        , w_max        , DATA_LyaRT , 
                                                                  Geometry     )
 
-    #my_f_pso_Arr = ( f_pso_Arr - np.amin( f_pso_Arr ) ) *1. / np.amax( f_pso_Arr) 
-
     my_f_pso_Arr = f_pso_Arr * 1. / np.amax( f_pso_Arr)
 
     my_f_pso_Arr = np.interp( w_tar_Arr , w_pso_Arr , my_f_pso_Arr )
 
     my_f_tar_Arr = my_f_tar_Arr * 1. / np.amax( my_f_tar_Arr )
-
-    #f_pso_to_use_Arr = np.interp( w_tar_Arr , w_pso_Arr , my_f_pso_Arr )
 
     xi_2 = np.sum( ( my_f_pso_Arr - my_f_tar_Arr ) ** 2 )
 
@@ -3483,7 +4110,43 @@ def PSO_compute_xi_2_ONE_6D( x , w_tar_Arr , f_tar_Arr , FWHM , PIX , DATA_LyaRT
 #====================================================================#
 #====================================================================#
 def PSO_compute_xi_2_MANY( X , w_tar_Arr , f_tar_Arr , FWHM , PIX , DATA_LyaRT, Geometry ):
+    '''
+        Compute the chi esquare for the PSO analysis for many configurations
 
+        **Input**
+
+        x: 1-D sequence of float
+                Contains the parameters of the mode:
+                    x[0] = logarithim of the expansion velocity
+                    x[1] = logarithim of the neutral hydrogen column density
+                    x[2] = logarithim of the dust optical depth
+                    x[3] = redshift
+                    x[4] = logarithm of the intrinsic equivalent width
+                    x[5] = intrinsic width
+
+        w_tar_Arr : 1-D sequence of float
+                    wavelength where the observed density flux is evaluated.
+
+        f_tar_Arr : 1-D sequence of float
+                    Observed flux density
+
+        FWHM : float
+              Full width half maximum [A] of the experiment.
+
+        PIX : float
+              Pixel size in wavelgnth [A] of the experiment.
+
+        DATA_LyaRT : python dictionary
+                     Contains the grid information.
+
+        Geometry : string
+                   Outflow geometry to use.
+
+        **Output**
+
+        xi_2_Arr : 1-D sequence of float
+               Chi square of the configurations
+    '''
     xi_2_Arr = np.zeros( len(X) )
 
     for i in range( 0 , len(X) ):
@@ -3499,6 +4162,43 @@ def PSO_compute_xi_2_MANY( X , w_tar_Arr , f_tar_Arr , FWHM , PIX , DATA_LyaRT, 
 ##====================================================================================#
 def PSO_Analysis( w_tar_Arr , f_tar_Arr , FWHM , PIX , DATA_LyaRT , Geometry , n_particles , n_iters ):
 
+    '''
+        Does a PSO analysis to find in a fast way a close good fit
+
+        **Input**
+
+        w_tar_Arr : 1-D sequence of float
+                    wavelength where the observed density flux is evaluated.
+
+        f_tar_Arr : 1-D sequence of float
+                    Observed flux density
+
+        FWHM : float
+              Full width half maximum [A] of the experiment.
+
+        PIX : float
+              Pixel size in wavelgnth [A] of the experiment.
+
+        DATA_LyaRT : python dictionary
+                     Contains the grid information.
+
+        Geometry : string
+                   Outflow geometry to use.
+
+        n_particles : int
+                      Number of particles in the PSO
+
+        n_iters : int
+                  Number of steps in the PSO
+
+        **Output**
+
+        cost : float
+               Cost of the best configuration
+
+        pos : 1-D sequence of floats
+                Position of the best configuration
+    '''
     w_lya = 1215.67
 
     #w_max = np.atleast_1d( w_tar_Arr[ f_tar_Arr == np.amax( f_tar_Arr ) ])[0]
