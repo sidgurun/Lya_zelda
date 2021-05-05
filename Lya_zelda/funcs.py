@@ -11,7 +11,7 @@ import time
 import sys
 import shutil
 
-import urllib
+#import urllib
 
 import numpy as np
 

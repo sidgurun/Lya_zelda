@@ -1,5 +1,3 @@
-shutil
-urllib
 scipy
 emcee
 sklearn
