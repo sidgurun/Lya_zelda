@@ -161,77 +161,275 @@
 <p>zELDA es a phantastic code!!</p>
 <dl class="function">
 <dt id="funcs.Add_noise_to_line">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Add_noise_to_line</code><span class="sig-paren">(</span><em class="sig-param">wave_Arr_line</em>, <em class="sig-param">Line_Prob_Arr</em>, <em class="sig-param">SN</em>, <em class="sig-param">same_norm=False</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.Add_noise_to_line" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Add_noise_to_line</code><span class="sig-paren">(</span><em class="sig-param">wave_Arr_line</em>, <em class="sig-param">Line_Prob_Arr</em>, <em class="sig-param">SN</em>, <em class="sig-param">same_norm=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#Add_noise_to_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.Add_noise_to_line" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="funcs.Analytic_f_esc_Thin_Shell">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Analytic_f_esc_Thin_Shell</code><span class="sig-paren">(</span><em class="sig-param">V_Arr</em>, <em class="sig-param">logNH_Arr</em>, <em class="sig-param">ta_Arr</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.Analytic_f_esc_Thin_Shell" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Analytic_f_esc_Thin_Shell</code><span class="sig-paren">(</span><em class="sig-param">V_Arr</em>, <em class="sig-param">logNH_Arr</em>, <em class="sig-param">ta_Arr</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#Analytic_f_esc_Thin_Shell"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.Analytic_f_esc_Thin_Shell" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the escape fraction computed analytically for the Thin Shell
+(Gurung-lopez et al. 2019a)</p>
+<p><strong>Input</strong>:</p>
+<dl class="simple">
+<dt>V_Arr<span class="classifier">1-D sequence of floats</span></dt><dd><p>Outflow bulk velocity [km/s]</p>
+</dd>
+<dt>logNH_Arr<span class="classifier">1-D sequence of floats</span></dt><dd><p>logarithm of the neutral hydrogen column density [cm**-2]</p>
+</dd>
+<dt>ta_Arr<span class="classifier">1-D sequence of floats</span></dt><dd><p>Dust optical depth [no dimensions]</p>
+</dd>
+</dl>
+<p><strong>Output</strong>:</p>
+<dl class="simple">
+<dt>fesc<span class="classifier">1-D sequence of floats</span></dt><dd><p>Escape fractions for the input configurations [no dimensions]</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="function">
 <dt id="funcs.Analytic_f_esc_Wind">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Analytic_f_esc_Wind</code><span class="sig-paren">(</span><em class="sig-param">V_Arr</em>, <em class="sig-param">logNH_Arr</em>, <em class="sig-param">ta_Arr</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.Analytic_f_esc_Wind" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Analytic_f_esc_Wind</code><span class="sig-paren">(</span><em class="sig-param">V_Arr</em>, <em class="sig-param">logNH_Arr</em>, <em class="sig-param">ta_Arr</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#Analytic_f_esc_Wind"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.Analytic_f_esc_Wind" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the escape fraction computed analytically for the Galactic Wind
+(Gurung-lopez et al. 2019a)</p>
+<p><strong>Input</strong>:</p>
+<dl class="simple">
+<dt>V_Arr<span class="classifier">1-D sequence of floats</span></dt><dd><p>Outflow bulk velocity [km/s]</p>
+</dd>
+<dt>logNH_Ar<span class="classifier">1-D sequence of floats</span></dt><dd><p>logarithm of the neutral hydrogen column density [cm**-2]</p>
+</dd>
+<dt>ta_Arr<span class="classifier">1-D sequence of floats</span></dt><dd><p>Dust optical depth [no dimensions]</p>
+</dd>
+</dl>
+<p><strong>Output</strong>:</p>
+<dl class="simple">
+<dt>fesc<span class="classifier">1-D sequence of floats</span></dt><dd><p>Escape fractions for the input configurations [no dimensions]</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="function">
 <dt id="funcs.Check_if_DATA_files_are_found">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Check_if_DATA_files_are_found</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#funcs.Check_if_DATA_files_are_found" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Check_if_DATA_files_are_found</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#Check_if_DATA_files_are_found"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.Check_if_DATA_files_are_found" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function checks if all the data files are in the set directory.</p>
+<p><strong>Input</strong>:</p>
+<p>None : None</p>
+<p><strong>Output</strong>:</p>
+<dl class="simple">
+<dt>Bool_1<span class="classifier">Bool</span></dt><dd><p>1 if     found.
+0 if not found.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="function">
 <dt id="funcs.Compute_Inflow_From_Outflow">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Compute_Inflow_From_Outflow</code><span class="sig-paren">(</span><em class="sig-param">w_Arr</em>, <em class="sig-param">f_out_Arr</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.Compute_Inflow_From_Outflow" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Compute_Inflow_From_Outflow</code><span class="sig-paren">(</span><em class="sig-param">w_Arr</em>, <em class="sig-param">f_out_Arr</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#Compute_Inflow_From_Outflow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.Compute_Inflow_From_Outflow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the line profile of an inflow from the line profiles of an
+outflow</p>
+<p><strong>Input</strong>:</p>
+<dl class="simple">
+<dt>w_Arr<span class="classifier">1-D sequence of floats</span></dt><dd><p>wavelength where the line profile is evaluated.</p>
+</dd>
+<dt>f_out_Arr<span class="classifier">float</span></dt><dd><p>Outflow flux density (line profile)</p>
+</dd>
+</dl>
+<p><strong>Output</strong>:</p>
+<dl class="simple">
+<dt>f_in_Arr<span class="classifier">1-D sequence of bool</span></dt><dd><p>Inflow flux density (line profile)</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="function">
 <dt id="funcs.Define_wavelength_for_NN">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Define_wavelength_for_NN</code><span class="sig-paren">(</span><em class="sig-param">Delta_min=-18.5</em>, <em class="sig-param">Delta_max=18.5</em>, <em class="sig-param">Nbins_tot=1000</em>, <em class="sig-param">Denser_Center=True</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.Define_wavelength_for_NN" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Define_wavelength_for_NN</code><span class="sig-paren">(</span><em class="sig-param">Delta_min=-18.5</em>, <em class="sig-param">Delta_max=18.5</em>, <em class="sig-param">Nbins_tot=1000</em>, <em class="sig-param">Denser_Center=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#Define_wavelength_for_NN"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.Define_wavelength_for_NN" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="funcs.Generate_a_line_for_training">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Generate_a_line_for_training</code><span class="sig-paren">(</span><em class="sig-param">z_t</em>, <em class="sig-param">V_t</em>, <em class="sig-param">log_N_t</em>, <em class="sig-param">t_t</em>, <em class="sig-param">F_t</em>, <em class="sig-param">log_EW_t</em>, <em class="sig-param">W_t</em>, <em class="sig-param">PNR_t</em>, <em class="sig-param">FWHM_t</em>, <em class="sig-param">PIX_t</em>, <em class="sig-param">DATA_LyaRT</em>, <em class="sig-param">Geometry</em>, <em class="sig-param">normed=False</em>, <em class="sig-param">scaled=False</em>, <em class="sig-param">Delta_min=-18.5</em>, <em class="sig-param">Delta_max=18.5</em>, <em class="sig-param">Denser_Center=True</em>, <em class="sig-param">Nbins_tot=1000</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.Generate_a_line_for_training" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Generate_a_line_for_training</code><span class="sig-paren">(</span><em class="sig-param">z_t</em>, <em class="sig-param">V_t</em>, <em class="sig-param">log_N_t</em>, <em class="sig-param">t_t</em>, <em class="sig-param">F_t</em>, <em class="sig-param">log_EW_t</em>, <em class="sig-param">W_t</em>, <em class="sig-param">PNR_t</em>, <em class="sig-param">FWHM_t</em>, <em class="sig-param">PIX_t</em>, <em class="sig-param">DATA_LyaRT</em>, <em class="sig-param">Geometry</em>, <em class="sig-param">normed=False</em>, <em class="sig-param">scaled=False</em>, <em class="sig-param">Delta_min=-18.5</em>, <em class="sig-param">Delta_max=18.5</em>, <em class="sig-param">Denser_Center=True</em>, <em class="sig-param">Nbins_tot=1000</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#Generate_a_line_for_training"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.Generate_a_line_for_training" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="funcs.Generate_a_real_line">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Generate_a_real_line</code><span class="sig-paren">(</span><em class="sig-param">z_t</em>, <em class="sig-param">V_t</em>, <em class="sig-param">log_N_t</em>, <em class="sig-param">t_t</em>, <em class="sig-param">F_t</em>, <em class="sig-param">log_EW_t</em>, <em class="sig-param">W_t</em>, <em class="sig-param">PNR_t</em>, <em class="sig-param">FWHM_t</em>, <em class="sig-param">PIX_t</em>, <em class="sig-param">DATA_LyaRT</em>, <em class="sig-param">Geometry</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.Generate_a_real_line" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Generate_a_real_line</code><span class="sig-paren">(</span><em class="sig-param">z_t</em>, <em class="sig-param">V_t</em>, <em class="sig-param">log_N_t</em>, <em class="sig-param">t_t</em>, <em class="sig-param">F_t</em>, <em class="sig-param">log_EW_t</em>, <em class="sig-param">W_t</em>, <em class="sig-param">PNR_t</em>, <em class="sig-param">FWHM_t</em>, <em class="sig-param">PIX_t</em>, <em class="sig-param">DATA_LyaRT</em>, <em class="sig-param">Geometry</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#Generate_a_real_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.Generate_a_real_line" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="funcs.Interpolate_Lines_Arrays_3D_grid">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Interpolate_Lines_Arrays_3D_grid</code><span class="sig-paren">(</span><em class="sig-param">V_Arr</em>, <em class="sig-param">logNH_Arr</em>, <em class="sig-param">logta_Arr</em>, <em class="sig-param">x_Arr</em>, <em class="sig-param">Grid_Dictionary</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.Interpolate_Lines_Arrays_3D_grid" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Interpolate_Lines_Arrays_3D_grid</code><span class="sig-paren">(</span><em class="sig-param">V_Arr</em>, <em class="sig-param">logNH_Arr</em>, <em class="sig-param">logta_Arr</em>, <em class="sig-param">x_Arr</em>, <em class="sig-param">Grid_Dictionary</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#Interpolate_Lines_Arrays_3D_grid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.Interpolate_Lines_Arrays_3D_grid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the escape fraction using the line profiles grids for many
+configurations</p>
+<p><strong>Input</strong>:</p>
+<dl class="simple">
+<dt>V_Arr<span class="classifier">1-D sequence of floats</span></dt><dd><p>Outflow bulk velocity [km/s]</p>
+</dd>
+<dt>logNH_Ar<span class="classifier">1-D sequence of floats</span></dt><dd><p>Logarithm of the neutral hydrogen column density [cm**-2]</p>
+</dd>
+<dt>ta_Arr<span class="classifier">1-D sequence of floats</span></dt><dd><p>Dust optical depth [no dimensions]</p>
+</dd>
+<dt>x_Arr<span class="classifier">1-D sequence of floats</span></dt><dd><p>Frequency in Doppler units where the line prfile will be
+evaluated.</p>
+</dd>
+<dt>Grid_Dictionary<span class="classifier">python dictionary</span></dt><dd><p>All the necessary information for the interpoation. Loaded 
+with load_Grid_Line().</p>
+</dd>
+</dl>
+<p><strong>Output</strong>:</p>
+<dl class="simple">
+<dt>line_Arr<span class="classifier">2-D sequence of floats</span></dt><dd><p>Flux density in arbitrary units. The first dimension matches
+the dimension of the input configurations (e.g. V_Arr). The
+second dimension matches x_Arr.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="function">
 <dt id="funcs.Interpolate_Lines_Arrays_3D_grid_MCMC">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Interpolate_Lines_Arrays_3D_grid_MCMC</code><span class="sig-paren">(</span><em class="sig-param">V_Value</em>, <em class="sig-param">logNH_Value</em>, <em class="sig-param">logta_Value</em>, <em class="sig-param">x_Arr</em>, <em class="sig-param">Grid_Dictionary</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.Interpolate_Lines_Arrays_3D_grid_MCMC" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Interpolate_Lines_Arrays_3D_grid_MCMC</code><span class="sig-paren">(</span><em class="sig-param">V_Value</em>, <em class="sig-param">logNH_Value</em>, <em class="sig-param">logta_Value</em>, <em class="sig-param">x_Arr</em>, <em class="sig-param">Grid_Dictionary</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#Interpolate_Lines_Arrays_3D_grid_MCMC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.Interpolate_Lines_Arrays_3D_grid_MCMC" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the escape fraction using the line profiles grids for one
+configuration. This is usefull for the Thin_Shell, Galactic_Wind and
+Bicones configurations.</p>
+<p><strong>Input</strong>:</p>
+<dl class="simple">
+<dt>V_Value<span class="classifier">float</span></dt><dd><p>Outflow bulk velocity [km/s]</p>
+</dd>
+<dt>logNH_Value<span class="classifier">float</span></dt><dd><p>Logarithm of the neutral hydrogen column density [cm**-2]</p>
+</dd>
+<dt>ta_Value<span class="classifier">float</span></dt><dd><p>Dust optical depth [no dimensions]</p>
+</dd>
+<dt>x_Arr<span class="classifier">1-D sequence of floats</span></dt><dd><p>Frequency in Doppler units where the line prfile will be
+evaluated.</p>
+</dd>
+<dt>Grid_Dictionary<span class="classifier">python dictionary</span></dt><dd><p>All the necessary information for the interpoation. Loaded 
+with load_Grid_Line().</p>
+</dd>
+</dl>
+<p><strong>Output</strong>:</p>
+<dl class="simple">
+<dt>axu_line_1<span class="classifier">1-D sequence of floats</span></dt><dd><p>Flux density in arbitrary units.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="function">
 <dt id="funcs.Interpolate_Lines_Arrays_5D_grid">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Interpolate_Lines_Arrays_5D_grid</code><span class="sig-paren">(</span><em class="sig-param">V_Arr</em>, <em class="sig-param">logNH_Arr</em>, <em class="sig-param">logta_Arr</em>, <em class="sig-param">logEW_Arr</em>, <em class="sig-param">Wi_Arr</em>, <em class="sig-param">x_Arr</em>, <em class="sig-param">Grid_Dictionary</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.Interpolate_Lines_Arrays_5D_grid" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Interpolate_Lines_Arrays_5D_grid</code><span class="sig-paren">(</span><em class="sig-param">V_Arr</em>, <em class="sig-param">logNH_Arr</em>, <em class="sig-param">logta_Arr</em>, <em class="sig-param">logEW_Arr</em>, <em class="sig-param">Wi_Arr</em>, <em class="sig-param">x_Arr</em>, <em class="sig-param">Grid_Dictionary</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#Interpolate_Lines_Arrays_5D_grid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.Interpolate_Lines_Arrays_5D_grid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the escape fraction using the line profiles grids for many
+configurations. This is usefull for the Thin_Shell_Cont</p>
+<p><strong>Input</strong>:</p>
+<dl class="simple">
+<dt>V_Arr<span class="classifier">1-D sequence of floats</span></dt><dd><p>Outflow bulk velocity [km/s]</p>
+</dd>
+<dt>logNH_Ar<span class="classifier">1-D sequence of floats</span></dt><dd><p>Logarithm of the neutral hydrogen column density [cm**-2]</p>
+</dd>
+<dt>ta_Arr<span class="classifier">1-D sequence of floats</span></dt><dd><p>Dust optical depth [no dimensions]</p>
+</dd>
+<dt>logEW_Arr<span class="classifier">1-D sequence of floats</span></dt><dd><p>Logarithm of the rest frame equivalent width [A]</p>
+</dd>
+<dt>Wi_Arr<span class="classifier">1-D sequence of floats</span></dt><dd><p>Rest frame instrinc line width [A]</p>
+</dd>
+<dt>x_Arr<span class="classifier">1-D sequence of floats</span></dt><dd><p>Frequency in Doppler units where the line prfile will be
+evaluated.</p>
+</dd>
+<dt>Grid_Dictionary<span class="classifier">python dictionary</span></dt><dd><p>All the necessary information for the interpoation. Loaded 
+with load_Grid_Line().</p>
+</dd>
+</dl>
+<p><strong>Output</strong>:</p>
+<dl class="simple">
+<dt>linew_Arr<span class="classifier">2-D sequence of floats</span></dt><dd><p>Flux density in arbitrary units. The first dimension matches
+the dimension of the input configurations (e.g. V_Arr). The
+second dimension matches x_Arr.
+Flux density in arbitrary units.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="function">
 <dt id="funcs.Interpolate_Lines_Arrays_5D_grid_MCMC">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Interpolate_Lines_Arrays_5D_grid_MCMC</code><span class="sig-paren">(</span><em class="sig-param">V_Value</em>, <em class="sig-param">logNH_Value</em>, <em class="sig-param">logta_Value</em>, <em class="sig-param">logEW_Value</em>, <em class="sig-param">Wi_Value</em>, <em class="sig-param">x_Arr</em>, <em class="sig-param">Grid_Dictionary</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.Interpolate_Lines_Arrays_5D_grid_MCMC" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Interpolate_Lines_Arrays_5D_grid_MCMC</code><span class="sig-paren">(</span><em class="sig-param">V_Value</em>, <em class="sig-param">logNH_Value</em>, <em class="sig-param">logta_Value</em>, <em class="sig-param">logEW_Value</em>, <em class="sig-param">Wi_Value</em>, <em class="sig-param">x_Arr</em>, <em class="sig-param">Grid_Dictionary</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#Interpolate_Lines_Arrays_5D_grid_MCMC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.Interpolate_Lines_Arrays_5D_grid_MCMC" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the escape fraction using the line profiles grids for many
+configurations. This is usefull for the Thin_Shell_Cont</p>
+<p><strong>Input</strong>:</p>
+<dl class="simple">
+<dt>V_Value<span class="classifier">float</span></dt><dd><p>Outflow bulk velocity [km/s]</p>
+</dd>
+<dt>logNH_Value<span class="classifier">float</span></dt><dd><p>Logarithm of the neutral hydrogen column density [cm**-2]</p>
+</dd>
+<dt>ta_Value<span class="classifier">float</span></dt><dd><p>Dust optical depth [no dimensions]</p>
+</dd>
+<dt>logEW_Value<span class="classifier">float</span></dt><dd><p>Logarithm of the rest frame equivalent width [A]</p>
+</dd>
+<dt>Wi_Value<span class="classifier">float</span></dt><dd><p>Rest frame instrinc line width [A]</p>
+</dd>
+<dt>x_Arr<span class="classifier">1-D sequence of floats</span></dt><dd><p>Frequency in Doppler units where the line prfile will be
+evaluated.</p>
+</dd>
+<dt>Grid_Dictionary<span class="classifier">python dictionary</span></dt><dd><p>All the necessary information for the interpoation. Loaded 
+with load_Grid_Line().</p>
+</dd>
+</dl>
+<p><strong>Output</strong>:</p>
+<dl class="simple">
+<dt>axu_line_1<span class="classifier">1-D sequence of floats</span></dt><dd><p>Flux density in arbitrary units.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="function">
 <dt id="funcs.Interpolate_f_esc_Arrays_2D_grid">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Interpolate_f_esc_Arrays_2D_grid</code><span class="sig-paren">(</span><em class="sig-param">V_Arr</em>, <em class="sig-param">logNH_Arr</em>, <em class="sig-param">ta_Arr</em>, <em class="sig-param">Grid_Dictionary</em>, <em class="sig-param">Geometry</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.Interpolate_f_esc_Arrays_2D_grid" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Interpolate_f_esc_Arrays_2D_grid</code><span class="sig-paren">(</span><em class="sig-param">V_Arr</em>, <em class="sig-param">logNH_Arr</em>, <em class="sig-param">ta_Arr</em>, <em class="sig-param">Grid_Dictionary</em>, <em class="sig-param">Geometry</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#Interpolate_f_esc_Arrays_2D_grid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.Interpolate_f_esc_Arrays_2D_grid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the escape fraction using the escape fraction grids of parameters</p>
+<p><strong>Input</strong>:</p>
+<dl class="simple">
+<dt>V_Arr<span class="classifier">1-D sequence of floats</span></dt><dd><p>Outflow bulk velocity [km/s]</p>
+</dd>
+<dt>logNH_Ar<span class="classifier">1-D sequence of floats</span></dt><dd><p>logarithm of the neutral hydrogen column density [cm**-2]</p>
+</dd>
+<dt>ta_Arr<span class="classifier">1-D sequence of floats</span></dt><dd><p>Dust optical depth [no dimensions]</p>
+</dd>
+<dt>Grid_Dictionary<span class="classifier">python dictionary</span></dt><dd><p>Constains the grid to compute the escape fraction. Loaded with
+load_Grid_fesc().</p>
+</dd>
+<dt>Geometry<span class="classifier">String</span></dt><dd><dl class="simple">
+<dt>Outflow configuration to use: ‘Thin_Shell’  , ‘Galactic_Wind’  </dt><dd><p>, ‘Bicone_X_Slab_In’ , ‘Bicone_X_Slab_Out’</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p><strong>Output</strong>:</p>
+<dl class="simple">
+<dt>f_esc_Arr<span class="classifier">1-D sequence of floats</span></dt><dd><p>Escape fractions for the input configurations [no dimensions]</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="function">
 <dt id="funcs.Interpolate_fesc_Arrays_3D_grid">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Interpolate_fesc_Arrays_3D_grid</code><span class="sig-paren">(</span><em class="sig-param">V_Arr</em>, <em class="sig-param">logNH_Arr</em>, <em class="sig-param">ta_Arr</em>, <em class="sig-param">Grid_Dictionary</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.Interpolate_fesc_Arrays_3D_grid" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Interpolate_fesc_Arrays_3D_grid</code><span class="sig-paren">(</span><em class="sig-param">V_Arr</em>, <em class="sig-param">logNH_Arr</em>, <em class="sig-param">ta_Arr</em>, <em class="sig-param">Grid_Dictionary</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#Interpolate_fesc_Arrays_3D_grid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.Interpolate_fesc_Arrays_3D_grid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the escape fraction using the escape fraction grids of parameters</p>
+<p><strong>Input</strong>:</p>
+<dl class="simple">
+<dt>V_Arr<span class="classifier">1-D sequence of floats</span></dt><dd><p>Outflow bulk velocity [km/s]</p>
+</dd>
+<dt>logNH_Ar<span class="classifier">1-D sequence of floats</span></dt><dd><p>logarithm of the neutral hydrogen column density [cm**-2]</p>
+</dd>
+<dt>ta_Arr<span class="classifier">1-D sequence of floats</span></dt><dd><p>Dust optical depth [no dimensions]</p>
+</dd>
+<dt>Grid_Dictionary<span class="classifier">python dictionary</span></dt><dd><p>Constains the grid to compute the escape fraction. Loaded with
+load_Grid_fesc().</p>
+</dd>
+</dl>
+<p><strong>Output</strong>:</p>
+<dl class="simple">
+<dt>f_esc_Arr_evaluated<span class="classifier">1-D sequence of floats</span></dt><dd><p>Escape fractions for the input configurations [no dimensions]</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="function">
 <dt id="funcs.Linear_ND_interpolator">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Linear_ND_interpolator</code><span class="sig-paren">(</span><em class="sig-param">N_dim</em>, <em class="sig-param">Coor_props_Matrix</em>, <em class="sig-param">Coor_grid_list</em>, <em class="sig-param">Field_in_grid_Matrix</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.Linear_ND_interpolator" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Linear_ND_interpolator</code><span class="sig-paren">(</span><em class="sig-param">N_dim</em>, <em class="sig-param">Coor_props_Matrix</em>, <em class="sig-param">Coor_grid_list</em>, <em class="sig-param">Field_in_grid_Matrix</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#Linear_ND_interpolator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.Linear_ND_interpolator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Interpolates in an arbitrary dimension space</p>
 <dl class="simple">
 <dt>N_dim<span class="classifier">int</span></dt><dd><p>Number of dimensions.</p>
@@ -249,76 +447,77 @@ For example [ X , Y , Z ]</p>
 
 <dl class="function">
 <dt id="funcs.Load_NN_model">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Load_NN_model</code><span class="sig-paren">(</span><em class="sig-param">Mode</em>, <em class="sig-param">iteration=1</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.Load_NN_model" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Load_NN_model</code><span class="sig-paren">(</span><em class="sig-param">Mode</em>, <em class="sig-param">iteration=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#Load_NN_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.Load_NN_model" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="funcs.MCMC_Analysis_sampler_5">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">MCMC_Analysis_sampler_5</code><span class="sig-paren">(</span><em class="sig-param">w_target_Arr</em>, <em class="sig-param">f_target_Arr</em>, <em class="sig-param">s_target_Arr</em>, <em class="sig-param">FWHM</em>, <em class="sig-param">N_walkers</em>, <em class="sig-param">N_burn</em>, <em class="sig-param">N_steps</em>, <em class="sig-param">Geometry</em>, <em class="sig-param">DATA_LyaRT</em>, <em class="sig-param">log_V_in=None</em>, <em class="sig-param">log_N_in=None</em>, <em class="sig-param">log_t_in=None</em>, <em class="sig-param">z_in=None</em>, <em class="sig-param">log_E_in=None</em>, <em class="sig-param">W_in=None</em>, <em class="sig-param">progress=True</em>, <em class="sig-param">FORCE_z=False</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.MCMC_Analysis_sampler_5" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">MCMC_Analysis_sampler_5</code><span class="sig-paren">(</span><em class="sig-param">w_target_Arr</em>, <em class="sig-param">f_target_Arr</em>, <em class="sig-param">s_target_Arr</em>, <em class="sig-param">FWHM</em>, <em class="sig-param">N_walkers</em>, <em class="sig-param">N_burn</em>, <em class="sig-param">N_steps</em>, <em class="sig-param">Geometry</em>, <em class="sig-param">DATA_LyaRT</em>, <em class="sig-param">log_V_in=None</em>, <em class="sig-param">log_N_in=None</em>, <em class="sig-param">log_t_in=None</em>, <em class="sig-param">z_in=None</em>, <em class="sig-param">log_E_in=None</em>, <em class="sig-param">W_in=None</em>, <em class="sig-param">progress=True</em>, <em class="sig-param">FORCE_z=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#MCMC_Analysis_sampler_5"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.MCMC_Analysis_sampler_5" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="funcs.MCMC_get_region_6D">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">MCMC_get_region_6D</code><span class="sig-paren">(</span><em class="sig-param">MODE</em>, <em class="sig-param">w_tar_Arr</em>, <em class="sig-param">f_tar_Arr</em>, <em class="sig-param">s_tar_Arr</em>, <em class="sig-param">FWHM</em>, <em class="sig-param">PIX</em>, <em class="sig-param">DATA_LyaRT</em>, <em class="sig-param">Geometry</em>, <em class="sig-param">Geometry_Mode='Outflow'</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.MCMC_get_region_6D" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">MCMC_get_region_6D</code><span class="sig-paren">(</span><em class="sig-param">MODE</em>, <em class="sig-param">w_tar_Arr</em>, <em class="sig-param">f_tar_Arr</em>, <em class="sig-param">s_tar_Arr</em>, <em class="sig-param">FWHM</em>, <em class="sig-param">PIX</em>, <em class="sig-param">DATA_LyaRT</em>, <em class="sig-param">Geometry</em>, <em class="sig-param">Geometry_Mode='Outflow'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#MCMC_get_region_6D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.MCMC_get_region_6D" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="funcs.NN_convert_Obs_Line_to_proxy_rest_line">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">NN_convert_Obs_Line_to_proxy_rest_line</code><span class="sig-paren">(</span><em class="sig-param">w_obs_Arr</em>, <em class="sig-param">f_obs_Arr</em>, <em class="sig-param">s_obs_Arr=None</em>, <em class="sig-param">normed=False</em>, <em class="sig-param">scaled=False</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.NN_convert_Obs_Line_to_proxy_rest_line" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">NN_convert_Obs_Line_to_proxy_rest_line</code><span class="sig-paren">(</span><em class="sig-param">w_obs_Arr</em>, <em class="sig-param">f_obs_Arr</em>, <em class="sig-param">s_obs_Arr=None</em>, <em class="sig-param">normed=False</em>, <em class="sig-param">scaled=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#NN_convert_Obs_Line_to_proxy_rest_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.NN_convert_Obs_Line_to_proxy_rest_line" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="funcs.NN_generate_random_outflow_props">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">NN_generate_random_outflow_props</code><span class="sig-paren">(</span><em class="sig-param">N_walkers</em>, <em class="sig-param">log_V_in</em>, <em class="sig-param">log_N_in</em>, <em class="sig-param">log_t_in</em>, <em class="sig-param">Allow_Inflows=True</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.NN_generate_random_outflow_props" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">NN_generate_random_outflow_props</code><span class="sig-paren">(</span><em class="sig-param">N_walkers</em>, <em class="sig-param">log_V_in</em>, <em class="sig-param">log_N_in</em>, <em class="sig-param">log_t_in</em>, <em class="sig-param">Allow_Inflows=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#NN_generate_random_outflow_props"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.NN_generate_random_outflow_props" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="funcs.NN_generate_random_outflow_props_5D">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">NN_generate_random_outflow_props_5D</code><span class="sig-paren">(</span><em class="sig-param">N_walkers</em>, <em class="sig-param">log_V_in</em>, <em class="sig-param">log_N_in</em>, <em class="sig-param">log_t_in</em>, <em class="sig-param">log_E_in</em>, <em class="sig-param">log_W_in</em>, <em class="sig-param">MODE='Outflow'</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.NN_generate_random_outflow_props_5D" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">NN_generate_random_outflow_props_5D</code><span class="sig-paren">(</span><em class="sig-param">N_walkers</em>, <em class="sig-param">log_V_in</em>, <em class="sig-param">log_N_in</em>, <em class="sig-param">log_t_in</em>, <em class="sig-param">log_E_in</em>, <em class="sig-param">log_W_in</em>, <em class="sig-param">MODE='Outflow'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#NN_generate_random_outflow_props_5D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.NN_generate_random_outflow_props_5D" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="funcs.NN_measure">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">NN_measure</code><span class="sig-paren">(</span><em class="sig-param">w_tar_Arr</em>, <em class="sig-param">f_tar_Arr</em>, <em class="sig-param">s_tar_Arr</em>, <em class="sig-param">FWHM_tar</em>, <em class="sig-param">PIX_tar</em>, <em class="sig-param">loaded_model</em>, <em class="sig-param">w_rest_Machine_Arr</em>, <em class="sig-param">N_iter=None</em>, <em class="sig-param">normed=False</em>, <em class="sig-param">scaled=False</em>, <em class="sig-param">Delta_min=-18.5</em>, <em class="sig-param">Delta_max=18.5</em>, <em class="sig-param">Nbins_tot=1000</em>, <em class="sig-param">Denser_Center=True</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.NN_measure" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">NN_measure</code><span class="sig-paren">(</span><em class="sig-param">w_tar_Arr</em>, <em class="sig-param">f_tar_Arr</em>, <em class="sig-param">s_tar_Arr</em>, <em class="sig-param">FWHM_tar</em>, <em class="sig-param">PIX_tar</em>, <em class="sig-param">loaded_model</em>, <em class="sig-param">w_rest_Machine_Arr</em>, <em class="sig-param">N_iter=None</em>, <em class="sig-param">normed=False</em>, <em class="sig-param">scaled=False</em>, <em class="sig-param">Delta_min=-18.5</em>, <em class="sig-param">Delta_max=18.5</em>, <em class="sig-param">Nbins_tot=1000</em>, <em class="sig-param">Denser_Center=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#NN_measure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.NN_measure" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="funcs.PSO_Analysis">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">PSO_Analysis</code><span class="sig-paren">(</span><em class="sig-param">w_tar_Arr</em>, <em class="sig-param">f_tar_Arr</em>, <em class="sig-param">FWHM</em>, <em class="sig-param">PIX</em>, <em class="sig-param">DATA_LyaRT</em>, <em class="sig-param">Geometry</em>, <em class="sig-param">n_particles</em>, <em class="sig-param">n_iters</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.PSO_Analysis" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">PSO_Analysis</code><span class="sig-paren">(</span><em class="sig-param">w_tar_Arr</em>, <em class="sig-param">f_tar_Arr</em>, <em class="sig-param">FWHM</em>, <em class="sig-param">PIX</em>, <em class="sig-param">DATA_LyaRT</em>, <em class="sig-param">Geometry</em>, <em class="sig-param">n_particles</em>, <em class="sig-param">n_iters</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#PSO_Analysis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.PSO_Analysis" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="funcs.PSO_compute_xi_2_MANY">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">PSO_compute_xi_2_MANY</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">w_tar_Arr</em>, <em class="sig-param">f_tar_Arr</em>, <em class="sig-param">FWHM</em>, <em class="sig-param">PIX</em>, <em class="sig-param">DATA_LyaRT</em>, <em class="sig-param">Geometry</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.PSO_compute_xi_2_MANY" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">PSO_compute_xi_2_MANY</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">w_tar_Arr</em>, <em class="sig-param">f_tar_Arr</em>, <em class="sig-param">FWHM</em>, <em class="sig-param">PIX</em>, <em class="sig-param">DATA_LyaRT</em>, <em class="sig-param">Geometry</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#PSO_compute_xi_2_MANY"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.PSO_compute_xi_2_MANY" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="funcs.PSO_compute_xi_2_ONE_6D">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">PSO_compute_xi_2_ONE_6D</code><span class="sig-paren">(</span><em class="sig-param">x</em>, <em class="sig-param">w_tar_Arr</em>, <em class="sig-param">f_tar_Arr</em>, <em class="sig-param">FWHM</em>, <em class="sig-param">PIX</em>, <em class="sig-param">DATA_LyaRT</em>, <em class="sig-param">Geometry</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.PSO_compute_xi_2_ONE_6D" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">PSO_compute_xi_2_ONE_6D</code><span class="sig-paren">(</span><em class="sig-param">x</em>, <em class="sig-param">w_tar_Arr</em>, <em class="sig-param">f_tar_Arr</em>, <em class="sig-param">FWHM</em>, <em class="sig-param">PIX</em>, <em class="sig-param">DATA_LyaRT</em>, <em class="sig-param">Geometry</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#PSO_compute_xi_2_ONE_6D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.PSO_compute_xi_2_ONE_6D" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="funcs.Print_the_grid_edges">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Print_the_grid_edges</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#funcs.Print_the_grid_edges" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Print_the_grid_edges</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#Print_the_grid_edges"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.Print_the_grid_edges" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="funcs.Prior_f">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Prior_f</code><span class="sig-paren">(</span><em class="sig-param">theta</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.Prior_f" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Prior_f</code><span class="sig-paren">(</span><em class="sig-param">theta</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#Prior_f"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.Prior_f" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="funcs.Prior_f_5">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Prior_f_5</code><span class="sig-paren">(</span><em class="sig-param">theta</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.Prior_f_5" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Prior_f_5</code><span class="sig-paren">(</span><em class="sig-param">theta</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#Prior_f_5"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.Prior_f_5" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="funcs.RT_Line_Profile">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">RT_Line_Profile</code><span class="sig-paren">(</span><em class="sig-param">Geometry</em>, <em class="sig-param">wavelength_Arr</em>, <em class="sig-param">V_Arr</em>, <em class="sig-param">logNH_Arr</em>, <em class="sig-param">ta_Arr</em>, <em class="sig-param">logEW_Arr=None</em>, <em class="sig-param">Wi_Arr=None</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.RT_Line_Profile" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">RT_Line_Profile</code><span class="sig-paren">(</span><em class="sig-param">Geometry</em>, <em class="sig-param">wavelength_Arr</em>, <em class="sig-param">V_Arr</em>, <em class="sig-param">logNH_Arr</em>, <em class="sig-param">ta_Arr</em>, <em class="sig-param">logEW_Arr=None</em>, <em class="sig-param">Wi_Arr=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#RT_Line_Profile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.RT_Line_Profile" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the Lyman alpha line profile for a given outflow properties.</p>
-<dl>
+<p><strong>Input</strong>:</p>
+<dl class="simple">
 <dt>Geometry<span class="classifier">string</span></dt><dd><p>The outflow geometry to use: Options: ‘Thins_Shell’,
-‘Galactic_Wind’ , ‘Bicone_X_Slab’.</p>
+‘Galactic_Wind’ , ‘Bicone_X_Slab’, ‘Thin_Shell_Cont’</p>
 </dd>
 <dt>wavelength_Arr<span class="classifier">1-D sequence of floats</span></dt><dd><p>Array with the wavelength vales where the line 
 profile is computed. The units are meters, i.e.,
@@ -333,18 +532,16 @@ i.e, cm**-2.</p>
 </dd>
 <dt>ta_Arr<span class="classifier">1-D sequence of float</span></dt><dd><p>Array with the dust optic depth of the outflow.</p>
 </dd>
-<dt>Inside_Bicone_Arr<span class="classifier">optional 1-D sequence of bool</span></dt><dd><blockquote>
-<div><p>This is useless if the geometry is not Bicone_X_Slab.
-An Array with booleans, indicating if the bicone is face-on 
-or edge-on. If True then the bicone is face-on. If false the
-bicone is edge-on. The probability of being face on is 
-np.cos( np.pi/4 ).</p>
-</div></blockquote>
-<div class="versionadded">
-<p><span class="versionmodified added">New in version 0.0.3.</span></p>
-</div>
+<dt>ta_Value<span class="classifier">1-D sequence of bool</span></dt><dd><p>Dust optical depth [no dimensions]</p>
+</dd>
+<dt>logEW_Value<span class="classifier">Optional 1-D sequence of bool</span></dt><dd><p>Logarithm of rest frame equiavlent width [A]
+Default = None</p>
+</dd>
+<dt>Wi_Value<span class="classifier">Optional 1-D sequence of bool</span></dt><dd><p>Intrinsic width line in the rest frame [A]
+Default = None</p>
 </dd>
 </dl>
+<p><strong>Output</strong>:</p>
 <dl class="simple">
 <dt>lines_Arr<span class="classifier">2-D sequence of float</span></dt><dd><p>The Lyman alpha line profiles. lines_Arr[i] is the line profile 
 computed at the wavelengths wavelength_Arr for wich V_Arr[i] , 
@@ -355,12 +552,13 @@ logNH_Arr[i] , ta_Arr[i] , Inside_Bicone_Arr[i].</p>
 
 <dl class="function">
 <dt id="funcs.RT_Line_Profile_MCMC">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">RT_Line_Profile_MCMC</code><span class="sig-paren">(</span><em class="sig-param">Geometry</em>, <em class="sig-param">wavelength_Arr</em>, <em class="sig-param">V_Value</em>, <em class="sig-param">logNH_Value</em>, <em class="sig-param">ta_Value</em>, <em class="sig-param">DATA_LyaRT</em>, <em class="sig-param">logEW_Value=None</em>, <em class="sig-param">Wi_Value=None</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.RT_Line_Profile_MCMC" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">RT_Line_Profile_MCMC</code><span class="sig-paren">(</span><em class="sig-param">Geometry</em>, <em class="sig-param">wavelength_Arr</em>, <em class="sig-param">V_Value</em>, <em class="sig-param">logNH_Value</em>, <em class="sig-param">ta_Value</em>, <em class="sig-param">DATA_LyaRT</em>, <em class="sig-param">logEW_Value=None</em>, <em class="sig-param">Wi_Value=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#RT_Line_Profile_MCMC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.RT_Line_Profile_MCMC" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return one and only one Lyman alpha line profile for a given outflow properties.
 This function is especial to run MCMCs or PSO.</p>
+<p><strong>Input</strong>:</p>
 <dl>
 <dt>Geometry<span class="classifier">string</span></dt><dd><p>The outflow geometry to use: Options: ‘Thins_Shell’,
-‘Galactic_Wind’ , ‘Bicone_X_Slab’.</p>
+‘Galactic_Wind’ , ‘Bicone_X_Slab’, ‘Thin_Shell_Cont’</p>
 </dd>
 <dt>wavelength_Arr<span class="classifier">1-D sequence of floats</span></dt><dd><p>Array with the wavelength vales where the line
 profile is computed. The units are meters, i.e.,
@@ -381,6 +579,7 @@ load_Grid_Line, for example:</p>
 <p>DATA_LyaRT = load_Grid_Line( ‘Thin_Shell’ )</p>
 </dd>
 </dl>
+<p><strong>Output</strong>:</p>
 <dl class="simple">
 <dt>lines_Arr<span class="classifier">1-D sequence of float</span></dt><dd><p>The Lyman alpha line profile.</p>
 </dd>
@@ -389,8 +588,9 @@ load_Grid_Line, for example:</p>
 
 <dl class="function">
 <dt id="funcs.RT_f_esc">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">RT_f_esc</code><span class="sig-paren">(</span><em class="sig-param">Geometry</em>, <em class="sig-param">V_Arr</em>, <em class="sig-param">logNH_Arr</em>, <em class="sig-param">ta_Arr</em>, <em class="sig-param">MODE='Parametrization'</em>, <em class="sig-param">Algorithm='Intrepolation'</em>, <em class="sig-param">Machine_Learning_Algorithm='Tree'</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.RT_f_esc" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">RT_f_esc</code><span class="sig-paren">(</span><em class="sig-param">Geometry</em>, <em class="sig-param">V_Arr</em>, <em class="sig-param">logNH_Arr</em>, <em class="sig-param">ta_Arr</em>, <em class="sig-param">MODE='Parametrization'</em>, <em class="sig-param">Algorithm='Intrepolation'</em>, <em class="sig-param">Machine_Learning_Algorithm='Tree'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#RT_f_esc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.RT_f_esc" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the Lyman alpha escape fraction for a given outflow properties.</p>
+<p><strong>Input</strong></p>
 <dl>
 <dt>Geometry<span class="classifier">string</span></dt><dd><p>The outflow geometry to use: Options: ‘Thins_Shell’,
 ‘Galactic_Wind’ , ‘Bicone_X_Slab’.</p>
@@ -447,6 +647,7 @@ KN     : KN</p>
 </div>
 </dd>
 </dl>
+<p><strong>Output</strong></p>
 <dl class="simple">
 <dt>lines_Arr<span class="classifier">1-D sequence of float</span></dt><dd><p>The Lyman alpha escape fraction for V_Arr[i] ,
 logNH_Arr[i] , ta_Arr[i] , Inside_Bicone_Arr[i].</p>
@@ -456,73 +657,182 @@ logNH_Arr[i] , ta_Arr[i] , Inside_Bicone_Arr[i].</p>
 
 <dl class="function">
 <dt id="funcs.RT_f_esc_Analytic">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">RT_f_esc_Analytic</code><span class="sig-paren">(</span><em class="sig-param">Geometry</em>, <em class="sig-param">V_Arr</em>, <em class="sig-param">logNH_Arr</em>, <em class="sig-param">ta_Arr</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.RT_f_esc_Analytic" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">RT_f_esc_Analytic</code><span class="sig-paren">(</span><em class="sig-param">Geometry</em>, <em class="sig-param">V_Arr</em>, <em class="sig-param">logNH_Arr</em>, <em class="sig-param">ta_Arr</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#RT_f_esc_Analytic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.RT_f_esc_Analytic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the escape fraction computed analytically
+(Gurung-lopez et al. 2019a, 2019b)</p>
+<p><strong>Input</strong>:
+Geometry : String</p>
+<blockquote>
+<div><p>Outflow configuration to use: ‘Thin_Shell’  , ‘Galactic_Wind’</p>
+</div></blockquote>
+<dl class="simple">
+<dt>V_Arr<span class="classifier">1-D sequence of floats</span></dt><dd><p>Outflow bulk velocity [km/s]</p>
+</dd>
+<dt>logNH_Arr<span class="classifier">1-D sequence of floats</span></dt><dd><p>logarithm of the neutral hydrogen column density [cm**-2]</p>
+</dd>
+<dt>ta_Arr<span class="classifier">1-D sequence of floats</span></dt><dd><p>Dust optical depth [no dimensions]</p>
+</dd>
+</dl>
+<p><strong>Output</strong>:</p>
+<dl class="simple">
+<dt>fesc<span class="classifier">1-D sequence of floats</span></dt><dd><p>Escape fractions for the input configurations [no dimensions]</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="function">
 <dt id="funcs.RT_f_esc_Interpolation_Parameters">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">RT_f_esc_Interpolation_Parameters</code><span class="sig-paren">(</span><em class="sig-param">Geometry</em>, <em class="sig-param">V_Arr</em>, <em class="sig-param">logNH_Arr</em>, <em class="sig-param">ta_Arr</em>, <em class="sig-param">Machine_Learning_Algorithm=None</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.RT_f_esc_Interpolation_Parameters" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">RT_f_esc_Interpolation_Parameters</code><span class="sig-paren">(</span><em class="sig-param">Geometry</em>, <em class="sig-param">V_Arr</em>, <em class="sig-param">logNH_Arr</em>, <em class="sig-param">ta_Arr</em>, <em class="sig-param">Machine_Learning_Algorithm=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#RT_f_esc_Interpolation_Parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.RT_f_esc_Interpolation_Parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the escape fraction using the escape fraction grids of parameters</p>
+<p><strong>Input</strong>:</p>
+<dl class="simple">
+<dt>Geometry<span class="classifier">String</span></dt><dd><dl class="simple">
+<dt>Outflow configuration to use: ‘Thin_Shell’  , ‘Galactic_Wind’  </dt><dd><p>, ‘Bicone_X_Slab_In’ , ‘Bicone_X_Slab_Out’</p>
+</dd>
+</dl>
+</dd>
+<dt>V_Arr<span class="classifier">1-D sequence of floats</span></dt><dd><p>Outflow bulk velocity [km/s]</p>
+</dd>
+<dt>logNH_Ar<span class="classifier">1-D sequence of floats</span></dt><dd><p>logarithm of the neutral hydrogen column density [cm**-2]</p>
+</dd>
+<dt>ta_Arr<span class="classifier">1-D sequence of floats</span></dt><dd><p>Dust optical depth [no dimensions]</p>
+</dd>
+<dt>Machine_Learning_Algorithm<span class="classifier">String</span></dt><dd><p>Kind of algorithm: ‘KN’, ‘Grad’, ‘Tree’ or ‘Forest’</p>
+</dd>
+</dl>
+<p><strong>Output</strong>:</p>
+<dl class="simple">
+<dt>f_esc_Arr<span class="classifier">1-D sequence of floats</span></dt><dd><p>Escape fractions for the input configurations [no dimensions]</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="function">
 <dt id="funcs.RT_f_esc_Interpolation_Values">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">RT_f_esc_Interpolation_Values</code><span class="sig-paren">(</span><em class="sig-param">Geometry</em>, <em class="sig-param">V_Arr</em>, <em class="sig-param">logNH_Arr</em>, <em class="sig-param">ta_Arr</em>, <em class="sig-param">Machine_Learning_Algorithm=None</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.RT_f_esc_Interpolation_Values" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">RT_f_esc_Interpolation_Values</code><span class="sig-paren">(</span><em class="sig-param">Geometry</em>, <em class="sig-param">V_Arr</em>, <em class="sig-param">logNH_Arr</em>, <em class="sig-param">ta_Arr</em>, <em class="sig-param">Machine_Learning_Algorithm=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#RT_f_esc_Interpolation_Values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.RT_f_esc_Interpolation_Values" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the escape fraction using the escape fraction grids of values</p>
+<p><strong>Input</strong>:</p>
+<dl class="simple">
+<dt>Geometry<span class="classifier">String</span></dt><dd><dl class="simple">
+<dt>Outflow configuration to use: ‘Thin_Shell’  , ‘Galactic_Wind’  </dt><dd><p>, ‘Bicone_X_Slab_In’ , ‘Bicone_X_Slab_Out’</p>
+</dd>
+</dl>
+</dd>
+<dt>V_Arr<span class="classifier">1-D sequence of floats</span></dt><dd><p>Outflow bulk velocity [km/s]</p>
+</dd>
+<dt>logNH_Ar<span class="classifier">1-D sequence of floats</span></dt><dd><p>logarithm of the neutral hydrogen column density [cm**-2]</p>
+</dd>
+<dt>ta_Arr<span class="classifier">1-D sequence of floats</span></dt><dd><p>Dust optical depth [no dimensions]</p>
+</dd>
+<dt>Machine_Learning_Algorithm<span class="classifier">String</span></dt><dd><p>Kind of algorithm: ‘KN’, ‘Grad’, ‘Tree’ or ‘Forest’</p>
+</dd>
+</dl>
+<p><strong>Output</strong>:</p>
+<dl class="simple">
+<dt>f_esc_Arr<span class="classifier">1-D sequence of floats</span></dt><dd><p>Escape fractions for the input configurations [no dimensions]</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="function">
 <dt id="funcs.RT_f_esc_Machine_Parameter">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">RT_f_esc_Machine_Parameter</code><span class="sig-paren">(</span><em class="sig-param">Geometry</em>, <em class="sig-param">V_Arr</em>, <em class="sig-param">logNH_Arr</em>, <em class="sig-param">ta_Arr</em>, <em class="sig-param">Machine_Learning_Algorithm='Tree'</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.RT_f_esc_Machine_Parameter" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">RT_f_esc_Machine_Parameter</code><span class="sig-paren">(</span><em class="sig-param">Geometry</em>, <em class="sig-param">V_Arr</em>, <em class="sig-param">logNH_Arr</em>, <em class="sig-param">ta_Arr</em>, <em class="sig-param">Machine_Learning_Algorithm='Tree'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#RT_f_esc_Machine_Parameter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.RT_f_esc_Machine_Parameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Anallytic expression of the escape fraction as a function of the
+dust optical depth (Gurung-lopez et al. 2019b). This uses the parametric
+expression of the escape fraction.</p>
+<p><strong>Input</strong>:</p>
+<dl class="simple">
+<dt>Geometry<span class="classifier">String</span></dt><dd><dl class="simple">
+<dt>Outflow configuration to use: ‘Thin_Shell’  , ‘Galactic_Wind’  </dt><dd><p>, ‘Bicone_X_Slab_In’ , ‘Bicone_X_Slab_Out’</p>
+</dd>
+</dl>
+</dd>
+<dt>V_Arr<span class="classifier">1-D sequence of floats</span></dt><dd><p>Outflow bulk velocity [km/s]</p>
+</dd>
+<dt>logNH_Ar<span class="classifier">1-D sequence of floats</span></dt><dd><p>logarithm of the neutral hydrogen column density [cm**-2]</p>
+</dd>
+<dt>ta_Arr<span class="classifier">1-D sequence of floats</span></dt><dd><p>Dust optical depth [no dimensions]</p>
+</dd>
+<dt>Machine_Learning_Algorithm<span class="classifier">string</span></dt><dd><p>Machine learning algorithm: ‘KN’, ‘Grad’, ‘Tree’ or ‘Forest’</p>
+</dd>
+</dl>
+<p><strong>Output</strong>:</p>
+<dl class="simple">
+<dt>f_esc_Arr<span class="classifier">1-D sequence of floats</span></dt><dd><p>Escape fractions for the input configurations [no dimensions]</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="function">
 <dt id="funcs.RT_f_esc_Machine_Values">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">RT_f_esc_Machine_Values</code><span class="sig-paren">(</span><em class="sig-param">Geometry</em>, <em class="sig-param">V_Arr</em>, <em class="sig-param">logNH_Arr</em>, <em class="sig-param">ta_Arr</em>, <em class="sig-param">Machine_Learning_Algorithm='Tree'</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.RT_f_esc_Machine_Values" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">RT_f_esc_Machine_Values</code><span class="sig-paren">(</span><em class="sig-param">Geometry</em>, <em class="sig-param">V_Arr</em>, <em class="sig-param">logNH_Arr</em>, <em class="sig-param">ta_Arr</em>, <em class="sig-param">Machine_Learning_Algorithm='Tree'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#RT_f_esc_Machine_Values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.RT_f_esc_Machine_Values" title="Permalink to this definition">¶</a></dt>
+<dd><p>Anallytic expression of the escape fraction as a function of the
+dust optical depth (Gurung-lopez et al. 2019b). This uses the directly
+the escape fraction.</p>
+<p><strong>Input</strong>:</p>
+<dl class="simple">
+<dt>Geometry<span class="classifier">String</span></dt><dd><dl class="simple">
+<dt>Outflow configuration to use: ‘Thin_Shell’  , ‘Galactic_Wind’  </dt><dd><p>, ‘Bicone_X_Slab_In’ , ‘Bicone_X_Slab_Out’</p>
+</dd>
+</dl>
+</dd>
+<dt>V_Arr<span class="classifier">1-D sequence of floats</span></dt><dd><p>Outflow bulk velocity [km/s]</p>
+</dd>
+<dt>logNH_Ar<span class="classifier">1-D sequence of floats</span></dt><dd><p>logarithm of the neutral hydrogen column density [cm**-2]</p>
+</dd>
+<dt>ta_Arr<span class="classifier">1-D sequence of floats</span></dt><dd><p>Dust optical depth [no dimensions]</p>
+</dd>
+<dt>Machine_Learning_Algorithm<span class="classifier">string</span></dt><dd><p>Machine learning algorithm: ‘KN’, ‘Grad’, ‘Tree’ or ‘Forest’</p>
+</dd>
+</dl>
+<p><strong>Output</strong>:</p>
+<dl class="simple">
+<dt>f_esc_Arr<span class="classifier">1-D sequence of floats</span></dt><dd><p>Escape fractions for the input configurations [no dimensions]</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="function">
 <dt id="funcs.Signal_to_noise_estimator">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Signal_to_noise_estimator</code><span class="sig-paren">(</span><em class="sig-param">w_Arr</em>, <em class="sig-param">Line_Arr</em>, <em class="sig-param">w_line</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.Signal_to_noise_estimator" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Signal_to_noise_estimator</code><span class="sig-paren">(</span><em class="sig-param">w_Arr</em>, <em class="sig-param">Line_Arr</em>, <em class="sig-param">w_line</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#Signal_to_noise_estimator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.Signal_to_noise_estimator" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="funcs.Test_1">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Test_1</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#funcs.Test_1" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Test_1</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#Test_1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.Test_1" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="funcs.Test_2">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Test_2</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#funcs.Test_2" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Test_2</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#Test_2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.Test_2" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="funcs.Test_Installation">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Test_Installation</code><span class="sig-paren">(</span><em class="sig-param">Make_Plots=False</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.Test_Installation" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Test_Installation</code><span class="sig-paren">(</span><em class="sig-param">Make_Plots=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#Test_Installation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.Test_Installation" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="funcs.Treat_A_Line_To_NN_Input">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Treat_A_Line_To_NN_Input</code><span class="sig-paren">(</span><em class="sig-param">w_Arr</em>, <em class="sig-param">f_Arr</em>, <em class="sig-param">PIX</em>, <em class="sig-param">FWHM</em>, <em class="sig-param">Delta_min=-18.5</em>, <em class="sig-param">Delta_max=18.5</em>, <em class="sig-param">Nbins_tot=1000</em>, <em class="sig-param">Denser_Center=True</em>, <em class="sig-param">normed=False</em>, <em class="sig-param">scaled=False</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.Treat_A_Line_To_NN_Input" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Treat_A_Line_To_NN_Input</code><span class="sig-paren">(</span><em class="sig-param">w_Arr</em>, <em class="sig-param">f_Arr</em>, <em class="sig-param">PIX</em>, <em class="sig-param">FWHM</em>, <em class="sig-param">Delta_min=-18.5</em>, <em class="sig-param">Delta_max=18.5</em>, <em class="sig-param">Nbins_tot=1000</em>, <em class="sig-param">Denser_Center=True</em>, <em class="sig-param">normed=False</em>, <em class="sig-param">scaled=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#Treat_A_Line_To_NN_Input"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.Treat_A_Line_To_NN_Input" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="funcs.bin_one_line">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">bin_one_line</code><span class="sig-paren">(</span><em class="sig-param">wave_Arr_line</em>, <em class="sig-param">Line_Prob_Arr</em>, <em class="sig-param">new_wave_Arr</em>, <em class="sig-param">Bin</em>, <em class="sig-param">same_norm=False</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.bin_one_line" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">bin_one_line</code><span class="sig-paren">(</span><em class="sig-param">wave_Arr_line</em>, <em class="sig-param">Line_Prob_Arr</em>, <em class="sig-param">new_wave_Arr</em>, <em class="sig-param">Bin</em>, <em class="sig-param">same_norm=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#bin_one_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.bin_one_line" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="funcs.convert_gaussian_FWHM_to_sigma">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">convert_gaussian_FWHM_to_sigma</code><span class="sig-paren">(</span><em class="sig-param">FWHM_Arr</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.convert_gaussian_FWHM_to_sigma" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">convert_gaussian_FWHM_to_sigma</code><span class="sig-paren">(</span><em class="sig-param">FWHM_Arr</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#convert_gaussian_FWHM_to_sigma"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.convert_gaussian_FWHM_to_sigma" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function computes the sigma of a gaussian from its FWHM.</p>
-<dl>
-<dt>FWHM_Arr<span class="classifier">1-D sequence of float</span></dt><dd><blockquote>
-<div><p>Array with the Full Width Half Maximum that you 
+<p><strong>Input</strong>:</p>
+<dl class="simple">
+<dt>FWHM_Arr<span class="classifier">1-D sequence of float</span></dt><dd><p>Array with the Full Width Half Maximum that you 
 want to convert</p>
-</div></blockquote>
-<div class="versionadded">
-<p><span class="versionmodified added">New in version 1.0.1.</span></p>
-</div>
 </dd>
 </dl>
+<p><strong>Output</strong>:</p>
 <dl class="simple">
 <dt>sigma_Arr<span class="classifier">1-D sequence of float</span></dt><dd><p>The width of the FWHM_Arr</p>
 </dd>
@@ -531,22 +841,66 @@ want to convert</p>
 
 <dl class="function">
 <dt id="funcs.convert_lamda_into_x">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">convert_lamda_into_x</code><span class="sig-paren">(</span><em class="sig-param">lamda</em>, <em class="sig-param">T4=None</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.convert_lamda_into_x" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">convert_lamda_into_x</code><span class="sig-paren">(</span><em class="sig-param">lamda</em>, <em class="sig-param">T4=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#convert_lamda_into_x"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.convert_lamda_into_x" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function converts from frequency in Doppler
+units to wavelength</p>
+<p><strong>Input</strong>:</p>
+<dl class="simple">
+<dt>lamda<span class="classifier">1-D sequence of float</span></dt><dd><p>wavelength</p>
+</dd>
+<dt>T4<span class="classifier">optional float</span></dt><dd><p>Temperature in units of 10**4 K:
+T4 = T[k] / 10**4</p>
+</dd>
+</dl>
+<p><strong>Output</strong>:</p>
+<dl class="simple">
+<dt>x_Arr<span class="classifier">1-D sequence of float</span></dt><dd><p>Frequency in Doppler units.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="function">
 <dt id="funcs.convert_x_into_lamda">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">convert_x_into_lamda</code><span class="sig-paren">(</span><em class="sig-param">x</em>, <em class="sig-param">T4=None</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.convert_x_into_lamda" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">convert_x_into_lamda</code><span class="sig-paren">(</span><em class="sig-param">x</em>, <em class="sig-param">T4=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#convert_x_into_lamda"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.convert_x_into_lamda" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function converts from frequency in Doppler
+units to wavelength</p>
+<p><strong>Input</strong>:</p>
+<dl class="simple">
+<dt>x<span class="classifier">1-D sequence of float</span></dt><dd><p>Frequency in Doppler units.</p>
+</dd>
+<dt>T4<span class="classifier">optional float</span></dt><dd><p>Temperature in units of 10**4 K:
+T4 = T[k] / 10**4</p>
+</dd>
+</dl>
+<p><strong>Output</strong>:</p>
+<dl class="simple">
+<dt>w_Arr<span class="classifier">1-D sequence of float</span></dt><dd><p>wavelength.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="function">
 <dt id="funcs.define_RT_parameters">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">define_RT_parameters</code><span class="sig-paren">(</span><em class="sig-param">T4=None</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.define_RT_parameters" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">define_RT_parameters</code><span class="sig-paren">(</span><em class="sig-param">T4=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#define_RT_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.define_RT_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function gives the parameters use to compute useful 
+variables when working with radiative transfer.</p>
+<p><strong>Input</strong>:</p>
+<dl class="simple">
+<dt>T4<span class="classifier">optional float</span></dt><dd><p>Temperature in units of 10**4 K:
+T4 = T[k] / 10**4</p>
+</dd>
+</dl>
+<p><strong>Output</strong>:</p>
+<dl class="simple">
+<dt>nu0<span class="classifier">float</span></dt><dd><p>Lyaman-alpha frequency.</p>
+</dd>
+</dl>
+<p>Dv : float</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="funcs.dilute_line">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">dilute_line</code><span class="sig-paren">(</span><em class="sig-param">wave_Arr</em>, <em class="sig-param">Spec_Arr</em>, <em class="sig-param">FWHM</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.dilute_line" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">dilute_line</code><span class="sig-paren">(</span><em class="sig-param">wave_Arr</em>, <em class="sig-param">Spec_Arr</em>, <em class="sig-param">FWHM</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#dilute_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.dilute_line" title="Permalink to this definition">¶</a></dt>
 <dd><p>This functions dilutes a given spectrum by convolving with a gaussian
 filter.</p>
 <dl>
@@ -579,7 +933,7 @@ has to be the same as wave_Arr and Spec_Arr.</p>
 
 <dl class="function">
 <dt id="funcs.dilute_line_changing_FWHM">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">dilute_line_changing_FWHM</code><span class="sig-paren">(</span><em class="sig-param">wave_Arr</em>, <em class="sig-param">Spec_Arr</em>, <em class="sig-param">FWHM_Arr</em>, <em class="sig-param">same_norm=False</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.dilute_line_changing_FWHM" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">dilute_line_changing_FWHM</code><span class="sig-paren">(</span><em class="sig-param">wave_Arr</em>, <em class="sig-param">Spec_Arr</em>, <em class="sig-param">FWHM_Arr</em>, <em class="sig-param">same_norm=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#dilute_line_changing_FWHM"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.dilute_line_changing_FWHM" title="Permalink to this definition">¶</a></dt>
 <dd><p>This functions dilutes a given spectrum by convolving with a gaussian 
 filter.</p>
 <dl>
@@ -612,63 +966,98 @@ has to be the same as wave_Arr and Spec_Arr.</p>
 
 <dl class="function">
 <dt id="funcs.fesc_of_ta_Bicone">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">fesc_of_ta_Bicone</code><span class="sig-paren">(</span><em class="sig-param">ta</em>, <em class="sig-param">CCC</em>, <em class="sig-param">KKK</em>, <em class="sig-param">LLL</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.fesc_of_ta_Bicone" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">fesc_of_ta_Bicone</code><span class="sig-paren">(</span><em class="sig-param">ta</em>, <em class="sig-param">CCC</em>, <em class="sig-param">KKK</em>, <em class="sig-param">LLL</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#fesc_of_ta_Bicone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.fesc_of_ta_Bicone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Anallytic expression of the escape fraction as a function of the
+dust optical depth (Gurung-lopez et al. 2019b)</p>
+<p><strong>Input</strong>:</p>
+<dl class="simple">
+<dt>ta<span class="classifier">1-D sequence of floats</span></dt><dd><p>Dust optical depth [no dimensions]</p>
+</dd>
+<dt>CCC<span class="classifier">float</span></dt><dd><p>CCC parameter</p>
+</dd>
+<dt>KKK<span class="classifier">float</span></dt><dd><p>KKK parameter</p>
+</dd>
+<dt>LLL<span class="classifier">float</span></dt><dd><p>LLL parameter</p>
+</dd>
+</dl>
+<p><strong>Output</strong>:</p>
+<dl class="simple">
+<dt>fesc<span class="classifier">1-D sequence of floats</span></dt><dd><p>Escape fractions for the input configurations [no dimensions]</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="function">
 <dt id="funcs.fesc_of_ta_Thin_and_Wind">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">fesc_of_ta_Thin_and_Wind</code><span class="sig-paren">(</span><em class="sig-param">ta</em>, <em class="sig-param">CCC</em>, <em class="sig-param">KKK</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.fesc_of_ta_Thin_and_Wind" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">fesc_of_ta_Thin_and_Wind</code><span class="sig-paren">(</span><em class="sig-param">ta</em>, <em class="sig-param">CCC</em>, <em class="sig-param">KKK</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#fesc_of_ta_Thin_and_Wind"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.fesc_of_ta_Thin_and_Wind" title="Permalink to this definition">¶</a></dt>
+<dd><p>Anallytic expression of the escape fraction as a function of the
+dust optical depth (Gurung-lopez et al. 2019a)</p>
+<p><strong>Input</strong>:</p>
+<dl class="simple">
+<dt>ta<span class="classifier">1-D sequence of floats</span></dt><dd><p>Dust optical depth [no dimensions]</p>
+</dd>
+<dt>CCC<span class="classifier">float</span></dt><dd><p>CCC parameter</p>
+</dd>
+<dt>KKK<span class="classifier">float</span></dt><dd><p>KKK parameter</p>
+</dd>
+</dl>
+<p><strong>Output</strong>:</p>
+<dl class="simple">
+<dt>fesc<span class="classifier">1-D sequence of floats</span></dt><dd><p>Escape fractions for the input configurations [no dimensions]</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="function">
 <dt id="funcs.gaus">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">gaus</code><span class="sig-paren">(</span><em class="sig-param">x_Arr</em>, <em class="sig-param">A</em>, <em class="sig-param">mu</em>, <em class="sig-param">sigma</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.gaus" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">gaus</code><span class="sig-paren">(</span><em class="sig-param">x_Arr</em>, <em class="sig-param">A</em>, <em class="sig-param">mu</em>, <em class="sig-param">sigma</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#gaus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.gaus" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="funcs.generate_a_REAL_line_Noise_w">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">generate_a_REAL_line_Noise_w</code><span class="sig-paren">(</span><em class="sig-param">z_f</em>, <em class="sig-param">V_f</em>, <em class="sig-param">logNH_f</em>, <em class="sig-param">ta_f</em>, <em class="sig-param">F_line_f</em>, <em class="sig-param">logEW_f</em>, <em class="sig-param">Wi_f</em>, <em class="sig-param">Noise_w_Arr</em>, <em class="sig-param">Noise_Arr</em>, <em class="sig-param">FWHM_f</em>, <em class="sig-param">PIX_f</em>, <em class="sig-param">w_min</em>, <em class="sig-param">w_max</em>, <em class="sig-param">DATA_LyaRT</em>, <em class="sig-param">Geometry</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.generate_a_REAL_line_Noise_w" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">generate_a_REAL_line_Noise_w</code><span class="sig-paren">(</span><em class="sig-param">z_f</em>, <em class="sig-param">V_f</em>, <em class="sig-param">logNH_f</em>, <em class="sig-param">ta_f</em>, <em class="sig-param">F_line_f</em>, <em class="sig-param">logEW_f</em>, <em class="sig-param">Wi_f</em>, <em class="sig-param">Noise_w_Arr</em>, <em class="sig-param">Noise_Arr</em>, <em class="sig-param">FWHM_f</em>, <em class="sig-param">PIX_f</em>, <em class="sig-param">w_min</em>, <em class="sig-param">w_max</em>, <em class="sig-param">DATA_LyaRT</em>, <em class="sig-param">Geometry</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#generate_a_REAL_line_Noise_w"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.generate_a_REAL_line_Noise_w" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="funcs.generate_a_REAL_line_SN">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">generate_a_REAL_line_SN</code><span class="sig-paren">(</span><em class="sig-param">z_f</em>, <em class="sig-param">V_f</em>, <em class="sig-param">logNH_f</em>, <em class="sig-param">ta_f</em>, <em class="sig-param">F_line_f</em>, <em class="sig-param">SN_f</em>, <em class="sig-param">FWHM_f</em>, <em class="sig-param">PIX_f</em>, <em class="sig-param">w_min</em>, <em class="sig-param">w_max</em>, <em class="sig-param">DATA_LyaRT</em>, <em class="sig-param">Geometry</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.generate_a_REAL_line_SN" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">generate_a_REAL_line_SN</code><span class="sig-paren">(</span><em class="sig-param">z_f</em>, <em class="sig-param">V_f</em>, <em class="sig-param">logNH_f</em>, <em class="sig-param">ta_f</em>, <em class="sig-param">F_line_f</em>, <em class="sig-param">SN_f</em>, <em class="sig-param">FWHM_f</em>, <em class="sig-param">PIX_f</em>, <em class="sig-param">w_min</em>, <em class="sig-param">w_max</em>, <em class="sig-param">DATA_LyaRT</em>, <em class="sig-param">Geometry</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#generate_a_REAL_line_SN"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.generate_a_REAL_line_SN" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="funcs.generate_a_obs_line">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">generate_a_obs_line</code><span class="sig-paren">(</span><em class="sig-param">z_f</em>, <em class="sig-param">V_f</em>, <em class="sig-param">logNH_f</em>, <em class="sig-param">ta_f</em>, <em class="sig-param">DATA_LyaRT</em>, <em class="sig-param">Geometry</em>, <em class="sig-param">logEW_f=None</em>, <em class="sig-param">Wi_f=None</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.generate_a_obs_line" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">generate_a_obs_line</code><span class="sig-paren">(</span><em class="sig-param">z_f</em>, <em class="sig-param">V_f</em>, <em class="sig-param">logNH_f</em>, <em class="sig-param">ta_f</em>, <em class="sig-param">DATA_LyaRT</em>, <em class="sig-param">Geometry</em>, <em class="sig-param">logEW_f=None</em>, <em class="sig-param">Wi_f=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#generate_a_obs_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.generate_a_obs_line" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="funcs.get_solutions_from_flat_chain">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">get_solutions_from_flat_chain</code><span class="sig-paren">(</span><em class="sig-param">flat_chains</em>, <em class="sig-param">Q_Arr</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.get_solutions_from_flat_chain" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">get_solutions_from_flat_chain</code><span class="sig-paren">(</span><em class="sig-param">flat_chains</em>, <em class="sig-param">Q_Arr</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#get_solutions_from_flat_chain"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.get_solutions_from_flat_chain" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="funcs.get_solutions_from_sampler">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">get_solutions_from_sampler</code><span class="sig-paren">(</span><em class="sig-param">sampler</em>, <em class="sig-param">N_walkers</em>, <em class="sig-param">N_burn</em>, <em class="sig-param">N_steps</em>, <em class="sig-param">Q_Arr</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.get_solutions_from_sampler" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">get_solutions_from_sampler</code><span class="sig-paren">(</span><em class="sig-param">sampler</em>, <em class="sig-param">N_walkers</em>, <em class="sig-param">N_burn</em>, <em class="sig-param">N_steps</em>, <em class="sig-param">Q_Arr</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#get_solutions_from_sampler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.get_solutions_from_sampler" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="funcs.get_solutions_from_sampler_mean">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">get_solutions_from_sampler_mean</code><span class="sig-paren">(</span><em class="sig-param">sampler</em>, <em class="sig-param">N_walkers</em>, <em class="sig-param">N_burn</em>, <em class="sig-param">N_steps</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.get_solutions_from_sampler_mean" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">get_solutions_from_sampler_mean</code><span class="sig-paren">(</span><em class="sig-param">sampler</em>, <em class="sig-param">N_walkers</em>, <em class="sig-param">N_burn</em>, <em class="sig-param">N_steps</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#get_solutions_from_sampler_mean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.get_solutions_from_sampler_mean" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="funcs.get_solutions_from_sampler_peak">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">get_solutions_from_sampler_peak</code><span class="sig-paren">(</span><em class="sig-param">sampler</em>, <em class="sig-param">N_walkers</em>, <em class="sig-param">N_burn</em>, <em class="sig-param">N_steps</em>, <em class="sig-param">N_hist_steps</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.get_solutions_from_sampler_peak" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">get_solutions_from_sampler_peak</code><span class="sig-paren">(</span><em class="sig-param">sampler</em>, <em class="sig-param">N_walkers</em>, <em class="sig-param">N_burn</em>, <em class="sig-param">N_steps</em>, <em class="sig-param">N_hist_steps</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#get_solutions_from_sampler_peak"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.get_solutions_from_sampler_peak" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="funcs.init_walkers_5">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">init_walkers_5</code><span class="sig-paren">(</span><em class="sig-param">N_walkers</em>, <em class="sig-param">N_dim</em>, <em class="sig-param">log_V_in</em>, <em class="sig-param">log_N_in</em>, <em class="sig-param">log_t_in</em>, <em class="sig-param">z_in</em>, <em class="sig-param">log_E_in</em>, <em class="sig-param">W_in</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.init_walkers_5" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">init_walkers_5</code><span class="sig-paren">(</span><em class="sig-param">N_walkers</em>, <em class="sig-param">N_dim</em>, <em class="sig-param">log_V_in</em>, <em class="sig-param">log_N_in</em>, <em class="sig-param">log_t_in</em>, <em class="sig-param">z_in</em>, <em class="sig-param">log_E_in</em>, <em class="sig-param">W_in</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#init_walkers_5"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.init_walkers_5" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="funcs.load_Grid_Line">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">load_Grid_Line</code><span class="sig-paren">(</span><em class="sig-param">Geometry</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.load_Grid_Line" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">load_Grid_Line</code><span class="sig-paren">(</span><em class="sig-param">Geometry</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#load_Grid_Line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.load_Grid_Line" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the dictionary with all the properties of the grid where the lines were run.</p>
+<p><strong>Input</strong></p>
 <dl class="simple">
 <dt>Geometry<span class="classifier">string</span></dt><dd><p>The outflow geometry to use: Options: ‘Thins_Shell’,
 ‘Galactic_Wind’ , ‘Bicone_X_Slab’.</p>
@@ -679,6 +1068,7 @@ bicone is edge-on. The probability of being face
 on is np.cos( np.pi/4 ).</p>
 </dd>
 </dl>
+<p><strong>Output</strong></p>
 <dl>
 <dt>loaded_model<span class="classifier">Dictionary</span></dt><dd><p>This dictonary have all the information of the grid.
 Entries:</p>
@@ -701,44 +1091,161 @@ loaded_model[‘logta_Arr’][k]</p>
 
 <dl class="function">
 <dt id="funcs.load_Grid_fesc">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">load_Grid_fesc</code><span class="sig-paren">(</span><em class="sig-param">Geometry</em>, <em class="sig-param">MODE</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.load_Grid_fesc" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">load_Grid_fesc</code><span class="sig-paren">(</span><em class="sig-param">Geometry</em>, <em class="sig-param">MODE</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#load_Grid_fesc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.load_Grid_fesc" title="Permalink to this definition">¶</a></dt>
+<dd><p>This functions gives you grids of the escape fraction</p>
+<p><strong>Input</strong>:</p>
+<dl class="simple">
+<dt>Geometry<span class="classifier">String</span></dt><dd><dl class="simple">
+<dt>Outflow configuration to use: ‘Thin_Shell’  , ‘Galactic_Wind’  </dt><dd><p>, ‘Bicone_X_Slab_In’ , ‘Bicone_X_Slab_Out’</p>
+</dd>
+</dl>
+</dd>
+<dt>MODE<span class="classifier">String</span></dt><dd><p>Parametrization of the escape fraction. ‘Parameters’ or ‘values’</p>
+</dd>
+</dl>
+<p><strong>Output</strong>:</p>
+<p>loaded_model : file the grid of f_esc parameters/values.</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="funcs.load_machine_fesc">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">load_machine_fesc</code><span class="sig-paren">(</span><em class="sig-param">Machine</em>, <em class="sig-param">property_name</em>, <em class="sig-param">Geometry</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.load_machine_fesc" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">load_machine_fesc</code><span class="sig-paren">(</span><em class="sig-param">Machine</em>, <em class="sig-param">property_name</em>, <em class="sig-param">Geometry</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#load_machine_fesc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.load_machine_fesc" title="Permalink to this definition">¶</a></dt>
 <dd><p>This functions gives you the trained model that you want to use.</p>
+<p><strong>Input</strong>:</p>
+<dl class="simple">
+<dt>Machine<span class="classifier">String</span></dt><dd><p>Kind of algorithm: ‘KN’, ‘Grad’, ‘Tree’ or ‘Forest’</p>
+</dd>
+<dt>property_name<span class="classifier">String</span></dt><dd><p>The variable to import: ‘KKK’ , ‘CCC’ , ‘LLL’ or ‘f_esc’</p>
+</dd>
+<dt>Geometry<span class="classifier">String</span></dt><dd><dl class="simple">
+<dt>Outflow configuration to use: ‘Thin_Shell’  , ‘Galactic_Wind’  </dt><dd><p>, ‘Bicone_X_Slab_In’ , ‘Bicone_X_Slab_Out’</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p><strong>Output</strong>:</p>
+<p>loaded_model : file with all the necesary to do machine learning</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="funcs.log_likeliehood_of_model_5">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">log_likeliehood_of_model_5</code><span class="sig-paren">(</span><em class="sig-param">theta</em>, <em class="sig-param">w_obs_Arr</em>, <em class="sig-param">f_obs_Arr</em>, <em class="sig-param">s_obs_Arr</em>, <em class="sig-param">FWHM</em>, <em class="sig-param">PIX</em>, <em class="sig-param">w_min</em>, <em class="sig-param">w_max</em>, <em class="sig-param">DATA_LyaRT</em>, <em class="sig-param">Geometry</em>, <em class="sig-param">z_in</em>, <em class="sig-param">FORCE_z=False</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.log_likeliehood_of_model_5" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">log_likeliehood_of_model_5</code><span class="sig-paren">(</span><em class="sig-param">theta</em>, <em class="sig-param">w_obs_Arr</em>, <em class="sig-param">f_obs_Arr</em>, <em class="sig-param">s_obs_Arr</em>, <em class="sig-param">FWHM</em>, <em class="sig-param">PIX</em>, <em class="sig-param">w_min</em>, <em class="sig-param">w_max</em>, <em class="sig-param">DATA_LyaRT</em>, <em class="sig-param">Geometry</em>, <em class="sig-param">z_in</em>, <em class="sig-param">FORCE_z=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#log_likeliehood_of_model_5"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.log_likeliehood_of_model_5" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="funcs.log_likelihood">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">log_likelihood</code><span class="sig-paren">(</span><em class="sig-param">w_obs_Arr</em>, <em class="sig-param">f_obs_Arr</em>, <em class="sig-param">s_obs_Arr</em>, <em class="sig-param">w_model_Arr</em>, <em class="sig-param">f_model_Arr</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.log_likelihood" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">log_likelihood</code><span class="sig-paren">(</span><em class="sig-param">w_obs_Arr</em>, <em class="sig-param">f_obs_Arr</em>, <em class="sig-param">s_obs_Arr</em>, <em class="sig-param">w_model_Arr</em>, <em class="sig-param">f_model_Arr</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#log_likelihood"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.log_likelihood" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="funcs.plot_a_rebinned_line">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">plot_a_rebinned_line</code><span class="sig-paren">(</span><em class="sig-param">new_wave_Arr</em>, <em class="sig-param">binned_line</em>, <em class="sig-param">Bin</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.plot_a_rebinned_line" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">plot_a_rebinned_line</code><span class="sig-paren">(</span><em class="sig-param">new_wave_Arr</em>, <em class="sig-param">binned_line</em>, <em class="sig-param">Bin</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#plot_a_rebinned_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.plot_a_rebinned_line" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="funcs.pre_treatment_Line_profile">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">pre_treatment_Line_profile</code><span class="sig-paren">(</span><em class="sig-param">Geometry</em>, <em class="sig-param">V_Arr</em>, <em class="sig-param">logNH_Arr</em>, <em class="sig-param">ta_Arr</em>, <em class="sig-param">logEW_Arr=None</em>, <em class="sig-param">Wi_Arr=None</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.pre_treatment_Line_profile" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">pre_treatment_Line_profile</code><span class="sig-paren">(</span><em class="sig-param">Geometry</em>, <em class="sig-param">V_Arr</em>, <em class="sig-param">logNH_Arr</em>, <em class="sig-param">ta_Arr</em>, <em class="sig-param">logEW_Arr=None</em>, <em class="sig-param">Wi_Arr=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#pre_treatment_Line_profile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.pre_treatment_Line_profile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks the inflow/outflow parameters before doing the proper computation.</p>
+<p><strong>Input</strong>:</p>
+<dl class="simple">
+<dt>Geometry<span class="classifier">String</span></dt><dd><dl class="simple">
+<dt>Outflow configuration to use: ‘Thin_Shell’  , ‘Galactic_Wind’  </dt><dd><dl class="simple">
+<dt>, ‘Bicone_X_Slab_In’ , ‘Bicone_X_Slab_Out’,</dt><dd><p>‘Thin_Shell_Cont’</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+<dt>V_Value<span class="classifier">1-D sequence of bool</span></dt><dd><p>Outflow bulk velocity [km/s]</p>
+</dd>
+<dt>logNH_Value<span class="classifier">1-D sequence of bool</span></dt><dd><p>logarithm of the neutral hydrogen column density [cm**-2]</p>
+</dd>
+<dt>ta_Value<span class="classifier">1-D sequence of bool</span></dt><dd><p>Dust optical depth [no dimensions]</p>
+</dd>
+<dt>logEW_Value<span class="classifier">Optional 1-D sequence of bool</span></dt><dd><p>Logarithm of rest frame equiavlent width [A]
+Default = None</p>
+</dd>
+<dt>Wi_Value<span class="classifier">Optional 1-D sequence of bool</span></dt><dd><p>Intrinsic width line in the rest frame [A]
+Default = None</p>
+</dd>
+</dl>
+<p><strong>Output</strong>:</p>
+<dl class="simple">
+<dt>Bool_good<span class="classifier">1-D sequence of bool</span></dt><dd><p>1 if the parameters are good, 0 if they are bad.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="function">
 <dt id="funcs.pre_treatment_Line_profile_MCMC">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">pre_treatment_Line_profile_MCMC</code><span class="sig-paren">(</span><em class="sig-param">Geometry</em>, <em class="sig-param">V_Value</em>, <em class="sig-param">logNH_Value</em>, <em class="sig-param">ta_Value</em>, <em class="sig-param">logEW_Value=None</em>, <em class="sig-param">Wi_Value=None</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.pre_treatment_Line_profile_MCMC" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">pre_treatment_Line_profile_MCMC</code><span class="sig-paren">(</span><em class="sig-param">Geometry</em>, <em class="sig-param">V_Value</em>, <em class="sig-param">logNH_Value</em>, <em class="sig-param">ta_Value</em>, <em class="sig-param">logEW_Value=None</em>, <em class="sig-param">Wi_Value=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#pre_treatment_Line_profile_MCMC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.pre_treatment_Line_profile_MCMC" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks the inflow/outflow parameters before doing the proper computation.</p>
+<p><strong>Input</strong>:</p>
+<dl class="simple">
+<dt>Geometry<span class="classifier">String</span></dt><dd><dl class="simple">
+<dt>Outflow configuration to use: ‘Thin_Shell’  , ‘Galactic_Wind’  </dt><dd><dl class="simple">
+<dt>, ‘Bicone_X_Slab_In’ , ‘Bicone_X_Slab_Out’</dt><dd><p>‘Thin_Shell_Cont’</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+<dt>V_Value<span class="classifier">float</span></dt><dd><p>Outflow bulk velocity [km/s]</p>
+</dd>
+<dt>logNH_Value<span class="classifier">float</span></dt><dd><p>logarithm of the neutral hydrogen column density [cm**-2]</p>
+</dd>
+<dt>ta_Value<span class="classifier">float</span></dt><dd><p>Dust optical depth [no dimensions]</p>
+</dd>
+<dt>logEW_Value<span class="classifier">Optinal float</span></dt><dd><p>Logarithm of rest frame equiavlent width [A]
+Default = None</p>
+</dd>
+<dt>Wi_Value<span class="classifier">Optinal float</span></dt><dd><p>Intrinsic width line in the rest frame [A]
+Default = None</p>
+</dd>
+</dl>
+<p><strong>Output</strong>:</p>
+<dl class="simple">
+<dt>Bool_good<span class="classifier">1-D sequence of bool</span></dt><dd><p>1 if the parameters are good, 0 if they are bad.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="function">
 <dt id="funcs.pre_treatment_f_esc">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">pre_treatment_f_esc</code><span class="sig-paren">(</span><em class="sig-param">Geometry</em>, <em class="sig-param">V_Arr</em>, <em class="sig-param">logNH_Arr</em>, <em class="sig-param">ta_Arr</em>, <em class="sig-param">MODE</em><span class="sig-paren">)</span><a class="headerlink" href="#funcs.pre_treatment_f_esc" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">pre_treatment_f_esc</code><span class="sig-paren">(</span><em class="sig-param">Geometry</em>, <em class="sig-param">V_Arr</em>, <em class="sig-param">logNH_Arr</em>, <em class="sig-param">ta_Arr</em>, <em class="sig-param">MODE</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#pre_treatment_f_esc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.pre_treatment_f_esc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks the inflow/outflow parameters before doing the proper computation.</p>
+<p><strong>Input</strong>:</p>
+<dl>
+<dt>Geometry<span class="classifier">String</span></dt><dd><dl class="simple">
+<dt>Outflow configuration to use: ‘Thin_Shell’  , ‘Galactic_Wind’  </dt><dd><p>, ‘Bicone_X_Slab_In’ , ‘Bicone_X_Slab_Out’</p>
+</dd>
+</dl>
+</dd>
+<dt>V_Arr<span class="classifier">1-D sequence of floats</span></dt><dd><p>Outflow bulk velocity [km/s]</p>
+</dd>
+<dt>logNH_Ar<span class="classifier">1-D sequence of floats</span></dt><dd><p>logarithm of the neutral hydrogen column density [cm**-2]</p>
+</dd>
+<dt>ta_Arr<span class="classifier">1-D sequence of floats</span></dt><dd><p>Dust optical depth [no dimensions]</p>
+</dd>
+<dt>MODE<span class="classifier">optional string</span></dt><dd><dl>
+<dt>Set the mode in which the escape fraction is computed. It can be:</dt><dd><p>Analytic        : it uses an analytic equation fitted to the output of the RT MC code.
+Parametrization : it computes the escape fraction using a function that depends on the</p>
+<blockquote>
+<div><p>dust optical depts as in Neufeld et al. 1990.</p>
+</div></blockquote>
+<p>Raw             : it uses directly the output of the RT MC code.</p>
+<p>Default = ‘Parametrization’</p>
+<p>Kind of algorithm: ‘KN’, ‘Grad’, ‘Tree’ or ‘Forest’</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p><strong>Output</strong>:</p>
+<dl class="simple">
+<dt>mask_good<span class="classifier">1-D sequence of bool</span></dt><dd><p>1 if the parameters are good, 0 if they are bad.</p>
+</dd>
+</dl>
+</dd></dl>
 
 </div>
 

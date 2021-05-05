@@ -4,16 +4,6 @@ zELDA es a phantastic code!!
 import os
 
 
-
-
-#====================================================================#
-#====================================================================#
-#====================================================================#
-Data_location = '/global/users/sidgurung/PROMARE/Grids/'
-#====================================================================#
-#====================================================================#
-#====================================================================#
-
 import time
 
 #from pylab import *
@@ -42,8 +32,24 @@ from pyswarms.single.global_best import GlobalBestPSO
 #====================================================================#
 #====================================================================#
 #====================================================================#
+Data_location = '/global/users/sidgurung/PROMARE/Grids/'
+#====================================================================#
+#====================================================================#
+#====================================================================#
 def Check_if_DATA_files_are_found():
+    '''
+        This function checks if all the data files are in the set directory.
 
+        **Input**:
+
+        None : None
+
+        **Output**:
+
+        Bool_1 : Bool
+                    1 if     found.
+                    0 if not found.
+    '''
     this_dir, this_filename = os.path.split(__file__)
 
     Bool_1 = True
@@ -62,56 +68,25 @@ def Check_if_DATA_files_are_found():
 #====================================================================#
 #====================================================================#
 #====================================================================#
-#def Download_data():
-#
-#    this_dir, this_filename = os.path.split(__file__)
-#
-#    arxiv_with_file_names = this_dir + '/DATA/List_of_DATA_files'
-#
-#    file_where_to_store_data = Data_location #+ '/DATA/'
-#
-#    print( 'This package is stored in ', this_dir , '(Please, note that we are not spying you.)' )
-#
-#    print( 'Saving data in...' , file_where_to_store_data )
-#
-#    http_url = 'http://www.cefca.es/people/~sidgurung/ShouT/ShouT/DATA/'
-#
-#    testfile = urllib.request.URLopener()
-#
-#    with open( arxiv_with_file_names ) as fd:
-#
-#        for line in fd.readlines():
-#
-#            arxiv_name = line.strip('\n')
-#
-#            print( 'Downloaing...' , http_url + arxiv_name )
-#
-#            testfile.retrieve( http_url + arxiv_name , arxiv_name )
-#
-#            print( '--> Done!' )
-#
-#            print( 'Moving Downloaded file to' , file_where_to_store_data )
-#
-#            shutil.move( arxiv_name , file_where_to_store_data + arxiv_name )
-#
-#            print( '--> Done' )
-#
-#    if Check_if_DATA_files_are_found():
-#        print( '\nHey man, looks like everything is done! That is brilliant!' )
-#
-#    else:
-#        print( 'This is weird... We just downloaded everthing but the files are not found...Exiting...')
-#        print( 'Error. Human is dead. Mismatch.')
-#        sys.exit()
-#
-#    return
-#====================================================================#
-#====================================================================#
-#====================================================================#
-def load_machine_fesc( Machine , property_name , Geometry ):#, INSIDE_BICONE=True ):
-
+def load_machine_fesc( Machine , property_name , Geometry ):
     '''
         This functions gives you the trained model that you want to use.
+
+        **Input**:
+
+        Machine : String
+                    Kind of algorithm: 'KN', 'Grad', 'Tree' or 'Forest'
+        
+        property_name : String
+                    The variable to import: 'KKK' , 'CCC' , 'LLL' or 'f_esc' 
+
+        Geometry : String
+                    Outflow configuration to use: 'Thin_Shell'  , 'Galactic_Wind'  
+                                       , 'Bicone_X_Slab_In' , 'Bicone_X_Slab_Out'
+
+        **Output**:
+
+        loaded_model : file with all the necesary to do machine learning
     '''
 
     Machine_Set = [ 'KN' , 'Grad' , 'Tree' , 'Forest'  ]
@@ -127,15 +102,6 @@ def load_machine_fesc( Machine , property_name , Geometry ):#, INSIDE_BICONE=Tru
     index = np.where( Geometry == np.array(Geometry_Set) )[0][0]
 
     this_dir, this_filename = os.path.split(__file__)
-
-    #/global/users/sidgurung/PROMARE/Grids
-
-    print( 'HARDCORING PATH TO GRIDS!!!!' )
-    #this_dir = '/global/users/sidgurung/PROMARE/Grids/'
-
-    #this_dir = '/global/users/sidgurung/PROMARE/Grids/'
-
-    #filename_root = 'DATA/finalized_model_'+ geo_code[index] +'_f_esc_' + Machine + '_' + property_name
 
     filename_root = 'finalized_model_'+ geo_code[index] +'_f_esc_' + Machine + '_' + property_name 
 
@@ -156,6 +122,27 @@ def load_machine_fesc( Machine , property_name , Geometry ):#, INSIDE_BICONE=Tru
 #====================================================================#
 #====================================================================#
 def Analytic_f_esc_Thin_Shell( V_Arr , logNH_Arr , ta_Arr ):
+
+    '''
+        Return the escape fraction computed analytically for the Thin Shell
+        (Gurung-lopez et al. 2019a)
+
+        **Input**:
+
+        V_Arr : 1-D sequence of floats
+                    Outflow bulk velocity [km/s] 
+        
+        logNH_Arr : 1-D sequence of floats
+                    logarithm of the neutral hydrogen column density [cm**-2] 
+
+        ta_Arr : 1-D sequence of floats
+                    Dust optical depth [no dimensions]
+
+        **Output**:
+
+        fesc :  1-D sequence of floats
+                    Escape fractions for the input configurations [no dimensions] 
+    '''
 
     NH18 = 10 ** ( logNH_Arr - 18 ) 
 
@@ -186,6 +173,26 @@ def Analytic_f_esc_Thin_Shell( V_Arr , logNH_Arr , ta_Arr ):
 #====================================================================#
 #====================================================================#
 def Analytic_f_esc_Wind( V_Arr , logNH_Arr , ta_Arr ):
+    '''
+        Return the escape fraction computed analytically for the Galactic Wind
+        (Gurung-lopez et al. 2019a)
+
+        **Input**:
+
+        V_Arr : 1-D sequence of floats
+                    Outflow bulk velocity [km/s] 
+        
+        logNH_Ar : 1-D sequence of floats
+                    logarithm of the neutral hydrogen column density [cm**-2] 
+
+        ta_Arr : 1-D sequence of floats
+                    Dust optical depth [no dimensions]
+
+        **Output**:
+
+        fesc :  1-D sequence of floats
+                    Escape fractions for the input configurations [no dimensions] 
+    '''
 
     NH18 = 10 ** ( logNH_Arr - 18 )
 
@@ -212,6 +219,28 @@ def Analytic_f_esc_Wind( V_Arr , logNH_Arr , ta_Arr ):
 #====================================================================#
 #====================================================================#
 def  RT_f_esc_Analytic( Geometry , V_Arr , logNH_Arr , ta_Arr ):
+    '''
+        Return the escape fraction computed analytically
+        (Gurung-lopez et al. 2019a, 2019b)
+
+        **Input**:
+        Geometry : String
+                    Outflow configuration to use: 'Thin_Shell'  , 'Galactic_Wind'  
+
+        V_Arr : 1-D sequence of floats
+                    Outflow bulk velocity [km/s] 
+        
+        logNH_Arr : 1-D sequence of floats
+                    logarithm of the neutral hydrogen column density [cm**-2] 
+
+        ta_Arr : 1-D sequence of floats
+                    Dust optical depth [no dimensions]
+
+        **Output**:
+
+        fesc :  1-D sequence of floats
+                    Escape fractions for the input configurations [no dimensions] 
+    '''
 
     Geometry_Set = [ 'Thin_Shell'  , 'Galactic_Wind'  ]
 
@@ -231,6 +260,26 @@ def  RT_f_esc_Analytic( Geometry , V_Arr , logNH_Arr , ta_Arr ):
 #====================================================================#
 #====================================================================#
 def fesc_of_ta_Thin_and_Wind( ta , CCC , KKK ):
+    '''
+        Anallytic expression of the escape fraction as a function of the
+        dust optical depth (Gurung-lopez et al. 2019a)
+
+        **Input**:
+
+        ta : 1-D sequence of floats
+                    Dust optical depth [no dimensions]
+
+        CCC : float
+                    CCC parameter
+
+        KKK : float
+                    KKK parameter
+
+        **Output**:
+
+        fesc :  1-D sequence of floats
+                    Escape fractions for the input configurations [no dimensions] 
+    '''
 
     f_esc = 1./np.cosh( np.sqrt( CCC * (ta**KKK) ) )
 
@@ -239,6 +288,29 @@ def fesc_of_ta_Thin_and_Wind( ta , CCC , KKK ):
 #====================================================================#
 #====================================================================#
 def fesc_of_ta_Bicone( ta , CCC , KKK , LLL ):
+    '''
+        Anallytic expression of the escape fraction as a function of the
+        dust optical depth (Gurung-lopez et al. 2019b)
+
+        **Input**:
+
+        ta : 1-D sequence of floats
+                    Dust optical depth [no dimensions]
+
+        CCC : float
+                    CCC parameter
+
+        KKK : float
+                    KKK parameter
+
+        LLL : float
+                    LLL parameter
+
+        **Output**:
+
+        fesc :  1-D sequence of floats
+                    Escape fractions for the input configurations [no dimensions] 
+    '''
  
     f_esc = LLL * 1./np.cosh( np.sqrt( CCC * (ta**KKK) ) )
  
@@ -248,58 +320,115 @@ def fesc_of_ta_Bicone( ta , CCC , KKK , LLL ):
 #====================================================================#
 def  RT_f_esc_Machine_Parameter( Geometry , V_Arr , logNH_Arr , ta_Arr , Machine_Learning_Algorithm='Tree' ):
 
-        logNH_Arr         = np.atleast_1d( logNH_Arr )
-        ta_Arr            = np.atleast_1d(    ta_Arr )
-        V_Arr             = np.atleast_1d(     V_Arr )
-
-        Coor_matrix = np.zeros( len(V_Arr) * 2 ).reshape( len(V_Arr) , 2 )
-
-        Coor_matrix[ : , 0 ] = V_Arr
-        Coor_matrix[ : , 1 ] = logNH_Arr
-
-        if Geometry in [ 'Thin_Shell'  , 'Galactic_Wind'  ] :
-
-            CCC_machine = load_machine_fesc( Machine_Learning_Algorithm , 'CCC' , Geometry )
-            KKK_machine = load_machine_fesc( Machine_Learning_Algorithm , 'KKK' , Geometry )
-
-            CCC_model_Arr  = CCC_machine.predict( Coor_matrix )
-            KKK_model_Arr  = KKK_machine.predict( Coor_matrix )
-
-            f_esc_Arr = fesc_of_ta_Thin_and_Wind( ta_Arr , CCC_model_Arr , KKK_model_Arr )
-
-        if Geometry in [ 'Bicone_X_Slab_In' , 'Bicone_X_Slab_Out' ] :
-
-            CCC_machine_in = load_machine_fesc( Machine_Learning_Algorithm , 'CCC' , Geometry )
-            KKK_machine_in = load_machine_fesc( Machine_Learning_Algorithm , 'KKK' , Geometry )
-            LLL_machine_in = load_machine_fesc( Machine_Learning_Algorithm , 'LLL' , Geometry )
-
-            CCC_model_in_Arr  = CCC_machine_in.predict( Coor_matrix )
-            KKK_model_in_Arr  = KKK_machine_in.predict( Coor_matrix )
-            LLL_model_in_Arr  = LLL_machine_in.predict( Coor_matrix )
-
-            f_esc_Arr = fesc_of_ta_Bicone( ta_Arr , CCC_model_in_Arr , KKK_model_in_Arr , LLL_model_in_Arr )
-
-        return f_esc_Arr
+    '''
+        Anallytic expression of the escape fraction as a function of the
+        dust optical depth (Gurung-lopez et al. 2019b). This uses the parametric
+        expression of the escape fraction.
+    
+        **Input**:
+    
+        Geometry : String
+                    Outflow configuration to use: 'Thin_Shell'  , 'Galactic_Wind'  
+                                       , 'Bicone_X_Slab_In' , 'Bicone_X_Slab_Out'
+    
+        V_Arr : 1-D sequence of floats
+                    Outflow bulk velocity [km/s] 
+        
+        logNH_Ar : 1-D sequence of floats
+                    logarithm of the neutral hydrogen column density [cm**-2] 
+    
+        ta_Arr : 1-D sequence of floats
+                    Dust optical depth [no dimensions]
+    
+        Machine_Learning_Algorithm : string
+                    Machine learning algorithm: 'KN', 'Grad', 'Tree' or 'Forest'
+    
+        **Output**:
+    
+        f_esc_Arr :  1-D sequence of floats
+                    Escape fractions for the input configurations [no dimensions] 
+    '''
+    
+    logNH_Arr         = np.atleast_1d( logNH_Arr )
+    ta_Arr            = np.atleast_1d(    ta_Arr )
+    V_Arr             = np.atleast_1d(     V_Arr )
+    
+    Coor_matrix = np.zeros( len(V_Arr) * 2 ).reshape( len(V_Arr) , 2 )
+    
+    Coor_matrix[ : , 0 ] = V_Arr
+    Coor_matrix[ : , 1 ] = logNH_Arr
+    
+    if Geometry in [ 'Thin_Shell'  , 'Galactic_Wind'  ] :
+    
+        CCC_machine = load_machine_fesc( Machine_Learning_Algorithm , 'CCC' , Geometry )
+        KKK_machine = load_machine_fesc( Machine_Learning_Algorithm , 'KKK' , Geometry )
+    
+        CCC_model_Arr  = CCC_machine.predict( Coor_matrix )
+        KKK_model_Arr  = KKK_machine.predict( Coor_matrix )
+    
+        f_esc_Arr = fesc_of_ta_Thin_and_Wind( ta_Arr , CCC_model_Arr , KKK_model_Arr )
+    
+    if Geometry in [ 'Bicone_X_Slab_In' , 'Bicone_X_Slab_Out' ] :
+    
+        CCC_machine_in = load_machine_fesc( Machine_Learning_Algorithm , 'CCC' , Geometry )
+        KKK_machine_in = load_machine_fesc( Machine_Learning_Algorithm , 'KKK' , Geometry )
+        LLL_machine_in = load_machine_fesc( Machine_Learning_Algorithm , 'LLL' , Geometry )
+    
+        CCC_model_in_Arr  = CCC_machine_in.predict( Coor_matrix )
+        KKK_model_in_Arr  = KKK_machine_in.predict( Coor_matrix )
+        LLL_model_in_Arr  = LLL_machine_in.predict( Coor_matrix )
+    
+        f_esc_Arr = fesc_of_ta_Bicone( ta_Arr , CCC_model_in_Arr , KKK_model_in_Arr , LLL_model_in_Arr )
+    
+    return f_esc_Arr
 #====================================================================#
 #====================================================================#
 #====================================================================#
 def  RT_f_esc_Machine_Values( Geometry , V_Arr , logNH_Arr , ta_Arr , Machine_Learning_Algorithm='Tree' ):
+    '''
+        Anallytic expression of the escape fraction as a function of the
+        dust optical depth (Gurung-lopez et al. 2019b). This uses the directly
+        the escape fraction.
 
-        logNH_Arr         = np.atleast_1d( logNH_Arr )
-        ta_Arr            = np.atleast_1d(    ta_Arr )
-        V_Arr             = np.atleast_1d(     V_Arr )
+        **Input**:
 
-        Coor_matrix = np.zeros( len(V_Arr) * 3 ).reshape( len(V_Arr) , 3 )
+        Geometry : String
+                    Outflow configuration to use: 'Thin_Shell'  , 'Galactic_Wind'  
+                                       , 'Bicone_X_Slab_In' , 'Bicone_X_Slab_Out'
 
-        Coor_matrix[ : , 0 ] = V_Arr
-        Coor_matrix[ : , 1 ] = logNH_Arr
-        Coor_matrix[ : , 2 ] = np.log10(ta_Arr)
+        V_Arr : 1-D sequence of floats
+                    Outflow bulk velocity [km/s] 
+        
+        logNH_Ar : 1-D sequence of floats
+                    logarithm of the neutral hydrogen column density [cm**-2] 
 
-        loaded_model = load_machine_fesc( Machine_Learning_Algorithm , 'f_esc' , Geometry )
-   
-        f_esc_Arr = loaded_model.predict( Coor_matrix )
+        ta_Arr : 1-D sequence of floats
+                    Dust optical depth [no dimensions]
+
+        Machine_Learning_Algorithm : string
+                    Machine learning algorithm: 'KN', 'Grad', 'Tree' or 'Forest'
+
+        **Output**:
+
+        f_esc_Arr :  1-D sequence of floats
+                    Escape fractions for the input configurations [no dimensions] 
+    '''
+
+    logNH_Arr         = np.atleast_1d( logNH_Arr )
+    ta_Arr            = np.atleast_1d(    ta_Arr )
+    V_Arr             = np.atleast_1d(     V_Arr )
     
-        return f_esc_Arr
+    Coor_matrix = np.zeros( len(V_Arr) * 3 ).reshape( len(V_Arr) , 3 )
+    
+    Coor_matrix[ : , 0 ] = V_Arr
+    Coor_matrix[ : , 1 ] = logNH_Arr
+    Coor_matrix[ : , 2 ] = np.log10(ta_Arr)
+    
+    loaded_model = load_machine_fesc( Machine_Learning_Algorithm , 'f_esc' , Geometry )
+    
+    f_esc_Arr = loaded_model.predict( Coor_matrix )
+    
+    return f_esc_Arr
 #====================================================================#
 #====================================================================#
 #====================================================================#
@@ -400,7 +529,21 @@ def Linear_ND_interpolator( N_dim , Coor_props_Matrix , Coor_grid_list , Field_i
 #====================================================================#
 #====================================================================#
 #====================================================================#
-def load_Grid_fesc( Geometry , MODE ):#, INSIDE_BICONE=True ):
+def load_Grid_fesc( Geometry , MODE ):
+    '''
+        This functions gives you grids of the escape fraction
+
+        **Input**:
+
+        Geometry : String
+                    Outflow configuration to use: 'Thin_Shell'  , 'Galactic_Wind'  
+                                       , 'Bicone_X_Slab_In' , 'Bicone_X_Slab_Out'
+        MODE : String
+                    Parametrization of the escape fraction. 'Parameters' or 'values'
+        **Output**:
+
+        loaded_model : file the grid of f_esc parameters/values.
+    '''
 
     Geometry_Set = [ 'Thin_Shell'  , 'Galactic_Wind'  , 'Bicone_X_Slab_In' , 'Bicone_X_Slab_Out']
 
@@ -410,7 +553,6 @@ def load_Grid_fesc( Geometry , MODE ):#, INSIDE_BICONE=True ):
 
     index = np.where( Geometry == np.array(Geometry_Set) )[0][0]
 
-    #filename_root = 'DATA/Dictonary_'+ geo_code[index] +'_Grid_f_esc_' + MODE 
     filename_root = 'Dictonary_'+ geo_code[index] +'_Grid_f_esc_' + MODE 
 
     if Geometry == 'Bicone_X_Slab_In':
@@ -421,12 +563,6 @@ def load_Grid_fesc( Geometry , MODE ):#, INSIDE_BICONE=True ):
 
     filename = filename_root + '.npy'
 
-    #this_dir, this_filename = os.path.split(__file__)
-
-    print( 'HARDCORING PATH TO GRIDS!!!!' )
-    #this_dir = '/global/users/sidgurung/PROMARE/Grids/'
-    #this_dir = '/global/users/sidgurung/PROMARE/Grids/'
-
     filename = os.path.join( Data_location , filename)
 
     loaded_model = np.load( filename , allow_pickle=True , encoding='latin1' ).item()
@@ -436,6 +572,33 @@ def load_Grid_fesc( Geometry , MODE ):#, INSIDE_BICONE=True ):
 #====================================================================#
 #====================================================================#
 def Interpolate_f_esc_Arrays_2D_grid( V_Arr , logNH_Arr , ta_Arr , Grid_Dictionary , Geometry ):
+    '''
+        Computes the escape fraction using the escape fraction grids of parameters
+
+        **Input**:
+
+        V_Arr : 1-D sequence of floats
+                    Outflow bulk velocity [km/s] 
+        
+        logNH_Ar : 1-D sequence of floats
+                    logarithm of the neutral hydrogen column density [cm**-2] 
+
+        ta_Arr : 1-D sequence of floats
+                    Dust optical depth [no dimensions]
+
+        Grid_Dictionary : python dictionary
+                    Constains the grid to compute the escape fraction. Loaded with
+                    load_Grid_fesc().
+
+        Geometry : String
+                    Outflow configuration to use: 'Thin_Shell'  , 'Galactic_Wind'  
+                                       , 'Bicone_X_Slab_In' , 'Bicone_X_Slab_Out'
+                    
+        **Output**:
+
+        f_esc_Arr :  1-D sequence of floats
+                    Escape fractions for the input configurations [no dimensions] 
+    '''
 
     V_Arr_Grid     = Grid_Dictionary[     'V_Arr' ]
 
@@ -486,6 +649,29 @@ def Interpolate_f_esc_Arrays_2D_grid( V_Arr , logNH_Arr , ta_Arr , Grid_Dictiona
 #====================================================================#
 #====================================================================#
 def Interpolate_fesc_Arrays_3D_grid( V_Arr , logNH_Arr , ta_Arr , Grid_Dictionary ):
+    '''
+        Computes the escape fraction using the escape fraction grids of parameters
+
+        **Input**:
+
+        V_Arr : 1-D sequence of floats
+                    Outflow bulk velocity [km/s] 
+        
+        logNH_Ar : 1-D sequence of floats
+                    logarithm of the neutral hydrogen column density [cm**-2] 
+
+        ta_Arr : 1-D sequence of floats
+                    Dust optical depth [no dimensions]
+
+        Grid_Dictionary : python dictionary
+                    Constains the grid to compute the escape fraction. Loaded with
+                    load_Grid_fesc().
+
+        **Output**:
+
+        f_esc_Arr_evaluated :  1-D sequence of floats
+                    Escape fractions for the input configurations [no dimensions] 
+    '''
 
     V_Arr_Grid     = Grid_Dictionary[     'V_Arr' ]
 
@@ -516,6 +702,32 @@ def Interpolate_fesc_Arrays_3D_grid( V_Arr , logNH_Arr , ta_Arr , Grid_Dictionar
 #====================================================================#
 #====================================================================#
 def  RT_f_esc_Interpolation_Values( Geometry , V_Arr , logNH_Arr , ta_Arr , Machine_Learning_Algorithm=None ):
+    '''
+        Computes the escape fraction using the escape fraction grids of values
+
+        **Input**:
+
+        Geometry : String
+                    Outflow configuration to use: 'Thin_Shell'  , 'Galactic_Wind'  
+                                       , 'Bicone_X_Slab_In' , 'Bicone_X_Slab_Out'
+
+        V_Arr : 1-D sequence of floats
+                    Outflow bulk velocity [km/s] 
+        
+        logNH_Ar : 1-D sequence of floats
+                    logarithm of the neutral hydrogen column density [cm**-2] 
+
+        ta_Arr : 1-D sequence of floats
+                    Dust optical depth [no dimensions]
+
+        Machine_Learning_Algorithm : String
+                    Kind of algorithm: 'KN', 'Grad', 'Tree' or 'Forest'
+
+        **Output**:
+
+        f_esc_Arr :  1-D sequence of floats
+                    Escape fractions for the input configurations [no dimensions] 
+    '''
 
     logNH_Arr         = np.atleast_1d( logNH_Arr )
     ta_Arr            = np.atleast_1d(    ta_Arr )
@@ -530,6 +742,32 @@ def  RT_f_esc_Interpolation_Values( Geometry , V_Arr , logNH_Arr , ta_Arr , Mach
 #====================================================================#
 #====================================================================#
 def  RT_f_esc_Interpolation_Parameters( Geometry , V_Arr , logNH_Arr , ta_Arr , Machine_Learning_Algorithm=None ):
+    '''
+        Computes the escape fraction using the escape fraction grids of parameters
+
+        **Input**:
+
+        Geometry : String
+                    Outflow configuration to use: 'Thin_Shell'  , 'Galactic_Wind'  
+                                       , 'Bicone_X_Slab_In' , 'Bicone_X_Slab_Out'
+
+        V_Arr : 1-D sequence of floats
+                    Outflow bulk velocity [km/s] 
+        
+        logNH_Ar : 1-D sequence of floats
+                    logarithm of the neutral hydrogen column density [cm**-2] 
+
+        ta_Arr : 1-D sequence of floats
+                    Dust optical depth [no dimensions]
+
+        Machine_Learning_Algorithm : String
+                    Kind of algorithm: 'KN', 'Grad', 'Tree' or 'Forest'
+
+        **Output**:
+
+        f_esc_Arr :  1-D sequence of floats
+                    Escape fractions for the input configurations [no dimensions] 
+    '''
 
     logNH_Arr         = np.atleast_1d( logNH_Arr )
     ta_Arr            = np.atleast_1d(    ta_Arr )
@@ -544,6 +782,40 @@ def  RT_f_esc_Interpolation_Parameters( Geometry , V_Arr , logNH_Arr , ta_Arr , 
 #====================================================================#
 #====================================================================#
 def pre_treatment_f_esc( Geometry , V_Arr , logNH_Arr , ta_Arr , MODE ):
+    '''
+        Checks the inflow/outflow parameters before doing the proper computation.
+
+        **Input**:
+
+        Geometry : String
+                    Outflow configuration to use: 'Thin_Shell'  , 'Galactic_Wind'  
+                                       , 'Bicone_X_Slab_In' , 'Bicone_X_Slab_Out'
+
+        V_Arr : 1-D sequence of floats
+                    Outflow bulk velocity [km/s] 
+        
+        logNH_Ar : 1-D sequence of floats
+                    logarithm of the neutral hydrogen column density [cm**-2] 
+
+        ta_Arr : 1-D sequence of floats
+                    Dust optical depth [no dimensions]
+
+        MODE : optional string
+               Set the mode in which the escape fraction is computed. It can be:
+                    Analytic        : it uses an analytic equation fitted to the output of the RT MC code.
+                    Parametrization : it computes the escape fraction using a function that depends on the 
+                                      dust optical depts as in Neufeld et al. 1990.
+                    Raw             : it uses directly the output of the RT MC code.
+
+                    Default = 'Parametrization'
+
+                    Kind of algorithm: 'KN', 'Grad', 'Tree' or 'Forest'
+
+        **Output**:
+
+        mask_good : 1-D sequence of bool
+                    1 if the parameters are good, 0 if they are bad.  
+    '''
 
     V_Arr     = np.atleast_1d(     V_Arr )
     logNH_Arr = np.atleast_1d( logNH_Arr )
@@ -596,12 +868,11 @@ def pre_treatment_f_esc( Geometry , V_Arr , logNH_Arr , ta_Arr , MODE ):
 #====================================================================#
 def  RT_f_esc( Geometry , V_Arr , logNH_Arr , ta_Arr , MODE='Parametrization' , Algorithm='Intrepolation' , Machine_Learning_Algorithm='Tree' ):
 
-
     '''
         Return the Lyman alpha escape fraction for a given outflow properties.
 
-        Parameters
-        ----------
+        **Input**
+
         Geometry : string
                    The outflow geometry to use: Options: 'Thins_Shell',
                    'Galactic_Wind' , 'Bicone_X_Slab'.
@@ -661,8 +932,8 @@ def  RT_f_esc( Geometry , V_Arr , logNH_Arr , ta_Arr , MODE='Parametrization' , 
 
             .. versionadded:: 0.0.3
 
-        Returns
-        -------
+        **Output**
+
         lines_Arr : 1-D sequence of float
                     The Lyman alpha escape fraction for V_Arr[i] ,
                     logNH_Arr[i] , ta_Arr[i] , Inside_Bicone_Arr[i].
@@ -705,24 +976,89 @@ def  RT_f_esc( Geometry , V_Arr , logNH_Arr , ta_Arr , MODE='Parametrization' , 
 #====================================================================#
 #====================================================================#
 def define_RT_parameters( T4=None ):
+    '''
+        This function gives the parameters use to compute useful 
+        variables when working with radiative transfer.
 
-     if T4 is None :  
-        T4 = 1. # = 10000. / 1e4
+        **Input**:
 
-     nu0 = 2.46777 * 1.e15 #3. * 10.**8 / (1215.67 * (10**(-10)))
-     Vth = 12.85 * np.sqrt(T4) # lo he comentado porque sqrt(1) = 1
-     Dv = Vth * nu0 *1. / ( 3 * (10**5))
-     return nu0 , Dv
+        T4 : optional float
+            Temperature in units of 10**4 K:
+            T4 = T[k] / 10**4
+
+        **Output**:
+
+        nu0 : float
+            Lyaman-alpha frequency.
+
+        Dv : float
+            
+    '''
+
+    if T4 is None :  
+       T4 = 1. # = 10000. / 1e4
+
+    nu0 = 2.46777 * 1.e15 #3. * 10.**8 / (1215.67 * (10**(-10)))
+    Vth = 12.85 * np.sqrt(T4) # lo he comentado porque sqrt(1) = 1
+    Dv = Vth * nu0 *1. / ( 3 * (10**5))
+    return nu0 , Dv
 #====================================================================#
 #====================================================================#
 #====================================================================#
 def convert_x_into_lamda( x , T4=None ):
-     nu0 , Dv = define_RT_parameters( T4 ) 
-     return( 3. * 1.e8 / ( x * Dv + nu0)  )
+    '''
+        This function converts from frequency in Doppler
+        units to wavelength
 
+        **Input**:
+
+        x : 1-D sequence of float
+            Frequency in Doppler units.
+
+        T4 : optional float
+            Temperature in units of 10**4 K:
+            T4 = T[k] / 10**4
+
+        **Output**:
+
+        w_Arr : 1-D sequence of float
+                wavelength.        
+    '''
+
+    if T4 is None :  
+        T4 = 1. # = 10000. / 1e4
+
+    nu0 = 2.46777 * 1.e15 #3. * 10.**8 / (1215.67 * (10**(-10)))
+    Vth = 12.85 * np.sqrt(T4) # lo he comentado porque sqrt(1) = 1
+    Dv = Vth * nu0 *1. / ( 3 * (10**5))
+    nu0 , Dv = define_RT_parameters( T4 ) 
+    w_Arr = 3. * 1.e8 / ( x * Dv + nu0)
+    return w_Arr
+#====================================================================#
+#====================================================================#
+#====================================================================#
 def convert_lamda_into_x( lamda , T4=None ):
-     nu0 , Dv = define_RT_parameters( T4 ) 
-     return( (( 3. * 1.e8 / lamda) -nu0 ) / Dv     )
+    '''
+        This function converts from frequency in Doppler
+        units to wavelength
+
+        **Input**:
+
+        lamda : 1-D sequence of float
+            wavelength
+
+        T4 : optional float
+            Temperature in units of 10**4 K:
+            T4 = T[k] / 10**4
+
+        **Output**:
+
+        x_Arr : 1-D sequence of float
+                Frequency in Doppler units.
+    '''
+    nu0 , Dv = define_RT_parameters( T4 ) 
+    x_Arr = (( 3. * 1.e8 / lamda) -nu0 ) / Dv
+    return x_Arr
 #====================================================================#
 #====================================================================#
 #====================================================================#
@@ -731,8 +1067,8 @@ def load_Grid_Line( Geometry ):
     '''
         Return the dictionary with all the properties of the grid where the lines were run.
 
-        Parameters
-        ----------
+        **Input**
+
         Geometry : string
                    The outflow geometry to use: Options: 'Thins_Shell',
                    'Galactic_Wind' , 'Bicone_X_Slab'.
@@ -744,8 +1080,8 @@ def load_Grid_Line( Geometry ):
                         on is np.cos( np.pi/4 ).
                 
 
-        Returns
-        -------
+        **Output**
+
         loaded_model : Dictionary
                        This dictonary have all the information of the grid.
                        Entries:
@@ -822,7 +1158,36 @@ def load_Grid_Line( Geometry ):
 #====================================================================#
 #====================================================================#
 def Interpolate_Lines_Arrays_3D_grid( V_Arr , logNH_Arr , logta_Arr , x_Arr , Grid_Dictionary ):
+    '''
+        Computes the escape fraction using the line profiles grids for many
+        configurations
 
+        **Input**:
+
+        V_Arr : 1-D sequence of floats
+                    Outflow bulk velocity [km/s] 
+        
+        logNH_Ar : 1-D sequence of floats
+                    Logarithm of the neutral hydrogen column density [cm**-2] 
+
+        ta_Arr : 1-D sequence of floats
+                    Dust optical depth [no dimensions]
+
+        x_Arr : 1-D sequence of floats
+                    Frequency in Doppler units where the line prfile will be
+                    evaluated.
+
+        Grid_Dictionary : python dictionary
+                    All the necessary information for the interpoation. Loaded 
+                    with load_Grid_Line().
+
+        **Output**:
+
+        line_Arr :  2-D sequence of floats
+                    Flux density in arbitrary units. The first dimension matches
+                    the dimension of the input configurations (e.g. V_Arr). The
+                    second dimension matches x_Arr.
+    '''
     lines_Arr = np.zeros( len(V_Arr) * len( x_Arr ) ).reshape( len(V_Arr) , len( x_Arr ) )
 
     for i in range( 0 , len( V_Arr ) ):
@@ -834,6 +1199,35 @@ def Interpolate_Lines_Arrays_3D_grid( V_Arr , logNH_Arr , logta_Arr , x_Arr , Gr
 #====================================================================#
 #====================================================================#
 def Interpolate_Lines_Arrays_3D_grid_MCMC( V_Value , logNH_Value , logta_Value , x_Arr , Grid_Dictionary ):
+    '''
+        Computes the escape fraction using the line profiles grids for one
+        configuration. This is usefull for the Thin_Shell, Galactic_Wind and
+        Bicones configurations.
+
+        **Input**:
+
+        V_Value : float
+                    Outflow bulk velocity [km/s] 
+        
+        logNH_Value : float
+                    Logarithm of the neutral hydrogen column density [cm**-2] 
+
+        ta_Value : float
+                    Dust optical depth [no dimensions]
+
+        x_Arr : 1-D sequence of floats
+                    Frequency in Doppler units where the line prfile will be
+                    evaluated.
+
+        Grid_Dictionary : python dictionary
+                    All the necessary information for the interpoation. Loaded 
+                    with load_Grid_Line().
+
+        **Output**:
+
+        axu_line_1 : 1-D sequence of floats
+                    Flux density in arbitrary units. 
+    '''
 
     Grid_Line = Grid_Dictionary['Grid']
 
@@ -860,6 +1254,43 @@ def Interpolate_Lines_Arrays_3D_grid_MCMC( V_Value , logNH_Value , logta_Value ,
 #====================================================================#
 #====================================================================#
 def Interpolate_Lines_Arrays_5D_grid( V_Arr , logNH_Arr , logta_Arr , logEW_Arr , Wi_Arr , x_Arr , Grid_Dictionary ):
+    '''
+        Computes the escape fraction using the line profiles grids for many
+        configurations. This is usefull for the Thin_Shell_Cont
+
+        **Input**:
+
+        V_Arr : 1-D sequence of floats
+                    Outflow bulk velocity [km/s] 
+        
+        logNH_Ar : 1-D sequence of floats
+                    Logarithm of the neutral hydrogen column density [cm**-2] 
+
+        ta_Arr : 1-D sequence of floats
+                    Dust optical depth [no dimensions]
+
+        logEW_Arr : 1-D sequence of floats
+                    Logarithm of the rest frame equivalent width [A]
+
+        Wi_Arr : 1-D sequence of floats
+                    Rest frame instrinc line width [A]
+
+        x_Arr : 1-D sequence of floats
+                    Frequency in Doppler units where the line prfile will be
+                    evaluated.
+
+        Grid_Dictionary : python dictionary
+                    All the necessary information for the interpoation. Loaded 
+                    with load_Grid_Line().
+
+        **Output**:
+
+        linew_Arr : 2-D sequence of floats
+                    Flux density in arbitrary units. The first dimension matches
+                    the dimension of the input configurations (e.g. V_Arr). The
+                    second dimension matches x_Arr.
+                    Flux density in arbitrary units. 
+    '''
 
     lines_Arr = np.zeros( len(V_Arr) * len( x_Arr ) ).reshape( len(V_Arr) , len( x_Arr ) )
 
@@ -872,6 +1303,40 @@ def Interpolate_Lines_Arrays_5D_grid( V_Arr , logNH_Arr , logta_Arr , logEW_Arr 
 #====================================================================#
 #====================================================================#
 def Interpolate_Lines_Arrays_5D_grid_MCMC( V_Value , logNH_Value , logta_Value , logEW_Value , Wi_Value , x_Arr , Grid_Dictionary ):
+    '''
+        Computes the escape fraction using the line profiles grids for many
+        configurations. This is usefull for the Thin_Shell_Cont
+
+        **Input**:
+
+        V_Value : float
+                    Outflow bulk velocity [km/s] 
+        
+        logNH_Value : float
+                    Logarithm of the neutral hydrogen column density [cm**-2] 
+
+        ta_Value : float
+                    Dust optical depth [no dimensions]
+
+        logEW_Value : float
+                    Logarithm of the rest frame equivalent width [A]
+
+        Wi_Value : float
+                    Rest frame instrinc line width [A]
+
+        x_Arr : 1-D sequence of floats
+                    Frequency in Doppler units where the line prfile will be
+                    evaluated.
+
+        Grid_Dictionary : python dictionary
+                    All the necessary information for the interpoation. Loaded 
+                    with load_Grid_Line().
+
+        **Output**:
+
+        axu_line_1 : 1-D sequence of floats
+                    Flux density in arbitrary units. 
+    '''
 
     Grid_Line = Grid_Dictionary['Grid']
 
@@ -905,6 +1370,38 @@ def Interpolate_Lines_Arrays_5D_grid_MCMC( V_Value , logNH_Value , logta_Value ,
 #====================================================================#
 #====================================================================#
 def pre_treatment_Line_profile_MCMC( Geometry , V_Value , logNH_Value , ta_Value , logEW_Value=None , Wi_Value=None ):
+    '''
+        Checks the inflow/outflow parameters before doing the proper computation.
+
+        **Input**:
+
+        Geometry : String
+                    Outflow configuration to use: 'Thin_Shell'  , 'Galactic_Wind'  
+                                       , 'Bicone_X_Slab_In' , 'Bicone_X_Slab_Out'
+                                         'Thin_Shell_Cont'
+
+        V_Value : float
+                    Outflow bulk velocity [km/s] 
+        
+        logNH_Value : float
+                    logarithm of the neutral hydrogen column density [cm**-2] 
+
+        ta_Value : float
+                    Dust optical depth [no dimensions]
+
+        logEW_Value : Optinal float
+                    Logarithm of rest frame equiavlent width [A]
+                    Default = None
+
+        Wi_Value : Optinal float
+                    Intrinsic width line in the rest frame [A]
+                    Default = None
+
+        **Output**:
+
+        Bool_good : 1-D sequence of bool
+                    1 if the parameters are good, 0 if they are bad.  
+    '''
 
     bool1 = np.isfinite(     V_Value )
     bool2 = np.isfinite( logNH_Value )
@@ -961,6 +1458,23 @@ def pre_treatment_Line_profile_MCMC( Geometry , V_Value , logNH_Value , ta_Value
 #====================================================================#
 def Compute_Inflow_From_Outflow( w_Arr , f_out_Arr ):
 
+    '''
+        Computes the line profile of an inflow from the line profiles of an
+        outflow
+
+        **Input**:
+
+        w_Arr : 1-D sequence of floats
+                    wavelength where the line profile is evaluated.
+
+        f_out_Arr : float
+                    Outflow flux density (line profile)
+        
+        **Output**:
+
+        f_in_Arr : 1-D sequence of bool
+                    Inflow flux density (line profile)
+    '''
     w_Lya = 1215.67 * 1e-10
 
     Delta_Arr = w_Arr - w_Lya
@@ -977,11 +1491,11 @@ def RT_Line_Profile_MCMC( Geometry , wavelength_Arr , V_Value , logNH_Value , ta
         Return one and only one Lyman alpha line profile for a given outflow properties.
         This function is especial to run MCMCs or PSO.
 
-        Parameters
-        ----------
+        **Input**:
+
         Geometry : string
                    The outflow geometry to use: Options: 'Thins_Shell',
-                   'Galactic_Wind' , 'Bicone_X_Slab'.
+                   'Galactic_Wind' , 'Bicone_X_Slab', 'Thin_Shell_Cont'
 
         wavelength_Arr : 1-D sequence of floats
                          Array with the wavelength vales where the line
@@ -1007,8 +1521,8 @@ def RT_Line_Profile_MCMC( Geometry , wavelength_Arr , V_Value , logNH_Value , ta
 
                      DATA_LyaRT = load_Grid_Line( 'Thin_Shell' ) 
 
-        Returns
-        -------
+        **Output**:
+
         lines_Arr : 1-D sequence of float
                     The Lyman alpha line profile. 
     '''
@@ -1051,6 +1565,38 @@ def RT_Line_Profile_MCMC( Geometry , wavelength_Arr , V_Value , logNH_Value , ta
 #====================================================================#
 #====================================================================#
 def pre_treatment_Line_profile( Geometry , V_Arr , logNH_Arr , ta_Arr , logEW_Arr=None , Wi_Arr=None ):
+    '''
+        Checks the inflow/outflow parameters before doing the proper computation.
+
+        **Input**:
+
+        Geometry : String
+                    Outflow configuration to use: 'Thin_Shell'  , 'Galactic_Wind'  
+                                       , 'Bicone_X_Slab_In' , 'Bicone_X_Slab_Out',
+                                         'Thin_Shell_Cont'
+
+        V_Value : 1-D sequence of bool
+                    Outflow bulk velocity [km/s] 
+        
+        logNH_Value : 1-D sequence of bool
+                    logarithm of the neutral hydrogen column density [cm**-2] 
+
+        ta_Value : 1-D sequence of bool
+                    Dust optical depth [no dimensions]
+
+        logEW_Value : Optional 1-D sequence of bool
+                    Logarithm of rest frame equiavlent width [A]
+                    Default = None
+
+        Wi_Value : Optional 1-D sequence of bool
+                    Intrinsic width line in the rest frame [A]
+                    Default = None
+
+        **Output**:
+
+        Bool_good : 1-D sequence of bool
+                    1 if the parameters are good, 0 if they are bad.  
+    '''
 
     V_Arr     = np.atleast_1d(     V_Arr )
     logNH_Arr = np.atleast_1d( logNH_Arr )
@@ -1084,11 +1630,11 @@ def RT_Line_Profile( Geometry , wavelength_Arr , V_Arr , logNH_Arr , ta_Arr , lo
     '''
         Return the Lyman alpha line profile for a given outflow properties.
         
-        Parameters
-        ----------
+        **Input**:
+
         Geometry : string
                    The outflow geometry to use: Options: 'Thins_Shell',
-                   'Galactic_Wind' , 'Bicone_X_Slab'.
+                   'Galactic_Wind' , 'Bicone_X_Slab', 'Thin_Shell_Cont'
         
         wavelength_Arr : 1-D sequence of floats
                          Array with the wavelength vales where the line 
@@ -1107,17 +1653,19 @@ def RT_Line_Profile( Geometry , wavelength_Arr , V_Arr , logNH_Arr , ta_Arr , lo
         ta_Arr : 1-D sequence of float
                  Array with the dust optic depth of the outflow. 
 
-        Inside_Bicone_Arr : optional 1-D sequence of bool
-                            This is useless if the geometry is not Bicone_X_Slab.
-                            An Array with booleans, indicating if the bicone is face-on 
-                            or edge-on. If True then the bicone is face-on. If false the
-                            bicone is edge-on. The probability of being face on is 
-                            np.cos( np.pi/4 ).
-        
-            .. versionadded:: 0.0.3
-        
-        Returns
-        -------
+        ta_Value : 1-D sequence of bool
+                    Dust optical depth [no dimensions]
+
+        logEW_Value : Optional 1-D sequence of bool
+                    Logarithm of rest frame equiavlent width [A]
+                    Default = None
+
+        Wi_Value : Optional 1-D sequence of bool
+                    Intrinsic width line in the rest frame [A]
+                    Default = None
+
+        **Output**:
+
         lines_Arr : 2-D sequence of float
                     The Lyman alpha line profiles. lines_Arr[i] is the line profile 
                     computed at the wavelengths wavelength_Arr for wich V_Arr[i] , 
@@ -1448,24 +1996,22 @@ def Test_Installation( Make_Plots=False ):
 #
 #           CODE  FOR  THE  NEW  VERSION    !!!          YEEEY
 #
-#====================================================================================#
-#====================================================================================#
-#====================================================================================#
+#====================================================================#
+#====================================================================#
+#====================================================================#
 def convert_gaussian_FWHM_to_sigma( FWHM_Arr ):
 
     '''
         This function computes the sigma of a gaussian from its FWHM.
 
-        Parameters
-        ----------
+        **Input**:
+
         FWHM_Arr : 1-D sequence of float
                    Array with the Full Width Half Maximum that you 
                    want to convert
 
-            .. versionadded:: 1.0.1
+        **Output**:
 
-        Returns
-        -------
         sigma_Arr : 1-D sequence of float
                     The width of the FWHM_Arr
     '''
@@ -1473,9 +2019,9 @@ def convert_gaussian_FWHM_to_sigma( FWHM_Arr ):
     sigma_Arr = FWHM_Arr * 1. / 2.3548
 
     return sigma_Arr
-#====================================================================================#
-#====================================================================================#
-#====================================================================================#
+#====================================================================#
+#====================================================================#
+#====================================================================#
 def dilute_line_changing_FWHM( wave_Arr , Spec_Arr , FWHM_Arr , same_norm=False ):
 
     '''
@@ -1517,9 +2063,9 @@ def dilute_line_changing_FWHM( wave_Arr , Spec_Arr , FWHM_Arr , same_norm=False 
     new_Line = gaussian_filter( wave_Arr , Spec_Arr , my_sigma_Arr ,same_norm=same_norm)
 
     return new_Line
-#====================================================================================#
-#====================================================================================#
-#====================================================================================#
+#====================================================================#
+#====================================================================#
+#====================================================================#
 def dilute_line( wave_Arr , Spec_Arr , FWHM ):
 
     '''
@@ -1562,9 +2108,9 @@ def dilute_line( wave_Arr , Spec_Arr , FWHM ):
     new_Line = gaussian_filter1d( Spec_Arr , sigma * 1. / bin_size )
 
     return new_Line
-#====================================================================================#
-#====================================================================================#
-#====================================================================================#
+#====================================================================#
+#====================================================================#
+#====================================================================#
 def bin_one_line( wave_Arr_line , Line_Prob_Arr , new_wave_Arr , Bin , same_norm=False ):
 
     RES = 100
@@ -1593,9 +2139,9 @@ def bin_one_line( wave_Arr_line , Line_Prob_Arr , new_wave_Arr , Bin , same_norm
         binned_line = binned_line * I_init * 1. / I_pix
 
     return binned_line
-#====================================================================================#
-#====================================================================================#
-#====================================================================================#
+#====================================================================#
+#====================================================================#
+#====================================================================#
 def plot_a_rebinned_line( new_wave_Arr , binned_line , Bin ):
 
     DD = Bin  * 1e-10
@@ -1615,9 +2161,9 @@ def plot_a_rebinned_line( new_wave_Arr , binned_line , Bin ):
         YY_Arr[ i_1 ] = binned_line[i]
 
     return XX_Arr , YY_Arr
-#====================================================================================#
-#====================================================================================#
-#====================================================================================#
+#====================================================================#
+#====================================================================#
+#====================================================================#
 def Add_noise_to_line( wave_Arr_line , Line_Prob_Arr , SN , same_norm=False ):
 
     mask = Line_Prob_Arr > 0.05 * np.amax( Line_Prob_Arr )
@@ -1639,15 +2185,15 @@ def Add_noise_to_line( wave_Arr_line , Line_Prob_Arr , SN , same_norm=False ):
         Noisy_Line_Arr = Noisy_Line_Arr * I_init * 1. / I_noise 
 
     return Noisy_Line_Arr , Noise_Arr
-##====================================================================================#
-##====================================================================================#
-##====================================================================================#
+#====================================================================#
+#====================================================================#
+#====================================================================#
 def gaus( x_Arr , A , mu , sigma ):
 
     return A * np.exp( -1*( x_Arr - mu )**2 * 1. / ( 2 * sigma**2 ) )
-##====================================================================================#
-##====================================================================================#
-##====================================================================================#
+#====================================================================#
+#====================================================================#
+#====================================================================#
 def Signal_to_noise_estimator( w_Arr , Line_Arr , w_line ):
 
     popt , pcov = curve_fit( gaus , w_Arr , Line_Arr , p0=[ 1e-17 , w_line , 5.0 ] )
@@ -1663,9 +2209,9 @@ def Signal_to_noise_estimator( w_Arr , Line_Arr , w_line ):
     SNR = SS * 1. / RMS
 
     return SNR
-##====================================================================================#
-##====================================================================================#
-##====================================================================================#
+#====================================================================#
+#====================================================================#
+#====================================================================#
 def generate_a_obs_line( z_f , V_f , logNH_f , ta_f , DATA_LyaRT , Geometry , logEW_f=None , Wi_f=None ):
 
     w_Lya = 1215.67
@@ -1677,9 +2223,9 @@ def generate_a_obs_line( z_f , V_f , logNH_f , ta_f , DATA_LyaRT , Geometry , lo
     wavelength_Arr = ( 1 + z_f ) * w_rest_Arr
 
     return w_rest_Arr , wavelength_Arr , line_Arr
-##====================================================================================#
-##====================================================================================#
-##====================================================================================#
+#====================================================================#
+#====================================================================#
+#====================================================================#
 def generate_a_REAL_line_Noise_w( z_f , V_f , logNH_f , ta_f , F_line_f , logEW_f , Wi_f , Noise_w_Arr , Noise_Arr , FWHM_f , PIX_f , w_min , w_max , DATA_LyaRT , Geometry ):
 
     w_rest_Arr , wavelength_Arr , line_Arr = generate_a_obs_line( z_f , V_f , logNH_f , ta_f , DATA_LyaRT , Geometry , logEW_f=logEW_f , Wi_f=Wi_f )
@@ -1710,9 +2256,9 @@ def generate_a_REAL_line_Noise_w( z_f , V_f , logNH_f , ta_f , F_line_f , logEW_
     dic[ 'Noise'     ] = noise_Arr
 
     return wave_pix_Arr , noisy_Line_Arr , dic
-##====================================================================================#
-##====================================================================================#
-##====================================================================================#
+#====================================================================#
+#====================================================================#
+#====================================================================#
 def Generate_a_real_line( z_t , V_t, log_N_t, t_t, F_t, log_EW_t, W_t , PNR_t, FWHM_t, PIX_t, DATA_LyaRT, Geometry ):
 
     w_min = ( 1215.67 - 25.5 ) * ( 1 + z_t )
@@ -1733,9 +2279,9 @@ def Generate_a_real_line( z_t , V_t, log_N_t, t_t, F_t, log_EW_t, W_t , PNR_t, F
     f_Arr = f_noiseless_Arr + noise_Arr
 
     return w_Arr , f_Arr , noise_Amplitude_Arr
-#######################################################################
-#######################################################################
-#######################################################################
+#====================================================================#
+#====================================================================#
+#====================================================================#
 def Define_wavelength_for_NN( Delta_min=-18.5 , Delta_max=18.5 , Nbins_tot=1000 , Denser_Center=True ):
 
     if not Denser_Center:
@@ -1776,9 +2322,9 @@ def Define_wavelength_for_NN( Delta_min=-18.5 , Delta_max=18.5 , Nbins_tot=1000 
         rest_w_Arr = np.hstack([ low_wing , core , top_wing ]) + 1215.67
 
     return rest_w_Arr
-#######################################################################
-#######################################################################
-#######################################################################
+#====================================================================#
+#====================================================================#
+#====================================================================#
 def Treat_A_Line_To_NN_Input( w_Arr , f_Arr , PIX , FWHM , Delta_min=-18.5 , Delta_max=18.5 , Nbins_tot=1000 , Denser_Center=True , normed=False, scaled=False ):
 
     rest_w_Arr = Define_wavelength_for_NN( Delta_min=Delta_min , Delta_max=Delta_max , Nbins_tot=Nbins_tot , Denser_Center=Denser_Center ) 
@@ -1792,9 +2338,9 @@ def Treat_A_Line_To_NN_Input( w_Arr , f_Arr , PIX , FWHM , Delta_min=-18.5 , Del
     INPUT =  np.array( [ np.hstack( ( NN_line , z_max_i , np.log10( FWHM )  , np.log10( PIX )  ) ) ] )
 
     return rest_w_Arr , NN_line , z_max_i , INPUT 
-#######################################################################
-#######################################################################
-#######################################################################
+#====================================================================#
+#====================================================================#
+#====================================================================#
 def Generate_a_line_for_training( z_t , V_t, log_N_t, t_t, F_t, log_EW_t, W_t, PNR_t, FWHM_t, PIX_t, DATA_LyaRT, Geometry, normed=False, scaled=False , Delta_min = -18.5 , Delta_max=18.5 , Denser_Center=True , Nbins_tot=1000 ):
 
     w_t_Arr , f_t_Arr , Noise_t_Arr = Generate_a_real_line( z_t , V_t, log_N_t, t_t, F_t, log_EW_t, W_t , PNR_t, FWHM_t, PIX_t, DATA_LyaRT, Geometry )
@@ -1802,9 +2348,9 @@ def Generate_a_line_for_training( z_t , V_t, log_N_t, t_t, F_t, log_EW_t, W_t, P
     rest_w_Arr , train_line , z_max_i , INPUT = Treat_A_Line_To_NN_Input( w_t_Arr , f_t_Arr , PIX_t , FWHM_t , Delta_min=Delta_min , Delta_max=Delta_max , Nbins_tot=Nbins_tot , Denser_Center=Denser_Center , normed=normed , scaled=scaled )
 
     return rest_w_Arr , train_line , z_max_i , INPUT
-##====================================================================================#
-##====================================================================================#
-##====================================================================================#
+#====================================================================#
+#====================================================================#
+#====================================================================#
 def generate_a_REAL_line_SN( z_f , V_f , logNH_f , ta_f , F_line_f , SN_f , FWHM_f , PIX_f , w_min , w_max , DATA_LyaRT , Geometry ):
 
     w_rest_Arr , wavelength_Arr , line_Arr = generate_a_obs_line( z_f , V_f , logNH_f , ta_f , DATA_LyaRT , Geometry )
@@ -1830,15 +2376,15 @@ def generate_a_REAL_line_SN( z_f , V_f , logNH_f , ta_f , F_line_f , SN_f , FWHM
     dic[ 'Pixelated' ] = pixled_Arr
 
     return wave_pix_Arr , noisy_Line_Arr , dic
-##====================================================================================#
-##====================================================================================#
-##====================================================================================#
+#====================================================================#
+#====================================================================#
+#====================================================================#
 
 ## MCMC section
 
-##====================================================================================#
-##====================================================================================#
-##====================================================================================#
+#====================================================================#
+#====================================================================#
+#====================================================================#
 def log_likelihood( w_obs_Arr , f_obs_Arr , s_obs_Arr , w_model_Arr , f_model_Arr ):
 
     f_my_Arr = np.interp( w_obs_Arr , w_model_Arr , f_model_Arr )
@@ -1858,9 +2404,9 @@ def log_likelihood( w_obs_Arr , f_obs_Arr , s_obs_Arr , w_model_Arr , f_model_Ar
     log_like = -0.5 * np.sum( cc *( my_f_obs_Arr - f_my_Arr ) ** 2 / sigma2 + np.log(sigma2))
 
     return log_like
-##====================================================================================#
-##====================================================================================#
-##====================================================================================#
+#====================================================================#
+#====================================================================#
+#====================================================================#
 def Prior_f( theta ):
 
     log_V , log_N , log_t , redshift = theta
@@ -1886,9 +2432,9 @@ def Prior_f( theta ):
     if redshift < z_min or redshift > z_max : return False
 
     return True
-##====================================================================================#
-##====================================================================================#
-##====================================================================================#
+#====================================================================#
+#====================================================================#
+#====================================================================#
 def Prior_f_5( theta ):
 
     #log_V , log_N , log_t , redshift , log_F , log_EW , Wi = theta
@@ -1927,9 +2473,9 @@ def Prior_f_5( theta ):
     if redshift < z_min or redshift > z_max : return False
 
     return True
-##====================================================================================#
-##====================================================================================#
-##====================================================================================#
+#====================================================================#
+#====================================================================#
+#====================================================================#
 def log_likeliehood_of_model_5( theta , w_obs_Arr , f_obs_Arr , s_obs_Arr , FWHM, PIX, w_min, w_max, DATA_LyaRT, Geometry , z_in , FORCE_z=False ):
 
     if not Prior_f_5( theta ):
@@ -1956,9 +2502,9 @@ def log_likeliehood_of_model_5( theta , w_obs_Arr , f_obs_Arr , s_obs_Arr , FWHM
     log_like = log_likelihood( w_obs_Arr , f_obs_Arr , s_obs_Arr , w_model_Arr , f_model_Arr )
 
     return log_like
-##====================================================================================#
-##====================================================================================#
-##====================================================================================#
+#====================================================================#
+#====================================================================#
+#====================================================================#
 def init_walkers_5( N_walkers , N_dim , log_V_in , log_N_in , log_t_in , z_in , log_E_in , W_in ):
 
     init_V_Arr = np.random.rand( N_walkers ) * ( log_V_in[1] - log_V_in[0] ) + log_V_in[0]
@@ -1993,9 +2539,9 @@ def init_walkers_5( N_walkers , N_dim , log_V_in , log_N_in , log_t_in , z_in , 
             theta = Theta_0[i]
 
     return Theta_0
-##====================================================================================#
-##====================================================================================#
-##====================================================================================#
+#====================================================================#
+#====================================================================#
+#====================================================================#
 def MCMC_get_region_6D( MODE , w_tar_Arr , f_tar_Arr , s_tar_Arr , FWHM , PIX , DATA_LyaRT , Geometry , Geometry_Mode='Outflow'):
 
     if MODE == 'PSO' :
@@ -2058,9 +2604,9 @@ def MCMC_get_region_6D( MODE , w_tar_Arr , f_tar_Arr , s_tar_Arr , FWHM , PIX , 
         Best = [ z_f_max , None , None , None , None , None ]
 
     return log_V_in , log_N_in , log_t_in , log_E_in , W_in , z_in , Best
-##====================================================================================#
-##====================================================================================#
-##====================================================================================#
+#====================================================================#
+#====================================================================#
+#====================================================================#
 def MCMC_Analysis_sampler_5( w_target_Arr , f_target_Arr , s_target_Arr , FWHM , N_walkers , N_burn , N_steps , Geometry , DATA_LyaRT , log_V_in=None , log_N_in=None , log_t_in=None , z_in=None , log_E_in=None , W_in=None , progress=True , FORCE_z=False ):
 
     N_dim = 6
@@ -2097,9 +2643,9 @@ def MCMC_Analysis_sampler_5( w_target_Arr , f_target_Arr , s_target_Arr , FWHM ,
     if progress : print( 'Done' )
 
     return sampler
-##====================================================================================#
-##====================================================================================#
-##====================================================================================#
+#====================================================================#
+#====================================================================#
+#====================================================================#
 def get_solutions_from_sampler( sampler , N_walkers , N_burn , N_steps , Q_Arr ):
 
     chains = sampler.get_chain()
@@ -2144,9 +2690,9 @@ def get_solutions_from_sampler( sampler , N_walkers , N_burn , N_steps , Q_Arr )
             matrix_sol[i,j] = np.percentile( flat_samples[ : , i ] , Q_Arr[j] )
 
     return matrix_sol , flat_samples
-##====================================================================================#
-##====================================================================================#
-##====================================================================================#
+#====================================================================#
+#====================================================================#
+#====================================================================#
 def get_solutions_from_sampler_mean( sampler , N_walkers , N_burn , N_steps ):
 
     chains = sampler.get_chain()
@@ -2168,9 +2714,9 @@ def get_solutions_from_sampler_mean( sampler , N_walkers , N_burn , N_steps ):
             matrix_sol[i] = np.mean( flat_samples[ : , i ] )
 
     return matrix_sol , flat_samples
-##====================================================================================#
-##====================================================================================#
-##====================================================================================#
+#====================================================================#
+#====================================================================#
+#====================================================================#
 def get_solutions_from_sampler_peak( sampler , N_walkers , N_burn , N_steps , N_hist_steps ):
 
     chains = sampler.get_chain()
@@ -2209,9 +2755,9 @@ def get_solutions_from_sampler_peak( sampler , N_walkers , N_burn , N_steps , N_
             matrix_sol[i] = centers[ H_2==np.amax(H_2) ][0]
 
     return matrix_sol , flat_samples
-##====================================================================================#
-##====================================================================================#
-##====================================================================================#
+#====================================================================#
+#====================================================================#
+#====================================================================#
 def get_solutions_from_flat_chain( flat_chains , Q_Arr ):
 
     N_dim = flat_chains.shape[1]
@@ -2226,15 +2772,15 @@ def get_solutions_from_flat_chain( flat_chains , Q_Arr ):
             matrix_sol[i,j] = np.percentile( flat_chains[ : , i ] , Q_Arr[j] )
 
     return matrix_sol 
-##====================================================================================#
-##====================================================================================#
-##====================================================================================#
+#====================================================================#
+#====================================================================#
+#====================================================================#
 
 # NN
 
-##====================================================================================#
-##====================================================================================#
-##====================================================================================#
+#====================================================================#
+#====================================================================#
+#====================================================================#
 def Load_NN_model( Mode , iteration=1 ):
 
     this_dir, this_filename = os.path.split(__file__) 
@@ -2249,9 +2795,9 @@ def Load_NN_model( Mode , iteration=1 ):
     machine_data = pickle.load(open( this_dir + extra_dir +  machine_name , 'rb'))
  
     return machine_data
-##====================================================================================#
-##====================================================================================#
-##====================================================================================#
+#====================================================================#
+#====================================================================#
+#====================================================================#
 def NN_convert_Obs_Line_to_proxy_rest_line( w_obs_Arr , f_obs_Arr , s_obs_Arr=None , normed=False , scaled=False ):
 
     w_Lya = 1215.67
@@ -2301,9 +2847,9 @@ def NN_convert_Obs_Line_to_proxy_rest_line( w_obs_Arr , f_obs_Arr , s_obs_Arr=No
 
     if not s_obs_Arr is None :
         return w_rest_Arr , Delta_rest_Arr , f_rest_Arr , z_max , s_rest_Arr
-##====================================================================================#
-##====================================================================================#
-##====================================================================================#
+#====================================================================#
+#====================================================================#
+#====================================================================#
 def NN_generate_random_outflow_props( N_walkers , log_V_in , log_N_in , log_t_in , Allow_Inflows=True ):
 
     init_log_V_Arr = np.random.rand( N_walkers ) * ( log_V_in[1] - log_V_in[0] ) + log_V_in[0]
@@ -2332,9 +2878,9 @@ def NN_generate_random_outflow_props( N_walkers , log_V_in , log_N_in , log_t_in
     init_V_Arr = 10**init_log_V_Arr * V_sign 
 
     return init_V_Arr , init_log_N_Arr , init_log_t_Arr
-##====================================================================================#
-##====================================================================================#
-##====================================================================================#
+#====================================================================#
+#====================================================================#
+#====================================================================#
 def NN_generate_random_outflow_props_5D( N_walkers , log_V_in , log_N_in , log_t_in , log_E_in , log_W_in , MODE='Outflow' ):
 
     # MODE = Outflow , Inflow , Mixture
@@ -2379,9 +2925,9 @@ def NN_generate_random_outflow_props_5D( N_walkers , log_V_in , log_N_in , log_t
     init_V_Arr = 10**init_log_V_Arr * V_sign 
 
     return init_V_Arr , init_log_N_Arr , init_log_t_Arr , init_log_E_Arr , init_log_W_Arr 
-#####====================================================================================#
-#####====================================================================================#
-#####====================================================================================#
+#====================================================================#
+#====================================================================#
+#====================================================================#
 def NN_measure( w_tar_Arr , f_tar_Arr , s_tar_Arr , FWHM_tar , PIX_tar , loaded_model , w_rest_Machine_Arr , N_iter=None , normed=False , scaled=False , Delta_min=-18.5 , Delta_max=18.5 , Nbins_tot=1000 , Denser_Center=True ):
 
     w_rest_tar_Arr , f_rest_tar_Arr , z_max_tar , INPUT = Treat_A_Line_To_NN_Input( w_tar_Arr , f_tar_Arr , PIX_tar , FWHM_tar , Delta_min=Delta_min , Delta_max=Delta_max , Nbins_tot=Nbins_tot , Denser_Center=Denser_Center , normed=normed, scaled=scaled )
@@ -2425,9 +2971,9 @@ def NN_measure( w_tar_Arr , f_tar_Arr , s_tar_Arr , FWHM_tar , PIX_tar , loaded_
             z_sol_2_Arr[i] = z_sol_i
 
         return Sol , z_sol , log_V_sol_2_Arr , log_N_sol_2_Arr , log_t_sol_2_Arr , z_sol_2_Arr , log_E_sol_2_Arr , log_W_sol_2_Arr
-##====================================================================================#
-##====================================================================================#
-##====================================================================================#
+#====================================================================#
+#====================================================================#
+#====================================================================#
 ####def NN_measure_3_no_tau( w_tar_Arr , f_tar_Arr , s_tar_Arr , FWHM_tar , PIX_tar , loaded_model , w_rest_Machine_Arr , N_iter=0 , normed=False , scaled=False ):
 ####
 ####    w_rest_tar_Arr , Delta_rest_tar_Arr , f_rest_tar_Arr , z_max_tar , s_rest_tar_Arr = NN_convert_Obs_Line_to_proxy_rest_line( w_tar_Arr , f_tar_Arr , s_obs_Arr=s_tar_Arr , normed=normed , scaled=scaled)
@@ -2477,14 +3023,14 @@ def NN_measure( w_tar_Arr , f_tar_Arr , s_tar_Arr , FWHM_tar , PIX_tar , loaded_
 ####            z_sol_2_Arr[i] = z_sol_i
 ####
 ####        return Sol , z_sol , log_V_sol_2_Arr , log_N_sol_2_Arr , z_sol_2_Arr , log_E_sol_2_Arr , log_W_sol_2_Arr
-##====================================================================================#
-##====================================================================================#
-##====================================================================================#
+#====================================================================#
+#====================================================================#
+#====================================================================#
 # PSO
+#====================================================================#
+#====================================================================#
+#====================================================================#
 
-##====================================================================================#
-##====================================================================================#
-##====================================================================================#
 def PSO_compute_xi_2_ONE_6D( x , w_tar_Arr , f_tar_Arr , FWHM , PIX , DATA_LyaRT, Geometry ):
 
     my_f_tar_Arr = ( f_tar_Arr - np.amin( f_tar_Arr ) ) * 1. / np.amax( f_tar_Arr )
@@ -2530,9 +3076,9 @@ def PSO_compute_xi_2_ONE_6D( x , w_tar_Arr , f_tar_Arr , FWHM , PIX , DATA_LyaRT
         xi_2 = np.inf
 
     return xi_2 , w_pso_Arr , my_f_pso_Arr
-##====================================================================================#
-##====================================================================================#
-##====================================================================================#
+#====================================================================#
+#====================================================================#
+#====================================================================#
 def PSO_compute_xi_2_MANY( X , w_tar_Arr , f_tar_Arr , FWHM , PIX , DATA_LyaRT, Geometry ):
 
     xi_2_Arr = np.zeros( len(X) )
@@ -2544,9 +3090,9 @@ def PSO_compute_xi_2_MANY( X , w_tar_Arr , f_tar_Arr , FWHM , PIX , DATA_LyaRT, 
         xi_2_Arr[i] = xi_2
 
     return xi_2_Arr
-##====================================================================================#
-##====================================================================================#
-##====================================================================================#
+#====================================================================#
+#====================================================================#
+#====================================================================#
 ##====================================================================================#
 def PSO_Analysis( w_tar_Arr , f_tar_Arr , FWHM , PIX , DATA_LyaRT , Geometry , n_particles , n_iters ):
 
@@ -2590,12 +3136,9 @@ def PSO_Analysis( w_tar_Arr , f_tar_Arr , FWHM , PIX , DATA_LyaRT , Geometry , n
     cost, pos = optimizer.optimize( PSO_compute_xi_2_MANY , iters=n_iters , w_tar_Arr=w_tar_Arr , f_tar_Arr=f_tar_Arr , FWHM=FWHM , PIX=PIX , DATA_LyaRT=DATA_LyaRT , Geometry=Geometry )
 
     return cost , pos
-#====================================================================================#
-#====================================================================================#
-#====================================================================================#
-#====================================================================================#
-#====================================================================================#
-#====================================================================================#
+#====================================================================#
+#====================================================================#
+#====================================================================#
 
 # Enjoy
 
