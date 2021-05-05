@@ -877,13 +877,6 @@ def  RT_f_esc( Geometry , V_Arr , logNH_Arr , ta_Arr , MODE='Parametrization' , 
                    The outflow geometry to use: Options: 'Thins_Shell',
                    'Galactic_Wind' , 'Bicone_X_Slab'.
 
-
-        wavelength_Arr : 1-D sequence of floats
-                         Array with the wavelength vales where the line
-                         profile is computed. The units are meters, i.e.,
-                         amstrongs * 1.e-10.
-
-
         V_Arr : 1-D sequence of float
                 Array with the expansion velocity of the outflow. The unit
                 are km/s. 
@@ -895,13 +888,6 @@ def  RT_f_esc( Geometry , V_Arr , logNH_Arr , ta_Arr , MODE='Parametrization' , 
 
         ta_Arr : 1-D sequence of float
                  Array with the dust optic depth of the outflow. 
-
-        Inside_Bicone_Arr : optional 1-D sequence of bool
-                            An Array with booleans, indicating if the bicone is face-on
-                            or edge-on. If True then the bicone is face-on. If false the
-                            bicone is edge-on. The probability of being face on is
-                            np.cos( np.pi/4 ).
-
 
         MODE : optional string
                Set the mode in which the escape fraction is computed. It can be:
@@ -930,8 +916,6 @@ def  RT_f_esc( Geometry , V_Arr , logNH_Arr , ta_Arr , MODE='Parametrization' , 
                 Default = 'Tree'
 
 
-            .. versionadded:: 0.0.3
-
         **Output**
 
         lines_Arr : 1-D sequence of float
@@ -946,6 +930,8 @@ def  RT_f_esc( Geometry , V_Arr , logNH_Arr , ta_Arr , MODE='Parametrization' , 
     assert Geometry in [ 'Thin_Shell' , 'Galactic_Wind' , 'Bicone_X_Slab_In' , 'Bicone_X_Slab_Out' ] , 'The requested geoemtry ' + Geometry + ' is not available. The geometries supported are : Thin_Shell , Galactic_Wind , Bicone_X_Slab'
     
     mask_good = pre_treatment_f_esc( Geometry , V_Arr , logNH_Arr , ta_Arr , MODE ) 
+
+    #print( 'fraction good confs = ' , np.sum(mask_good) * 1. / len(mask_good)  )
 
     f_esc_Arr = np.zeros( len( mask_good ) ) * np.nan
 
@@ -1243,7 +1229,9 @@ def Interpolate_Lines_Arrays_3D_grid_MCMC( V_Value , logNH_Value , logta_Value ,
 
     aux_line = Linear_ND_interpolator( 3 , Coor_list , Coor_Arr_list , Grid_Line )
 
-    axu_line_1 = np.interp( x_Arr , x_Arr_Grid , aux_line , left=aux_line[0] , right=[-1] )
+    #print( aux_line[0] , right=[-1] )
+
+    axu_line_1 = np.interp( x_Arr , x_Arr_Grid , aux_line , left=aux_line[0] , right=aux_line[-1] )
 
     Integral = np.trapz( axu_line_1 , x_Arr )
 
@@ -1714,59 +1702,14 @@ def RT_Line_Profile( Geometry , wavelength_Arr , V_Arr , logNH_Arr , ta_Arr , lo
 #====================================================================#
 #====================================================================#
 #====================================================================#
-def Print_the_grid_edges():
-
-    print( '')
-    print( '    Hi,')
-    print( '')
-    print( '    The expanssion velocity V_exp and neutral hydrogen column density logNH are the same in the escape fraction and line profile grids. However, the optical depth of dust tau_a is different.')
-    print( '' )
-    print( '    V_exp [ km/s ] = [ 0 , 10 , ... , 90 , 100 , 150 , 200 , ... , 950 , 1000 ]')
-    print( '')
-    print( '    Bicone_X_Slab :')
-    print( '')
-    print( '         For V_exp <  100 km/s the logNH [ cm**-2 ] = [ 17.0 , 17.25 , ... , 20.25 , 20.5 ]')
-    print( '    ')
-    print( '         For V_exp >= 100 km/s the logNH [ cm**-2 ] = [ 17.0 , 17.25 , ... , 21.75 , 22.0 ]')
-    print( '')
-    print( '    Thin_Shell and Galactic_Wind :')
-    print( '')
-    print( '         logNH [ cm**-2 ] = [ 17.0 , 17.25 , ... , 21.75 , 22.0 ]')
-    print( '')
-    print( '    ')
-    print( '    For the escape fraction : tau_a = [ -3. , -2. , -1.5 , -1.0 , -0.75 , -0.5 , -0.25 , -0.0 ]')
-    print( '    ')
-    print( '    For the line profile    : tau_a = [  -0.125 , -0.25 , -0.375 , -0.5 , -0.625 , -0.75 , -0.875 , -1.0 , -1.125 , -1.25 , -1.375 , -1.5 , -1.75 , -2.0 , -2.25 , -2.5 , -2.75 , -3.0 , -3.25 , -3.5 , -3.75 ]')
-    print( '')
-    print( '    Have a nice day!')
-    print( '    El. PSY. CONGROO.')
-    print( '')
-
-    return
-#====================================================================#
-#====================================================================#
-#====================================================================#
 def Test_1( ):
-    print( '\nChecking if all the files are found...',)
-
-    print( '\nSKIPPING',)
-    print( '\nSKIPPING',)
-    print( '\nSKIPPING',)
-    print( '\nSKIPPING',)
-    print( '\nSKIPPING',)
-    print( '\nSKIPPING',)
-    print( '\nSKIPPING',)
-    print( '\nSKIPPING',)
-    print( '\nSKIPPING',)
-    
-   
-    print( '\n Now that we are sure that the data is downloaded in your machine...')
+    '''
+        Script to test if everything is working fine.
+    '''
 
     print( '\n Let us check every different configuration for computing the escape fraction and the line profiles.')
  
-    Geometry_set = [ 'Thin_Shell' , 'Galactic_Wind' , 'Bicone_X_Slab' ]
-    #Geometry_set = [ 'Thin_Shell' , 'Galactic_Wind' ]#, 'Bicone_X_Slab' ]
-    #Geometry_set = [ 'Galactic_Wind'  ]#, 'Galactic_Wind' , 'Bicone_X_Slab' ]
+    Geometry_set = [ 'Thin_Shell' , 'Galactic_Wind' , 'Bicone_X_Slab_In' , 'Bicone_X_Slab_Out' , 'Thin_Shell_Cont']
     
     ML_codes_set = [ 'Tree' , 'Forest' , 'KN' ]
     
@@ -1778,16 +1721,22 @@ def Test_1( ):
     
     N_points = int( 1e4 )
     
-    V_Arr     = np.random.rand( N_points ) * 1000   + 0.0
-    logNH_Arr = np.random.rand( N_points ) *   5   + 17.0
-    logta_Arr = np.random.rand( N_points ) *   4.5 -  4.0
-    
-    In_Arr = np.random.rand( N_points ) > 0.5
-    
+    V_Arr     = np.random.rand( N_points ) * 989 + 10.0
+    logNH_Arr = np.random.rand( N_points ) *   5 + 17.0
+    logta_Arr = np.random.rand( N_points ) *   2 - 2.5  
+   
+    mask_bad_bicone = ( V_Arr <= 100 ) * ( logNH_Arr >= 20.5 ) 
+
+    V_Arr     =     V_Arr[ ~mask_bad_bicone ]
+    logNH_Arr = logNH_Arr[ ~mask_bad_bicone ]
+    logta_Arr = logta_Arr[ ~mask_bad_bicone ]
+ 
     print( '\nComputing', N_points , 'random configurations of escape fraction with each algorithms...\n')
     
     for Geo in Geometry_set:
-    
+   
+        if Geo == 'Thin_Shell_Cont' : continue
+ 
         for Mod in MODE_set :
     
             if not Mod in [ 'Analytic' ]:
@@ -1800,21 +1749,20 @@ def Test_1( ):
     
                             for machine in ML_codes_set :
     
-    
-                                #try:
+                                try:
                                     print( '      Running : ' , Geo , Mod , Algo , machine , end = '' )
-                                    fff = RT_f_esc( Geo , V_Arr , logNH_Arr , 10**logta_Arr , Inside_Bicone_Arr=In_Arr , MODE=Mod , Algorithm=Algo , Machine_Learning_Algorithm=machine)
+                                    fff = RT_f_esc( Geo , V_Arr , logNH_Arr , 10**logta_Arr , MODE=Mod , Algorithm=Algo , Machine_Learning_Algorithm=machine)
                                     assert np.sum( np.isnan( fff ) ) == 0
                                     print( '--> Success!!')
-                                #except:
-                                #    print( '--> ERROR.. MISMATCH!!')
+                                except:
+                                    print( '--> ERROR.. MISMATCH!!')
     
                         if Algo != 'Machine_Learning' :
     
     
                                 try:
                                     print( '      Running : ' , Geo , Mod , Algo , end = '' )
-                                    fff = RT_f_esc( Geo , V_Arr , logNH_Arr , 10**logta_Arr , Inside_Bicone_Arr=In_Arr , MODE=Mod , Algorithm=Algo )
+                                    fff = RT_f_esc( Geo , V_Arr , logNH_Arr , 10**logta_Arr , MODE=Mod , Algorithm=Algo )
                                     assert np.sum( np.isnan( fff ) ) == 0
                                     print( '--> Success!!')
     
@@ -1831,7 +1779,7 @@ def Test_1( ):
                                     print( '--> Success!!')
     
                                 except:
-                                    print( '--> ERROR. HUMAN IS DEAD. MISMATCH!!')
+                                    print( '--> ERROR. MISMATCH!!')
     
     
     
@@ -1839,42 +1787,36 @@ def Test_1( ):
     
     print( '\nComputing', N_points , 'random configurations of line profile  with each algorithms...\n')
     
-    V_Arr     = np.random.rand( N_points ) * 1000   + 50
-    logNH_Arr = np.random.rand( N_points ) *   5   + 17.0
-    logta_Arr = np.random.rand( N_points ) *   5.5 -  4.75
-    
-    In_Arr = np.random.rand( N_points ) > 0.5
-    
+    V_Arr     = np.random.rand( N_points ) * 900  + 100
+    logNH_Arr = np.random.rand( N_points ) *   4.5 + 17.0
+    logta_Arr = np.random.rand( N_points ) *   2.  -  2.5
+   
+    logEW_Arr = np.random.rand( N_points ) * 3 - 1.
+    Wi_Arr    = np.random.rand( N_points ) * 2 + 0.1 
+ 
     wavelength_Arr = np.linspace( 1215.68 - 20 , 1215.68 + 20 , 1000 ) * 1e-10
     
     RUN_TEST_Lines = True
     if RUN_TEST_Lines :
         for Geo in Geometry_set:
     
-    
-            #try:
+            try: 
                 print( '      Running : ' , Geo , end = '' )
 
-                qq = RT_Line_Profile( Geo , wavelength_Arr , V_Arr , logNH_Arr , 10**logta_Arr , Inside_Bicone_Arr=In_Arr )
+                qq = RT_Line_Profile( Geo , wavelength_Arr , V_Arr , logNH_Arr , 10**logta_Arr , logEW_Arr=logEW_Arr , Wi_Arr=Wi_Arr )
                 assert np.sum( np.isnan( qq ) ) == 0
                 print( '--> Success!!')
-    
-            #except:
-            #    print( '--> ERROR.. MISMATCH!!')
+            except:
+                print( '--> ERROR. MISMATCH!!' )
 
     return
 #====================================================================#
 #====================================================================#
 #====================================================================#
 def Test_2( ):
-
-    #from pylab import *
-
-    #import matplotlib as plt
-
-    #import matplotlib
-    ## see http://matplotlib.org/faq/usage_faq.html#what-is-a-backend
-    #matplotlib.use('Svg')
+    '''
+        Script to test if everything looks fine.
+    '''
 
     import matplotlib.pyplot as plt
 
@@ -1892,13 +1834,16 @@ def Test_2( ):
 
     logta_Arr = np.array( [ -1. ] * len( V_Arr ) )
 
+    Wi_Arr    = np.array( [ 0.4 ] * len( V_Arr ) )
+    logEW_Arr = np.array( [ 1.5 ] * len( V_Arr ) )
+
     Inside_Bicone_Arr = np.zeros( len(V_Arr) ) == 0
 
     cm = plt.get_cmap( 'rainbow' )
     
-    for geo in [ 'Thin_Shell' , 'Galactic_Wind' , 'Bicone_X_Slab' ]:
+    for geo in [ 'Thin_Shell' , 'Galactic_Wind' , 'Bicone_X_Slab_In' , 'Bicone_X_Slab_Out' , 'Thin_Shell_Cont' ]:
 
-        qq = RT_Line_Profile( geo , wavelength_Arr , V_Arr , logNH_Arr , 10.**logta_Arr , Inside_Bicone_Arr=Inside_Bicone_Arr ) 
+        qq = RT_Line_Profile( geo , wavelength_Arr , V_Arr , logNH_Arr , 10.**logta_Arr , logEW_Arr=logEW_Arr , Wi_Arr=Wi_Arr ) 
 
         plt.figure()
 
@@ -1906,18 +1851,12 @@ def Test_2( ):
 
         for i in range( 0 ,len( V_Arr ) ):
 
-            #ax_ax.plot( wavelength_Arr*1e10 , qq[i] , color=cm( i*1./( len(V_Arr) -1 ) ) , label=r'$\rm V_{exp} = '+ str(V_Arr[i]) +'km/s$ ' , lw=2 )
             ax_ax.plot( wavelength_Arr*1e10 , qq[i] , color=cm( i*1./( len(V_Arr) -1 ) ) , lw=2 )
-
-        #texto = r'$\rm N_{H} = 10^{20} cm^{-2}$' + '\n' + r'$\rm \tau_{a} = 0.1$'
-
-        #ax_ax.text( .95 , 0.45 , texto , verticalalignment='top', horizontalalignment='right', transform=ax_ax.transAxes, fontsize=20 )
-        
-        #ax_ax.set_title( r'$\rm Geometry = $' + geo , size=20 )
-        #ax_ax.set_title( r'Geometry = ' + geo , size=20 )
 
         ax_ax.set_ylabel( r'Flux [a.u.]' , size=20 )
         ax_ax.set_xlabel( r'Wavelength [AA]' , size=20 )
+
+        ax_ax.set_title( r'Geometry = ' + geo , size=20 )
 
         ax_ax.set_xlim( 1212.5 , 1222.5 )
 
@@ -1927,57 +1866,30 @@ def Test_2( ):
 
     logta_Arr = np.linspace( -2 , 0.5 , 20 )
 
-    logNH_Arr = [20.0] * len( logta_Arr )
+    logNH_Arr = np.array( [20.0] * len( logta_Arr ) )
 
-    for geo in [ 'Thin_Shell' , 'Galactic_Wind' , 'Bicone_X_Slab' ]  :
+    for geo in [ 'Thin_Shell' , 'Galactic_Wind' , 'Bicone_X_Slab_In' , 'Bicone_X_Slab_Out' ]  :
 
         plt.figure()
 
-        ax_ax = subplot(111)
+        ax_ax = plt.subplot(111)
 
         for i in range( 0 , len(V_Arr) ):
 
-            V_Arr_tmp = [ V_Arr[i] ] * len( logta_Arr )
+            V_Arr_tmp = np.array( [ V_Arr[i] ] * len( logta_Arr ) )
 
-            Inside_Bicone_Arr = np.zeros( len( logta_Arr ) ) == 0
-
-            f_esc = RT_f_esc( geo , V_Arr_tmp , logNH_Arr , 10**logta_Arr , Inside_Bicone_Arr=Inside_Bicone_Arr)
-        
-            #ax_ax.plot( logta_Arr , f_esc , color=cm( i*1./( len(V_Arr) -1 ) ) , label=r'$\rm V_{exp} = '+ str(V_Arr[i]) +'km/s$ ' , lw=2 )
-            ax_ax.plot( logta_Arr , f_esc , color=cm( i*1./( len(V_Arr) -1 ) ) , lw=2 )
-
-            Inside_Bicone_Arr = np.zeros( len( logta_Arr ) ) == 1
-
-            f_esc = RT_f_esc( geo , V_Arr_tmp , logNH_Arr , 10**logta_Arr , Inside_Bicone_Arr=Inside_Bicone_Arr)
+            f_esc = RT_f_esc( geo , V_Arr_tmp , logNH_Arr , 10**logta_Arr )
 
             ax_ax.semilogy( logta_Arr , f_esc , '--' , color=cm( i*1./( len(V_Arr) -1 ) ) , lw=2 )
 
         ax_ax.set_xlabel( r'log tau a' , size=20 )
         ax_ax.set_ylabel( r'f esc Ly alpha ' , size=20 )
 
-        #texto = r' N_{H} = 10^{20} cm^{-2}'
-
-        #ax_ax.text( .5 , 0.05 , texto , verticalalignment='bottom', horizontalalignment='left', transform=ax_ax.transAxes, fontsize=20 )
-
-        #ax_ax.set_title( r'Geometry = ' + geo , size=20 )
-        ax_ax.set_title( r'Geometry = ' , size=20 )
+        ax_ax.set_title( r'Geometry = ' + geo , size=20 )
 
         plt.legend( loc=0 )
 
     plt.show()
-
-    return
-#====================================================================#
-#====================================================================#
-#====================================================================#
-def Test_Installation( Make_Plots=False ):
-
-    import warnings
-    warnings.filterwarnings("ignore")
-
-    Test_1()
-
-    #if Make_Plots : Test_2()
 
     return
 #====================================================================#
@@ -1994,13 +1906,13 @@ def convert_gaussian_FWHM_to_sigma( FWHM_Arr ):
     '''
         This function computes the sigma of a gaussian from its FWHM.
 
-        **Input**:
+        **Input**
 
         FWHM_Arr : 1-D sequence of float
                    Array with the Full Width Half Maximum that you 
                    want to convert
 
-        **Output**:
+        **Output**
 
         sigma_Arr : 1-D sequence of float
                     The width of the FWHM_Arr
@@ -2018,8 +1930,8 @@ def dilute_line_changing_FWHM( wave_Arr , Spec_Arr , FWHM_Arr , same_norm=False 
         This functions dilutes a given spectrum by convolving with a gaussian 
         filter.
 
-        Parameters
-        ----------
+        **Input**
+
         wave_Arr : 1-D sequence of float
                    Array with the Wavelength where the spectrum is evaluated.
                    Same units as FWHM_Arr. This has to be sorted.
@@ -2039,10 +1951,8 @@ def dilute_line_changing_FWHM( wave_Arr , Spec_Arr , FWHM_Arr , same_norm=False 
         same_norm : optional bool.
                     If true return a line with the same normalization as the input
 
-            .. versionadded:: 1.0.1
+        **Output**
 
-        Returns
-        -------
         new_Line : 1-D sequence of float
                    Spectrum after the convolution
     '''
@@ -2062,8 +1972,8 @@ def dilute_line( wave_Arr , Spec_Arr , FWHM ):
         This functions dilutes a given spectrum by convolving with a gaussian
         filter.
 
-        Parameters
-        ----------
+        **Input**
+
         wave_Arr : 1-D sequence of float
                    Array with the Wavelength where the spectrum is evaluated.
                    Same units as FWHM_Arr. This has to be sorted.
@@ -2083,10 +1993,8 @@ def dilute_line( wave_Arr , Spec_Arr , FWHM ):
         same_norm : optional bool.
                     If true return a line with the same normalization as the input
 
-            .. versionadded:: 1.0.1
+        **Output**
 
-        Returns
-        -------
         new_Line : 1-D sequence of float
                    Spectrum after the convolution
     '''
@@ -2102,6 +2010,33 @@ def dilute_line( wave_Arr , Spec_Arr , FWHM ):
 #====================================================================#
 #====================================================================#
 def bin_one_line( wave_Arr_line , Line_Prob_Arr , new_wave_Arr , Bin , same_norm=False ):
+    '''
+        This functions bins the line profile mimicking the pixelization in a CCD.
+
+        **Input**
+
+        wave_Arr_line : 1-D sequence of float
+                   Array with the Wavelength where the spectrum is evaluated.
+                   Same units as Bin. This has to be sorted.
+
+        Line_Prob_Arr : 1-D sequence of float
+                   Arrays with the flux of the spectrum.
+
+        new_wave_Arr : 1-D sequence of float
+                   Array with the nex wavelgnth where the fline profile will be
+                   interpolated 
+
+        Bin : float
+                   Bin size.
+
+        same_norm : optional bool.
+                    If true return a line with the same normalization as the input
+
+        **Output**
+
+        binned_line : 1-D sequence of float
+                   Spectrum after the convolution
+    '''
 
     RES = 100
 
@@ -2133,6 +2068,29 @@ def bin_one_line( wave_Arr_line , Line_Prob_Arr , new_wave_Arr , Bin , same_norm
 #====================================================================#
 #====================================================================#
 def plot_a_rebinned_line( new_wave_Arr , binned_line , Bin ):
+    '''
+        This functions is used to plot line profiles. It transforms the line
+        line in a histogram.
+
+        **Input**
+
+        new_wave_Arr : 1-D sequence of float
+                   Array with the Wavelength where the spectrum is evaluated.
+
+        binned_line : 1-D sequence of float
+                   Arrays with the flux of the spectrum.
+
+        Bin : float
+                   Bin size.
+
+        **Output**
+
+        XX_Arr : 1-D sequence of float
+                   Wavelength where the new line is evaluated
+
+        YY_Arr : 1-D sequence of float
+                   Flux density array
+    '''
 
     DD = Bin  * 1e-10
 
@@ -2155,7 +2113,32 @@ def plot_a_rebinned_line( new_wave_Arr , binned_line , Bin ):
 #====================================================================#
 #====================================================================#
 def Add_noise_to_line( wave_Arr_line , Line_Prob_Arr , SN , same_norm=False ):
+    '''
+        This functions adds noise to a line profile.
 
+        **Input**
+
+        wave_Arr_line : 1-D sequence of float
+                   Array with the Wavelength where the spectrum is evaluated.
+                   Same units as Bin. This has to be sorted.
+
+        Line_Prob_Arr : 1-D sequence of float
+                   Arrays with the flux of the spectrum.
+
+        SN : float
+                   Signal to noise of the desire line.
+
+        same_norm : optional bool.
+                    If true return a line with the same normalization as the input
+
+        **Output**
+
+         Noisy_Line_Arr : 1-D sequence of float
+                   Spectrum with the noise
+
+        Noise_Arr : 1-D sequence of float
+                   Particular flux density of the noise applyed
+    '''
     mask = Line_Prob_Arr > 0.05 * np.amax( Line_Prob_Arr )
 
     SS = np.mean( Line_Prob_Arr[ mask ] )
@@ -2179,13 +2162,55 @@ def Add_noise_to_line( wave_Arr_line , Line_Prob_Arr , SN , same_norm=False ):
 #====================================================================#
 #====================================================================#
 def gaus( x_Arr , A , mu , sigma ):
+        '''
+        Retruns a gaussian evaluated in x_Arr.
 
-    return A * np.exp( -1*( x_Arr - mu )**2 * 1. / ( 2 * sigma**2 ) )
+        **Input**
+
+        x_Arr : 1-D sequence of float
+                   Where the gaussian has to be evaluated.
+
+        A : float
+            Amplitude
+
+        mu : float
+            Mean
+
+        sigma : float
+            width
+
+        **Output**
+
+        gauss_Arr : 1-D sequence of float
+                   Gaussian
+    '''
+
+    gauss_Arr =  A * np.exp( -1*( x_Arr - mu )**2 * 1. / ( 2 * sigma**2 ) )
+
+    return gauss_Arr
 #====================================================================#
 #====================================================================#
 #====================================================================#
 def Signal_to_noise_estimator( w_Arr , Line_Arr , w_line ):
+     '''
+        Estimates the signal to noise of a line profile
 
+        **Input**
+
+        w_Arr : 1-D sequence of float
+                wavelgnth array
+
+        Line_Arr : 1-D sequence float
+                   Flux density of the line profile.
+
+        w_line : float
+                 wavelgnth of the line
+
+        **Output**
+
+        SNR : float
+              Signal to noise ratio.
+    '''
     popt , pcov = curve_fit( gaus , w_Arr , Line_Arr , p0=[ 1e-17 , w_line , 5.0 ] )
 
     sigma_line = popt[2]
@@ -2203,7 +2228,49 @@ def Signal_to_noise_estimator( w_Arr , Line_Arr , w_line ):
 #====================================================================#
 #====================================================================#
 def generate_a_obs_line( z_f , V_f , logNH_f , ta_f , DATA_LyaRT , Geometry , logEW_f=None , Wi_f=None ):
+     '''
+        Moves in redshift a line profile.
 
+        **Input**
+
+        z_f : float
+              Redshift
+
+        V_f : float
+              Outflow expansion velocity [km/s]
+
+        logNH_f : float
+                  logarithmic of the neutral hydrogen column density in cm**-2
+
+        ta_f : float
+               Dust optical depth
+
+        DATA_LyaRT : python dictionary
+                     Contains the grid information. 
+
+        Geometry : string
+                   Outflow geometry to use.
+
+        logEW_f : optional, float
+                  Logarithmic of the rest frame intrisic equivalent width of the line [A]
+                  Requiered if Geometry == 'Thin_Shell_Cont' 
+
+        Wi_f : optional, float
+               Rest frame intrisic width of the Lyman-alpha line [A]
+               Requiered if Geometry == 'Thin_Shell_Cont' 
+
+        **Output**
+
+        w_rest_Arr : 1-D sequence of float
+                     Wavelgnth array where the line is evaluated in the rest frame.
+
+        wavelength_Arr : 1-D sequence of float
+                     Wavelgnth array where the line is evaluated in the observed frame.
+
+        line_Arr : 1-D sequence of float
+                   Line profile flux density in arbitrary units.
+
+    '''
     w_Lya = 1215.67
 
     w_rest_Arr = np.linspace( 1215.68 - 30 , 1215.68 + 30 , 2000 )
@@ -2217,7 +2284,74 @@ def generate_a_obs_line( z_f , V_f , logNH_f , ta_f , DATA_LyaRT , Geometry , lo
 #====================================================================#
 #====================================================================#
 def generate_a_REAL_line_Noise_w( z_f , V_f , logNH_f , ta_f , F_line_f , logEW_f , Wi_f , Noise_w_Arr , Noise_Arr , FWHM_f , PIX_f , w_min , w_max , DATA_LyaRT , Geometry ):
+     '''
+        Makes a mock line profile for the Thin_Shell_Cont geometry.
 
+        **Input**
+
+        z_f : float
+              Redshift
+
+        V_f : float
+              Outflow expansion velocity [km/s]
+
+        logNH_f : float
+                  logarithmic of the neutral hydrogen column density in cm**-2
+
+        ta_f : float
+               Dust optical depth
+
+        logEW_f : optional, float
+                  Logarithmic of the rest frame intrisic equivalent width of the line [A]
+                  Requiered if Geometry == 'Thin_Shell_Cont'
+
+        Wi_f : optional, float
+               Rest frame intrisic width of the Lyman-alpha line [A]
+               Requiered if Geometry == 'Thin_Shell_Cont'
+
+        Noise_w_Arr : 1-D sequence of float
+                      wavelength array where the noise pattern is evaluated.
+
+        Noise_Arr : 1-D sequence of float
+                    Noise pattern. Evolution of the noise as a function of wavelength (Noise_w_Arr)
+       
+        FWHM_f : float
+                 Full width half maximum [A] of the experiment. This dilutes the line profile.  
+
+        PIX_f : float
+                Pixel size in wavelgnth [A] of the experiment. This binnes the line profile.  
+
+        w_min : float
+                minimum wavelength in the observed frame [A] to use. This matches the minimum
+                wavelgnth of wave_pix_Arr (see below).
+
+        w_max : float
+                maximum  wavelength in the observed frame [A] to use. This might not be exactly
+                the maximum wavelgnth of wave_pix_Arr (see below) due to pixelization. 
+
+        DATA_LyaRT : python dictionary
+                     Contains the grid information.
+
+        Geometry : string
+                   Outflow geometry to use.
+
+        **Output**
+
+        wave_pix_Arr : 1-D sequence of float
+                     Wavelgnth array where the line is evaluated in the observed frame.
+
+        noisy_Line_Arr : 1-D sequence of float
+                   Line profile flux density in arbitrary units.
+
+        dic : python dictionaty.
+              Contains all the meta data used to get the line profiles:
+                'w_rest'    : restframe wavelength of line before reducing quality
+                'w_obs'     : wavelength of line before reducing quality
+                'Intrinsic' : line profile before quality reduction
+                'Diluted'   : Line profile after the FWHM has been applyed.
+                'Pixelated' : Line profile after the FWHM and PIX have been applyed
+                'Noise'     : Particular noise patern used.
+    '''
     w_rest_Arr , wavelength_Arr , line_Arr = generate_a_obs_line( z_f , V_f , logNH_f , ta_f , DATA_LyaRT , Geometry , logEW_f=logEW_f , Wi_f=Wi_f )
 
     diluted_Arr = dilute_line( wavelength_Arr , line_Arr , FWHM_f )
@@ -2250,6 +2384,61 @@ def generate_a_REAL_line_Noise_w( z_f , V_f , logNH_f , ta_f , F_line_f , logEW_
 #====================================================================#
 #====================================================================#
 def Generate_a_real_line( z_t , V_t, log_N_t, t_t, F_t, log_EW_t, W_t , PNR_t, FWHM_t, PIX_t, DATA_LyaRT, Geometry ):
+    
+     '''
+        Makes a mock line profile for the Thin_Shell_Cont geometry.
+
+        **Input**
+
+        z_t : float
+              Redshift
+
+        V_t : float
+              Outflow expansion velocity [km/s]
+
+        log_N_t : float
+                  logarithmic of the neutral hydrogen column density in cm**-2
+
+        t_t : float
+              Dust optical depth
+
+        F_t : float
+              Total flux of the line. You can pass 1.
+
+        log_EW_t : optional, float
+                   Logarithmic of the rest frame intrisic equivalent width of the line [A]
+                   Requiered if Geometry == 'Thin_Shell_Cont'
+
+        W_t : optional, float
+               Rest frame intrisic width of the Lyman-alpha line [A]
+               Requiered if Geometry == 'Thin_Shell_Cont'
+
+        PNR_t : float
+                Signal to noise ratio of the global maximum of the line profile.
+
+        FWHM_t : float
+                 Full width half maximum [A] of the experiment. This dilutes the line profile.
+
+        PIX_t : float
+                Pixel size in wavelgnth [A] of the experiment. This binnes the line profile.
+
+        DATA_LyaRT : python dictionary
+                     Contains the grid information.
+
+        Geometry : string
+                   Outflow geometry to use.
+
+        **Output**
+
+        w_Arr : 1-D sequence of float
+                     Wavelgnth array where the line is evaluated in the observed frame.
+
+        f_Arr : 1-D sequence of float
+                   Line profile flux density in arbitrary units.
+
+        noise_Amplitude_Arr : 1-D sequence of float
+                              1-sigma level of the applyed noise.
+    '''
 
     w_min = ( 1215.67 - 25.5 ) * ( 1 + z_t )
     w_max = ( 1215.67 + 25.5 ) * ( 1 + z_t )
@@ -2273,7 +2462,36 @@ def Generate_a_real_line( z_t , V_t, log_N_t, t_t, F_t, log_EW_t, W_t , PNR_t, F
 #====================================================================#
 #====================================================================#
 def Define_wavelength_for_NN( Delta_min=-18.5 , Delta_max=18.5 , Nbins_tot=1000 , Denser_Center=True ):
+    '''
+        This function defines the wavelength used in for the neural netwroks.
 
+        **Input**
+
+        Delta_min : optional float
+              Defines the minimum rest frame wavelegnth with respecto to Lyman-alpha.
+
+              Default = -18.5
+
+        Delta_min : optional float
+              Defines the maximum rest frame wavelegnth with respecto to Lyman-alpha.
+
+              Default = +18.5
+
+        Nbins_tot : optional int
+              Total number of wvelgnths bins.
+              
+              Default = 1000
+
+        Denser_Center : optional bool
+              Populates denser the regions close to Lyman-alpha
+              
+              Default = True
+
+        **Output**
+
+        rest_w_Arr : 1-D sequence of float
+                     Wavelgnth array where the line is evaluated in the rest frame.
+    '''
     if not Denser_Center:
     
         rest_w_Arr = np.linspace( 1215.67+Delta_min , 1215.67+Delta_max , Nbins_tot )
@@ -2316,7 +2534,65 @@ def Define_wavelength_for_NN( Delta_min=-18.5 , Delta_max=18.5 , Nbins_tot=1000 
 #====================================================================#
 #====================================================================#
 def Treat_A_Line_To_NN_Input( w_Arr , f_Arr , PIX , FWHM , Delta_min=-18.5 , Delta_max=18.5 , Nbins_tot=1000 , Denser_Center=True , normed=False, scaled=False ):
+    '''
+        Convert a line profile and the usefull information into the INPUT of the NN.
 
+        **Input**
+
+        w_Arr : 1-D sequence of floats
+              Wavelgnth of the line profile in the observed frame. [A]
+
+        f_Arr : 1-D sequence of floats
+              Flux density of the observed line profile in arbitrary units.
+
+        FWHM : float
+              Full width half maximum [A] of the experiment.
+
+        PIX : float
+              Pixel size in wavelgnth [A] of the experiment. 
+        
+
+        Delta_min : optional float
+              Defines the minimum rest frame wavelegnth with respecto to Lyman-alpha.
+
+              Default = -18.5
+
+        Delta_min : optional float
+              Defines the maximum rest frame wavelegnth with respecto to Lyman-alpha.
+
+              Default = +18.5
+
+        Nbins_tot : optional int
+              Total number of wvelgnths bins.
+
+              Default = 1000
+
+        Denser_Center : optional bool
+              Populates denser the regions close to Lyman-alpha
+
+              Default = True
+
+        normed : optional bool
+              If True, nomalizes the line profile.
+
+        scaled : optinal bool
+              If True, divides the line profile by its maximum.
+
+        **Output**
+
+        rest_w_Arr : 1-D sequence of float
+              Wavelgnth array where the line is evaluated in the rest frame.
+
+        NN_line : 1-D sequence of float
+              Line profile evaluated in rest_w_Arr after normalization or scaling.
+
+        z_max_i : float
+              Redshift of the source if the global maximum of the spectrum is the
+              Lyman-alpha wavelegth.
+
+        INPUT: 1-D secuence of float
+              The actuall input to use in the Neural networks.
+    '''
     rest_w_Arr = Define_wavelength_for_NN( Delta_min=Delta_min , Delta_max=Delta_max , Nbins_tot=Nbins_tot , Denser_Center=Denser_Center ) 
 
     w_r_i_Arr , Delta_r_i_Arr , f_r_i_Arr , z_max_i = NN_convert_Obs_Line_to_proxy_rest_line( w_Arr, f_Arr, normed=normed , scaled=scaled)
@@ -2332,6 +2608,92 @@ def Treat_A_Line_To_NN_Input( w_Arr , f_Arr , PIX , FWHM , Delta_min=-18.5 , Del
 #====================================================================#
 #====================================================================#
 def Generate_a_line_for_training( z_t , V_t, log_N_t, t_t, F_t, log_EW_t, W_t, PNR_t, FWHM_t, PIX_t, DATA_LyaRT, Geometry, normed=False, scaled=False , Delta_min = -18.5 , Delta_max=18.5 , Denser_Center=True , Nbins_tot=1000 ):
+    
+    '''
+        Creates a mock line profile at the desired redshift and returns all the NN
+        products.
+
+        **Input**
+
+        z_t : float
+              Redshift
+
+        V_t : float
+              Outflow expansion velocity [km/s]
+
+        log_N_t : float
+                  logarithmic of the neutral hydrogen column density in cm**-2
+
+        t_t : float
+              Dust optical depth
+
+        F_t : float
+              Total flux of the line. You can pass 1.
+
+        log_EW_t : optional, float
+                   Logarithmic of the rest frame intrisic equivalent width of the line [A]
+                   Requiered if Geometry == 'Thin_Shell_Cont'
+
+        W_t : optional, float
+               Rest frame intrisic width of the Lyman-alpha line [A]
+               Requiered if Geometry == 'Thin_Shell_Cont'
+
+        PNR_t : float
+                Signal to noise ratio of the global maximum of the line profile.
+
+        FWHM_t : float
+                 Full width half maximum [A] of the experiment. This dilutes the line profile.
+
+        PIX_t : float
+                Pixel size in wavelgnth [A] of the experiment. This binnes the line profile.
+
+        DATA_LyaRT : python dictionary
+                     Contains the grid information.
+
+        Geometry : string
+                   Outflow geometry to use.
+
+        Delta_min : optional float
+              Defines the minimum rest frame wavelegnth with respecto to Lyman-alpha.
+
+              Default = -18.5
+
+        Delta_min : optional float
+              Defines the maximum rest frame wavelegnth with respecto to Lyman-alpha.
+
+              Default = +18.5
+
+        Nbins_tot : optional int
+              Total number of wvelgnths bins.
+
+              Default = 1000
+
+        Denser_Center : optional bool
+              Populates denser the regions close to Lyman-alpha
+
+              Default = True
+
+        normed : optional bool
+              If True, nomalizes the line profile.
+
+        scaled : optinal bool
+              If True, divides the line profile by its maximum.
+
+        **Output**
+
+        rest_w_Arr : 1-D sequence of float
+              Wavelgnth array where the line is evaluated in the rest frame.
+
+        train_line : 1-D sequence of float
+              Line profile.
+
+        z_max_i : float
+              Redshift of the source if the global maximum of the spectrum is the
+              Lyman-alpha wavelegth.
+
+        INPUT: 1-D secuence of float
+              The actuall input to use in the Neural networks.
+    '''
 
     w_t_Arr , f_t_Arr , Noise_t_Arr = Generate_a_real_line( z_t , V_t, log_N_t, t_t, F_t, log_EW_t, W_t , PNR_t, FWHM_t, PIX_t, DATA_LyaRT, Geometry )
 
@@ -2342,6 +2704,58 @@ def Generate_a_line_for_training( z_t , V_t, log_N_t, t_t, F_t, log_EW_t, W_t, P
 #====================================================================#
 #====================================================================#
 def generate_a_REAL_line_SN( z_f , V_f , logNH_f , ta_f , F_line_f , SN_f , FWHM_f , PIX_f , w_min , w_max , DATA_LyaRT , Geometry ):
+     '''
+        Makes a mock line profile for the other geometries that are not Thin_Shell_Cont geometry.
+
+        **Input**
+
+        z_t : float
+              Redshift
+
+        V_t : float
+              Outflow expansion velocity [km/s]
+
+        log_N_t : float
+                  logarithmic of the neutral hydrogen column density in cm**-2
+
+        t_t : float
+              Dust optical depth
+
+        F_line_f : float
+              Total flux of the line. You can pass 1.
+
+        SN_t : float
+                Signal to noise ratio.
+
+        FWHM_t : float
+                 Full width half maximum [A] of the experiment. This dilutes the line profile.
+
+        PIX_t : float
+                Pixel size in wavelgnth [A] of the experiment. This binnes the line profile.
+
+        DATA_LyaRT : python dictionary
+                     Contains the grid information.
+
+        Geometry : string
+                   Outflow geometry to use.
+
+        **Output**
+
+        wave_pix_Arr : 1-D sequence of float
+                     Wavelgnth array where the line is evaluated in the observed frame.
+
+        noisy_Line_Arr : 1-D sequence of float
+                   Line profile flux density in arbitrary units.
+
+        dic : python dictionaty.
+              Contains all the meta data used to get the line profiles:
+                'w_rest'    : restframe wavelength of line before reducing quality
+                'w_obs'     : wavelength of line before reducing quality
+                'Intrinsic' : line profile before quality reduction
+                'Diluted'   : Line profile after the FWHM has been applyed.
+                'Pixelated' : Line profile after the FWHM and PIX have been applyed
+                'Noise'     : Particular noise patern used.
+    '''
 
     w_rest_Arr , wavelength_Arr , line_Arr = generate_a_obs_line( z_f , V_f , logNH_f , ta_f , DATA_LyaRT , Geometry )
 
