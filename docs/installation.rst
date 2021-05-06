@@ -10,15 +10,15 @@ The simpliest way of installing `zELDA`'s scripts is pip:
 
 .. code:: python
 
-          pip install Lya_zelda
+          $ pip install Lya_zelda
 
 An alternative method to install `zELDA`'scripts is downloading the code from GitHub:
 
 .. code:: python
 
-          git clone https://github.com/sidgurun/Lya_zelda.git
-          cd Lya_zelda
-          pip install .
+          $ git clone https://github.com/sidgurun/Lya_zelda.git
+          $ cd Lya_zelda
+          $ pip install .
 
 Remember that you can also add the tag ``--user`` ,  if necessary.
 
