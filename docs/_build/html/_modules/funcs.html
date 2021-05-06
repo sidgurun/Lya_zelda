@@ -29,10 +29,10 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -86,7 +86,7 @@
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../intro.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../funcs.html">funcs module</a></li>
 </ul>
 
@@ -171,20 +171,20 @@
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="k">import</span> <span class="n">RandomForestRegressor</span><span class="p">,</span> <span class="n">ExtraTreesRegressor</span><span class="p">,</span> <span class="n">GradientBoostingRegressor</span>
-<span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="k">import</span> <span class="n">KNeighborsRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestRegressor</span><span class="p">,</span> <span class="n">ExtraTreesRegressor</span><span class="p">,</span> <span class="n">GradientBoostingRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">KNeighborsRegressor</span>
 
 <span class="kn">import</span> <span class="nn">pickle</span>
 
-<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="k">import</span> <span class="n">curve_fit</span>
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">curve_fit</span>
 
-<span class="kn">from</span> <span class="nn">scipy.ndimage</span> <span class="k">import</span> <span class="n">gaussian_filter1d</span>
+<span class="kn">from</span> <span class="nn">scipy.ndimage</span> <span class="kn">import</span> <span class="n">gaussian_filter1d</span>
 
 <span class="kn">import</span> <span class="nn">emcee</span>
 
-<span class="kn">from</span> <span class="nn">sklearn.neural_network</span> <span class="k">import</span> <span class="n">MLPRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.neural_network</span> <span class="kn">import</span> <span class="n">MLPRegressor</span>
 
-<span class="kn">from</span> <span class="nn">pyswarms.single.global_best</span> <span class="k">import</span> <span class="n">GlobalBestPSO</span>
+<span class="kn">from</span> <span class="nn">pyswarms.single.global_best</span> <span class="kn">import</span> <span class="n">GlobalBestPSO</span>
 <span class="c1">#====================================================================#</span>
 <span class="c1">#====================================================================#</span>
 <span class="c1">#====================================================================#</span>
@@ -2946,11 +2946,34 @@
 <span class="c1">#====================================================================#</span>
 <div class="viewcode-block" id="log_likelihood"><a class="viewcode-back" href="../funcs.html#funcs.log_likelihood">[docs]</a><span class="k">def</span> <span class="nf">log_likelihood</span><span class="p">(</span> <span class="n">w_obs_Arr</span> <span class="p">,</span> <span class="n">f_obs_Arr</span> <span class="p">,</span> <span class="n">s_obs_Arr</span> <span class="p">,</span> <span class="n">w_model_Arr</span> <span class="p">,</span> <span class="n">f_model_Arr</span> <span class="p">):</span>
 
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Logarithm of the likelihood between an observed spectrum and a model spectrum.</span>
+
+<span class="sd">        **Input**</span>
+
+<span class="sd">        w_obs_Arr : 1-D sequence of float</span>
+<span class="sd">                    wavelength where the observed density flux is evaluated.</span>
+
+<span class="sd">        f_obs_Arr : 1-D sequence of float</span>
+<span class="sd">                    Observed flux density</span>
+
+<span class="sd">        s_obs_Arr : 1-D sequence of float</span>
+<span class="sd">                    Uncertanty in the observed flux density.</span>
+
+<span class="sd">        w_model_Arr : 1-D sequence of float</span>
+<span class="sd">                      wavelength where the model density flux is evaluated</span>
+
+<span class="sd">        f_model_Arr : 1-D sequence of float</span>
+<span class="sd">                      Model flux density</span>
+
+<span class="sd">        **Output**</span>
+
+<span class="sd">        log_like : float</span>
+<span class="sd">                   Logarithm of the likelihood</span>
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">f_my_Arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span> <span class="n">w_obs_Arr</span> <span class="p">,</span> <span class="n">w_model_Arr</span> <span class="p">,</span> <span class="n">f_model_Arr</span> <span class="p">)</span>
 
     <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span> <span class="n">f_my_Arr</span> <span class="p">)</span>
-
-    <span class="c1">#print( f_my_Arr )</span>
 
     <span class="n">sigma2</span> <span class="o">=</span> <span class="n">s_obs_Arr</span> <span class="o">**</span> <span class="mi">2</span>
 
@@ -2967,6 +2990,23 @@
 <span class="c1">#====================================================================#</span>
 <span class="c1">#====================================================================#</span>
 <div class="viewcode-block" id="Prior_f"><a class="viewcode-back" href="../funcs.html#funcs.Prior_f">[docs]</a><span class="k">def</span> <span class="nf">Prior_f</span><span class="p">(</span> <span class="n">theta</span> <span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Decides when a walker from the MCMC is out for the Thin_Shell,</span>
+<span class="sd">        Galactic wind and bicones.</span>
+
+<span class="sd">        **Input**</span>
+
+<span class="sd">        theta : 1-D sequence of float</span>
+<span class="sd">                Contains the parameters of the mode:</span>
+<span class="sd">                    theta[0] = logarithim of the expansion velocity</span>
+<span class="sd">                    theta[1] = logarithim of the neutral hydrogen column density</span>
+<span class="sd">                    theta[2] = logarithim of the dust optical depth</span>
+
+<span class="sd">        **Output**</span>
+
+<span class="sd">        True  if the walker is  inside</span>
+<span class="sd">        False if the walker is outside</span>
+<span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">log_V</span> <span class="p">,</span> <span class="n">log_N</span> <span class="p">,</span> <span class="n">log_t</span> <span class="p">,</span> <span class="n">redshift</span> <span class="o">=</span> <span class="n">theta</span>
 
@@ -2995,8 +3035,26 @@
 <span class="c1">#====================================================================#</span>
 <span class="c1">#====================================================================#</span>
 <div class="viewcode-block" id="Prior_f_5"><a class="viewcode-back" href="../funcs.html#funcs.Prior_f_5">[docs]</a><span class="k">def</span> <span class="nf">Prior_f_5</span><span class="p">(</span> <span class="n">theta</span> <span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Decides when a walker from the MCMC is out for the Thin_Shell_Cont,</span>
 
-    <span class="c1">#log_V , log_N , log_t , redshift , log_F , log_EW , Wi = theta</span>
+<span class="sd">        **Input**</span>
+
+<span class="sd">        theta : 1-D sequence of float</span>
+<span class="sd">                Contains the parameters of the mode:</span>
+<span class="sd">                    theta[0] = logarithim of the expansion velocity</span>
+<span class="sd">                    theta[1] = logarithim of the neutral hydrogen column density</span>
+<span class="sd">                    theta[2] = logarithim of the dust optical depth</span>
+<span class="sd">                    theta[3] = redshift</span>
+<span class="sd">                    theta[4] = logarithm of the intrinsic equivalent width</span>
+<span class="sd">                    theta[5] = intrinsic width</span>
+
+<span class="sd">        **Output**</span>
+
+<span class="sd">        True  if the walker is  inside</span>
+<span class="sd">        False if the walker is outside</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
     <span class="n">log_V</span> <span class="p">,</span> <span class="n">log_N</span> <span class="p">,</span> <span class="n">log_t</span> <span class="p">,</span> <span class="n">redshift</span> <span class="p">,</span> <span class="n">log_EW</span> <span class="p">,</span> <span class="n">Wi</span> <span class="o">=</span> <span class="n">theta</span>
 
     <span class="n">log_V_min</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.</span> 
@@ -3008,9 +3066,6 @@
     <span class="n">log_t_min</span> <span class="o">=</span> <span class="o">-</span><span class="mf">4.00</span>
     <span class="n">log_t_max</span> <span class="o">=</span>  <span class="mf">0.000</span>
 
-    <span class="c1">#log_F_min = -22.00</span>
-    <span class="c1">#log_F_max = -3.000</span>
-
     <span class="n">log_EW_min</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.</span>
     <span class="n">log_EW_max</span> <span class="o">=</span>  <span class="mf">3.</span>
 
@@ -3020,12 +3075,9 @@
     <span class="n">z_min</span> <span class="o">=</span>   <span class="mf">0.0</span>
     <span class="n">z_max</span> <span class="o">=</span>   <span class="mf">7.0</span>
 
-    <span class="c1">#if log_V &lt; np.log10( 40 ) : log_N_max = 20.5</span>
- 
     <span class="k">if</span> <span class="n">log_V</span>  <span class="o">&lt;</span> <span class="n">log_V_min</span>  <span class="ow">or</span> <span class="n">log_V</span>  <span class="o">&gt;</span> <span class="n">log_V_max</span>  <span class="p">:</span> <span class="k">return</span> <span class="kc">False</span>
     <span class="k">if</span> <span class="n">log_N</span>  <span class="o">&lt;</span> <span class="n">log_N_min</span>  <span class="ow">or</span> <span class="n">log_N</span>  <span class="o">&gt;</span> <span class="n">log_N_max</span>  <span class="p">:</span> <span class="k">return</span> <span class="kc">False</span>
     <span class="k">if</span> <span class="n">log_t</span>  <span class="o">&lt;</span> <span class="n">log_t_min</span>  <span class="ow">or</span> <span class="n">log_t</span>  <span class="o">&gt;</span> <span class="n">log_t_max</span>  <span class="p">:</span> <span class="k">return</span> <span class="kc">False</span>
-    <span class="c1">#if log_F  &lt; log_F_min  or log_F  &gt; log_F_max  : return False</span>
     <span class="k">if</span> <span class="n">log_EW</span> <span class="o">&lt;</span> <span class="n">log_EW_min</span> <span class="ow">or</span> <span class="n">log_EW</span> <span class="o">&gt;</span> <span class="n">log_EW_max</span> <span class="p">:</span> <span class="k">return</span> <span class="kc">False</span>
     <span class="k">if</span> <span class="n">Wi</span>     <span class="o">&lt;</span>     <span class="n">Wi_min</span> <span class="ow">or</span>     <span class="n">Wi</span> <span class="o">&gt;</span>     <span class="n">Wi_max</span> <span class="p">:</span> <span class="k">return</span> <span class="kc">False</span>
 
@@ -3036,6 +3088,63 @@
 <span class="c1">#====================================================================#</span>
 <span class="c1">#====================================================================#</span>
 <div class="viewcode-block" id="log_likeliehood_of_model_5"><a class="viewcode-back" href="../funcs.html#funcs.log_likeliehood_of_model_5">[docs]</a><span class="k">def</span> <span class="nf">log_likeliehood_of_model_5</span><span class="p">(</span> <span class="n">theta</span> <span class="p">,</span> <span class="n">w_obs_Arr</span> <span class="p">,</span> <span class="n">f_obs_Arr</span> <span class="p">,</span> <span class="n">s_obs_Arr</span> <span class="p">,</span> <span class="n">FWHM</span><span class="p">,</span> <span class="n">PIX</span><span class="p">,</span> <span class="n">w_min</span><span class="p">,</span> <span class="n">w_max</span><span class="p">,</span> <span class="n">DATA_LyaRT</span><span class="p">,</span> <span class="n">Geometry</span> <span class="p">,</span> <span class="n">z_in</span> <span class="p">,</span> <span class="n">FORCE_z</span><span class="o">=</span><span class="kc">False</span> <span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Logarithm of the likelihood between an observed spectrum and a model </span>
+<span class="sd">        configuration defined in theta</span>
+
+<span class="sd">        **Input**</span>
+
+<span class="sd">        theta : 1-D sequence of float</span>
+<span class="sd">                Contains the parameters of the mode:</span>
+<span class="sd">                    theta[0] = logarithim of the expansion velocity</span>
+<span class="sd">                    theta[1] = logarithim of the neutral hydrogen column density</span>
+<span class="sd">                    theta[2] = logarithim of the dust optical depth</span>
+<span class="sd">                    theta[3] = redshift</span>
+<span class="sd">                    theta[4] = logarithm of the intrinsic equivalent width</span>
+<span class="sd">                    theta[5] = intrinsic width</span>
+
+<span class="sd">        w_obs_Arr : 1-D sequence of float</span>
+<span class="sd">                    wavelength where the observed density flux is evaluated.</span>
+
+<span class="sd">        f_obs_Arr : 1-D sequence of float</span>
+<span class="sd">                    Observed flux density</span>
+
+<span class="sd">        s_obs_Arr : 1-D sequence of float</span>
+<span class="sd">                    Uncertanty in the observed flux density.</span>
+
+<span class="sd">        FWHM : float</span>
+<span class="sd">              Full width half maximum [A] of the experiment.</span>
+
+<span class="sd">        PIX : float</span>
+<span class="sd">              Pixel size in wavelgnth [A] of the experiment.</span>
+
+<span class="sd">        w_min : float</span>
+<span class="sd">                minimum wavelength in the observed frame [A] to use. This matches the minimum</span>
+<span class="sd">                wavelgnth of wave_pix_Arr (see below).</span>
+
+<span class="sd">        w_max : float</span>
+<span class="sd">                maximum  wavelength in the observed frame [A] to use. This might not be exactly</span>
+<span class="sd">                the maximum wavelgnth of wave_pix_Arr (see below) due to pixelization.</span>
+
+<span class="sd">        DATA_LyaRT : python dictionary</span>
+<span class="sd">                     Contains the grid information.</span>
+
+<span class="sd">        Geometry : string</span>
+<span class="sd">                   Outflow geometry to use.</span>
+
+<span class="sd">        z_in : 1-D sequence of floats.</span>
+<span class="sd">               Redshift range to be considered. In principle the redshift can be outside</span>
+<span class="sd">               z_in[0] is the minimum redshift </span>
+<span class="sd">               z_in[1] is the maximum redshift </span>
+
+<span class="sd">        FORCE_z : optional bool</span>
+<span class="sd">                  If True, force the redshift to be inside z_in </span>
+
+<span class="sd">        **Output**</span>
+
+<span class="sd">        log_like : float</span>
+<span class="sd">                   Logarithm of the likelihood</span>
+<span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="n">Prior_f_5</span><span class="p">(</span> <span class="n">theta</span> <span class="p">):</span>
         <span class="k">return</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span>
@@ -3065,7 +3174,59 @@
 <span class="c1">#====================================================================#</span>
 <span class="c1">#====================================================================#</span>
 <div class="viewcode-block" id="init_walkers_5"><a class="viewcode-back" href="../funcs.html#funcs.init_walkers_5">[docs]</a><span class="k">def</span> <span class="nf">init_walkers_5</span><span class="p">(</span> <span class="n">N_walkers</span> <span class="p">,</span> <span class="n">N_dim</span> <span class="p">,</span> <span class="n">log_V_in</span> <span class="p">,</span> <span class="n">log_N_in</span> <span class="p">,</span> <span class="n">log_t_in</span> <span class="p">,</span> <span class="n">z_in</span> <span class="p">,</span> <span class="n">log_E_in</span> <span class="p">,</span> <span class="n">W_in</span> <span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Creates the initial position for the walkers</span>
 
+<span class="sd">        **Input**</span>
+
+<span class="sd">        N_walkers : int</span>
+<span class="sd">                    Number of walkers</span>
+
+<span class="sd">        N_dim : int</span>
+<span class="sd">                Number of dimensions (6)</span>
+<span class="sd">        </span>
+<span class="sd">        log_V_in : 1-D sequence of floats.</span>
+<span class="sd">               Range of the logarithm of the bulk velocity</span>
+<span class="sd">               log_V_in[0] is the minimum </span>
+<span class="sd">               log_V_in[1] is the maximum</span>
+
+<span class="sd">        log_N_in : 1-D sequence of floats.</span>
+<span class="sd">               Range of the logarithm of the neutral hydrogen column density</span>
+<span class="sd">               log_N_in[0] is the minimum </span>
+<span class="sd">               log_N_in[1] is the maximum</span>
+<span class="sd"> </span>
+<span class="sd">        log_t_in : 1-D sequence of floats.</span>
+<span class="sd">               Range of the logarithm of the dust optical depth</span>
+<span class="sd">               log_t_in[0] is the minimum </span>
+<span class="sd">               log_t_in[1] is the maximum</span>
+
+<span class="sd">        z_in : 1-D sequence of floats.</span>
+<span class="sd">               Redshift range to be considered. </span>
+<span class="sd">               z_in[0] is the minimum redshift</span>
+<span class="sd">               z_in[1] is the maximum redshift</span>
+
+<span class="sd">        log_E_in : 1-D sequence of floats.</span>
+<span class="sd">               Range of the logarithm of the intrinsic equivalent width</span>
+<span class="sd">               log_E_in[0] is the minimum </span>
+<span class="sd">               log_E_in[1] is the maximum</span>
+
+<span class="sd">        W_in : 1-D sequence of floats.</span>
+<span class="sd">               Instrinsic line width range to be considered. </span>
+<span class="sd">               W_in[0] is the minimum redshift</span>
+<span class="sd">               W_in[1] is the maximum redshift</span>
+
+<span class="sd">        **Output**</span>
+
+<span class="sd">        theta_0 : 1-D sequence of float</span>
+<span class="sd">                Contains the parameters of the mode:</span>
+<span class="sd">                    theta_0[:,0] = logarithim of the expansion velocity</span>
+<span class="sd">                    theta_0[:,1] = logarithim of the neutral hydrogen column density</span>
+<span class="sd">                    theta_0[:,2] = logarithim of the dust optical depth</span>
+<span class="sd">                    theta_0[:,3] = redshift</span>
+<span class="sd">                    theta_0[:,4] = logarithm of the intrinsic equivalent width</span>
+<span class="sd">                    theta_0[:,5] = intrinsic width</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">init_V_Arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span> <span class="n">N_walkers</span> <span class="p">)</span> <span class="o">*</span> <span class="p">(</span> <span class="n">log_V_in</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">log_V_in</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">)</span> <span class="o">+</span> <span class="n">log_V_in</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">init_N_Arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span> <span class="n">N_walkers</span> <span class="p">)</span> <span class="o">*</span> <span class="p">(</span> <span class="n">log_N_in</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">log_N_in</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">)</span> <span class="o">+</span> <span class="n">log_N_in</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">init_t_Arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span> <span class="n">N_walkers</span> <span class="p">)</span> <span class="o">*</span> <span class="p">(</span> <span class="n">log_t_in</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">log_t_in</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">)</span> <span class="o">+</span> <span class="n">log_t_in</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -3102,7 +3263,80 @@
 <span class="c1">#====================================================================#</span>
 <span class="c1">#====================================================================#</span>
 <div class="viewcode-block" id="MCMC_get_region_6D"><a class="viewcode-back" href="../funcs.html#funcs.MCMC_get_region_6D">[docs]</a><span class="k">def</span> <span class="nf">MCMC_get_region_6D</span><span class="p">(</span> <span class="n">MODE</span> <span class="p">,</span> <span class="n">w_tar_Arr</span> <span class="p">,</span> <span class="n">f_tar_Arr</span> <span class="p">,</span> <span class="n">s_tar_Arr</span> <span class="p">,</span> <span class="n">FWHM</span> <span class="p">,</span> <span class="n">PIX</span> <span class="p">,</span> <span class="n">DATA_LyaRT</span> <span class="p">,</span> <span class="n">Geometry</span> <span class="p">,</span> <span class="n">Geometry_Mode</span><span class="o">=</span><span class="s1">&#39;Outflow&#39;</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Computes the region of where the walkers are initialize</span>
 
+<span class="sd">        **Input**</span>
+
+<span class="sd">        MODE : string</span>
+<span class="sd">               Method, DNN or PSO</span>
+
+<span class="sd">        w_tar_Arr : 1-D sequence of floats</span>
+<span class="sd">                    wavelength where the densit flux is evaluated</span>
+
+<span class="sd">        f_tar_Arr : 1-D sequence of floats</span>
+<span class="sd">                    Densit flux is evaluated</span>
+
+<span class="sd">        s_tar_Arr : 1-D sequence of floats</span>
+<span class="sd">                    Uncertainty of the densit flux is evaluated</span>
+
+<span class="sd">        FWHM : float</span>
+<span class="sd">              Full width half maximum [A] of the experiment.</span>
+
+<span class="sd">        PIX : float</span>
+<span class="sd">              Pixel size in wavelgnth [A] of the experiment.</span>
+
+<span class="sd">        w_min : float</span>
+<span class="sd">                minimum wavelength in the observed frame [A] to use. This matches the minimum</span>
+<span class="sd">                wavelgnth of wave_pix_Arr (see below).</span>
+
+<span class="sd">        w_max : float</span>
+<span class="sd">                maximum  wavelength in the observed frame [A] to use. This might not be exactly</span>
+<span class="sd">                the maximum wavelgnth of wave_pix_Arr (see below) due to pixelization.</span>
+
+<span class="sd">        DATA_LyaRT : python dictionary</span>
+<span class="sd">                     Contains the grid information.</span>
+
+<span class="sd">        Geometry : string</span>
+<span class="sd">                   Outflow geometry to use.</span>
+
+
+<span class="sd">        Geometry_Mode : optinal string</span>
+<span class="sd">                        Changes from inflow (&#39;Inflow&#39;) to outflow (&#39;Outflow&#39;)</span>
+<span class="sd">                        Default: &#39;Outflow&#39;</span>
+
+<span class="sd">        **Output**</span>
+
+<span class="sd">        log_V_in : 1-D sequence of floats.</span>
+<span class="sd">               Range of the logarithm of the bulk velocity</span>
+<span class="sd">               log_V_in[0] is the minimum</span>
+<span class="sd">               log_V_in[1] is the maximum</span>
+
+<span class="sd">        log_N_in : 1-D sequence of floats.</span>
+<span class="sd">               Range of the logarithm of the neutral hydrogen column density</span>
+<span class="sd">               log_N_in[0] is the minimum</span>
+<span class="sd">               log_N_in[1] is the maximum</span>
+
+<span class="sd">        log_t_in : 1-D sequence of floats.</span>
+<span class="sd">               Range of the logarithm of the dust optical depth</span>
+<span class="sd">               log_t_in[0] is the minimum</span>
+<span class="sd">               log_t_in[1] is the maximum</span>
+
+<span class="sd">        z_in : 1-D sequence of floats.</span>
+<span class="sd">               Redshift range to be considered.</span>
+<span class="sd">               z_in[0] is the minimum redshift</span>
+<span class="sd">               z_in[1] is the maximum redshift</span>
+
+<span class="sd">        log_E_in : 1-D sequence of floats.</span>
+<span class="sd">               Range of the logarithm of the intrinsic equivalent width</span>
+<span class="sd">               log_E_in[0] is the minimum</span>
+<span class="sd">               log_E_in[1] is the maximum</span>
+
+<span class="sd">        W_in : 1-D sequence of floats.</span>
+<span class="sd">               Instrinsic line width range to be considered.</span>
+<span class="sd">               W_in[0] is the minimum redshift</span>
+<span class="sd">               W_in[1] is the maximum redshift</span>
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">if</span> <span class="n">MODE</span> <span class="o">==</span> <span class="s1">&#39;PSO&#39;</span> <span class="p">:</span>
 
         <span class="n">n_particles</span> <span class="o">=</span> <span class="mi">400</span>
@@ -3168,6 +3402,89 @@
 <span class="c1">#====================================================================#</span>
 <div class="viewcode-block" id="MCMC_Analysis_sampler_5"><a class="viewcode-back" href="../funcs.html#funcs.MCMC_Analysis_sampler_5">[docs]</a><span class="k">def</span> <span class="nf">MCMC_Analysis_sampler_5</span><span class="p">(</span> <span class="n">w_target_Arr</span> <span class="p">,</span> <span class="n">f_target_Arr</span> <span class="p">,</span> <span class="n">s_target_Arr</span> <span class="p">,</span> <span class="n">FWHM</span> <span class="p">,</span> <span class="n">N_walkers</span> <span class="p">,</span> <span class="n">N_burn</span> <span class="p">,</span> <span class="n">N_steps</span> <span class="p">,</span> <span class="n">Geometry</span> <span class="p">,</span> <span class="n">DATA_LyaRT</span> <span class="p">,</span> <span class="n">log_V_in</span><span class="o">=</span><span class="kc">None</span> <span class="p">,</span> <span class="n">log_N_in</span><span class="o">=</span><span class="kc">None</span> <span class="p">,</span> <span class="n">log_t_in</span><span class="o">=</span><span class="kc">None</span> <span class="p">,</span> <span class="n">z_in</span><span class="o">=</span><span class="kc">None</span> <span class="p">,</span> <span class="n">log_E_in</span><span class="o">=</span><span class="kc">None</span> <span class="p">,</span> <span class="n">W_in</span><span class="o">=</span><span class="kc">None</span> <span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">True</span> <span class="p">,</span> <span class="n">FORCE_z</span><span class="o">=</span><span class="kc">False</span> <span class="p">):</span>
 
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Full MCMC anaylsis for the Thin_Shell_Cont</span>
+
+<span class="sd">        **Input**</span>
+
+<span class="sd">        w_tar_Arr : 1-D sequence of floats</span>
+<span class="sd">                    wavelength where the densit flux is evaluated</span>
+
+<span class="sd">        f_tar_Arr : 1-D sequence of floats</span>
+<span class="sd">                    Densit flux is evaluated</span>
+
+<span class="sd">        s_tar_Arr : 1-D sequence of floats</span>
+<span class="sd">                    Uncertainty of the densit flux is evaluated</span>
+
+<span class="sd">        FWHM : float</span>
+<span class="sd">              Full width half maximum [A] of the experiment.</span>
+
+<span class="sd">        N_walkers : int</span>
+<span class="sd">                    Number of walkers</span>
+
+<span class="sd">        N_dim : int</span>
+<span class="sd">                Number of dimensions (6)</span>
+
+<span class="sd">        N_burn : int</span>
+<span class="sd">                 Number of steps in the burnin-in phase</span>
+
+<span class="sd">        N_steps : int</span>
+<span class="sd">                  Number of steps </span>
+
+<span class="sd">        Geometry : string</span>
+<span class="sd">                   Outflow geometry to use.</span>
+
+<span class="sd">        DATA_LyaRT : python dictionary</span>
+<span class="sd">                     Contains the grid information.</span>
+
+<span class="sd">        Geometry_Mode : optinal string</span>
+<span class="sd">                        Changes from inflow (&#39;Inflow&#39;) to outflow (&#39;Outflow&#39;)</span>
+<span class="sd">                        Default: &#39;Outflow&#39;</span>
+
+<span class="sd">        log_V_in : optional 1-D sequence of floats.</span>
+<span class="sd">               Range of the logarithm of the bulk velocity</span>
+<span class="sd">               log_V_in[0] is the minimum</span>
+<span class="sd">               log_V_in[1] is the maximum</span>
+
+<span class="sd">        log_N_in : optional 1-D sequence of floats.</span>
+<span class="sd">               Range of the logarithm of the neutral hydrogen column density</span>
+<span class="sd">               log_N_in[0] is the minimum</span>
+<span class="sd">               log_N_in[1] is the maximum</span>
+
+<span class="sd">        log_t_in : optional 1-D sequence of floats.</span>
+<span class="sd">               Range of the logarithm of the dust optical depth</span>
+<span class="sd">               log_t_in[0] is the minimum</span>
+<span class="sd">               log_t_in[1] is the maximum</span>
+
+<span class="sd">        z_in : optional 1-D sequence of floats.</span>
+<span class="sd">               Redshift range to be considered.</span>
+<span class="sd">               z_in[0] is the minimum redshift</span>
+<span class="sd">               z_in[1] is the maximum redshift</span>
+
+<span class="sd">        log_E_in : optional 1-D sequence of floats.</span>
+<span class="sd">               Range of the logarithm of the intrinsic equivalent width</span>
+<span class="sd">               log_E_in[0] is the minimum</span>
+<span class="sd">               log_E_in[1] is the maximum</span>
+
+<span class="sd">        W_in : optional 1-D sequence of floats.</span>
+<span class="sd">               Instrinsic line width range to be considered.</span>
+<span class="sd">               W_in[0] is the minimum redshift</span>
+<span class="sd">               W_in[1] is the maximum redshift</span>
+
+<span class="sd">        progress : optional bool</span>
+<span class="sd">              If True shows the MCMC progress.</span>
+<span class="sd">              Default True</span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">        FORCE_z : optional bool</span>
+<span class="sd">                  If True, force the redshift to be inside z_in</span>
+
+<span class="sd">        **Output**</span>
+
+<span class="sd">        samples : emcee python packge object.</span>
+<span class="sd">                  Contains the information of the MCMC.</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">N_dim</span> <span class="o">=</span> <span class="mi">6</span>
 
     <span class="k">if</span> <span class="n">log_V_in</span> <span class="ow">is</span> <span class="kc">None</span> <span class="p">:</span> <span class="n">log_V_in</span> <span class="o">=</span>  <span class="p">[</span>  <span class="mf">1.</span>   <span class="p">,</span>  <span class="mf">3.</span>  <span class="p">]</span>
@@ -3206,7 +3523,36 @@
 <span class="c1">#====================================================================#</span>
 <span class="c1">#====================================================================#</span>
 <div class="viewcode-block" id="get_solutions_from_sampler"><a class="viewcode-back" href="../funcs.html#funcs.get_solutions_from_sampler">[docs]</a><span class="k">def</span> <span class="nf">get_solutions_from_sampler</span><span class="p">(</span> <span class="n">sampler</span> <span class="p">,</span> <span class="n">N_walkers</span> <span class="p">,</span> <span class="n">N_burn</span> <span class="p">,</span> <span class="n">N_steps</span> <span class="p">,</span> <span class="n">Q_Arr</span> <span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        function to get the solution from the emcee sampler sin some given</span>
+<span class="sd">        percentiles.</span>
 
+<span class="sd">        **Input**</span>
+
+<span class="sd">        sampler : emcee python packge object.</span>
+<span class="sd">                  Contains the information of the MCMC.</span>
+
+<span class="sd">        N_walkers : int</span>
+<span class="sd">                    Number of walkers</span>
+
+<span class="sd">        N_burn : int</span>
+<span class="sd">                 Number of steps in the burnin-in phase</span>
+
+<span class="sd">        N_steps : int</span>
+<span class="sd">                  Number of steps</span>
+
+<span class="sd">        Q_Arr : 1-D list of floats</span>
+<span class="sd">                List of the percentiles that will be computed, for </span>
+<span class="sd">                example [ 16.0 , 50.0 , 84.0 ]</span>
+
+<span class="sd">        **Output**</span>
+
+<span class="sd">        matrix_sol: 2-D sequence of floats</span>
+<span class="sd">                    The percentiles of each of the 6 properties.</span>
+
+<span class="sd">        flat_samples : 2-D sequence of floats</span>
+<span class="sd">                       The MCMC chains but flat.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">chains</span> <span class="o">=</span> <span class="n">sampler</span><span class="o">.</span><span class="n">get_chain</span><span class="p">()</span>
 
     <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;chains_shape = &#39;</span> <span class="p">,</span> <span class="n">chains</span><span class="o">.</span><span class="n">shape</span> <span class="p">)</span>
@@ -3233,19 +3579,9 @@
     
     <span class="n">matrix_sol</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span> <span class="n">N_dim</span> <span class="o">*</span> <span class="n">N_Q</span> <span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span> <span class="n">N_dim</span> <span class="p">,</span> <span class="n">N_Q</span> <span class="p">)</span>
     
-    <span class="c1">#mask_log = flat_log_prob &gt; np.percentile( flat_log_prob , 50 )</span>
-
-    <span class="c1">#flat_samples = flat_samples[ mask_log ]</span>
-
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span> <span class="mi">0</span> <span class="p">,</span> <span class="n">N_dim</span> <span class="p">):</span>
         <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span> <span class="mi">0</span> <span class="p">,</span> <span class="n">N_Q</span> <span class="p">):</span>
 
-            <span class="c1">#bool_1 = flat_samples[ : , i ] &gt; np.percentile( flat_samples[ : , i ] ,  5 )  </span>
-            <span class="c1">#bool_2 = flat_samples[ : , i ] &lt; np.percentile( flat_samples[ : , i ] , 95 )  </span>
-
-            <span class="c1">#mask_per = bool_1 * bool_2</span>
-
-            <span class="c1">#matrix_sol[i,j] = np.percentile( flat_samples[ : , i ][ mask_per ] , Q_Arr[j] )</span>
             <span class="n">matrix_sol</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span> <span class="n">flat_samples</span><span class="p">[</span> <span class="p">:</span> <span class="p">,</span> <span class="n">i</span> <span class="p">]</span> <span class="p">,</span> <span class="n">Q_Arr</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="p">)</span>
 
     <span class="k">return</span> <span class="n">matrix_sol</span> <span class="p">,</span> <span class="n">flat_samples</span></div>
@@ -3254,6 +3590,31 @@
 <span class="c1">#====================================================================#</span>
 <div class="viewcode-block" id="get_solutions_from_sampler_mean"><a class="viewcode-back" href="../funcs.html#funcs.get_solutions_from_sampler_mean">[docs]</a><span class="k">def</span> <span class="nf">get_solutions_from_sampler_mean</span><span class="p">(</span> <span class="n">sampler</span> <span class="p">,</span> <span class="n">N_walkers</span> <span class="p">,</span> <span class="n">N_burn</span> <span class="p">,</span> <span class="n">N_steps</span> <span class="p">):</span>
 
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        function to get the solution from the emcee sampler as the mean.</span>
+
+<span class="sd">        **Input**</span>
+
+<span class="sd">        sampler : emcee python packge object.</span>
+<span class="sd">                  Contains the information of the MCMC.</span>
+
+<span class="sd">        N_walkers : int</span>
+<span class="sd">                    Number of walkers</span>
+
+<span class="sd">        N_burn : int</span>
+<span class="sd">                 Number of steps in the burnin-in phase</span>
+
+<span class="sd">        N_steps : int</span>
+<span class="sd">                  Number of steps</span>
+
+<span class="sd">        **Output**</span>
+
+<span class="sd">        matrix_sol: 1-D sequence of floats</span>
+<span class="sd">                    Mean of each of the 6 properties.</span>
+
+<span class="sd">        flat_samples : 2-D sequence of floats</span>
+<span class="sd">                       The MCMC chains but flat.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">chains</span> <span class="o">=</span> <span class="n">sampler</span><span class="o">.</span><span class="n">get_chain</span><span class="p">()</span>
 
     <span class="n">N_dim</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span> <span class="n">chains</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="p">)</span>
@@ -3278,6 +3639,34 @@
 <span class="c1">#====================================================================#</span>
 <div class="viewcode-block" id="get_solutions_from_sampler_peak"><a class="viewcode-back" href="../funcs.html#funcs.get_solutions_from_sampler_peak">[docs]</a><span class="k">def</span> <span class="nf">get_solutions_from_sampler_peak</span><span class="p">(</span> <span class="n">sampler</span> <span class="p">,</span> <span class="n">N_walkers</span> <span class="p">,</span> <span class="n">N_burn</span> <span class="p">,</span> <span class="n">N_steps</span> <span class="p">,</span> <span class="n">N_hist_steps</span> <span class="p">):</span>
 
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        function to get the solution from the emcee sampler as the</span>
+<span class="sd">        global maximum of the distribution of the posteriors.</span>
+
+<span class="sd">        **Input**</span>
+
+<span class="sd">        sampler : emcee python packge object.</span>
+<span class="sd">                  Contains the information of the MCMC.</span>
+
+<span class="sd">        N_walkers : int</span>
+<span class="sd">                    Number of walkers</span>
+
+<span class="sd">        N_burn : int</span>
+<span class="sd">                 Number of steps in the burnin-in phase</span>
+
+<span class="sd">        N_steps : int</span>
+<span class="sd">                  Number of steps</span>
+
+<span class="sd">        N_hist_steps : int </span>
+<span class="sd">                     Number of bins to sample the PDF of all properties</span>
+<span class="sd">        **Output**</span>
+
+<span class="sd">        matrix_sol: 1-D sequence of floats</span>
+<span class="sd">                    Mean of each of the 6 properties.</span>
+
+<span class="sd">        flat_samples : 2-D sequence of floats</span>
+<span class="sd">                       The MCMC chains but flat.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">chains</span> <span class="o">=</span> <span class="n">sampler</span><span class="o">.</span><span class="n">get_chain</span><span class="p">()</span>
 
     <span class="n">N_dim</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span> <span class="n">chains</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="p">)</span>
@@ -3318,7 +3707,25 @@
 <span class="c1">#====================================================================#</span>
 <span class="c1">#====================================================================#</span>
 <div class="viewcode-block" id="get_solutions_from_flat_chain"><a class="viewcode-back" href="../funcs.html#funcs.get_solutions_from_flat_chain">[docs]</a><span class="k">def</span> <span class="nf">get_solutions_from_flat_chain</span><span class="p">(</span> <span class="n">flat_chains</span> <span class="p">,</span> <span class="n">Q_Arr</span> <span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        function to get the solution from the emcee sampler sin some given</span>
+<span class="sd">        percentiles.</span>
 
+<span class="sd">        **Input**</span>
+
+<span class="sd">        flat_samples : 2-D sequence of floats</span>
+<span class="sd">                       The MCMC chains but flat.</span>
+
+<span class="sd">        Q_Arr : 1-D list of floats</span>
+<span class="sd">                List of the percentiles that will be computed, for</span>
+<span class="sd">                example [ 16.0 , 50.0 , 84.0 ]</span>
+
+<span class="sd">        **Output**</span>
+
+<span class="sd">        matrix_sol: 2-D sequence of floats</span>
+<span class="sd">                    The percentiles of each of the 6 properties.</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">N_dim</span> <span class="o">=</span> <span class="n">flat_chains</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
     <span class="n">N_Q</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span> <span class="n">Q_Arr</span> <span class="p">)</span>
@@ -3341,7 +3748,24 @@
 <span class="c1">#====================================================================#</span>
 <span class="c1">#====================================================================#</span>
 <div class="viewcode-block" id="Load_NN_model"><a class="viewcode-back" href="../funcs.html#funcs.Load_NN_model">[docs]</a><span class="k">def</span> <span class="nf">Load_NN_model</span><span class="p">(</span> <span class="n">Mode</span> <span class="p">,</span> <span class="n">iteration</span><span class="o">=</span><span class="mi">1</span> <span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Loads the saved parameters of the deep neural networks</span>
 
+<span class="sd">        **Input**</span>
+
+<span class="sd">        Mode : string</span>
+<span class="sd">               &#39;Inflow&#39; or &#39;Outflow&#39;</span>
+
+<span class="sd">        iteration : optional int</span>
+<span class="sd">                    Number of the iteration. Currently only 1</span>
+<span class="sd">                    Default 1</span>
+
+<span class="sd">        **Output**</span>
+
+<span class="sd">        machine_data : python dictionaty</span>
+<span class="sd">                       Contains all the info for the DNN</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">this_dir</span><span class="p">,</span> <span class="n">this_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span> 
 
     <span class="k">if</span> <span class="n">Mode</span> <span class="o">==</span> <span class="s1">&#39;Inflow&#39;</span> <span class="p">:</span> <span class="n">my_str</span> <span class="o">=</span> <span class="s1">&#39;INFLOWS&#39;</span>
@@ -3358,7 +3782,46 @@
 <span class="c1">#====================================================================#</span>
 <span class="c1">#====================================================================#</span>
 <div class="viewcode-block" id="NN_convert_Obs_Line_to_proxy_rest_line"><a class="viewcode-back" href="../funcs.html#funcs.NN_convert_Obs_Line_to_proxy_rest_line">[docs]</a><span class="k">def</span> <span class="nf">NN_convert_Obs_Line_to_proxy_rest_line</span><span class="p">(</span> <span class="n">w_obs_Arr</span> <span class="p">,</span> <span class="n">f_obs_Arr</span> <span class="p">,</span> <span class="n">s_obs_Arr</span><span class="o">=</span><span class="kc">None</span> <span class="p">,</span> <span class="n">normed</span><span class="o">=</span><span class="kc">False</span> <span class="p">,</span> <span class="n">scaled</span><span class="o">=</span><span class="kc">False</span> <span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Converts an observed line profile to the rest frame of the maximum</span>
+<span class="sd">        of the line profile.</span>
 
+<span class="sd">        **Input**</span>
+
+<span class="sd">        w_obs_Arr : 1-D sequence of floats</span>
+<span class="sd">                    wavelength where the line profile is evaluated.</span>
+
+<span class="sd">        f_obs_Arr : 1-D sequence of floats</span>
+<span class="sd">                    Flux density of the observed line profile.</span>
+
+<span class="sd">        s_obs_Arr : optional 1-D sequence of floats</span>
+<span class="sd">                    Uncertainty in the flux density of the observed line profile.</span>
+
+<span class="sd">        normed : optional bool</span>
+<span class="sd">              If True, nomalizes the line profile.</span>
+
+<span class="sd">        scaled : optinal bool</span>
+<span class="sd">              If True, divides the line profile by its maximum.</span>
+
+<span class="sd">        **Output**</span>
+
+<span class="sd">        w_rest_Arr : 1-D sequence of floats</span>
+<span class="sd">                    wavelength where the line profile is evaluated in the rest frame</span>
+<span class="sd">                    of the global maximum</span>
+
+<span class="sd">        Delta_rest_Arr : 1-D sequence of floats</span>
+<span class="sd">                         w_rest_Arr - Lyman-alpha.</span>
+
+<span class="sd">        f_rest_Arr : 1-D sequence of floats</span>
+<span class="sd">                    Flux density in the rest frame of the global maximum</span>
+
+<span class="sd">        z_max : float</span>
+<span class="sd">                Redshift if the global maximum is the Lyaman-alpha wavelength</span>
+
+<span class="sd">        if s_obs_Arr is not None it also returns:</span>
+<span class="sd">        s_rest_Arr : 1-D sequence of floats</span>
+<span class="sd">                    Uncertainty of the flux density in the rest frame of the global maximum</span>
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">w_Lya</span> <span class="o">=</span> <span class="mf">1215.67</span>
 
     <span class="n">w_obs_max</span> <span class="o">=</span> <span class="n">w_obs_Arr</span><span class="p">[</span> <span class="n">f_obs_Arr</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span> <span class="n">f_obs_Arr</span> <span class="p">)</span> <span class="p">]</span>
@@ -3411,6 +3874,47 @@
 <span class="c1">#====================================================================#</span>
 <div class="viewcode-block" id="NN_generate_random_outflow_props"><a class="viewcode-back" href="../funcs.html#funcs.NN_generate_random_outflow_props">[docs]</a><span class="k">def</span> <span class="nf">NN_generate_random_outflow_props</span><span class="p">(</span> <span class="n">N_walkers</span> <span class="p">,</span> <span class="n">log_V_in</span> <span class="p">,</span> <span class="n">log_N_in</span> <span class="p">,</span> <span class="n">log_t_in</span> <span class="p">,</span> <span class="n">Allow_Inflows</span><span class="o">=</span><span class="kc">True</span> <span class="p">):</span>
 
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Generates random poperties for the Thin_Shell, Galactic_Wind, etc. </span>
+<span class="sd">        (Not for Thin_Shell_Cont)        </span>
+
+<span class="sd">        **Input**</span>
+
+<span class="sd">        N_walkers : int</span>
+<span class="sd">                    Number of walkers</span>
+
+<span class="sd">        log_V_in : optional 1-D sequence of floats.</span>
+<span class="sd">               Range of the logarithm of the bulk velocity</span>
+<span class="sd">               log_V_in[0] is the minimum</span>
+<span class="sd">               log_V_in[1] is the maximum</span>
+
+<span class="sd">        log_N_in : optional 1-D sequence of floats.</span>
+<span class="sd">               Range of the logarithm of the neutral hydrogen column density</span>
+<span class="sd">               log_N_in[0] is the minimum</span>
+<span class="sd">               log_N_in[1] is the maximum</span>
+
+<span class="sd">        log_t_in : optional 1-D sequence of floats.</span>
+<span class="sd">               Range of the logarithm of the dust optical depth</span>
+<span class="sd">               log_t_in[0] is the minimum</span>
+<span class="sd">               log_t_in[1] is the maximum</span>
+
+<span class="sd">        Allow_Inflows : optional Bool</span>
+<span class="sd">               If True it also return negative values of V in the same range.</span>
+<span class="sd">               Default True           </span>
+<span class="sd"> </span>
+<span class="sd">        **Output**</span>
+
+<span class="sd">        init_V_Arr : 1-D sequence of floats</span>
+<span class="sd">                     Expansion velocity</span>
+
+<span class="sd">        init_log_N_Arr : 1-D sequence of floats</span>
+<span class="sd">                     Logarithms of the column density  </span>
+
+<span class="sd">        init_log_t_Arr : 1-D sequence of floats</span>
+<span class="sd">                     Logarithms of the dust optical depth</span>
+
+
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">init_log_V_Arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span> <span class="n">N_walkers</span> <span class="p">)</span> <span class="o">*</span> <span class="p">(</span> <span class="n">log_V_in</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">log_V_in</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">)</span> <span class="o">+</span> <span class="n">log_V_in</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">init_log_N_Arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span> <span class="n">N_walkers</span> <span class="p">)</span> <span class="o">*</span> <span class="p">(</span> <span class="n">log_N_in</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">log_N_in</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">)</span> <span class="o">+</span> <span class="n">log_N_in</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">init_log_t_Arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span> <span class="n">N_walkers</span> <span class="p">)</span> <span class="o">*</span> <span class="p">(</span> <span class="n">log_t_in</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">log_t_in</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">)</span> <span class="o">+</span> <span class="n">log_t_in</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -3441,8 +3945,59 @@
 <span class="c1">#====================================================================#</span>
 <span class="c1">#====================================================================#</span>
 <div class="viewcode-block" id="NN_generate_random_outflow_props_5D"><a class="viewcode-back" href="../funcs.html#funcs.NN_generate_random_outflow_props_5D">[docs]</a><span class="k">def</span> <span class="nf">NN_generate_random_outflow_props_5D</span><span class="p">(</span> <span class="n">N_walkers</span> <span class="p">,</span> <span class="n">log_V_in</span> <span class="p">,</span> <span class="n">log_N_in</span> <span class="p">,</span> <span class="n">log_t_in</span> <span class="p">,</span> <span class="n">log_E_in</span> <span class="p">,</span> <span class="n">log_W_in</span> <span class="p">,</span> <span class="n">MODE</span><span class="o">=</span><span class="s1">&#39;Outflow&#39;</span> <span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Generates random poperties for the Thin_Shell_Cont</span>
 
-    <span class="c1"># MODE = Outflow , Inflow , Mixture</span>
+<span class="sd">        **Input**</span>
+
+<span class="sd">        N_walkers : int</span>
+<span class="sd">                    Number of walkers</span>
+
+<span class="sd">        log_V_in : optional 1-D sequence of floats.</span>
+<span class="sd">               Range of the logarithm of the bulk velocity</span>
+<span class="sd">               log_V_in[0] is the minimum</span>
+<span class="sd">               log_V_in[1] is the maximum</span>
+
+<span class="sd">        log_N_in : optional 1-D sequence of floats.</span>
+<span class="sd">               Range of the logarithm of the neutral hydrogen column density</span>
+<span class="sd">               log_N_in[0] is the minimum</span>
+<span class="sd">               log_N_in[1] is the maximum</span>
+
+<span class="sd">        log_t_in : optional 1-D sequence of floats.</span>
+<span class="sd">               Range of the logarithm of the dust optical depth</span>
+<span class="sd">               log_t_in[0] is the minimum</span>
+<span class="sd">               log_t_in[1] is the maximum</span>
+
+<span class="sd">        log_E_in : optional 1-D sequence of floats.</span>
+<span class="sd">               Range of the logarithm of the instrinsic equivalent width</span>
+<span class="sd">               log_E_in[0] is the minimum</span>
+<span class="sd">               log_E_in[1] is the maximum</span>
+
+<span class="sd">        log_W_in : optional 1-D sequence of floats.</span>
+<span class="sd">               Range of the logarithm of the intrinsic width of the line</span>
+<span class="sd">               log_W_in[0] is the minimum</span>
+<span class="sd">               log_W_in[1] is the maximum</span>
+
+<span class="sd">        MODE : optional string</span>
+<span class="sd">               &#39;Outflow&#39; for outflows &#39;Inflow&#39; for inflows</span>
+
+<span class="sd">        **Output**</span>
+
+<span class="sd">        init_V_Arr : 1-D sequence of floats</span>
+<span class="sd">                     Expansion velocity</span>
+
+<span class="sd">        init_log_N_Arr : 1-D sequence of floats</span>
+<span class="sd">                     Logarithms of the column density</span>
+
+<span class="sd">        init_log_t_Arr : 1-D sequence of floats</span>
+<span class="sd">                     Logarithms of the dust optical depth</span>
+
+<span class="sd">        init_log_E_Arr : 1-D sequence of floats</span>
+<span class="sd">                     Logarithms of the instrinsic equivalent width</span>
+
+<span class="sd">        init_log_W_Arr : 1-D sequence of floats</span>
+<span class="sd">                     Logarithms of the intrinsic width of the line</span>
+<span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="k">if</span> <span class="n">MODE</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span> <span class="s1">&#39;Outflow&#39;</span> <span class="p">,</span> <span class="s1">&#39;Inflow&#39;</span> <span class="p">,</span> <span class="s1">&#39;Mixture&#39;</span> <span class="p">]:</span>
 
@@ -3488,7 +4043,95 @@
 <span class="c1">#====================================================================#</span>
 <span class="c1">#====================================================================#</span>
 <div class="viewcode-block" id="NN_measure"><a class="viewcode-back" href="../funcs.html#funcs.NN_measure">[docs]</a><span class="k">def</span> <span class="nf">NN_measure</span><span class="p">(</span> <span class="n">w_tar_Arr</span> <span class="p">,</span> <span class="n">f_tar_Arr</span> <span class="p">,</span> <span class="n">s_tar_Arr</span> <span class="p">,</span> <span class="n">FWHM_tar</span> <span class="p">,</span> <span class="n">PIX_tar</span> <span class="p">,</span> <span class="n">loaded_model</span> <span class="p">,</span> <span class="n">w_rest_Machine_Arr</span> <span class="p">,</span> <span class="n">N_iter</span><span class="o">=</span><span class="kc">None</span> <span class="p">,</span> <span class="n">normed</span><span class="o">=</span><span class="kc">False</span> <span class="p">,</span> <span class="n">scaled</span><span class="o">=</span><span class="kc">False</span> <span class="p">,</span> <span class="n">Delta_min</span><span class="o">=-</span><span class="mf">18.5</span> <span class="p">,</span> <span class="n">Delta_max</span><span class="o">=</span><span class="mf">18.5</span> <span class="p">,</span> <span class="n">Nbins_tot</span><span class="o">=</span><span class="mi">1000</span> <span class="p">,</span> <span class="n">Denser_Center</span><span class="o">=</span><span class="kc">True</span> <span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Generates random poperties for the Thin_Shell_Cont</span>
 
+<span class="sd">        **Input**</span>
+
+<span class="sd">        w_tar_Arr : 1-D sequence of floats</span>
+<span class="sd">                    wavelength where the densit flux is evaluated</span>
+
+<span class="sd">        f_tar_Arr : 1-D sequence of floats</span>
+<span class="sd">                    Densit flux is evaluated</span>
+
+<span class="sd">        s_tar_Arr : 1-D sequence of floats</span>
+<span class="sd">                    Uncertainty of the densit flux is evaluated</span>
+
+<span class="sd">        FWHM : float</span>
+<span class="sd">              Full width half maximum [A] of the experiment.</span>
+
+<span class="sd">        PIX_tar : float</span>
+<span class="sd">                  Pixelization of the line profiles due to the experiment [A]</span>
+
+<span class="sd">        loaded_model : python dictionaty</span>
+<span class="sd">                       Contains all the info for the DNN form Load_NN_model()</span>
+
+<span class="sd">        w_rest_Machine_Arr : 1-D sequence of floats</span>
+<span class="sd">                             wavelength used by the INPUT of the DNN       </span>
+<span class="sd">                           </span>
+<span class="sd">        N_iter : optional int</span>
+<span class="sd">                 Number of Monte Carlo iterations of the observed espectrum.</span>
+<span class="sd">                 If None, no iteration is done.</span>
+<span class="sd">                 Default None</span>
+<span class="sd"> </span>
+<span class="sd">        Delta_min : optional float</span>
+<span class="sd">              Defines the minimum rest frame wavelegnth with respecto to Lyman-alpha.</span>
+
+<span class="sd">              Default = -18.5</span>
+
+<span class="sd">        Delta_min : optional float</span>
+<span class="sd">              Defines the maximum rest frame wavelegnth with respecto to Lyman-alpha.</span>
+
+<span class="sd">              Default = +18.5</span>
+
+<span class="sd">        Nbins_tot : optional int</span>
+<span class="sd">              Total number of wvelgnths bins.</span>
+
+<span class="sd">              Default = 1000</span>
+
+<span class="sd">        Denser_Center : optional bool</span>
+<span class="sd">              Populates denser the regions close to Lyman-alpha</span>
+
+<span class="sd">              Default = True</span>
+
+<span class="sd">        normed : optional bool</span>
+<span class="sd">              If True, nomalizes the line profile.</span>
+
+<span class="sd">        scaled : optinal bool</span>
+<span class="sd">              If True, divides the line profile by its maximum. </span>
+
+<span class="sd">        **Output**</span>
+
+<span class="sd">        if N_iter is None: </span>
+<span class="sd">            Sol : 1-D sequence of float</span>
+<span class="sd">                  Array with the solution of the observed spectrum. No Monte Carlo perturbation.</span>
+
+<span class="sd">            z_Sol : float</span>
+<span class="sd">                    Best resdhift</span>
+
+<span class="sd">        if N_iter is a float:</span>
+<span class="sd">            Sol and z_sol and</span>
+
+<span class="sd">            log_V_sol_2_Arr : 1-D sequence</span>
+<span class="sd">                              Logarithm of the expasion velocity</span>
+
+<span class="sd">            log_N_sol_2_Arr : 1-D sequence</span>
+<span class="sd">                              Logarithm of the neutral hydrogen column density</span>
+
+<span class="sd">            log_t_sol_2_Arr : 1-D sequence</span>
+<span class="sd">                              Logarithm of the dust optical depth</span>
+
+<span class="sd">            z_sol_2_Arr : 1-D sequence</span>
+<span class="sd">                              redshift</span>
+
+<span class="sd">            log_E_sol_2_Arr : 1-D sequence</span>
+<span class="sd">                              Logarithm of the intrinsic equivalent width</span>
+
+<span class="sd">            log_W_sol_2_Arr : 1-D sequence</span>
+<span class="sd">                              Logarithm of the instrinsic width of the line</span>
+
+
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">w_rest_tar_Arr</span> <span class="p">,</span> <span class="n">f_rest_tar_Arr</span> <span class="p">,</span> <span class="n">z_max_tar</span> <span class="p">,</span> <span class="n">INPUT</span> <span class="o">=</span> <span class="n">Treat_A_Line_To_NN_Input</span><span class="p">(</span> <span class="n">w_tar_Arr</span> <span class="p">,</span> <span class="n">f_tar_Arr</span> <span class="p">,</span> <span class="n">PIX_tar</span> <span class="p">,</span> <span class="n">FWHM_tar</span> <span class="p">,</span> <span class="n">Delta_min</span><span class="o">=</span><span class="n">Delta_min</span> <span class="p">,</span> <span class="n">Delta_max</span><span class="o">=</span><span class="n">Delta_max</span> <span class="p">,</span> <span class="n">Nbins_tot</span><span class="o">=</span><span class="n">Nbins_tot</span> <span class="p">,</span> <span class="n">Denser_Center</span><span class="o">=</span><span class="n">Denser_Center</span> <span class="p">,</span> <span class="n">normed</span><span class="o">=</span><span class="n">normed</span><span class="p">,</span> <span class="n">scaled</span><span class="o">=</span><span class="n">scaled</span> <span class="p">)</span>
 
     <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span> <span class="n">w_rest_tar_Arr</span> <span class="o">-</span> <span class="n">w_rest_Machine_Arr</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">,</span> <span class="s1">&#39;wavelength array of machine and measure dont match. Check that Delta_min, Delta_max, Nbins_tot and Denser_Center are the same in the model and the imput here.&#39;</span>
@@ -3533,65 +4176,55 @@
 <span class="c1">#====================================================================#</span>
 <span class="c1">#====================================================================#</span>
 <span class="c1">#====================================================================#</span>
-<span class="c1">####def NN_measure_3_no_tau( w_tar_Arr , f_tar_Arr , s_tar_Arr , FWHM_tar , PIX_tar , loaded_model , w_rest_Machine_Arr , N_iter=0 , normed=False , scaled=False ):</span>
-<span class="c1">####</span>
-<span class="c1">####    w_rest_tar_Arr , Delta_rest_tar_Arr , f_rest_tar_Arr , z_max_tar , s_rest_tar_Arr = NN_convert_Obs_Line_to_proxy_rest_line( w_tar_Arr , f_tar_Arr , s_obs_Arr=s_tar_Arr , normed=normed , scaled=scaled)</span>
-<span class="c1">####</span>
-<span class="c1">####    f_rest_tar_Arr = np.interp( w_rest_Machine_Arr , w_rest_tar_Arr , f_rest_tar_Arr )</span>
-<span class="c1">####</span>
-<span class="c1">####    INPUT =  [ np.hstack( ( f_rest_tar_Arr , z_max_tar , np.log10( FWHM_tar )  , np.log10( PIX_tar )  ) ) ]</span>
-<span class="c1">####</span>
-<span class="c1">####    Sol = loaded_model.predict( INPUT )</span>
-<span class="c1">####</span>
-<span class="c1">####    w_Lya = 1215.673123 #A</span>
-<span class="c1">####</span>
-<span class="c1">####    z_sol = ( w_Lya + Sol[0,3] ) * ( 1 + z_max_tar ) * 1. / ( w_Lya ) - 1.</span>
-<span class="c1">####</span>
-<span class="c1">####    if not N_iter &gt; 0 :</span>
-<span class="c1">####        return Sol , z_sol</span>
-<span class="c1">####</span>
-<span class="c1">####    if N_iter &gt; 0 :</span>
-<span class="c1">####        log_V_sol_2_Arr = np.zeros( N_iter )</span>
-<span class="c1">####        log_N_sol_2_Arr = np.zeros( N_iter )</span>
-<span class="c1">####        log_E_sol_2_Arr = np.zeros( N_iter )</span>
-<span class="c1">####        log_W_sol_2_Arr = np.zeros( N_iter )</span>
-<span class="c1">####</span>
-<span class="c1">####        z_sol_2_Arr = np.zeros( N_iter )</span>
-<span class="c1">####</span>
-<span class="c1">####        for i in range( 0 , N_iter ) :</span>
-<span class="c1">####</span>
-<span class="c1">####            f_obs_i_Arr = f_tar_Arr + np.random.randn( len( f_tar_Arr ) ) * s_tar_Arr</span>
-<span class="c1">####</span>
-<span class="c1">####            w_rest_i_Arr , Delta_rest_i_Arr , f_rest_i_Arr , z_max_i = NN_convert_Obs_Line_to_proxy_rest_line( w_tar_Arr , f_obs_i_Arr , normed=normed , scaled=scaled)</span>
-<span class="c1">####</span>
-<span class="c1">####            f_rest_i_Arr = np.interp( w_rest_Machine_Arr , w_rest_i_Arr , f_rest_i_Arr )</span>
-<span class="c1">####</span>
-<span class="c1">####            INPUT_i =  [ np.hstack( ( f_rest_i_Arr , z_max_i , np.log10( FWHM_tar )  , np.log10( PIX_tar )  ) ) ]</span>
-<span class="c1">####</span>
-<span class="c1">####            Sol_i = loaded_model.predict( INPUT_i )</span>
-<span class="c1">####</span>
-<span class="c1">####            #print( Sol_i )</span>
-<span class="c1">####</span>
-<span class="c1">####            z_sol_i = ( w_Lya + Sol_i[0,0] ) * ( 1 + z_max_i ) * 1. / ( w_Lya ) - 1.</span>
-<span class="c1">####</span>
-<span class="c1">####            log_V_sol_2_Arr[i] = Sol_i[0,1]</span>
-<span class="c1">####            log_N_sol_2_Arr[i] = Sol_i[0,2]</span>
-<span class="c1">####            log_E_sol_2_Arr[i] = Sol_i[0,3]</span>
-<span class="c1">####            log_W_sol_2_Arr[i] = Sol_i[0,4]</span>
-<span class="c1">####</span>
-<span class="c1">####            z_sol_2_Arr[i] = z_sol_i</span>
-<span class="c1">####</span>
-<span class="c1">####        return Sol , z_sol , log_V_sol_2_Arr , log_N_sol_2_Arr , z_sol_2_Arr , log_E_sol_2_Arr , log_W_sol_2_Arr</span>
-<span class="c1">#====================================================================#</span>
-<span class="c1">#====================================================================#</span>
-<span class="c1">#====================================================================#</span>
 <span class="c1"># PSO</span>
 <span class="c1">#====================================================================#</span>
 <span class="c1">#====================================================================#</span>
 <span class="c1">#====================================================================#</span>
-
 <div class="viewcode-block" id="PSO_compute_xi_2_ONE_6D"><a class="viewcode-back" href="../funcs.html#funcs.PSO_compute_xi_2_ONE_6D">[docs]</a><span class="k">def</span> <span class="nf">PSO_compute_xi_2_ONE_6D</span><span class="p">(</span> <span class="n">x</span> <span class="p">,</span> <span class="n">w_tar_Arr</span> <span class="p">,</span> <span class="n">f_tar_Arr</span> <span class="p">,</span> <span class="n">FWHM</span> <span class="p">,</span> <span class="n">PIX</span> <span class="p">,</span> <span class="n">DATA_LyaRT</span><span class="p">,</span> <span class="n">Geometry</span> <span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Compute the chi esquare for the PSO analysis</span>
 
+<span class="sd">        **Input**</span>
+
+<span class="sd">        x: 1-D sequence of float</span>
+<span class="sd">                Contains the parameters of the mode:</span>
+<span class="sd">                    x[0] = logarithim of the expansion velocity</span>
+<span class="sd">                    x[1] = logarithim of the neutral hydrogen column density</span>
+<span class="sd">                    x[2] = logarithim of the dust optical depth</span>
+<span class="sd">                    x[3] = redshift</span>
+<span class="sd">                    x[4] = logarithm of the intrinsic equivalent width</span>
+<span class="sd">                    x[5] = intrinsic width</span>
+
+<span class="sd">        w_tar_Arr : 1-D sequence of float</span>
+<span class="sd">                    wavelength where the observed density flux is evaluated.</span>
+
+<span class="sd">        f_tar_Arr : 1-D sequence of float</span>
+<span class="sd">                    Observed flux density</span>
+
+<span class="sd">        FWHM : float</span>
+<span class="sd">              Full width half maximum [A] of the experiment.</span>
+
+<span class="sd">        PIX : float</span>
+<span class="sd">              Pixel size in wavelgnth [A] of the experiment.</span>
+
+<span class="sd">        DATA_LyaRT : python dictionary</span>
+<span class="sd">                     Contains the grid information.</span>
+
+<span class="sd">        Geometry : string</span>
+<span class="sd">                   Outflow geometry to use.</span>
+
+<span class="sd">        **Output**</span>
+
+<span class="sd">        xi_2 : float</span>
+<span class="sd">               Chi square of the configuration</span>
+
+<span class="sd">        w_pso_Arr : 1-D sequence of floats</span>
+<span class="sd">                    Wavelgnth of the line profile computed by the PSO </span>
+
+<span class="sd">        my_f_pso_Arr : 1-D sequence of floats</span>
+<span class="sd">                       Flux density of the line profile computed by the PSO </span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">my_f_tar_Arr</span> <span class="o">=</span> <span class="p">(</span> <span class="n">f_tar_Arr</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">amin</span><span class="p">(</span> <span class="n">f_tar_Arr</span> <span class="p">)</span> <span class="p">)</span> <span class="o">*</span> <span class="mf">1.</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span> <span class="n">f_tar_Arr</span> <span class="p">)</span>
 
     <span class="n">w_min</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">amin</span><span class="p">(</span> <span class="n">w_tar_Arr</span> <span class="p">)</span>
@@ -3609,8 +4242,6 @@
 
     <span class="n">F_pso</span> <span class="o">=</span> <span class="mf">1.0</span>
 
-    <span class="c1"># z_f , V_f , logNH_f , ta_f , F_line_f , logEW_f , Wi_f , Noise_w_Arr , Noise_Arr , FWHM_f , PIX_f , w_min , w_max , DATA_LyaRT , Geometry</span>
-
     <span class="n">w_pso_Arr</span> <span class="p">,</span> <span class="n">f_pso_Arr</span> <span class="p">,</span> <span class="n">dic</span> <span class="o">=</span> <span class="n">generate_a_REAL_line_Noise_w</span><span class="p">(</span> <span class="n">redshift</span>      <span class="p">,</span> <span class="mi">10</span><span class="o">**</span><span class="n">log_V_pso</span><span class="p">,</span> <span class="n">log_N_pso</span>  <span class="p">,</span> 
                                                                 <span class="mi">10</span><span class="o">**</span><span class="n">log_t_pso</span> <span class="p">,</span> <span class="n">F_pso</span>        <span class="p">,</span> <span class="n">log_E_pso</span>  <span class="p">,</span> 
                                                                 <span class="mi">10</span><span class="o">**</span><span class="n">log_W_pso</span> <span class="p">,</span> <span class="n">w_s_tar_Arr</span> <span class="p">,</span>
@@ -3618,15 +4249,11 @@
                                                                  <span class="n">w_min</span>        <span class="p">,</span> <span class="n">w_max</span>        <span class="p">,</span> <span class="n">DATA_LyaRT</span> <span class="p">,</span> 
                                                                  <span class="n">Geometry</span>     <span class="p">)</span>
 
-    <span class="c1">#my_f_pso_Arr = ( f_pso_Arr - np.amin( f_pso_Arr ) ) *1. / np.amax( f_pso_Arr) </span>
-
     <span class="n">my_f_pso_Arr</span> <span class="o">=</span> <span class="n">f_pso_Arr</span> <span class="o">*</span> <span class="mf">1.</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span> <span class="n">f_pso_Arr</span><span class="p">)</span>
 
     <span class="n">my_f_pso_Arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span> <span class="n">w_tar_Arr</span> <span class="p">,</span> <span class="n">w_pso_Arr</span> <span class="p">,</span> <span class="n">my_f_pso_Arr</span> <span class="p">)</span>
 
     <span class="n">my_f_tar_Arr</span> <span class="o">=</span> <span class="n">my_f_tar_Arr</span> <span class="o">*</span> <span class="mf">1.</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span> <span class="n">my_f_tar_Arr</span> <span class="p">)</span>
-
-    <span class="c1">#f_pso_to_use_Arr = np.interp( w_tar_Arr , w_pso_Arr , my_f_pso_Arr )</span>
 
     <span class="n">xi_2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span> <span class="p">(</span> <span class="n">my_f_pso_Arr</span> <span class="o">-</span> <span class="n">my_f_tar_Arr</span> <span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="p">)</span>
 
@@ -3639,7 +4266,43 @@
 <span class="c1">#====================================================================#</span>
 <span class="c1">#====================================================================#</span>
 <div class="viewcode-block" id="PSO_compute_xi_2_MANY"><a class="viewcode-back" href="../funcs.html#funcs.PSO_compute_xi_2_MANY">[docs]</a><span class="k">def</span> <span class="nf">PSO_compute_xi_2_MANY</span><span class="p">(</span> <span class="n">X</span> <span class="p">,</span> <span class="n">w_tar_Arr</span> <span class="p">,</span> <span class="n">f_tar_Arr</span> <span class="p">,</span> <span class="n">FWHM</span> <span class="p">,</span> <span class="n">PIX</span> <span class="p">,</span> <span class="n">DATA_LyaRT</span><span class="p">,</span> <span class="n">Geometry</span> <span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Compute the chi esquare for the PSO analysis for many configurations</span>
 
+<span class="sd">        **Input**</span>
+
+<span class="sd">        x: 1-D sequence of float</span>
+<span class="sd">                Contains the parameters of the mode:</span>
+<span class="sd">                    x[0] = logarithim of the expansion velocity</span>
+<span class="sd">                    x[1] = logarithim of the neutral hydrogen column density</span>
+<span class="sd">                    x[2] = logarithim of the dust optical depth</span>
+<span class="sd">                    x[3] = redshift</span>
+<span class="sd">                    x[4] = logarithm of the intrinsic equivalent width</span>
+<span class="sd">                    x[5] = intrinsic width</span>
+
+<span class="sd">        w_tar_Arr : 1-D sequence of float</span>
+<span class="sd">                    wavelength where the observed density flux is evaluated.</span>
+
+<span class="sd">        f_tar_Arr : 1-D sequence of float</span>
+<span class="sd">                    Observed flux density</span>
+
+<span class="sd">        FWHM : float</span>
+<span class="sd">              Full width half maximum [A] of the experiment.</span>
+
+<span class="sd">        PIX : float</span>
+<span class="sd">              Pixel size in wavelgnth [A] of the experiment.</span>
+
+<span class="sd">        DATA_LyaRT : python dictionary</span>
+<span class="sd">                     Contains the grid information.</span>
+
+<span class="sd">        Geometry : string</span>
+<span class="sd">                   Outflow geometry to use.</span>
+
+<span class="sd">        **Output**</span>
+
+<span class="sd">        xi_2_Arr : 1-D sequence of float</span>
+<span class="sd">               Chi square of the configurations</span>
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">xi_2_Arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="p">)</span>
 
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span> <span class="mi">0</span> <span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="p">):</span>
@@ -3655,6 +4318,43 @@
 <span class="c1">##====================================================================================#</span>
 <div class="viewcode-block" id="PSO_Analysis"><a class="viewcode-back" href="../funcs.html#funcs.PSO_Analysis">[docs]</a><span class="k">def</span> <span class="nf">PSO_Analysis</span><span class="p">(</span> <span class="n">w_tar_Arr</span> <span class="p">,</span> <span class="n">f_tar_Arr</span> <span class="p">,</span> <span class="n">FWHM</span> <span class="p">,</span> <span class="n">PIX</span> <span class="p">,</span> <span class="n">DATA_LyaRT</span> <span class="p">,</span> <span class="n">Geometry</span> <span class="p">,</span> <span class="n">n_particles</span> <span class="p">,</span> <span class="n">n_iters</span> <span class="p">):</span>
 
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Does a PSO analysis to find in a fast way a close good fit</span>
+
+<span class="sd">        **Input**</span>
+
+<span class="sd">        w_tar_Arr : 1-D sequence of float</span>
+<span class="sd">                    wavelength where the observed density flux is evaluated.</span>
+
+<span class="sd">        f_tar_Arr : 1-D sequence of float</span>
+<span class="sd">                    Observed flux density</span>
+
+<span class="sd">        FWHM : float</span>
+<span class="sd">              Full width half maximum [A] of the experiment.</span>
+
+<span class="sd">        PIX : float</span>
+<span class="sd">              Pixel size in wavelgnth [A] of the experiment.</span>
+
+<span class="sd">        DATA_LyaRT : python dictionary</span>
+<span class="sd">                     Contains the grid information.</span>
+
+<span class="sd">        Geometry : string</span>
+<span class="sd">                   Outflow geometry to use.</span>
+
+<span class="sd">        n_particles : int</span>
+<span class="sd">                      Number of particles in the PSO</span>
+
+<span class="sd">        n_iters : int</span>
+<span class="sd">                  Number of steps in the PSO</span>
+
+<span class="sd">        **Output**</span>
+
+<span class="sd">        cost : float</span>
+<span class="sd">               Cost of the best configuration</span>
+
+<span class="sd">        pos : 1-D sequence of floats</span>
+<span class="sd">                Position of the best configuration</span>
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">w_lya</span> <span class="o">=</span> <span class="mf">1215.67</span>
 
     <span class="c1">#w_max = np.atleast_1d( w_tar_Arr[ f_tar_Arr == np.amax( f_tar_Arr ) ])[0]</span>

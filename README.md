@@ -1,39 +1,41 @@
-# `FLaREON`
+# `zELDA`
 
-In this Universe everything is neat, even stochasticity.
-
-Lyman alpha Resonant Scatter is dominated by random processes.
-
-Although there is chaos, there is also an order.
+A code to understand Lyman-alpha emission.
 
 ## Authors
 
 Siddhartha Gurung Lopez
 
+Max Gronke
+
 Alvaro Orsi
 
 Silvia Bonoli
 
+Shun Saito
 
 ## Publication links:
 
-ADS : http://adsabs.harvard.edu/abs/2018arXiv181109630G
+`zELDA` paper:
+ADS   : ???
+arXiv : ???
 
+`zELDA` is based on its previous version, `FLaREON`. Please, if you used `zELDA` in your project, cite also `FLaREON`:
+ADS   : http://adsabs.harvard.edu/abs/2018arXiv181109630G
 arXiv : https://arxiv.org/abs/1811.09630
 
 ## Origins and motivation
 
 Due to the Lyman alpha Radiative Transfer large complexity, the efforts of understanding it moved from pure analytic studies to the so-called radiative transfer Monte Carlo (RTMC) codes that simulate Lyman alpha photons in arbitrary gas geometries. These codes provide useful information about the fraction of photons that manage to escape and the resulting Lyman alpha line profiles. The RTMC approach has shown to reproduce the observed properties of LAEs.
 
-`FLaREON` is a publicly available `python` package based on a RTMC (Orsi et al. 2012) able to predict large amounts of Lyman alpha line profiles and escape fractions with high accuracy. We designed this code hoping that it helps researches all over the wolrd to get a better understanding of the Universe.
+`zELDA` is a publicly available `python` package based on a RTMC (Orsi et al. 2012) able to predict large amounts of Lyman alpha line profiles and escape fractions with high accuracy. We designed this code hoping that it helps researches all over the wolrd to get a better understanding of the Universe.
 
-`FLaREON` is **fast** and **simple**. 
+`zELDA` is **fast** and **simple**. 
 
 + **Fast** : This code is able to predict Lyman alpha escape fractions and line profiles in an unprecedentedly low amount of time. In particular thousands of escape fractions and line profiles can be computed in less than a second of computational time. 
 
-+ **Simple** : This code is *One-Line-Running*. Everyone, from a good trained monkey, passing through undergrade studients, to researches with basic python knowlege should be able to use `FLaREON`.
++ **Simple** : This code is only needs a few lines of code to be executed. 
 
-Although `FLaREON` is completely open source and is available for everyone, please, if you are using this code ( for whatever reason ) we will be very glad to hear about you and how you are using it. it's just a curiosity and efficiency matter. Maybe we can help you to have a smoother experience with `FLaREON`. For any issue or suggestion, please, contact `sidgurung@cefca.es`. Thank you.
 
 ## Installation
 
@@ -59,7 +61,7 @@ This function checks if the pip installation downloaded everything. Then, if the
 
 After Checking that you have got the data in your machine `FLaREON` will check that everyhting works smoothly. For this some escape fractions and line profiles will be computed. The status of the operation should appear in the screen. Everything should get a `Succsess!!`. The only exception is 
 
-`Running :  Bicone_X_Slab Analytic --> ERROR. HUMAN IS DEAD. MISMATCH!!`
+`Running :  Bicone_X_Slab Analytic --> ERROR. MISMATCH!!`
 
 Do not worry. The only reason why you are getting this error is because this algorithm is not implemented yet. Then the function will produce some plots. In case you want to run the tests without plotting just set `Make_Plots = False`  when calling the `Lya.Test_Installation`.
 

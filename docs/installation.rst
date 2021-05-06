@@ -1,0 +1,30 @@
+Installation
+============
+
+`zELDA`, installation is divided in two blocks. First you will need to install the python package containing all the scritps. With this you can already use the Deep Neural Network methodologies to extract information from observed Lyman-alpha line profiles. The second block contains all the grids computed from `FLarEON`. This are necessary in order to compute line profiles and escape fractions for all the outflow geometries. As a consequence, the second block is mandatory to make MCMC analysis.  
+
+Python package
+**************
+
+The simpliest way of installing `zELDA`'s scripts is pip:
+
+.. code:: python
+
+          pip install Lya_zelda
+
+An alternative method to install `zELDA`'scripts is downloading the code from GitHub:
+
+.. code:: python
+
+          git clone https://github.com/sidgurun/Lya_zelda.git
+          cd Lya_zelda
+          pip install .
+
+Remember that you can also add the tag ``--user`` ,  if necessary.
+
+LyaRT data grids
+****************
+
+https://sandbox.zenodo.org/record/808374#.YJOzNC3FT0c
+
+

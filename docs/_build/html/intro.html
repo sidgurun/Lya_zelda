@@ -29,17 +29,17 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Examples" href="examples.html" />
+    <link rel="next" title="Installation" href="installation.html" />
     <link rel="prev" title="Welcome to zELDA’s documentation! 10_51_342" href="index.html" /> 
 </head>
 
@@ -88,10 +88,12 @@
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#motivation">Motivation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#authors">Authors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#publication-links">Publication links:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#origins-and-motivation">Origins and motivation</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="funcs.html">funcs module</a></li>
 </ul>
 
@@ -162,12 +164,39 @@
             
   <div class="section" id="introduction">
 <h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
-<p><code class="docutils literal notranslate"><span class="pre">Lya_zelda</span></code> is a high-level OO Python package which aims to provide an easy and intuitive way of interacting with nearby Bluetooth Low Energy (BLE) devices (GATT servers). In essence, this package is an extension of the <code class="docutils literal notranslate"><span class="pre">bluepy</span></code> package created by Ian Harvey (see <a class="reference external" href="https://github.com/IanHarvey/bluepy/">here</a>)</p>
-<p>The current implementation has been developed in Python 3 and tested on a Raspberry Pi Zero W, running Raspbian 9 (stretch), but should work with Python 2.7+ (maybe with minor modifications in terms of printing and error handling) and most Debian based OSs.</p>
-<div class="section" id="motivation">
-<h2>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">¶</a></h2>
-<p>As a newbie experimenter/hobbyist in the field of IoT using BLE communications, I found it pretty hard to identify a Python package which would enable one to use a Raspberry Pi (Zero W inthis case) to swiftly scan, connect to and read/write from/to a nearby BLE device (GATT server).</p>
-<p>This package is intended to provide a quick, as well as (hopefully) easy to undestand, way of getting a simple BLE GATT client up and running, for all those out there, who, like myself, are hands-on learners and are eager to get their hands dirty from early on.</p>
+<p><cite>zELDA</cite>, a code to understand Lyman-alpha emission.</p>
+<div class="section" id="authors">
+<h2>Authors<a class="headerlink" href="#authors" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line">Siddhartha Gurung Lopez</div>
+<div class="line">Max Gronke</div>
+<div class="line">Alvaro Orsi</div>
+<div class="line">Silvia Bonoli</div>
+<div class="line">Shun Saito</div>
+</div>
+</div>
+<div class="section" id="publication-links">
+<h2>Publication links:<a class="headerlink" href="#publication-links" title="Permalink to this headline">¶</a></h2>
+<p><cite>zELDA</cite> paper:</p>
+<div class="line-block">
+<div class="line">ADS   : ???</div>
+<div class="line">arXiv : ???</div>
+</div>
+<p><cite>zELDA</cite> is based on its previous version, <cite>FLaREON</cite>. Please, if you used <cite>zELDA</cite> in your project, cite also <cite>FLaREON</cite>:</p>
+<div class="line-block">
+<div class="line">ADS   : <a class="reference external" href="http://adsabs.harvard.edu/abs/2018arXiv181109630G">http://adsabs.harvard.edu/abs/2018arXiv181109630G</a></div>
+<div class="line">arXiv : <a class="reference external" href="https://arxiv.org/abs/1811.09630">https://arxiv.org/abs/1811.09630</a></div>
+</div>
+</div>
+<div class="section" id="origins-and-motivation">
+<h2>Origins and motivation<a class="headerlink" href="#origins-and-motivation" title="Permalink to this headline">¶</a></h2>
+<p>Due to the Lyman alpha Radiative Transfer large complexity, the efforts of understanding it moved from pure analytic studies to the so-called radiative transfer Mont    e Carlo (RTMC) codes that simulate Lyman alpha photons in arbitrary gas geometries. These codes provide useful information about the fraction of photons that manage     to escape and the resulting Lyman alpha line profiles. The RTMC approach has shown to reproduce the observed properties of LAEs.</p>
+<p><cite>zELDA</cite> is a publicly available <cite>python</cite> package based on a RTMC (Orsi et al. 2012) able to predict large amounts of Lyman alpha line profiles and escape fractions w    ith high accuracy. We designed this code hoping that it helps researches all over the wolrd to get a better understanding of the Universe.</p>
+<p><cite>zELDA</cite> is <strong>fast</strong> and <strong>simple</strong>.</p>
+<ul class="simple">
+<li><p><strong>Fast</strong> : This code is able to predict Lyman alpha escape fractions and line profiles in an unprecedentedly low amount of time. In particular thousands of escape     fractions and line profiles can be computed in less than a second of computational time.</p></li>
+<li><p><strong>Simple</strong> : This code is only needs a few lines of code to be executed.</p></li>
+</ul>
 </div>
 </div>
 
@@ -177,7 +206,7 @@
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="examples.html" class="btn btn-neutral float-right" title="Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="installation.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
         <a href="index.html" class="btn btn-neutral float-left" title="Welcome to zELDA’s documentation! 10_51_342" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
