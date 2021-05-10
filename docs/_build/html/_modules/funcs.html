@@ -87,6 +87,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../intro.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Tutorial_ideal.html">Tutorial : Computing ideal line profiles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../funcs.html">funcs module</a></li>
 </ul>
 
@@ -1204,7 +1205,7 @@
 <span class="c1">#====================================================================#</span>
 <span class="c1">#====================================================================#</span>
 <span class="c1">#====================================================================#</span>
-<div class="viewcode-block" id="load_Grid_Line"><a class="viewcode-back" href="../funcs.html#funcs.load_Grid_Line">[docs]</a><span class="k">def</span> <span class="nf">load_Grid_Line</span><span class="p">(</span> <span class="n">Geometry</span> <span class="p">):</span>
+<div class="viewcode-block" id="load_Grid_Line"><a class="viewcode-back" href="../funcs.html#funcs.load_Grid_Line">[docs]</a><span class="k">def</span> <span class="nf">load_Grid_Line</span><span class="p">(</span> <span class="n">Geometry</span> <span class="p">,</span> <span class="n">MODE</span><span class="o">=</span><span class="s1">&#39;FULL&#39;</span> <span class="p">):</span>
 
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Return the dictionary with all the properties of the grid where the lines were run.</span>
@@ -1213,14 +1214,13 @@
 
 <span class="sd">        Geometry : string</span>
 <span class="sd">                   The outflow geometry to use: Options: &#39;Thins_Shell&#39;,</span>
-<span class="sd">                   &#39;Galactic_Wind&#39; , &#39;Bicone_X_Slab&#39;.</span>
+<span class="sd">                   &#39;Galactic_Wind&#39; , &#39;Bicone_X_Slab_In&#39;, &#39;Bicone_X_Slab_Out&#39;,</span>
+<span class="sd">                   &#39;Thin_Shell_Cont&#39;.</span>
 
-<span class="sd">        INSIDE_BICONE : optional boolean</span>
-<span class="sd">                        This is useless if the geometry is not Bicone_X_Slab. </span>
-<span class="sd">                        If True then the bicone is face-on. If false the</span>
-<span class="sd">                        bicone is edge-on. The probability of being face </span>
-<span class="sd">                        on is np.cos( np.pi/4 ).</span>
-<span class="sd">                </span>
+<span class="sd">        MODE : optinal string.</span>
+<span class="sd">               For the &#39;Thin_Shell_Cont&#39; ONLY. Defines the grid to be loaded.</span>
+<span class="sd">               MODE=&#39;FULL&#39;  loads a very dense  grid. ~12GB of RAM.</span>
+<span class="sd">               MODE=&#39;LIGHT&#39; loads a more sparse grid. ~ 2GB of RAM.</span>
 
 <span class="sd">        **Output**</span>
 
@@ -1251,7 +1251,7 @@
     <span class="c1">#this_dir = &#39;/global/users/sidgurung/PROMARE/Grids/&#39;</span>
     <span class="c1">#this_dir = &#39;/global/users/sidgurung/PROMARE/Grids/&#39;</span>
 
-    <span class="k">if</span> <span class="n">Geometry</span> <span class="o">!=</span> <span class="s1">&#39;Thin_Shell_Cont&#39;</span> <span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">Geometry</span> <span class="ow">in</span> <span class="p">[</span> <span class="s1">&#39;Thin_Shell_Cont&#39;</span> <span class="p">,</span> <span class="s1">&#39;Thin_Shell_Cont_Light&#39;</span> <span class="p">]</span> <span class="p">:</span>
 
         <span class="n">index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span> <span class="n">Geometry</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">Geometry_Set</span><span class="p">)</span> <span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
 
@@ -1268,15 +1268,22 @@
 
         <span class="n">loaded_model</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span> <span class="n">filename</span> <span class="p">,</span> <span class="n">allow_pickle</span><span class="o">=</span><span class="kc">True</span> <span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;latin1&#39;</span> <span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
 
-    <span class="k">if</span> <span class="n">Geometry</span> <span class="o">==</span> <span class="s1">&#39;Thin_Shell_Cont&#39;</span> <span class="p">:</span>
+    <span class="k">if</span> <span class="n">Geometry</span> <span class="ow">in</span> <span class="p">[</span> <span class="s1">&#39;Thin_Shell_Cont&#39;</span> <span class="p">,</span> <span class="s1">&#39;Thin_Shell_Cont_Light&#39;</span> <span class="p">]</span> <span class="p">:</span>
 
         <span class="n">NV</span>  <span class="o">=</span> <span class="mi">29</span>
         <span class="n">NNH</span> <span class="o">=</span> <span class="mi">19</span>
         <span class="n">Nta</span> <span class="o">=</span> <span class="mi">9</span>
+
         <span class="n">NEW</span> <span class="o">=</span> <span class="mi">20</span>
         <span class="n">NWi</span> <span class="o">=</span> <span class="mi">31</span>
+
+        <span class="k">if</span> <span class="n">MODE</span> <span class="o">==</span> <span class="s1">&#39;FULL&#39;</span><span class="p">:</span>
+            <span class="n">NEW</span> <span class="o">=</span> <span class="mi">20</span>
+            <span class="n">NWi</span> <span class="o">=</span> <span class="mi">31</span>
         
-        <span class="c1"># ../Grids/GRID_data__V_29_logNH_15_logta_9_EW_20_Wi_18.npy</span>
+        <span class="k">if</span> <span class="n">MODE</span> <span class="o">==</span> <span class="s1">&#39;LIGHT&#39;</span><span class="p">:</span>
+            <span class="n">NEW</span> <span class="o">=</span> <span class="mi">8</span>
+            <span class="n">NWi</span> <span class="o">=</span> <span class="mi">9</span>
         
         <span class="n">t_name</span> <span class="o">=</span> <span class="s1">&#39;_V_&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">NV</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;_logNH_&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">NNH</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;_logta_&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">Nta</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;_EW_&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">NEW</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;_Wi_&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">NWi</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;.npy&#39;</span>
 
@@ -1671,7 +1678,6 @@
 <span class="sd">                    The Lyman alpha line profile. </span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
-    <span class="c1">#V_Value , logNH_Value , ta_Value , Bool_good = pre_treatment_Line_profile_MCMC( Geometry , V_Value , logNH_Value , ta_Value )</span>
     <span class="n">Bool_good</span> <span class="o">=</span> <span class="n">pre_treatment_Line_profile_MCMC</span><span class="p">(</span> <span class="n">Geometry</span> <span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">absolute</span><span class="p">(</span> <span class="n">V_Value</span> <span class="p">)</span> <span class="p">,</span> <span class="n">logNH_Value</span> <span class="p">,</span> <span class="n">ta_Value</span> <span class="p">,</span> <span class="n">logEW_Value</span><span class="o">=</span><span class="n">logEW_Value</span> <span class="p">,</span> <span class="n">Wi_Value</span><span class="o">=</span><span class="n">Wi_Value</span> <span class="p">)</span>
 
     <span class="n">x_Arr</span> <span class="o">=</span> <span class="n">convert_lamda_into_x</span><span class="p">(</span> <span class="n">wavelength_Arr</span> <span class="p">)</span>
@@ -1769,7 +1775,7 @@
 <span class="c1">#====================================================================#</span>
 <span class="c1">#====================================================================#</span>
 <span class="c1">#====================================================================#</span>
-<div class="viewcode-block" id="RT_Line_Profile"><a class="viewcode-back" href="../funcs.html#funcs.RT_Line_Profile">[docs]</a><span class="k">def</span> <span class="nf">RT_Line_Profile</span><span class="p">(</span> <span class="n">Geometry</span> <span class="p">,</span> <span class="n">wavelength_Arr</span> <span class="p">,</span> <span class="n">V_Arr</span> <span class="p">,</span> <span class="n">logNH_Arr</span> <span class="p">,</span> <span class="n">ta_Arr</span> <span class="p">,</span> <span class="n">logEW_Arr</span><span class="o">=</span><span class="kc">None</span> <span class="p">,</span> <span class="n">Wi_Arr</span><span class="o">=</span><span class="kc">None</span> <span class="p">):</span>
+<div class="viewcode-block" id="RT_Line_Profile"><a class="viewcode-back" href="../funcs.html#funcs.RT_Line_Profile">[docs]</a><span class="k">def</span> <span class="nf">RT_Line_Profile</span><span class="p">(</span> <span class="n">Geometry</span> <span class="p">,</span> <span class="n">wavelength_Arr</span> <span class="p">,</span> <span class="n">V_Arr</span> <span class="p">,</span> <span class="n">logNH_Arr</span> <span class="p">,</span> <span class="n">ta_Arr</span> <span class="p">,</span> <span class="n">logEW_Arr</span><span class="o">=</span><span class="kc">None</span> <span class="p">,</span> <span class="n">Wi_Arr</span><span class="o">=</span><span class="kc">None</span> <span class="p">,</span> <span class="n">MODE_CONT</span><span class="o">=</span><span class="s1">&#39;FULL&#39;</span> <span class="p">):</span>
 
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Return the Lyman alpha line profile for a given outflow properties.</span>
@@ -1808,6 +1814,11 @@
 <span class="sd">                    Intrinsic width line in the rest frame [A]</span>
 <span class="sd">                    Default = None</span>
 
+<span class="sd">        MODE : optinal string.</span>
+<span class="sd">               For the &#39;Thin_Shell_Cont&#39; ONLY. Defines the grid to be loaded.</span>
+<span class="sd">               MODE_CONT=&#39;FULL&#39;  loads a very dense  grid. ~12GB of RAM.</span>
+<span class="sd">               MODE_CONT=&#39;LIGHT&#39; loads a more sparse grid. ~ 2GB of RAM.</span>
+
 <span class="sd">        **Output**:</span>
 
 <span class="sd">        lines_Arr : 2-D sequence of float</span>
@@ -1840,7 +1851,7 @@
 
     <span class="c1">##############################</span>
 
-    <span class="n">DATA_LyaRT</span> <span class="o">=</span> <span class="n">load_Grid_Line</span><span class="p">(</span> <span class="n">Geometry</span> <span class="p">)</span>
+    <span class="n">DATA_LyaRT</span> <span class="o">=</span> <span class="n">load_Grid_Line</span><span class="p">(</span> <span class="n">Geometry</span> <span class="p">,</span> <span class="n">MODE_CONT</span> <span class="p">)</span>
 
     <span class="k">if</span> <span class="n">Geometry</span> <span class="ow">in</span> <span class="p">[</span> <span class="s1">&#39;Thin_Shell&#39;</span>  <span class="p">,</span> <span class="s1">&#39;Galactic_Wind&#39;</span>  <span class="p">,</span> <span class="s1">&#39;Bicone_X_Slab_In&#39;</span> <span class="p">,</span> <span class="s1">&#39;Bicone_X_Slab_Out&#39;</span> <span class="p">]</span> <span class="p">:</span>
 

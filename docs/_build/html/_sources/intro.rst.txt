@@ -28,15 +28,22 @@ Publication links:
 Origins and motivation
 **********************
 
-Due to the Lyman alpha Radiative Transfer large complexity, the efforts of understanding it moved from pure analytic studies to the so-called radiative transfer Mont    e Carlo (RTMC) codes that simulate Lyman alpha photons in arbitrary gas geometries. These codes provide useful information about the fraction of photons that manage     to escape and the resulting Lyman alpha line profiles. The RTMC approach has shown to reproduce the observed properties of LAEs.
+The main goal of `zELDA` is to provide the scientific community with a common tool to analyze and model Lyman-alpha line profiles. 
 
-`zELDA` is a publicly available `python` package based on a RTMC (Orsi et al. 2012) able to predict large amounts of Lyman alpha line profiles and escape fractions w    ith high accuracy. We designed this code hoping that it helps researches all over the wolrd to get a better understanding of the Universe.
 
-`zELDA` is **fast** and **simple**.
+`zELDA` is a publicly available `python` package based on a RTMC (Orsi et al. 2012) and `FLaREON` able to predict large amounts of Lyman alpha line profiles and escape fractions with high accuracy. We designed this code hoping that it helps researches all over the wolrd to get a better understanding of the Universe. In particular `zELDA` is divided in two main functionalites:
 
-+ **Fast** : This code is able to predict Lyman alpha escape fractions and line profiles in an unprecedentedly low amount of time. In particular thousands of escape     fractions and line profiles can be computed in less than a second of computational time.
+*  **Mocking Lyman-alpha line profiles**. Due to the Lyman alpha Radiative Transfer large complexity, the efforts of understanding it moved from pure analytic studies to the so-called radiative transfer Monte Carlo (RTMC) codes that simulate Lyman alpha photons in arbitrary gas geometries. These codes provide useful information about the fraction of photons that manage to escape and the resulting Lyman alpha line profiles. The RTMC approach has shown to reproduce the observed properties of Lyman-alpha emitters. `zELDA` constains several data grids of `LyaRT`, the RTMC described in Orsi et al. 2012 (https://github.com/aaorsi/LyaRT), from which Lyman-alpha line profiles are computed using lineal interpolation. This methodology allow us to predict line profiles with a high accuracy with a low compitational cost. In fact, the used by `zELDA` to predict a single line profiles y usually eight orders of magnitud smaller than the full radiative transfer analysis done by `LyaRT`. Additionally, in order to mock observed Lyman-alpha spectrum, `zELDA` also includes rutines to mimick the artifacts induced by obsevations in the line profiles, such a finite spectral resolution or the wavelegnth binning. 
+*  **Fitting observed Lyman-alpha line profiles**. The main update from `FLaREON` to `zELDA` is the inclussion of several fitting algotirhms to model observed Lyman-alhpa line profiles. On the basics, `zELDA` uses mock Lyman-alpha line profiles to fit observed espectrums in two main phasions :
 
-+ **Simple** : This code is only needs a few lines of code to be executed.
+  *  **Monte Carlo Markov Chain** : This is the most classic approach taken in the literaute (e.g. Gronke et al. 2017). `zELDA` implementation is power by the public code `emcee` (https://emcee.readthedocs.io/en/stable/) by Daniel Foreman-Mackey et al. (2013). 
+  
+  *  **Deep learning** : `zELDA` is the first open source code that uses machine learning to fit Lyman-alpha line profiles. `zELDA` includes some trained deep neural networks that predicts the best inflow/outflow model and redshift for a given observed line profile. This approach is about 3 orders of maginutd faster than the MCMC analysis and provides similar accuracies. This methodology will prove crutial in the upcoming years when tens of thousands of Lyman-alpha line profiles will be measure by instruments such as the James Webb Space Telescope. The neural network engine powering `zELDA` is `scikitlearn` (https://scikit-learn.org/stable/).  
+
+
+
+
+
 
 
 

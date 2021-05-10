@@ -94,6 +94,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tutorial_ideal.html">Tutorial : Computing ideal line profiles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="funcs.html">funcs module</a></li>
 </ul>
 
@@ -190,13 +191,18 @@
 </div>
 <div class="section" id="origins-and-motivation">
 <h2>Origins and motivation<a class="headerlink" href="#origins-and-motivation" title="Permalink to this headline">¶</a></h2>
-<p>Due to the Lyman alpha Radiative Transfer large complexity, the efforts of understanding it moved from pure analytic studies to the so-called radiative transfer Mont    e Carlo (RTMC) codes that simulate Lyman alpha photons in arbitrary gas geometries. These codes provide useful information about the fraction of photons that manage     to escape and the resulting Lyman alpha line profiles. The RTMC approach has shown to reproduce the observed properties of LAEs.</p>
-<p><cite>zELDA</cite> is a publicly available <cite>python</cite> package based on a RTMC (Orsi et al. 2012) able to predict large amounts of Lyman alpha line profiles and escape fractions w    ith high accuracy. We designed this code hoping that it helps researches all over the wolrd to get a better understanding of the Universe.</p>
-<p><cite>zELDA</cite> is <strong>fast</strong> and <strong>simple</strong>.</p>
+<p>The main goal of <cite>zELDA</cite> is to provide the scientific community with a common tool to analyze and model Lyman-alpha line profiles.</p>
+<p><cite>zELDA</cite> is a publicly available <cite>python</cite> package based on a RTMC (Orsi et al. 2012) and <cite>FLaREON</cite> able to predict large amounts of Lyman alpha line profiles and escape fractions with high accuracy. We designed this code hoping that it helps researches all over the wolrd to get a better understanding of the Universe. In particular <cite>zELDA</cite> is divided in two main functionalites:</p>
 <ul class="simple">
-<li><p><strong>Fast</strong> : This code is able to predict Lyman alpha escape fractions and line profiles in an unprecedentedly low amount of time. In particular thousands of escape     fractions and line profiles can be computed in less than a second of computational time.</p></li>
-<li><p><strong>Simple</strong> : This code is only needs a few lines of code to be executed.</p></li>
+<li><p><strong>Mocking Lyman-alpha line profiles</strong>. Due to the Lyman alpha Radiative Transfer large complexity, the efforts of understanding it moved from pure analytic studies to the so-called radiative transfer Monte Carlo (RTMC) codes that simulate Lyman alpha photons in arbitrary gas geometries. These codes provide useful information about the fraction of photons that manage to escape and the resulting Lyman alpha line profiles. The RTMC approach has shown to reproduce the observed properties of Lyman-alpha emitters. <cite>zELDA</cite> constains several data grids of <cite>LyaRT</cite>, the RTMC described in Orsi et al. 2012 (<a class="reference external" href="https://github.com/aaorsi/LyaRT">https://github.com/aaorsi/LyaRT</a>), from which Lyman-alpha line profiles are computed using lineal interpolation. This methodology allow us to predict line profiles with a high accuracy with a low compitational cost. In fact, the used by <cite>zELDA</cite> to predict a single line profiles y usually eight orders of magnitud smaller than the full radiative transfer analysis done by <cite>LyaRT</cite>. Additionally, in order to mock observed Lyman-alpha spectrum, <cite>zELDA</cite> also includes rutines to mimick the artifacts induced by obsevations in the line profiles, such a finite spectral resolution or the wavelegnth binning.</p></li>
+<li><p><strong>Fitting observed Lyman-alpha line profiles</strong>. The main update from <cite>FLaREON</cite> to <cite>zELDA</cite> is the inclussion of several fitting algotirhms to model observed Lyman-alhpa line profiles. On the basics, <cite>zELDA</cite> uses mock Lyman-alpha line profiles to fit observed espectrums in two main phasions :</p></li>
 </ul>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Monte Carlo Markov Chain</strong> : This is the most classic approach taken in the literaute (e.g. Gronke et al. 2017). <cite>zELDA</cite> implementation is power by the public code <cite>emcee</cite> (<a class="reference external" href="https://emcee.readthedocs.io/en/stable/">https://emcee.readthedocs.io/en/stable/</a>) by Daniel Foreman-Mackey et al. (2013).</p></li>
+<li><p><strong>Deep learning</strong> : <cite>zELDA</cite> is the first open source code that uses machine learning to fit Lyman-alpha line profiles. <cite>zELDA</cite> includes some trained deep neural networks that predicts the best inflow/outflow model and redshift for a given observed line profile. This approach is about 3 orders of maginutd faster than the MCMC analysis and provides similar accuracies. This methodology will prove crutial in the upcoming years when tens of thousands of Lyman-alpha line profiles will be measure by instruments such as the James Webb Space Telescope. The neural network engine powering <cite>zELDA</cite> is <cite>scikitlearn</cite> (<a class="reference external" href="https://scikit-learn.org/stable/">https://scikit-learn.org/stable/</a>).</p></li>
+</ul>
+</div></blockquote>
 </div>
 </div>
 

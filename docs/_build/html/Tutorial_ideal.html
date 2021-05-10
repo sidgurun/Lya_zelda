@@ -1,0 +1,322 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Tutorial : Computing ideal line profiles &mdash; zELDA 0.0.01 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="funcs module" href="funcs.html" />
+    <link rel="prev" title="Installation" href="installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> zELDA
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial : Computing ideal line profiles</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#computing-one-ideal-line-profile">Computing one ideal line profile</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#computing-many-ideal-line-profile">Computing many ideal line profile</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="funcs.html">funcs module</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">zELDA</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Tutorial : Computing ideal line profiles</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/Tutorial_ideal.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tutorial-computing-ideal-line-profiles">
+<h1>Tutorial : Computing ideal line profiles<a class="headerlink" href="#tutorial-computing-ideal-line-profiles" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="computing-one-ideal-line-profile">
+<h2>Computing one ideal line profile<a class="headerlink" href="#computing-one-ideal-line-profile" title="Permalink to this headline">¶</a></h2>
+<p>In this tutorial you will, hopefully, learn how to compute ideal line Lyman-alpha line profiles with <cite>zELDA</cite>. The lines computed in this turorial are ideal becase they don’t suffer from the tipical artifacts casued by the fact the instruments are not perfect. These line are in the rest frame of the galaxy.</p>
+<p>Let’s start by loading <cite>zELDA</cite> and setting the location of the LyaRT grids:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">Lya_zelda</span> <span class="k">as</span> <span class="nn">Lya</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">your_grids_location</span> <span class="o">=</span> <span class="s1">&#39;/This/Folder/Contains/The/Grids/&#39;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Lya</span><span class="o">.</span><span class="n">funcs</span><span class="o">.</span><span class="n">Data_location</span> <span class="o">=</span> <span class="n">your_grids_location</span>
+</pre></div>
+</div>
+<p>where <cite>/This/Folder/Contains/The/Grids/</cite> is the place where you store the LyaRT data grids, as shown in the installation section.</p>
+<p>Now, let’s decide which outflow geometry we want to use. For this tutorial we will use the gas geometry known as Thin Shell in which the instrinsic continum is a gaussian and a continuum with a give equivalent width.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Geometry</span> <span class="o">=</span> <span class="s1">&#39;Thin_Shell_Cont&#39;</span>
+</pre></div>
+</div>
+<p>Let’s load the data containing the grid:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">LyaRT_Grid</span> <span class="o">=</span> <span class="n">Lya</span><span class="o">.</span><span class="n">load_Grid_Line</span><span class="p">(</span> <span class="n">Geometry</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>This contains all the necessary information to compute the line profiles. To learn more about the grids of line profiles go to …………</p>
+<p>Now let’s define the parameters of the shell model that we want. these are five:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">V_Value</span>     <span class="o">=</span> <span class="mf">50.0</span>  <span class="c1"># Outflow expansion velocity [km/s]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">logNH_Value</span> <span class="o">=</span> <span class="mf">20.</span>   <span class="c1"># Logarithmic of the neutral hydrogen column density [cm**-2]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ta_Value</span>    <span class="o">=</span> <span class="mf">0.01</span>  <span class="c1"># Dust optical depth</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">logEW_Value</span> <span class="o">=</span> <span class="mf">1.5</span>   <span class="c1"># Logarithmic the intrinsic equivalent width [A]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Wi_Value</span>    <span class="o">=</span> <span class="mf">0.5</span>   <span class="c1"># Intrinsic width of the line [A]</span>
+</pre></div>
+</div>
+<p>Now, let’s set the wavlength array where we want to put the line in the international system of units (meters). We arbitraly chose to evaluate the line +-10A around Lyman-alpha:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">w_Lya</span> <span class="o">=</span> <span class="mf">1215.68</span> <span class="c1"># Lyman-alpha wavelength in amstrongs</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span> <span class="n">w_Lya</span><span class="o">-</span><span class="mi">10</span> <span class="p">,</span> <span class="n">w_Lya</span><span class="o">+</span><span class="mi">10</span> <span class="p">,</span> <span class="mi">1000</span> <span class="p">)</span> <span class="o">*</span> <span class="mf">1e-10</span>
+</pre></div>
+</div>
+<p>Now he have verything, let’s compute the line simply by doing:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Line_Arr</span> <span class="o">=</span> <span class="n">Lya</span><span class="o">.</span><span class="n">RT_Line_Profile_MCMC</span><span class="p">(</span> <span class="n">Geometry</span> <span class="p">,</span> <span class="n">wavelength_Arr</span> <span class="p">,</span> <span class="n">V_Value</span> <span class="p">,</span> <span class="n">logNH_Value</span> <span class="p">,</span> <span class="n">ta_Value</span> <span class="p">,</span> <span class="n">LyaRT_Grid</span> <span class="p">,</span> <span class="n">logEW_Value</span><span class="o">=</span><span class="n">logEW_Value</span> <span class="p">,</span> <span class="n">Wi_Value</span><span class="o">=</span><span class="n">Wi_Value</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>And… It’s done! <cite>Line_Arr</cite> is a numpy array that contains the line profile evaluated in <cite>wavelength_Arr</cite>.</p>
+<p>Let’s plot the line by doing</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pylab</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span> <span class="n">wavelength_Arr</span> <span class="o">*</span><span class="mf">1e10</span> <span class="p">,</span> <span class="n">Line_Arr</span> <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;wavelength[A]&#39;</span> <span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span> <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Flux density [a.u.]&#39;</span> <span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span> <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This should show something like this</p>
+<a class="reference internal image-reference" href="_images/fig_Tutorial_1_1.png"><img alt="_images/fig_Tutorial_1_1.png" src="_images/fig_Tutorial_1_1.png" style="width: 600px;" /></a>
+</div>
+<div class="section" id="computing-many-ideal-line-profile">
+<h2>Computing many ideal line profile<a class="headerlink" href="#computing-many-ideal-line-profile" title="Permalink to this headline">¶</a></h2>
+<p>Above we have just seen how to compute one ideal line profile. In the case that you want to compute several <cite>zELDA</cite> has a more compact function.</p>
+<p>Let’s start like in the case above in which we set the location of the grids:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">Lya_zelda</span> <span class="k">as</span> <span class="nn">Lya</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">your_grids_location</span> <span class="o">=</span> <span class="s1">&#39;/This/Folder/Contains/The/Grids/&#39;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Lya</span><span class="o">.</span><span class="n">funcs</span><span class="o">.</span><span class="n">Data_location</span> <span class="o">=</span> <span class="n">your_grids_location</span>
+</pre></div>
+</div>
+<p>where <cite>/This/Folder/Contains/The/Grids/</cite> is the place where you store the LyaRT data grids, as shown in the installation section.</p>
+<p>Now, let’s set the geometry:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Geometry</span> <span class="o">=</span> <span class="s1">&#39;Thin_Shell_Cont&#39;</span>
+</pre></div>
+</div>
+<p>And now, instead of loading the grid, let’s define the outflow parameters. In this case they will be lists (or numpy arrays) as we want, for example 3 line profile configurations:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">V_Arr</span>     <span class="o">=</span> <span class="p">[</span> <span class="mf">50.0</span> <span class="p">,</span> <span class="mf">100.</span>   <span class="p">,</span> <span class="mf">200.</span>    <span class="p">]</span> <span class="c1"># Outflow expansion velocity [km/s]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">logNH_Arr</span> <span class="o">=</span> <span class="p">[</span> <span class="mf">18.</span>  <span class="p">,</span>  <span class="mf">19.</span>   <span class="p">,</span>  <span class="mf">20.</span>    <span class="p">]</span> <span class="c1"># Logarithmic of the neutral hydrogen column density [cm**-2]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ta_Arr</span>    <span class="o">=</span> <span class="p">[</span>  <span class="mf">0.1</span> <span class="p">,</span>   <span class="mf">0.01</span> <span class="p">,</span>   <span class="mf">0.001</span> <span class="p">]</span> <span class="c1"># Dust optical depth</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">logEW_Arr</span> <span class="o">=</span> <span class="p">[</span>  <span class="mf">1.</span>  <span class="p">,</span>   <span class="mf">1.5</span>  <span class="p">,</span>   <span class="mf">2.0</span>   <span class="p">]</span> <span class="c1"># Logarithmic the intrinsic equivalent width [A]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Wi_Arr</span>    <span class="o">=</span> <span class="p">[</span>  <span class="mf">0.1</span> <span class="p">,</span>   <span class="mf">0.5</span>  <span class="p">,</span>   <span class="mf">1.0</span>   <span class="p">]</span> <span class="c1"># Intrinsic width of the line [A]</span>
+</pre></div>
+</div>
+<p>and the wavelength array</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">w_Lya</span> <span class="o">=</span> <span class="mf">1215.68</span> <span class="c1"># Lyman-alpha wavelength in amstrongs</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span> <span class="n">w_Lya</span><span class="o">-</span><span class="mi">10</span> <span class="p">,</span> <span class="n">w_Lya</span><span class="o">+</span><span class="mi">10</span> <span class="p">,</span> <span class="mi">1000</span> <span class="p">)</span> <span class="o">*</span> <span class="mf">1e-10</span>
+</pre></div>
+</div>
+<p>Now let’s actually compute the lines:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Line_Matrix</span> <span class="o">=</span> <span class="n">Lya</span><span class="o">.</span><span class="n">RT_Line_Profile</span><span class="p">(</span> <span class="n">Geometry</span> <span class="p">,</span> <span class="n">wavelength_Arr</span> <span class="p">,</span> <span class="n">V_Arr</span> <span class="p">,</span> <span class="n">logNH_Arr</span> <span class="p">,</span> <span class="n">ta_Arr</span> <span class="p">,</span> <span class="n">logEW_Arr</span><span class="o">=</span><span class="n">logEW_Arr</span> <span class="p">,</span> <span class="n">Wi_Arr</span><span class="o">=</span><span class="n">Wi_Arr</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p><cite>Line_Matrix</cite> is a 2-D numpy array containing the line profiles for teh configurations. For example, <cite>Line_Matrix[0]</cite> has outflow velocity <cite>V_Arr[0]</cite>, neutral hydrogen column density <cite>logNH_Arr[0]</cite> and so on.</p>
+<p>Let’s plot them:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pylab</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span> <span class="mi">0</span> <span class="p">,</span> <span class="mi">3</span> <span class="p">)</span> <span class="p">:</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="nb">print</span><span class="p">(</span> <span class="n">Line_Matrix</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span> <span class="n">wavelength_Arr</span> <span class="o">*</span><span class="mf">1e10</span> <span class="p">,</span> <span class="n">Line_Matrix</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;wavelength[A]&#39;</span> <span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span> <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Flux density [a.u.]&#39;</span> <span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span> <span class="p">)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This should show something like this:</p>
+<a class="reference internal image-reference" href="_images/fig_Tutorial_1_2.png"><img alt="_images/fig_Tutorial_1_2.png" src="_images/fig_Tutorial_1_2.png" style="width: 600px;" /></a>
+<p>Now you know how to get ideal Lyman-alpha line profiles!</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="funcs.html" class="btn btn-neutral float-right" title="funcs module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Gurung-Lopez, Siddhartha.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

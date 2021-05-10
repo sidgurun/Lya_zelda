@@ -39,7 +39,7 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Installation" href="installation.html" /> 
+    <link rel="prev" title="Tutorial : Computing ideal line profiles" href="Tutorial_ideal.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -88,6 +88,7 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tutorial_ideal.html">Tutorial : Computing ideal line profiles</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">funcs module</a></li>
 </ul>
 
@@ -1074,7 +1075,7 @@ False if the walker is outside</p>
 
 <dl class="py function">
 <dt id="funcs.RT_Line_Profile">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">RT_Line_Profile</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">Geometry</span></em>, <em class="sig-param"><span class="n">wavelength_Arr</span></em>, <em class="sig-param"><span class="n">V_Arr</span></em>, <em class="sig-param"><span class="n">logNH_Arr</span></em>, <em class="sig-param"><span class="n">ta_Arr</span></em>, <em class="sig-param"><span class="n">logEW_Arr</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">Wi_Arr</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#RT_Line_Profile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.RT_Line_Profile" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">RT_Line_Profile</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">Geometry</span></em>, <em class="sig-param"><span class="n">wavelength_Arr</span></em>, <em class="sig-param"><span class="n">V_Arr</span></em>, <em class="sig-param"><span class="n">logNH_Arr</span></em>, <em class="sig-param"><span class="n">ta_Arr</span></em>, <em class="sig-param"><span class="n">logEW_Arr</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">Wi_Arr</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">MODE_CONT</span><span class="o">=</span><span class="default_value">'FULL'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#RT_Line_Profile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.RT_Line_Profile" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the Lyman alpha line profile for a given outflow properties.</p>
 <p><strong>Input</strong>:</p>
 <dl class="simple">
@@ -1101,6 +1102,10 @@ Default = None</p>
 </dd>
 <dt>Wi_Value<span class="classifier">Optional 1-D sequence of bool</span></dt><dd><p>Intrinsic width line in the rest frame [A]
 Default = None</p>
+</dd>
+<dt>MODE<span class="classifier">optinal string.</span></dt><dd><p>For the ‘Thin_Shell_Cont’ ONLY. Defines the grid to be loaded.
+MODE_CONT=’FULL’  loads a very dense  grid. ~12GB of RAM.
+MODE_CONT=’LIGHT’ loads a more sparse grid. ~ 2GB of RAM.</p>
 </dd>
 </dl>
 <p><strong>Output</strong>:</p>
@@ -1936,17 +1941,17 @@ theta_0[:,5] = intrinsic width</p>
 
 <dl class="py function">
 <dt id="funcs.load_Grid_Line">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">load_Grid_Line</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">Geometry</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#load_Grid_Line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.load_Grid_Line" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">load_Grid_Line</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">Geometry</span></em>, <em class="sig-param"><span class="n">MODE</span><span class="o">=</span><span class="default_value">'FULL'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#load_Grid_Line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.load_Grid_Line" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the dictionary with all the properties of the grid where the lines were run.</p>
 <p><strong>Input</strong></p>
 <dl class="simple">
 <dt>Geometry<span class="classifier">string</span></dt><dd><p>The outflow geometry to use: Options: ‘Thins_Shell’,
-‘Galactic_Wind’ , ‘Bicone_X_Slab’.</p>
+‘Galactic_Wind’ , ‘Bicone_X_Slab_In’, ‘Bicone_X_Slab_Out’,
+‘Thin_Shell_Cont’.</p>
 </dd>
-<dt>INSIDE_BICONE<span class="classifier">optional boolean</span></dt><dd><p>This is useless if the geometry is not Bicone_X_Slab. 
-If True then the bicone is face-on. If false the
-bicone is edge-on. The probability of being face 
-on is np.cos( np.pi/4 ).</p>
+<dt>MODE<span class="classifier">optinal string.</span></dt><dd><p>For the ‘Thin_Shell_Cont’ ONLY. Defines the grid to be loaded.
+MODE=’FULL’  loads a very dense  grid. ~12GB of RAM.
+MODE=’LIGHT’ loads a more sparse grid. ~ 2GB of RAM.</p>
 </dd>
 </dl>
 <p><strong>Output</strong></p>
@@ -2219,7 +2224,7 @@ Parametrization : it computes the escape fraction using a function that depends 
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Tutorial_ideal.html" class="btn btn-neutral float-left" title="Tutorial : Computing ideal line profiles" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

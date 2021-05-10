@@ -12,7 +12,8 @@ Welcome to zELDA's documentation! 10_51_342
 
    intro
    installation
-   Lya_zelda
+   Tutorial_ideal
+   Tutorial_mock
    funcs
 
 Indices and tables

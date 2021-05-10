@@ -1048,7 +1048,7 @@ def convert_lamda_into_x( lamda , T4=None ):
 #====================================================================#
 #====================================================================#
 #====================================================================#
-def load_Grid_Line( Geometry ):
+def load_Grid_Line( Geometry , MODE='FULL' ):
 
     '''
         Return the dictionary with all the properties of the grid where the lines were run.
@@ -1057,14 +1057,13 @@ def load_Grid_Line( Geometry ):
 
         Geometry : string
                    The outflow geometry to use: Options: 'Thins_Shell',
-                   'Galactic_Wind' , 'Bicone_X_Slab'.
+                   'Galactic_Wind' , 'Bicone_X_Slab_In', 'Bicone_X_Slab_Out',
+                   'Thin_Shell_Cont'.
 
-        INSIDE_BICONE : optional boolean
-                        This is useless if the geometry is not Bicone_X_Slab. 
-                        If True then the bicone is face-on. If false the
-                        bicone is edge-on. The probability of being face 
-                        on is np.cos( np.pi/4 ).
-                
+        MODE : optinal string.
+               For the 'Thin_Shell_Cont' ONLY. Defines the grid to be loaded.
+               MODE='FULL'  loads a very dense  grid. ~12GB of RAM.
+               MODE='LIGHT' loads a more sparse grid. ~ 2GB of RAM.
 
         **Output**
 
@@ -1095,7 +1094,7 @@ def load_Grid_Line( Geometry ):
     #this_dir = '/global/users/sidgurung/PROMARE/Grids/'
     #this_dir = '/global/users/sidgurung/PROMARE/Grids/'
 
-    if Geometry != 'Thin_Shell_Cont' :
+    if not Geometry in [ 'Thin_Shell_Cont' , 'Thin_Shell_Cont_Light' ] :
 
         index = np.where( Geometry == np.array(Geometry_Set) )[0][0]
 
@@ -1112,15 +1111,22 @@ def load_Grid_Line( Geometry ):
 
         loaded_model = np.load( filename , allow_pickle=True , encoding='latin1' ).item()
 
-    if Geometry == 'Thin_Shell_Cont' :
+    if Geometry in [ 'Thin_Shell_Cont' , 'Thin_Shell_Cont_Light' ] :
 
         NV  = 29
         NNH = 19
         Nta = 9
+
         NEW = 20
         NWi = 31
+
+        if MODE == 'FULL':
+            NEW = 20
+            NWi = 31
         
-        # ../Grids/GRID_data__V_29_logNH_15_logta_9_EW_20_Wi_18.npy
+        if MODE == 'LIGHT':
+            NEW = 8
+            NWi = 9
         
         t_name = '_V_'+str(NV)+'_logNH_'+str(NNH)+'_logta_'+str(Nta)+'_EW_'+str(NEW)+'_Wi_'+str(NWi)+'.npy'
 
@@ -1515,7 +1521,6 @@ def RT_Line_Profile_MCMC( Geometry , wavelength_Arr , V_Value , logNH_Value , ta
                     The Lyman alpha line profile. 
     '''
 
-    #V_Value , logNH_Value , ta_Value , Bool_good = pre_treatment_Line_profile_MCMC( Geometry , V_Value , logNH_Value , ta_Value )
     Bool_good = pre_treatment_Line_profile_MCMC( Geometry , np.absolute( V_Value ) , logNH_Value , ta_Value , logEW_Value=logEW_Value , Wi_Value=Wi_Value )
 
     x_Arr = convert_lamda_into_x( wavelength_Arr )
@@ -1613,7 +1618,7 @@ def pre_treatment_Line_profile( Geometry , V_Arr , logNH_Arr , ta_Arr , logEW_Ar
 #====================================================================#
 #====================================================================#
 #====================================================================#
-def RT_Line_Profile( Geometry , wavelength_Arr , V_Arr , logNH_Arr , ta_Arr , logEW_Arr=None , Wi_Arr=None ):
+def RT_Line_Profile( Geometry , wavelength_Arr , V_Arr , logNH_Arr , ta_Arr , logEW_Arr=None , Wi_Arr=None , MODE_CONT='FULL' ):
 
     '''
         Return the Lyman alpha line profile for a given outflow properties.
@@ -1652,6 +1657,11 @@ def RT_Line_Profile( Geometry , wavelength_Arr , V_Arr , logNH_Arr , ta_Arr , lo
                     Intrinsic width line in the rest frame [A]
                     Default = None
 
+        MODE : optinal string.
+               For the 'Thin_Shell_Cont' ONLY. Defines the grid to be loaded.
+               MODE_CONT='FULL'  loads a very dense  grid. ~12GB of RAM.
+               MODE_CONT='LIGHT' loads a more sparse grid. ~ 2GB of RAM.
+
         **Output**:
 
         lines_Arr : 2-D sequence of float
@@ -1684,7 +1694,7 @@ def RT_Line_Profile( Geometry , wavelength_Arr , V_Arr , logNH_Arr , ta_Arr , lo
 
     ##############################
 
-    DATA_LyaRT = load_Grid_Line( Geometry )
+    DATA_LyaRT = load_Grid_Line( Geometry , MODE_CONT )
 
     if Geometry in [ 'Thin_Shell'  , 'Galactic_Wind'  , 'Bicone_X_Slab_In' , 'Bicone_X_Slab_Out' ] :
 
