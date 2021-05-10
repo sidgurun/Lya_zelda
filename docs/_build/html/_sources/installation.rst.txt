@@ -1,3 +1,5 @@
+.. _Target_Installation:
+
 Installation
 ============
 

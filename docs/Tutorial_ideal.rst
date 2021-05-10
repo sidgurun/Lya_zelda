@@ -1,10 +1,10 @@
 Tutorial : Computing ideal line profiles
 ========================================
 
+In this tutorial you will, hopefully, learn how to compute ideal line Lyman-alpha line profiles with `zELDA`. The lines computed in this turorial are ideal becase they don't suffer from the tipical artifacts casued by the fact the instruments are not perfect. These lines are in the rest frame of the galaxy.
+
 Computing one ideal line profile
 ********************************
-
-In this tutorial you will, hopefully, learn how to compute ideal line Lyman-alpha line profiles with `zELDA`. The lines computed in this turorial are ideal becase they don't suffer from the tipical artifacts casued by the fact the instruments are not perfect. These line are in the rest frame of the galaxy.
 
 Let's start by loading `zELDA` and setting the location of the LyaRT grids:
 
@@ -30,7 +30,7 @@ Let's load the data containing the grid:
 
           >>> LyaRT_Grid = Lya.load_Grid_Line( Geometry )
 
-This contains all the necessary information to compute the line profiles. To learn more about the grids of line profiles go to ............
+This contains all the necessary information to compute the line profiles. To learn more about the grids of line profiles go to :doc:`Installation <installation>` .
 
 Now let's define the parameters of the shell model that we want. these are five:
 
@@ -75,7 +75,7 @@ This should show something like this
 
 
 Computing many ideal line profile
-********************************
+*********************************
 
 Above we have just seen how to compute one ideal line profile. In the case that you want to compute several `zELDA` has a more compact function. 
 

@@ -14,6 +14,7 @@ Welcome to zELDA's documentation! 10_51_342
    installation
    Tutorial_ideal
    Tutorial_mock
+   Tutorial_DNN
    funcs
 
 Indices and tables

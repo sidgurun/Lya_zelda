@@ -39,7 +39,7 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="funcs module" href="funcs.html" />
+    <link rel="next" title="Tutorial : Computing mock line profiles" href="Tutorial_mock.html" />
     <link rel="prev" title="Installation" href="installation.html" /> 
 </head>
 
@@ -94,6 +94,8 @@
 <li class="toctree-l2"><a class="reference internal" href="#computing-many-ideal-line-profile">Computing many ideal line profile</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="Tutorial_mock.html">Tutorial : Computing mock line profiles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tutorial_DNN.html">Tutorial : Fitting a line profile using deep learning</a></li>
 <li class="toctree-l1"><a class="reference internal" href="funcs.html">funcs module</a></li>
 </ul>
 
@@ -164,9 +166,9 @@
             
   <div class="section" id="tutorial-computing-ideal-line-profiles">
 <h1>Tutorial : Computing ideal line profiles<a class="headerlink" href="#tutorial-computing-ideal-line-profiles" title="Permalink to this headline">¶</a></h1>
+<p>In this tutorial you will, hopefully, learn how to compute ideal line Lyman-alpha line profiles with <cite>zELDA</cite>. The lines computed in this turorial are ideal becase they don’t suffer from the tipical artifacts casued by the fact the instruments are not perfect. These lines are in the rest frame of the galaxy.</p>
 <div class="section" id="computing-one-ideal-line-profile">
 <h2>Computing one ideal line profile<a class="headerlink" href="#computing-one-ideal-line-profile" title="Permalink to this headline">¶</a></h2>
-<p>In this tutorial you will, hopefully, learn how to compute ideal line Lyman-alpha line profiles with <cite>zELDA</cite>. The lines computed in this turorial are ideal becase they don’t suffer from the tipical artifacts casued by the fact the instruments are not perfect. These line are in the rest frame of the galaxy.</p>
 <p>Let’s start by loading <cite>zELDA</cite> and setting the location of the LyaRT grids:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">Lya_zelda</span> <span class="k">as</span> <span class="nn">Lya</span>
 
@@ -184,7 +186,7 @@
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">LyaRT_Grid</span> <span class="o">=</span> <span class="n">Lya</span><span class="o">.</span><span class="n">load_Grid_Line</span><span class="p">(</span> <span class="n">Geometry</span> <span class="p">)</span>
 </pre></div>
 </div>
-<p>This contains all the necessary information to compute the line profiles. To learn more about the grids of line profiles go to …………</p>
+<p>This contains all the necessary information to compute the line profiles. To learn more about the grids of line profiles go to <a class="reference internal" href="installation.html"><span class="doc">Installation</span></a> .</p>
 <p>Now let’s define the parameters of the shell model that we want. these are five:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">V_Value</span>     <span class="o">=</span> <span class="mf">50.0</span>  <span class="c1"># Outflow expansion velocity [km/s]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">logNH_Value</span> <span class="o">=</span> <span class="mf">20.</span>   <span class="c1"># Logarithmic of the neutral hydrogen column density [cm**-2]</span>
@@ -255,11 +257,9 @@
 <span class="go">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span> <span class="mi">0</span> <span class="p">,</span> <span class="mi">3</span> <span class="p">)</span> <span class="p">:</span>
 <span class="go">&gt;&gt;&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span>    <span class="nb">print</span><span class="p">(</span> <span class="n">Line_Matrix</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-<span class="go">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span>    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span> <span class="n">wavelength_Arr</span> <span class="o">*</span><span class="mf">1e10</span> <span class="p">,</span> <span class="n">Line_Matrix</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">)</span>
 <span class="go">&gt;&gt;&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;wavelength[A]&#39;</span> <span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span> <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;wavelength[A]&#39;</span>       <span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span> <span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Flux density [a.u.]&#39;</span> <span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span> <span class="p">)</span>
 <span class="go">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -277,7 +277,7 @@
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="funcs.html" class="btn btn-neutral float-right" title="funcs module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="Tutorial_mock.html" class="btn btn-neutral float-right" title="Tutorial : Computing mock line profiles" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
         <a href="installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
