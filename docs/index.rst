@@ -15,11 +15,10 @@ Welcome to zELDA's documentation! 10_51_342
    Tutorial_ideal
    Tutorial_mock
    Tutorial_DNN
+   Tutorial_MCMC
    funcs
 
 Indices and tables
 ==================
 
 * :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
