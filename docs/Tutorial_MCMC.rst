@@ -84,7 +84,7 @@ Let's now run the MCMC:
 
           >>> sampler = Lya.MCMC_Analysis_sampler_5( w_Arr , f_Arr , s_Arr , FWHM_t , N_walkers , N_burn , N_steps , Geometry , LyaRT_Grid , z_in=z_in , log_V_in=log_V_in , log_N_in=log_N_in , log_t_in=log_t_in , log_E_in=log_E_in , W_in=W_in )
 
-`sampler` is an object of the python pakage `emcee`. Note that there is a way of forcing the redshift to be inside `z_in`. We decided to this with only this property in case you know the redshift of the source before hand. you can do this by passing `FORCE_z` to `Lya.MCMC_Analysis_sampler_5`.
+`sampler` is an object of the python pakage `emcee`. Note that there is a way of forcing the redshift to be inside `z_in`. We decided to this with only this property in case you know the redshift of the source before hand. you can do this by passing `FORCE_z=True` to `Lya.MCMC_Analysis_sampler_5`.
 
 Now let's get the actual value of the predicted properties and their 1-sigma undertanty. For this, in this tutorial we chose as our prediction the percentile 50th o the probability distribution function of the varibles. For the +-1-sigma uncertainty we choose the percentiles 16th and 84th.  
 
@@ -143,8 +143,12 @@ which should look something like:
 
 .. code:: python
 
-          dasd
-
+          The true redshift                 is 0.5 and the predicted is 0.49991074547548753 (- 1.9665578543492934e-05 , + 0.0014991528312225944 )
+          The true expansion velocity       is 40.0 and the predicted is 30.741297629627855 (- 1.097915986182759 , + 244.88872432354253 )
+          The true dust optical depth       is 0.01 and the predicted is 0.04392859929402969 (- 0.035550939281926146 , + 0.0103076912398413 )
+          The true intrinsic width          is 0.5 and the predicted is 0.2859470609607235 (- 0.09765211992507192 , + 0.06363668998672473 )
+          The true log of HI column density is 20.0 and the predicted is 20.215438954615962 (- 2.4584647794744434 , + 0.027551697514507367 )
+          The true log of equivalent width  is 1.5 and the predicted is 1.7365288817793056 (- 0.29375812799042955 , + 0.033311663274792735 )
 
 Now let's plot the lines and see how they compare:
 
