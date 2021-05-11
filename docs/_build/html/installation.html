@@ -29,10 +29,10 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -186,7 +186,7 @@ $ pip install .
 <h2>LyaRT data grids<a class="headerlink" href="#lyart-data-grids" title="Permalink to this headline">¶</a></h2>
 <p>Next, let’s download the data grids necessary for generating mock Lyman-alpha line profiles as escape fractions. The data is stored at <a class="reference external" href="https://zenodo.org/record/4733518#.YJjw_y_Wf0c">https://zenodo.org/record/4733518#.YJjw_y_Wf0c</a> . Download the <cite>Grids.zip</cite> file and unzip it in the place that you want to keep it.</p>
 <p>In order to compute line profiles and escape fraction you will need to indicate <cite>zELDA</cite> the location of grids by doing</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">Lya_zelda</span> <span class="k">as</span> <span class="nn">Lya</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">Lya_zelda</span> <span class="kn">as</span> <span class="nn">Lya</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">your_grids_location</span> <span class="o">=</span> <span class="s1">&#39;/This/Folder/Contains/The/Grids/&#39;</span>
 

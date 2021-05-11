@@ -175,7 +175,7 @@ This should give you something like this:
 .. image:: figs_and_codes/fig_Tutorial_4_2.png
    :width: 600
 
-Now let's do a correlation plot to see where the walkers are. For this we will use the function `make_corner_plots` which is define just below in this same page, in :ref:`my-correlations`.
+Now let's do a correlation plot to see where the walkers are. For this we will use the function `make_corner_plots` which is define just below in this same page, in :ref:`my-reference-label` .
 
 .. code:: python
 
@@ -186,8 +186,10 @@ And it should give you something like:
 .. image:: figs_and_codes/fig_Tutorial_4_3.png
    :width: 600
 
+And.. with that it's done. Now you know how to use the MCMC implementation in `zELDA`.
 
-.. _my-correlations:
+.. _my-reference-label:
+
 Tool to make corraltion plots
 *****************************
 
