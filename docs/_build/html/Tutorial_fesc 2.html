@@ -1,0 +1,244 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Tutorial : Computing Lyman-alpha escape fractions &mdash; zELDA 0.0.01 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="funcs module" href="funcs.html" />
+    <link rel="prev" title="Tutorial : Fitting a line profile using deep learning" href="Tutorial_MCMC.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> zELDA
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tutorial_ideal.html">Tutorial : Computing ideal line profiles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tutorial_mock.html">Tutorial : Computing mock line profiles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tutorial_DNN.html">Tutorial : Fitting a line profile using deep learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tutorial_MCMC.html">Tutorial : Fitting a line profile using deep learning</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial : Computing Lyman-alpha escape fractions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#default-computation-of-escape-fractions">Default computation of escape fractions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#deeper-options-on-predicting-the-escape-fraction">Deeper options on predicting the escape fraction</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="funcs.html">funcs module</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">zELDA</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Tutorial : Computing Lyman-alpha escape fractions</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/Tutorial_fesc.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tutorial-computing-lyman-alpha-escape-fractions">
+<h1>Tutorial : Computing Lyman-alpha escape fractions<a class="headerlink" href="#tutorial-computing-lyman-alpha-escape-fractions" title="Permalink to this headline">¶</a></h1>
+<p>In this tutorial you will, hopefully, learn how to compute Lyman-alpha escape fractions with <cite>zELDA</cite>. Note that this part of the code compres directly from <cite>FLaREON</cite> ( <a class="reference external" href="https://github.com/sidgurun/FLaREON">https://github.com/sidgurun/FLaREON</a> , Gurung-lopez et al. 2019b).</p>
+<div class="section" id="default-computation-of-escape-fractions">
+<h2>Default computation of escape fractions<a class="headerlink" href="#default-computation-of-escape-fractions" title="Permalink to this headline">¶</a></h2>
+<p>Let’s move to one of the most powerful products of <cite>FLaREON</cite>: predicting huge amounts of Lyman alpha escape fractions.</p>
+<p>In theory only one line is needed to predict the escape fraction for a thin shell geometry with expasion velocity (V) of 200km/s, logarithmic of column density (log    NH) of 19.5 and dust optical depth (ta) of 0.1 :</p>
+<p>In this way <cite>f_esc_Arr</cite> is an Array of 1 dimension and length 1 that contains the predicted escape fraction for this configuration.</p>
+<p>However, <cite>zELDA</cite> implements several gas geometries and is optimized to obtain large amount of escape fractions with only one line of code, so lets expand this a l    ittle bit more. If we want to compute the escape fraction in a thin shell outflow with the configurations { V , logNH , ta } , { 200 , 19.5 , 0.1 }, { 300 , 20.0 ,     0.01 } and { 400 , 20.5 , 0.001 } we could do</p>
+<p>Where <cite>Geometry</cite> indicates the gas disitrubitons that is being used. ‘Bicone_X_Slab_In’ indicates the bicone geometry look through the outflow, while ‘Bicone_X_Slab_In’ is looking through the optically thick gas. The ‘Thin_Shell_Cont’ model does not support escape fractions yet.</p>
+<p>Now let’s compute the escape fraction for this configuraitons:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f_esc_Arr</span> <span class="o">=</span> <span class="n">Lya</span><span class="o">.</span><span class="n">RT_f_esc</span><span class="p">(</span> <span class="n">Geometry</span> <span class="p">,</span> <span class="n">V_Arr</span> <span class="p">,</span> <span class="n">logNH_Arr</span> <span class="p">,</span> <span class="n">ta_Arr</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>The variable <cite>f_esc_Arr</cite> is an Array of 1 dimension and length 3 that encloses the escape fractions for the configurations. In particular <cite>f_esc_Arr[i]</cite> is computed     using <cite>V_Arr[i]</cite> ,  <cite>logNH_Arr[i]</cite> and <cite>ta_Arr[i]</cite>.</p>
+</div>
+<div class="section" id="deeper-options-on-predicting-the-escape-fraction">
+<h2>Deeper options on predicting the escape fraction<a class="headerlink" href="#deeper-options-on-predicting-the-escape-fraction" title="Permalink to this headline">¶</a></h2>
+<p>There are many algorithims implemented to compute <cite>f_esc_Arr</cite>. By default <cite>FLaREON</cite> uses a machine learning decision tree regressor and a parametric equation for th    e escape fraction as function of the dust optical depth (Go to the <cite>FLaREON</cite> presentation paper Gurung-Lopez et al. in prep for more information). These settings we    re chosen as default since they give the best performance. However the user might want to change the computing algorithm so here leave a guide with all the availabl    e options.</p>
+<ul class="simple">
+<li><p><cite>MODE</cite> variable refers to mode in which the escape fraction is computed. There are 3 ways in which <cite>FLaREON</cite> can compute this. i) <cite>‘Raw’</cite> Using the raw data from     the RTMC (Orsi et al. 2012). ii) <cite>‘Parametrization’</cite> Assume a parametric equation between the escape fraction and the dust optical depth that allows to extend calcu    lations outside the grid with the highest accuracy (in <cite>FLaREON</cite>). iii) <cite>‘Analytic’</cite> Use of the recalibrated analytic equations presented by Gurung-Lopez et al. 201    8. Note that the analytic mode is not enabled in the bicone geometry although it is in the <cite>‘Thin_Shel’</cite> and <cite>‘Galactic_Wind’</cite></p></li>
+<li><p><cite>Algorithm</cite> varible determines the technique used. This can be i) <cite>‘Intrepolation’</cite>: lineal interpoation is used.  ii) <cite>‘Machine_Learning’</cite> machine learning is us    ed. To determine which machine learning algorithm you would like to use please, provide the variable <cite>Machine_Learning_Algorithm</cite>. The machine learning algorithms i    mplemented are Decision tree regressor (<cite>‘Tree’</cite>), Random forest regressor (<cite>‘Forest’</cite>) and KN regressor (<cite>‘KN’</cite>). The machine learning is implemented by <cite>Sci-kit-learn</cite>, please, visit their webside for more information (<a class="reference external" href="http://scikit-learn.org/stable/">http://scikit-learn.org/stable/</a>).</p></li>
+</ul>
+<p>Finally, any combination of <cite>MODE</cite> , <cite>Algorithm</cite> and <cite>Machine_Learning_Algorithm</cite> is allowed. However, note that the variable <cite>Machine_Learning_Algorithm</cite> is useles    s if <cite>Algorithm=’Intrepolation’</cite>.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="funcs.html" class="btn btn-neutral float-right" title="funcs module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="Tutorial_MCMC.html" class="btn btn-neutral float-left" title="Tutorial : Fitting a line profile using deep learning" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Gurung-Lopez, Siddhartha.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
