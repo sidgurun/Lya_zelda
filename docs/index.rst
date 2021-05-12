@@ -16,6 +16,7 @@ Welcome to zELDA's documentation! 10_51_342
    Tutorial_ideal
    Tutorial_mock
    Tutorial_DNN
+   Tutorial_Train
    Tutorial_MCMC
    Tutorial_fesc
    funcs

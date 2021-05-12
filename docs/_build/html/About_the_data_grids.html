@@ -29,10 +29,10 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -174,7 +174,7 @@
 <div class="section" id="getting-started">
 <h2>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
 <p>Let’s start by loading <cite>zELDA</cite> and setting the location of the LyaRT grids:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">Lya_zelda</span> <span class="k">as</span> <span class="nn">Lya</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">Lya_zelda</span> <span class="kn">as</span> <span class="nn">Lya</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">your_grids_location</span> <span class="o">=</span> <span class="s1">&#39;/This/Folder/Contains/The/Grids/&#39;</span>
 
@@ -190,20 +190,20 @@
 </pre></div>
 </div>
 <p><cite>LyaRT_Grid</cite> is a python dictionary containing all the data necessary for the interpolation. Let’s look to the keys</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span> <span class="n">LyaRT_Grid</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span> <span class="n">LyaRT_Grid</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="p">)</span>
 
 <span class="go">dict_keys([&#39;logNH_Arr&#39;, &#39;logta_Arr&#39;, &#39;Grid&#39;, &#39;x_Arr&#39;, &#39;V_Arr&#39;])</span>
 </pre></div>
 </div>
 <p>The varibles <cite>‘V_Arr’</cite>, <cite>‘logNH_Arr’</cite> and <cite>‘logta_Arr’</cite> are 1-D numpy arrays that contains the values in which the grid is evaluated for the expansion velocity, the logarithmic of the HI column density and  the logarithmic of the dust optical depth respectively. If you want to check where the grid is evaluated you can do</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;The expansion velocity [km/s] is evaluated in : &#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span> <span class="n">LyaRT_Grid</span><span class="p">[</span><span class="s1">&#39;V_Arr&#39;</span>    <span class="p">]</span> <span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span> <span class="s1">&#39;The expansion velocity [km/s] is evaluated in : &#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span> <span class="n">LyaRT_Grid</span><span class="p">[</span><span class="s1">&#39;V_Arr&#39;</span>    <span class="p">]</span> <span class="p">)</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;The logarithmic of the HI column density [cm**-2] is evaluated in : &#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span> <span class="n">LyaRT_Grid</span><span class="p">[</span><span class="s1">&#39;logNH_Arr&#39;</span><span class="p">]</span> <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span> <span class="s1">&#39;The logarithmic of the HI column density [cm**-2] is evaluated in : &#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span> <span class="n">LyaRT_Grid</span><span class="p">[</span><span class="s1">&#39;logNH_Arr&#39;</span><span class="p">]</span> <span class="p">)</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;The logarithmic of the dust optical depth is evaluated in : &#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span> <span class="n">LyaRT_Grid</span><span class="p">[</span><span class="s1">&#39;logta_Arr&#39;</span><span class="p">]</span> <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span> <span class="s1">&#39;The logarithmic of the dust optical depth is evaluated in : &#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span> <span class="n">LyaRT_Grid</span><span class="p">[</span><span class="s1">&#39;logta_Arr&#39;</span><span class="p">]</span> <span class="p">)</span>
 
 <span class="go">The expansion velocity [km/s] is evaluated in :</span>
 <span class="go">[   0   10   20   30   40   50   60   70   80   90  100  150  200  250</span>
@@ -236,7 +236,7 @@
 <h2>Line profile grids with smaller RAM occupation<a class="headerlink" href="#line-profile-grids-with-smaller-ram-occupation" title="Permalink to this headline">¶</a></h2>
 <p>The data grids for the geometries <cite>‘Thin_Shell’</cite>, <cite>‘Galactic_Wind’</cite>, <cite>‘Bicone_X_Slab_In’</cite> and <cite>‘Bicone_X_Slab_Out’</cite> are relatively small and they occupy less than 1GB of RAM. These models have 3 dimensions: expansion velocity, HI column density and dust optical depth. However, the model <cite>‘Thin_Shell_Cont’</cite> includes different intrinsic line profiles, which increases the number of dimensions to 5. This increase a lot the data volume, interms of paramter space and RAM occupation. Indeed, the default <cite>‘Thin_Shell_Cont’</cite> line profile grid is about 11GB. This means that when using this mode you would need to have 11GB of RAM or more. In case that you want to do some tests with a smaller grid (but still 5D) we have included a lighter grid, that is about 2GB of size.</p>
 <p>You can load the default <cite>‘Thin_Shell_Cont’</cite> by doing</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">Lya_zelda</span> <span class="k">as</span> <span class="nn">Lya</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">Lya_zelda</span> <span class="kn">as</span> <span class="nn">Lya</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">your_grids_location</span> <span class="o">=</span> <span class="s1">&#39;/This/Folder/Contains/The/Grids/&#39;</span>
 
@@ -252,20 +252,20 @@
 </pre></div>
 </div>
 <p>And you can see where the grid is evaluated by doing</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;The expansion velocity [km/s] is evaluated in : &#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span> <span class="n">LyaRT_Grid_Full</span><span class="p">[</span><span class="s1">&#39;V_Arr&#39;</span><span class="p">]</span> <span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span> <span class="s1">&#39;The expansion velocity [km/s] is evaluated in : &#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span> <span class="n">LyaRT_Grid_Full</span><span class="p">[</span><span class="s1">&#39;V_Arr&#39;</span><span class="p">]</span> <span class="p">)</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;The logarithmic of the HI column density [cm**-2] is evaluated in : &#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span> <span class="n">LyaRT_Grid_Full</span><span class="p">[</span><span class="s1">&#39;logNH_Arr&#39;</span><span class="p">]</span> <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span> <span class="s1">&#39;The logarithmic of the HI column density [cm**-2] is evaluated in : &#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span> <span class="n">LyaRT_Grid_Full</span><span class="p">[</span><span class="s1">&#39;logNH_Arr&#39;</span><span class="p">]</span> <span class="p">)</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;The logarithmic of the dust optical depth is evaluated in : &#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span> <span class="n">LyaRT_Grid_Full</span><span class="p">[</span><span class="s1">&#39;logta_Arr&#39;</span><span class="p">]</span> <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span> <span class="s1">&#39;The logarithmic of the dust optical depth is evaluated in : &#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span> <span class="n">LyaRT_Grid_Full</span><span class="p">[</span><span class="s1">&#39;logta_Arr&#39;</span><span class="p">]</span> <span class="p">)</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;The logarithmic of the intrinsic equivalent width [A] is evaluated in : &#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span> <span class="n">LyaRT_Grid_Full</span><span class="p">[</span><span class="s1">&#39;logEW_Arr&#39;</span><span class="p">]</span> <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span> <span class="s1">&#39;The logarithmic of the intrinsic equivalent width [A] is evaluated in : &#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span> <span class="n">LyaRT_Grid_Full</span><span class="p">[</span><span class="s1">&#39;logEW_Arr&#39;</span><span class="p">]</span> <span class="p">)</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;The logarithmic of the intrinsic line width [A] is evaluated in : &#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span> <span class="n">LyaRT_Grid_Full</span><span class="p">[</span><span class="s1">&#39;Wi_Arr&#39;</span><span class="p">]</span> <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span> <span class="s1">&#39;The logarithmic of the intrinsic line width [A] is evaluated in : &#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span> <span class="n">LyaRT_Grid_Full</span><span class="p">[</span><span class="s1">&#39;Wi_Arr&#39;</span><span class="p">]</span> <span class="p">)</span>
 
 <span class="go">The expansion velocity [km/s] is evaluated in :</span>
 <span class="go">[   0   10   20   30   40   50   60   70   80   90  100  150  200  250</span>
@@ -292,16 +292,16 @@
 </pre></div>
 </div>
 <p>The reduction of the size of the grid is done by reducing the number of bins in <cite>‘logEW_Arr’</cite> and <cite>‘Wi_Arr’</cite>. You can see the new <cite>‘logEW_Arr’</cite> and <cite>‘Wi_Arr’</cite> arrays in:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span> <span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;The logarithmic of the intrinsic equivalent width [A] is evaluated in : &#39;</span><span class="p">)</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span> <span class="n">LyaRT_Grid_Light</span><span class="p">[</span><span class="s1">&#39;logEW_Arr&#39;</span><span class="p">]</span> <span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span> <span class="s1">&#39;The logarithmic of the intrinsic equivalent width [A] is evaluated in : &#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span> <span class="n">LyaRT_Grid_Light</span><span class="p">[</span><span class="s1">&#39;logEW_Arr&#39;</span><span class="p">]</span> <span class="p">)</span>
 
- <span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;The logarithmic of the intrinsic line width [A] is evaluated in : &#39;</span><span class="p">)</span>
- <span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span> <span class="n">LyaRT_Grid_Light</span><span class="p">[</span><span class="s1">&#39;Wi_Arr&#39;</span><span class="p">]</span> <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span> <span class="s1">&#39;The logarithmic of the intrinsic line width [A] is evaluated in : &#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span> <span class="n">LyaRT_Grid_Light</span><span class="p">[</span><span class="s1">&#39;Wi_Arr&#39;</span><span class="p">]</span> <span class="p">)</span>
 
-<span class="n">The</span> <span class="n">logarithmic</span> <span class="n">of</span> <span class="n">the</span> <span class="n">intrinsic</span> <span class="n">equivalent</span> <span class="n">width</span> <span class="p">[</span><span class="n">A</span><span class="p">]</span> <span class="ow">is</span> <span class="n">evaluated</span> <span class="ow">in</span> <span class="p">:</span>
-<span class="p">[</span><span class="o">-</span><span class="mf">1.</span>   <span class="mf">0.</span>   <span class="mf">0.4</span>  <span class="mf">0.8</span>  <span class="mf">1.2</span>  <span class="mf">1.6</span>  <span class="mf">2.</span>   <span class="mf">3.</span> <span class="p">]</span>
-<span class="n">The</span> <span class="n">logarithmic</span> <span class="n">of</span> <span class="n">the</span> <span class="n">intrinsic</span> <span class="n">line</span> <span class="n">width</span> <span class="p">[</span><span class="n">A</span><span class="p">]</span> <span class="ow">is</span> <span class="n">evaluated</span> <span class="ow">in</span> <span class="p">:</span>
-<span class="p">[</span><span class="mf">0.01</span> <span class="mf">0.05</span> <span class="mf">0.1</span>  <span class="mf">0.25</span> <span class="mf">0.5</span>  <span class="mf">1.</span>   <span class="mf">2.</span>   <span class="mf">4.</span>   <span class="mf">6.</span>  <span class="p">]</span>
+<span class="go">The logarithmic of the intrinsic equivalent width [A] is evaluated in :</span>
+<span class="go">[-1.   0.   0.4  0.8  1.2  1.6  2.   3. ]</span>
+<span class="go">The logarithmic of the intrinsic line width [A] is evaluated in :</span>
+<span class="go">[0.01 0.05 0.1  0.25 0.5  1.   2.   4.   6.  ]</span>
 </pre></div>
 </div>
 <p>If you want a smaller custom grid, you can build your own data grid by selecting nodes from <cite>LyaRT_Grid_Full</cite>. As long as you keep the format of <cite>LyaRT_Grid_Full</cite>, you will be able to pass your custom grids to the algorithms. Just as a short advice, it would be beneficial in you keep the very extrems in the evlatuion arrays (for example, <cite>LyaRT_Grid_Full[‘V_Arr’][0]</cite> and <cite>LyaRT_Grid_Full[‘V_Arr’][-1]</cite>) in your new custom grid.</p>

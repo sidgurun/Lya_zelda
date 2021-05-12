@@ -29,10 +29,10 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -173,7 +173,7 @@
 <div class="section" id="mocking-lyman-alpha-line-profiles">
 <h2>Mocking Lyman-alpha line profiles<a class="headerlink" href="#mocking-lyman-alpha-line-profiles" title="Permalink to this headline">¶</a></h2>
 <p>Let’s start by loading <cite>zELDA</cite> and setting the location of the LyaRT grids:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">Lya_zelda</span> <span class="k">as</span> <span class="nn">Lya</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">Lya_zelda</span> <span class="kn">as</span> <span class="nn">Lya</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">your_grids_location</span> <span class="o">=</span> <span class="s1">&#39;/This/Folder/Contains/The/Grids/&#39;</span>
 
@@ -212,7 +212,7 @@
 </div>
 <p>And… It’s done! <cite>w_Arr</cite> is a numpy array that contains the wavelength where the line profile is evaluated. Meanwhile, <cite>f_Arr</cite> is the actuall line profile.</p>
 <p>Let’s plot the line by doing</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pylab</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pylab</span> <span class="kn">as</span> <span class="nn">plt</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span> <span class="n">w_Arr</span> <span class="p">,</span> <span class="n">f_Arr</span> <span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;wavelength[A]&#39;</span> <span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span> <span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Flux density [a.u.]&#39;</span> <span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span> <span class="p">)</span>

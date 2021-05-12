@@ -2542,7 +2542,7 @@ def Define_wavelength_for_NN( Delta_min=-18.5 , Delta_max=18.5 , Nbins_tot=1000 
 #====================================================================#
 #====================================================================#
 #====================================================================#
-def Treat_A_Line_To_NN_Input( w_Arr , f_Arr , PIX , FWHM , Delta_min=-18.5 , Delta_max=18.5 , Nbins_tot=1000 , Denser_Center=True , normed=False, scaled=False ):
+def Treat_A_Line_To_NN_Input( w_Arr , f_Arr , PIX , FWHM , Delta_min=-18.5 , Delta_max=18.5 , Nbins_tot=1000 , Denser_Center=True , normed=False, scaled=True ):
     '''
         Convert a line profile and the usefull information into the INPUT of the NN.
 
@@ -2616,7 +2616,7 @@ def Treat_A_Line_To_NN_Input( w_Arr , f_Arr , PIX , FWHM , Delta_min=-18.5 , Del
 #====================================================================#
 #====================================================================#
 #====================================================================#
-def Generate_a_line_for_training( z_t , V_t, log_N_t, t_t, F_t, log_EW_t, W_t, PNR_t, FWHM_t, PIX_t, DATA_LyaRT, Geometry, normed=False, scaled=False , Delta_min = -18.5 , Delta_max=18.5 , Denser_Center=True , Nbins_tot=1000 ):
+def Generate_a_line_for_training( z_t , V_t, log_N_t, t_t, F_t, log_EW_t, W_t, PNR_t, FWHM_t, PIX_t, DATA_LyaRT, Geometry, normed=False, scaled=True , Delta_min = -18.5 , Delta_max=18.5 , Denser_Center=True , Nbins_tot=1000 ):
     
     '''
         Creates a mock line profile at the desired redshift and returns all the NN
@@ -3635,7 +3635,7 @@ def Load_NN_model( Mode , iteration=1 ):
 #====================================================================#
 #====================================================================#
 #====================================================================#
-def NN_convert_Obs_Line_to_proxy_rest_line( w_obs_Arr , f_obs_Arr , s_obs_Arr=None , normed=False , scaled=False ):
+def NN_convert_Obs_Line_to_proxy_rest_line( w_obs_Arr , f_obs_Arr , s_obs_Arr=None , normed=False , scaled=True ):
     '''
         Converts an observed line profile to the rest frame of the maximum
         of the line profile.
@@ -3896,7 +3896,7 @@ def NN_generate_random_outflow_props_5D( N_walkers , log_V_in , log_N_in , log_t
 #====================================================================#
 #====================================================================#
 #====================================================================#
-def NN_measure( w_tar_Arr , f_tar_Arr , s_tar_Arr , FWHM_tar , PIX_tar , loaded_model , w_rest_Machine_Arr , N_iter=None , normed=False , scaled=False , Delta_min=-18.5 , Delta_max=18.5 , Nbins_tot=1000 , Denser_Center=True ):
+def NN_measure( w_tar_Arr , f_tar_Arr , s_tar_Arr , FWHM_tar , PIX_tar , loaded_model , w_rest_Machine_Arr , N_iter=None , normed=False , scaled=True, Delta_min=-18.5 , Delta_max=18.5 , Nbins_tot=1000 , Denser_Center=True ):
     '''
         Generates random poperties for the Thin_Shell_Cont
 

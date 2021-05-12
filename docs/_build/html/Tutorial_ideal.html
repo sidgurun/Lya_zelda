@@ -29,10 +29,10 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -173,7 +173,7 @@
 <div class="section" id="computing-one-ideal-line-profile">
 <h2>Computing one ideal line profile<a class="headerlink" href="#computing-one-ideal-line-profile" title="Permalink to this headline">¶</a></h2>
 <p>Let’s start by loading <cite>zELDA</cite> and setting the location of the LyaRT grids:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">Lya_zelda</span> <span class="k">as</span> <span class="nn">Lya</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">Lya_zelda</span> <span class="kn">as</span> <span class="nn">Lya</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">your_grids_location</span> <span class="o">=</span> <span class="s1">&#39;/This/Folder/Contains/The/Grids/&#39;</span>
 
@@ -199,7 +199,7 @@
 </pre></div>
 </div>
 <p>Now, let’s set the wavlength array where we want to put the line in the international system of units (meters). We arbitraly chose to evaluate the line +-10A around Lyman-alpha:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">w_Lya</span> <span class="o">=</span> <span class="mf">1215.68</span> <span class="c1"># Lyman-alpha wavelength in amstrongs</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span> <span class="n">w_Lya</span><span class="o">-</span><span class="mi">10</span> <span class="p">,</span> <span class="n">w_Lya</span><span class="o">+</span><span class="mi">10</span> <span class="p">,</span> <span class="mi">1000</span> <span class="p">)</span> <span class="o">*</span> <span class="mf">1e-10</span>
 </pre></div>
@@ -210,7 +210,7 @@
 </div>
 <p>And… It’s done! <cite>Line_Arr</cite> is a numpy array that contains the line profile evaluated in <cite>wavelength_Arr</cite>.</p>
 <p>Let’s plot the line by doing</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pylab</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pylab</span> <span class="kn">as</span> <span class="nn">plt</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span> <span class="n">wavelength_Arr</span> <span class="o">*</span><span class="mf">1e10</span> <span class="p">,</span> <span class="n">Line_Arr</span> <span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;wavelength[A]&#39;</span> <span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span> <span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Flux density [a.u.]&#39;</span> <span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span> <span class="p">)</span>
@@ -224,7 +224,7 @@
 <h2>Computing many ideal line profile<a class="headerlink" href="#computing-many-ideal-line-profile" title="Permalink to this headline">¶</a></h2>
 <p>Above we have just seen how to compute one ideal line profile. In the case that you want to compute several <cite>zELDA</cite> has a more compact function.</p>
 <p>Let’s start like in the case above in which we set the location of the grids:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">Lya_zelda</span> <span class="k">as</span> <span class="nn">Lya</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">Lya_zelda</span> <span class="kn">as</span> <span class="nn">Lya</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">your_grids_location</span> <span class="o">=</span> <span class="s1">&#39;/This/Folder/Contains/The/Grids/&#39;</span>
 
@@ -245,7 +245,7 @@
 </pre></div>
 </div>
 <p>and the wavelength array</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">w_Lya</span> <span class="o">=</span> <span class="mf">1215.68</span> <span class="c1"># Lyman-alpha wavelength in amstrongs</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span> <span class="n">w_Lya</span><span class="o">-</span><span class="mi">10</span> <span class="p">,</span> <span class="n">w_Lya</span><span class="o">+</span><span class="mi">10</span> <span class="p">,</span> <span class="mi">1000</span> <span class="p">)</span> <span class="o">*</span> <span class="mf">1e-10</span>
 </pre></div>
@@ -256,7 +256,7 @@
 </div>
 <p><cite>Line_Matrix</cite> is a 2-D numpy array containing the line profiles for teh configurations. For example, <cite>Line_Matrix[0]</cite> has outflow velocity <cite>V_Arr[0]</cite>, neutral hydrogen column density <cite>logNH_Arr[0]</cite> and so on.</p>
 <p>Let’s plot them:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pylab</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pylab</span> <span class="kn">as</span> <span class="nn">plt</span>
 <span class="go">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span> <span class="mi">0</span> <span class="p">,</span> <span class="mi">3</span> <span class="p">)</span> <span class="p">:</span>
 <span class="go">&gt;&gt;&gt;</span>

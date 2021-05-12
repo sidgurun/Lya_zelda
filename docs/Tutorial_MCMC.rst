@@ -15,6 +15,7 @@ Let's start by loading `zELDA` creating a mock line profile that we will fit lat
           >>> Lya.funcs.Data_location = your_grids_location
 
           >>> Geometry = 'Thin_Shell_Cont'
+          >>> Lya.load_Grid_Line( Geometry )
 
           >>> # Defining the model parameters:
           >>> z_t      = 0.5   # redshift of the source
