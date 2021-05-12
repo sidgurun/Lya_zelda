@@ -19,10 +19,10 @@ Publication links:
 
 | ADS   : ???
 | arXiv : ???
-
-`zELDA` is based on its previous version, `FLaREON`. Please, if you used `zELDA` in your project, cite also `FLaREON`:
-
-ADS   : http://adsabs.harvard.edu/abs/2018arXiv181109630G
+|
+| `zELDA` is based on its previous version, `FLaREON`. Please, if you used `zELDA` in your project, cite also `FLaREON`:
+| 
+| ADS   : http://adsabs.harvard.edu/abs/2018arXiv181109630G
 | arXiv : https://arxiv.org/abs/1811.09630
 
 Documentation
