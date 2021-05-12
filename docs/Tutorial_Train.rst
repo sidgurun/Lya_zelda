@@ -165,8 +165,8 @@ Now let's save all the data
 
 Done, now you have a set of data that can be used as training set. Of cource we have done it with only 1000 galaxies. In general you want to use about 100 000 or more. You can divide the data in small data sets for parallelitation and then combine them, for example.
 
-Generating data sets for the training
-*************************************
+Get your DNN ready!
+*******************
 
 Let's load the data that we have just saved,
 
