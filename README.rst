@@ -25,6 +25,13 @@ Publication links:
 | ADS   : http://adsabs.harvard.edu/abs/2018arXiv181109630G
 | arXiv : https://arxiv.org/abs/1811.09630
 
+Documentation
+*************
+
+You can find all the necessay information for installation and tutorials here:
+
+| https://zelda.readthedocs.io/en/latest/
+
 Origins and motivation
 **********************
 
