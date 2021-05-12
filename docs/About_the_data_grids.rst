@@ -161,10 +161,10 @@ The reduction of the size of the grid is done by reducing the number of bins in 
           >>> print( 'The logarithmic of the intrinsic line width [A] is evaluated in : ')
           >>> print( LyaRT_Grid_Light['Wi_Arr'] ) 
 
-         The logarithmic of the intrinsic equivalent width [A] is evaluated in :
-         [-1.   0.   0.4  0.8  1.2  1.6  2.   3. ]
-         The logarithmic of the intrinsic line width [A] is evaluated in :
-         [0.01 0.05 0.1  0.25 0.5  1.   2.   4.   6.  ]
+          The logarithmic of the intrinsic equivalent width [A] is evaluated in :
+          [-1.   0.   0.4  0.8  1.2  1.6  2.   3. ]
+          The logarithmic of the intrinsic line width [A] is evaluated in :
+          [0.01 0.05 0.1  0.25 0.5  1.   2.   4.   6.  ]
 
 If you want a smaller custom grid, you can build your own data grid by selecting nodes from `LyaRT_Grid_Full`. As long as you keep the format of `LyaRT_Grid_Full`, you will be able to pass your custom grids to the algorithms. Just as a short advice, it would be beneficial in you keep the very extrems in the evlatuion arrays (for example, `LyaRT_Grid_Full['V_Arr'][0]` and `LyaRT_Grid_Full['V_Arr'][-1]`) in your new custom grid. 
 
