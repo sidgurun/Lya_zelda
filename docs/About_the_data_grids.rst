@@ -1,7 +1,7 @@
 About the LyaRT data grids
 ==========================
 
-Here we explain a little bit the data grid from `LyaRT`, the Radiative Monte Carlo Code described in Orsi et al. 2012 ( https://github.com/aaorsi/LyaRT ). These grids are the pillars of `zELDA`, so it good to familiared with them.  
+Here we explain a little bit the data grid from `LyaRT`, the Radiative Monte Carlo Code described in Orsi et al. 2012 ( https://github.com/aaorsi/LyaRT ). These grids are the pillars of `zELDA`, so it is good to familiared with them.  
 
 Getting started
 ***************
