@@ -12,6 +12,7 @@ Welcome to zELDA's documentation! 10_51_342
 
    intro
    installation
+   About_the_data_grids
    Tutorial_ideal
    Tutorial_mock
    Tutorial_DNN

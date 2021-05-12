@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Tutorial : Fitting a line profile using deep learning &mdash; zELDA 0.0.01 documentation</title>
+  <title>Tutorial : Fitting a line profile using Monte Carlo Markov Chains &mdash; zELDA 0.0.01 documentation</title>
   
 
   
@@ -89,10 +89,11 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="About_the_data_grids.html">About the LyaRT data grids</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Tutorial_ideal.html">Tutorial : Computing ideal line profiles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Tutorial_mock.html">Tutorial : Computing mock line profiles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Tutorial_DNN.html">Tutorial : Fitting a line profile using deep learning</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial : Fitting a line profile using deep learning</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial : Fitting a line profile using Monte Carlo Markov Chains</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#getting-started">Getting started</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#the-mcmc-anlysis">The MCMC anlysis</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#tool-to-make-corraltion-plots">Tool to make corraltion plots</a></li>
@@ -148,7 +149,7 @@
     
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
-      <li>Tutorial : Fitting a line profile using deep learning</li>
+      <li>Tutorial : Fitting a line profile using Monte Carlo Markov Chains</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -167,8 +168,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="tutorial-fitting-a-line-profile-using-deep-learning">
-<h1>Tutorial : Fitting a line profile using deep learning<a class="headerlink" href="#tutorial-fitting-a-line-profile-using-deep-learning" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="tutorial-fitting-a-line-profile-using-monte-carlo-markov-chains">
+<h1>Tutorial : Fitting a line profile using Monte Carlo Markov Chains<a class="headerlink" href="#tutorial-fitting-a-line-profile-using-monte-carlo-markov-chains" title="Permalink to this headline">¶</a></h1>
 <p>In this tutorial you will, hopefully, learn how fit Lyman-alpha line profiles ussing a Monte Carlo Markov Chain with <cite>zELDA</cite>. The MCMC engine is <cite>emcee</cite> (<a class="reference external" href="https://emcee.readthedocs.io/en/stable/">https://emcee.readthedocs.io/en/stable/</a>).</p>
 <div class="section" id="getting-started">
 <h2>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>

@@ -3,6 +3,9 @@ Tutorial : Computing mock line profiles
 
 In this tutorial you will, hopefully, learn how to compute mock line Lyman-alpha line profiles with `zELDA`. The lines computed in this turorial suffer from the tipical artifacts casued by the fact the instruments are not perfect
 
+Mocking Lyman-alpha line profiles
+*********************************
+
 Let's start by loading `zELDA` and setting the location of the LyaRT grids:
 
 .. code:: python
@@ -13,7 +16,7 @@ Let's start by loading `zELDA` and setting the location of the LyaRT grids:
 
           >>> Lya.funcs.Data_location = your_grids_location
 
-where `/This/Folder/Contains/The/Grids/` is the place where you store the LyaRT data grids, as shown in the installation section.
+where `/This/Folder/Contains/The/Grids/` is the place where you store the LyaRT data grids, as shown in the :doc:`Installation <installation>` section.
 
 Now, let's decide which outflow geometry we want to use. For this tutorial we will use the gas geometry known as Thin Shell in which the instrinsic continum is a gaussian and a continuum with a give equivalent width.
 
@@ -27,7 +30,7 @@ Let's load the data containing the grid:
 
           >>> LyaRT_Grid = Lya.load_Grid_Line( Geometry )
 
-This contains all the necessary information to compute the line profiles. To learn more about the grids of line profiles go to :doc:`Installation <installation>` .
+This contains all the necessary information to compute the line profiles. To learn more about the grids of line profiles go to :doc:`About the LyaRT data grids <About_the_data_grids>` .
 
 Now let's define the parameters of the shell model that we want. these are five:
 
@@ -72,6 +75,9 @@ This should show something like this
 
 .. image:: figs_and_codes/fig_Tutorial_2_1.png
    :width: 600
+
+Plotting cooler line profiles
+*****************************
 
 If you want a cooler and more 'accurate' plot of the line profile you can use:
 

@@ -89,10 +89,15 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="About_the_data_grids.html">About the LyaRT data grids</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Tutorial_ideal.html">Tutorial : Computing ideal line profiles</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial : Computing mock line profiles</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial : Computing mock line profiles</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#mocking-lyman-alpha-line-profiles">Mocking Lyman-alpha line profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#plotting-cooler-line-profiles">Plotting cooler line profiles</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="Tutorial_DNN.html">Tutorial : Fitting a line profile using deep learning</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Tutorial_MCMC.html">Tutorial : Fitting a line profile using deep learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tutorial_MCMC.html">Tutorial : Fitting a line profile using Monte Carlo Markov Chains</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Tutorial_fesc.html">Tutorial : Computing Lyman-alpha escape fractions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="funcs.html">funcs module</a></li>
 </ul>
@@ -165,6 +170,8 @@
   <div class="section" id="tutorial-computing-mock-line-profiles">
 <h1>Tutorial : Computing mock line profiles<a class="headerlink" href="#tutorial-computing-mock-line-profiles" title="Permalink to this headline">¶</a></h1>
 <p>In this tutorial you will, hopefully, learn how to compute mock line Lyman-alpha line profiles with <cite>zELDA</cite>. The lines computed in this turorial suffer from the tipical artifacts casued by the fact the instruments are not perfect</p>
+<div class="section" id="mocking-lyman-alpha-line-profiles">
+<h2>Mocking Lyman-alpha line profiles<a class="headerlink" href="#mocking-lyman-alpha-line-profiles" title="Permalink to this headline">¶</a></h2>
 <p>Let’s start by loading <cite>zELDA</cite> and setting the location of the LyaRT grids:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">Lya_zelda</span> <span class="k">as</span> <span class="nn">Lya</span>
 
@@ -173,7 +180,7 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Lya</span><span class="o">.</span><span class="n">funcs</span><span class="o">.</span><span class="n">Data_location</span> <span class="o">=</span> <span class="n">your_grids_location</span>
 </pre></div>
 </div>
-<p>where <cite>/This/Folder/Contains/The/Grids/</cite> is the place where you store the LyaRT data grids, as shown in the installation section.</p>
+<p>where <cite>/This/Folder/Contains/The/Grids/</cite> is the place where you store the LyaRT data grids, as shown in the <a class="reference internal" href="installation.html"><span class="doc">Installation</span></a> section.</p>
 <p>Now, let’s decide which outflow geometry we want to use. For this tutorial we will use the gas geometry known as Thin Shell in which the instrinsic continum is a gaussian and a continuum with a give equivalent width.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Geometry</span> <span class="o">=</span> <span class="s1">&#39;Thin_Shell_Cont&#39;</span>
 </pre></div>
@@ -182,7 +189,7 @@
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">LyaRT_Grid</span> <span class="o">=</span> <span class="n">Lya</span><span class="o">.</span><span class="n">load_Grid_Line</span><span class="p">(</span> <span class="n">Geometry</span> <span class="p">)</span>
 </pre></div>
 </div>
-<p>This contains all the necessary information to compute the line profiles. To learn more about the grids of line profiles go to <a class="reference internal" href="installation.html"><span class="doc">Installation</span></a> .</p>
+<p>This contains all the necessary information to compute the line profiles. To learn more about the grids of line profiles go to <a class="reference internal" href="About_the_data_grids.html"><span class="doc">About the LyaRT data grids</span></a> .</p>
 <p>Now let’s define the parameters of the shell model that we want. these are five:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">z_t</span>      <span class="o">=</span> <span class="mf">0.5</span>   <span class="c1"># redshift of the source</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">V_t</span>      <span class="o">=</span> <span class="mf">50.0</span>  <span class="c1"># Outfloe expansion velocity [km/s]</span>
@@ -215,6 +222,9 @@
 </div>
 <p>This should show something like this</p>
 <a class="reference internal image-reference" href="_images/fig_Tutorial_2_1.png"><img alt="_images/fig_Tutorial_2_1.png" src="_images/fig_Tutorial_2_1.png" style="width: 600px;" /></a>
+</div>
+<div class="section" id="plotting-cooler-line-profiles">
+<h2>Plotting cooler line profiles<a class="headerlink" href="#plotting-cooler-line-profiles" title="Permalink to this headline">¶</a></h2>
 <p>If you want a cooler and more ‘accurate’ plot of the line profile you can use:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">w_pix_Arr</span> <span class="p">,</span> <span class="n">f_pix_Arr</span> <span class="o">=</span> <span class="n">Lya</span><span class="o">.</span><span class="n">plot_a_rebinned_line</span><span class="p">(</span> <span class="n">w_Arr</span> <span class="p">,</span> <span class="n">f_Arr</span> <span class="p">,</span> <span class="n">PIX_t</span> <span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span> <span class="n">w_pix_Arr</span> <span class="p">,</span> <span class="n">f_pix_Arr</span> <span class="p">)</span>
@@ -226,6 +236,7 @@
 </div>
 <a class="reference internal image-reference" href="_images/fig_Tutorial_2_2.png"><img alt="_images/fig_Tutorial_2_2.png" src="_images/fig_Tutorial_2_2.png" style="width: 600px;" /></a>
 <p><cite>Lya.plot_a_rebinned_line</cite> is just a function that returns the line profile and wavelength array in a cool way to plot them. You probably shouldn’t use for science the output of <cite>Lya.plot_a_rebinned_line</cite>, just for plotting.</p>
+</div>
 </div>
 
 

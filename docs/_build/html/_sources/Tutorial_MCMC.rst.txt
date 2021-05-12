@@ -1,5 +1,5 @@
-Tutorial : Fitting a line profile using deep learning
-=====================================================
+Tutorial : Fitting a line profile using Monte Carlo Markov Chains
+=================================================================
 
 In this tutorial you will, hopefully, learn how fit Lyman-alpha line profiles ussing a Monte Carlo Markov Chain with `zELDA`. The MCMC engine is `emcee` (https://emcee.readthedocs.io/en/stable/). 
 

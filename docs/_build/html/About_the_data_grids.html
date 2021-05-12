@@ -1,0 +1,359 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>About the LyaRT data grids &mdash; zELDA 0.0.01 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tutorial : Computing ideal line profiles" href="Tutorial_ideal.html" />
+    <link rel="prev" title="Installation" href="installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> zELDA
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">About the LyaRT data grids</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#getting-started">Getting started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#line-profile-lyart-data-grids">Line profile LyaRT data grids</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#line-profile-grids-with-smaller-ram-occupation">Line profile grids with smaller RAM occupation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Tutorial_ideal.html">Tutorial : Computing ideal line profiles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tutorial_mock.html">Tutorial : Computing mock line profiles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tutorial_DNN.html">Tutorial : Fitting a line profile using deep learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tutorial_MCMC.html">Tutorial : Fitting a line profile using Monte Carlo Markov Chains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tutorial_fesc.html">Tutorial : Computing Lyman-alpha escape fractions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="funcs.html">funcs module</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">zELDA</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>About the LyaRT data grids</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/About_the_data_grids.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="about-the-lyart-data-grids">
+<h1>About the LyaRT data grids<a class="headerlink" href="#about-the-lyart-data-grids" title="Permalink to this headline">¶</a></h1>
+<p>Here we explain a little bit the data grid from <cite>LyaRT</cite>, the Radiative Monte Carlo Code described in Orsi et al. 2012 ( <a class="reference external" href="https://github.com/aaorsi/LyaRT">https://github.com/aaorsi/LyaRT</a> ). These grids are the pillars of <cite>zELDA</cite>, so it good to familiared with them.</p>
+<div class="section" id="getting-started">
+<h2>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<p>Let’s start by loading <cite>zELDA</cite> and setting the location of the LyaRT grids:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">Lya_zelda</span> <span class="k">as</span> <span class="nn">Lya</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">your_grids_location</span> <span class="o">=</span> <span class="s1">&#39;/This/Folder/Contains/The/Grids/&#39;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Lya</span><span class="o">.</span><span class="n">funcs</span><span class="o">.</span><span class="n">Data_location</span> <span class="o">=</span> <span class="n">your_grids_location</span>
+</pre></div>
+</div>
+<p>where <cite>/This/Folder/Contains/The/Grids/</cite> is the place where you store the LyaRT data grids, as shown in the <a class="reference internal" href="installation.html"><span class="doc">Installation</span></a> section.</p>
+</div>
+<div class="section" id="line-profile-lyart-data-grids">
+<h2>Line profile LyaRT data grids<a class="headerlink" href="#line-profile-lyart-data-grids" title="Permalink to this headline">¶</a></h2>
+<p>Let’s load a data grid to start working. In particular we are going to load the one for the ‘Thin_Shell’ geometry. This geometry has 3 varibles for the outflow configuration: expansion velocity, HI column density and dust optical depth.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">LyaRT_Grid</span> <span class="o">=</span> <span class="n">Lya</span><span class="o">.</span><span class="n">load_Grid_Line</span><span class="p">(</span> <span class="s1">&#39;Thin_Shell&#39;</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p><cite>LyaRT_Grid</cite> is a python dictionary containing all the data necessary for the interpolation. Let’s look to the keys</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span> <span class="n">LyaRT_Grid</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="p">)</span>
+
+<span class="go">dict_keys([&#39;logNH_Arr&#39;, &#39;logta_Arr&#39;, &#39;Grid&#39;, &#39;x_Arr&#39;, &#39;V_Arr&#39;])</span>
+</pre></div>
+</div>
+<p>The varibles <cite>‘V_Arr’</cite>, <cite>‘logNH_Arr’</cite> and <cite>‘logta_Arr’</cite> are 1-D numpy arrays that contains the values in which the grid is evaluated for the expansion velocity, the logarithmic of the HI column density and  the logarithmic of the dust optical depth respectively. If you want to check where the grid is evaluated you can do</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;The expansion velocity [km/s] is evaluated in : &#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span> <span class="n">LyaRT_Grid</span><span class="p">[</span><span class="s1">&#39;V_Arr&#39;</span>    <span class="p">]</span> <span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;The logarithmic of the HI column density [cm**-2] is evaluated in : &#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span> <span class="n">LyaRT_Grid</span><span class="p">[</span><span class="s1">&#39;logNH_Arr&#39;</span><span class="p">]</span> <span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;The logarithmic of the dust optical depth is evaluated in : &#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span> <span class="n">LyaRT_Grid</span><span class="p">[</span><span class="s1">&#39;logta_Arr&#39;</span><span class="p">]</span> <span class="p">)</span>
+
+<span class="go">The expansion velocity [km/s] is evaluated in :</span>
+<span class="go">[   0   10   20   30   40   50   60   70   80   90  100  150  200  250</span>
+<span class="go">  300  350  400  450  500  550  600  650  700  750  800  850  900  950</span>
+<span class="go"> 1000]</span>
+<span class="go">The logarithmic of the HI column density [cm**-2] is evaluated in :</span>
+<span class="go">[17.   17.25 17.5  17.75 18.   18.25 18.5  18.75 19.   19.25 19.5  19.75</span>
+<span class="go"> 20.   20.25 20.5  20.75 21.   21.25 21.5  21.75 22.  ]</span>
+<span class="go">The logarithmic of the dust optical depth is evaluated in :</span>
+<span class="go">[-3.75  -3.5   -3.25  -3.    -2.75  -2.5   -2.25  -2.    -1.75  -1.5</span>
+<span class="go"> -1.375 -1.25  -1.125 -1.    -0.875 -0.75  -0.625 -0.5   -0.375 -0.25</span>
+<span class="go"> -0.125]</span>
+</pre></div>
+</div>
+<p>Then, <cite>LyaRT_Grid[‘Grid’]</cite> are the line profiles in each of the nodes of the 3-D grid. For example, <cite>LyaRT_Grid[‘Grid’][0,1,2]</cite> is the line profile with <cite>LyaRT_Grid[‘V_Arr’][0]</cite>, <cite>LyaRT_Grid[‘logNH_Arr’][1]</cite> and <cite>LyaRT_Grid[‘logta_Arr’][2]</cite>. This spectrum is evaluated in <cite>LyaRT_Grid[‘x_Arr’]</cite>, that is the frequency in Doppler units. You can convert from frequency in Doppler units to wavelgnth by doing:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">w_Arr</span> <span class="o">=</span> <span class="n">Lya</span><span class="o">.</span><span class="n">convert_x_into_lamda</span><span class="p">(</span> <span class="n">LyaRT_Grid</span><span class="p">[</span><span class="s1">&#39;x_Arr&#39;</span><span class="p">]</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p><cite>w_Arr</cite> is a 1-D array with the wavelgnths in meters. Let’s take a look to the spectrum:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span> <span class="n">w_Arr</span> <span class="p">,</span> <span class="n">LyaRT_Grid</span><span class="p">[</span><span class="s1">&#39;Grid&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span> <span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span> <span class="mi">1213</span><span class="o">*</span><span class="mf">1e-10</span> <span class="p">,</span> <span class="mi">1218</span><span class="o">*</span><span class="mf">1e-10</span> <span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span> <span class="s1">&#39;wavelength [m]&#39;</span> <span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span> <span class="s1">&#39;Flux density [a.u.]&#39;</span> <span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/fig_Tutorial_5_1.png"><img alt="_images/fig_Tutorial_5_1.png" src="_images/fig_Tutorial_5_1.png" style="width: 600px;" /></a>
+</div>
+<div class="section" id="line-profile-grids-with-smaller-ram-occupation">
+<h2>Line profile grids with smaller RAM occupation<a class="headerlink" href="#line-profile-grids-with-smaller-ram-occupation" title="Permalink to this headline">¶</a></h2>
+<p>The data grids for the geometries <cite>‘Thin_Shell’</cite>, <cite>‘Galactic_Wind’</cite>, <cite>‘Bicone_X_Slab_In’</cite> and <cite>‘Bicone_X_Slab_Out’</cite> are relatively small and they occupy less than 1GB of RAM. These models have 3 dimensions: expansion velocity, HI column density and dust optical depth. However, the model <cite>‘Thin_Shell_Cont’</cite> includes different intrinsic line profiles, which increases the number of dimensions to 5. This increase a lot the data volume, interms of paramter space and RAM occupation. Indeed, the default <cite>‘Thin_Shell_Cont’</cite> line profile grid is about 11GB. This means that when using this mode you would need to have 11GB of RAM or more. In case that you want to do some tests with a smaller grid (but still 5D) we have included a lighter grid, that is about 2GB of size.</p>
+<p>You can load the default <cite>‘Thin_Shell_Cont’</cite> by doing</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">Lya_zelda</span> <span class="k">as</span> <span class="nn">Lya</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">your_grids_location</span> <span class="o">=</span> <span class="s1">&#39;/This/Folder/Contains/The/Grids/&#39;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Lya</span><span class="o">.</span><span class="n">funcs</span><span class="o">.</span><span class="n">Data_location</span> <span class="o">=</span> <span class="n">your_grids_location</span>
+</pre></div>
+</div>
+<p>where <cite>/This/Folder/Contains/The/Grids/</cite> is the place where you store the LyaRT data grids, as shown in the <a class="reference internal" href="installation.html"><span class="doc">Installation</span></a> section.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">LyaRT_Grid_Full</span> <span class="o">=</span> <span class="n">Lya</span><span class="o">.</span><span class="n">load_Grid_Line</span><span class="p">(</span> <span class="s1">&#39;Thin_Shell_Cont&#39;</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">LyaRT_Grid_Full</span> <span class="o">=</span> <span class="n">Lya</span><span class="o">.</span><span class="n">load_Grid_Line</span><span class="p">(</span> <span class="s1">&#39;Thin_Shell_Cont&#39;</span> <span class="p">,</span> <span class="n">MODE</span><span class="o">=</span><span class="s1">&#39;FULL&#39;</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>And you can see where the grid is evaluated by doing</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;The expansion velocity [km/s] is evaluated in : &#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span> <span class="n">LyaRT_Grid_Full</span><span class="p">[</span><span class="s1">&#39;V_Arr&#39;</span><span class="p">]</span> <span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;The logarithmic of the HI column density [cm**-2] is evaluated in : &#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span> <span class="n">LyaRT_Grid_Full</span><span class="p">[</span><span class="s1">&#39;logNH_Arr&#39;</span><span class="p">]</span> <span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;The logarithmic of the dust optical depth is evaluated in : &#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span> <span class="n">LyaRT_Grid_Full</span><span class="p">[</span><span class="s1">&#39;logta_Arr&#39;</span><span class="p">]</span> <span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;The logarithmic of the intrinsic equivalent width [A] is evaluated in : &#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span> <span class="n">LyaRT_Grid_Full</span><span class="p">[</span><span class="s1">&#39;logEW_Arr&#39;</span><span class="p">]</span> <span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;The logarithmic of the intrinsic line width [A] is evaluated in : &#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span> <span class="n">LyaRT_Grid_Full</span><span class="p">[</span><span class="s1">&#39;Wi_Arr&#39;</span><span class="p">]</span> <span class="p">)</span>
+
+<span class="go">The expansion velocity [km/s] is evaluated in :</span>
+<span class="go">[   0   10   20   30   40   50   60   70   80   90  100  150  200  250</span>
+<span class="go">  300  350  400  450  500  550  600  650  700  750  800  850  900  950</span>
+<span class="go"> 1000]</span>
+<span class="go">The logarithmic of the HI column density [cm**-2] is evaluated in :</span>
+<span class="go">[17.   17.25 17.5  17.75 18.   18.25 18.5  18.75 19.   19.25 19.5  19.75</span>
+<span class="go"> 20.   20.25 20.5  20.75 21.   21.25 21.5 ]</span>
+<span class="go">The logarithmic of the dust optical depth is evaluated in :</span>
+<span class="go">[-4.  -3.5 -3.  -2.5 -2.  -1.5 -1.  -0.5  0. ]</span>
+<span class="go">The logarithmic of the intrinsic equivalent width [A] is evaluated in :</span>
+<span class="go">[-1.         -0.78947368 -0.57894737 -0.36842105 -0.15789474  0.05263158</span>
+<span class="go">  0.26315789  0.47368421  0.68421053  0.89473684  1.10526316  1.31578947</span>
+<span class="go">  1.52631579  1.73684211  1.94736842  2.15789474  2.36842105  2.57894737</span>
+<span class="go">  2.78947368  3.        ]</span>
+<span class="go">The logarithmic of the intrinsic line width [A] is evaluated in :</span>
+<span class="go">[0.01 0.05 0.1  0.15 0.2  0.3  0.4  0.5  0.6  0.7  0.8  0.9  1.   1.2</span>
+<span class="go"> 1.4  1.6  1.8  2.   2.2  2.4  2.6  2.8  3.   3.25 3.5  3.75 4.   5.25</span>
+<span class="go"> 5.5  5.75 6.  ]</span>
+</pre></div>
+</div>
+<p>Now let’s load the lighter grid for <cite>‘Thin_Shell_Cont’</cite>,</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">LyaRT_Grid_Full</span> <span class="o">=</span> <span class="n">Lya</span><span class="o">.</span><span class="n">load_Grid_Line</span><span class="p">(</span> <span class="s1">&#39;Thin_Shell_Cont&#39;</span> <span class="p">,</span> <span class="n">MODE</span><span class="o">=</span><span class="s1">&#39;LIGHT&#39;</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>The reduction of the size of the grid is done by reducing the number of bins in <cite>‘logEW_Arr’</cite> and <cite>‘Wi_Arr’</cite>. You can see the new <cite>‘logEW_Arr’</cite> and <cite>‘Wi_Arr’</cite> arrays in:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span> <span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;The logarithmic of the intrinsic equivalent width [A] is evaluated in : &#39;</span><span class="p">)</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span> <span class="n">LyaRT_Grid_Light</span><span class="p">[</span><span class="s1">&#39;logEW_Arr&#39;</span><span class="p">]</span> <span class="p">)</span>
+
+ <span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;The logarithmic of the intrinsic line width [A] is evaluated in : &#39;</span><span class="p">)</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span> <span class="n">LyaRT_Grid_Light</span><span class="p">[</span><span class="s1">&#39;Wi_Arr&#39;</span><span class="p">]</span> <span class="p">)</span>
+
+<span class="n">The</span> <span class="n">logarithmic</span> <span class="n">of</span> <span class="n">the</span> <span class="n">intrinsic</span> <span class="n">equivalent</span> <span class="n">width</span> <span class="p">[</span><span class="n">A</span><span class="p">]</span> <span class="ow">is</span> <span class="n">evaluated</span> <span class="ow">in</span> <span class="p">:</span>
+<span class="p">[</span><span class="o">-</span><span class="mf">1.</span>   <span class="mf">0.</span>   <span class="mf">0.4</span>  <span class="mf">0.8</span>  <span class="mf">1.2</span>  <span class="mf">1.6</span>  <span class="mf">2.</span>   <span class="mf">3.</span> <span class="p">]</span>
+<span class="n">The</span> <span class="n">logarithmic</span> <span class="n">of</span> <span class="n">the</span> <span class="n">intrinsic</span> <span class="n">line</span> <span class="n">width</span> <span class="p">[</span><span class="n">A</span><span class="p">]</span> <span class="ow">is</span> <span class="n">evaluated</span> <span class="ow">in</span> <span class="p">:</span>
+<span class="p">[</span><span class="mf">0.01</span> <span class="mf">0.05</span> <span class="mf">0.1</span>  <span class="mf">0.25</span> <span class="mf">0.5</span>  <span class="mf">1.</span>   <span class="mf">2.</span>   <span class="mf">4.</span>   <span class="mf">6.</span>  <span class="p">]</span>
+</pre></div>
+</div>
+<p>If you want a smaller custom grid, you can build your own data grid by selecting nodes from <cite>LyaRT_Grid_Full</cite>. As long as you keep the format of <cite>LyaRT_Grid_Full</cite>, you will be able to pass your custom grids to the algorithms. Just as a short advice, it would be beneficial in you keep the very extrems in the evlatuion arrays (for example, <cite>LyaRT_Grid_Full[‘V_Arr’][0]</cite> and <cite>LyaRT_Grid_Full[‘V_Arr’][-1]</cite>) in your new custom grid.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="Tutorial_ideal.html" class="btn btn-neutral float-right" title="Tutorial : Computing ideal line profiles" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Gurung-Lopez, Siddhartha.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
