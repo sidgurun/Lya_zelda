@@ -27,7 +27,17 @@ Remember that you can also add the tag ``--user`` ,  if necessary.
 LyaRT data grids
 ****************
 
-Next, let's download the data grids necessary for generating mock Lyman-alpha line profiles as escape fractions. The data is stored at https://zenodo.org/record/4733518#.YJjw_y_Wf0c . Download the `Grids.zip` file and unzip it in the place that you want to keep it.
+Next, let's download the data grids necessary for generating mock Lyman-alpha line profiles as escape fractions. The data is stored at https://zenodo.org/record/4733518#.YJjw_y_Wf0c . Download the `Grids.zip` file. You can do this in different ways. The recomended method is using the commamnd `wget` or `curl`, which should be more stable. For example, for downloawing it with `curl`, you can do:
+
+.. code:: python
+
+          $ curl -0 --compressed --output Grids.zip https://zenodo.org/record/4733518/files/Grids.zip
+
+The download might take a while, as it is about 12Gb, so grab your fauvorite snack and be patience :) .
+
+Other way of getting the date is going to the `zenodo`  webpage and download it through your internet borwser. As this is a large file, if you browers is a little bit unstable the download might stop in halfway, causing you to restart the download again. 
+
+Once you have the `Grids.zip` file, unzip it in the place that you want to keep it.
 
 In order to compute line profiles and escape fraction you will need to indicate `zELDA` the location of grids by doing 
 
