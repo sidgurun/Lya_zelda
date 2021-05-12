@@ -33,7 +33,7 @@ Next, let's download the data grids necessary for generating mock Lyman-alpha li
 
           $ curl -0 --compressed --output Grids.zip https://zenodo.org/record/4733518/files/Grids.zip
 
-The download might take a while, as it is about 12Gb, so grab your fauvorite snack and be patience :) .
+The download might take a while, as it is about 12Gb, so grab your fauvorite snack and be patient =D .
 
 Other way of getting the date is going to the `zenodo`  webpage and download it through your internet borwser. As this is a large file, if you browers is a little bit unstable the download might stop in halfway, causing you to restart the download again. 
 
