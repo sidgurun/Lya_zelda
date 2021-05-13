@@ -246,7 +246,9 @@ ax.tick_params(axis=u'both', which=u'both',length=0)
 
 ax.axis('off')
 
-savefig( 'fig_log_'+LINE_MODEL+'_'+GEO+'_r_' + str(LINE_range) + '_s_' + str(zELDA) +'.png' , bbox_inches='tight' )
+savefig( 'fig_log_'+LINE_MODEL+'_'+GEO+'_r_' + str(LINE_range) + '_s_' + str(zELDA) +'.svg' , bbox_inches='tight' )
+savefig( 'fig_log_'+LINE_MODEL+'_'+GEO+'_r_' + str(LINE_range) + '_s_' + str(zELDA) +'.pdf' , bbox_inches='tight' )
+savefig( 'fig_log_'+LINE_MODEL+'_'+GEO+'_r_' + str(LINE_range) + '_s_' + str(zELDA) +'.png' , bbox_inches='tight' , dpi = 1000 )
 
 
 
