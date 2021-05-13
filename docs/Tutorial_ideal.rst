@@ -48,7 +48,7 @@ Now, let's set the wavlength array where we want to put the line in the internat
 
           >>> import numpy as np
           >>> w_Lya = 1215.68 # Lyman-alpha wavelength in amstrongs
-          >>> np.linspace( w_Lya-10 , w_Lya+10 , 1000 ) * 1e-10
+          >>> wavelength_Arr = np.linspace( w_Lya-10 , w_Lya+10 , 1000 ) * 1e-10
 
 Now he have verything, let's compute the line simply by doing:
 
