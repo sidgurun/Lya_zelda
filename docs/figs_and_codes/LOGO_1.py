@@ -15,7 +15,7 @@ GEO = 'COOL_SHELL_EDGE'#'HALF_SIN_SHELL'#'SIN'#'COOL' #'SHELL' # 'COOL'
 
 LINE_MODEL = 'DOUBLE'#'DOUBLE'#'SINGLE'
 
-LINE_range = 2.#2#0.80
+LINE_range = 0.8#2#0.80
 #LINE_range = 0.8#2#0.80
 
 zELDA = 30
@@ -29,9 +29,20 @@ if LINE_range == 0.8:
     zELDA = 40
     s_p   = 180  
 
-corlor_shell = 'cornflowerblue'
 
-color_cool = 'w'
+corlor_shell = 'cornflowerblue'
+color_cool   = 'w'
+color_line   = 'k'
+color_zelda  = 'k'
+
+ALL_WHITE = True
+if ALL_WHITE:
+
+    corlor_shell = 'w'
+    color_cool   = 'w'
+    color_line   = 'w'
+    color_zelda  = 'w'
+
 
 #################################################
 #################################################
@@ -231,9 +242,9 @@ if GEO == 'HALF_SIN_SHELL':
 #################################################
 #################################################
 #Plot line:
-ax.plot( w_Arr , Line_Arr , 'k' , lw=2 )
+ax.plot( w_Arr , Line_Arr , color=color_line , lw=2 )
 
-ax.text( .5 , 0.30 , r'$z\:{\rmELDA}$' , verticalalignment='center', horizontalalignment='center', transform=ax.transAxes, fontsize=zELDA)
+ax.text( .5 , 0.30 , r'$z\:{\rmELDA}$' , verticalalignment='center', horizontalalignment='center', transform=ax.transAxes, fontsize=zELDA, color=color_zelda )
 
 ax.scatter( [0] , [0] , marker='o' , color=corlor_shell , s=s_p )
 
@@ -246,9 +257,11 @@ ax.tick_params(axis=u'both', which=u'both',length=0)
 
 ax.axis('off')
 
-savefig( 'fig_log_'+LINE_MODEL+'_'+GEO+'_r_' + str(LINE_range) + '_s_' + str(zELDA) +'.svg' , bbox_inches='tight' )
-savefig( 'fig_log_'+LINE_MODEL+'_'+GEO+'_r_' + str(LINE_range) + '_s_' + str(zELDA) +'.pdf' , bbox_inches='tight' )
-savefig( 'fig_log_'+LINE_MODEL+'_'+GEO+'_r_' + str(LINE_range) + '_s_' + str(zELDA) +'.png' , bbox_inches='tight' , dpi = 1000 )
+str_name = 'fig_log_'+LINE_MODEL+'_'+GEO+'_r_' + str(LINE_range) + '_s_' + str(zELDA) + '_WHITE_' + str( ALL_WHITE ) 
+
+savefig( str_name + '.svg' , transparent=True )
+savefig( str_name + '.pdf' , transparent=True )
+savefig( str_name + '.png' , bbox_inches='tight' , dpi = 1000 , transparent=True )
 
 
 
