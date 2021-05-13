@@ -1,7 +1,7 @@
 Introduction
 ============
 
-`zELDA`, a code to understand Lyman-alpha emission.
+`zELDA` [redshift ('z') 'E'stimator using 'L'ine profiles of 'D'istant lyman-'A'lpha emitters], a code to understand Lyman-alpha emission.
 
 Authors
 *******

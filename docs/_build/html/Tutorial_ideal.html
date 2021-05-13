@@ -58,6 +58,9 @@
           
 
           
+            
+            <img src="_static/fig_log_DOUBLE_COOL_SHELL_EDGE_r_0.8_s_40_WHITE_True.png" class="logo" alt="Logo"/>
+          
           </a>
 
           
@@ -97,6 +100,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Tutorial_mock.html">Tutorial : Computing mock line profiles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Tutorial_DNN.html">Tutorial : Fitting a line profile using deep learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tutorial_Train.html">Tutorial : Train your own neural network</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Tutorial_MCMC.html">Tutorial : Fitting a line profile using Monte Carlo Markov Chains</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Tutorial_fesc.html">Tutorial : Computing Lyman-alpha escape fractions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="funcs.html">funcs module</a></li>
@@ -201,7 +205,7 @@
 <p>Now, let’s set the wavlength array where we want to put the line in the international system of units (meters). We arbitraly chose to evaluate the line +-10A around Lyman-alpha:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">w_Lya</span> <span class="o">=</span> <span class="mf">1215.68</span> <span class="c1"># Lyman-alpha wavelength in amstrongs</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span> <span class="n">w_Lya</span><span class="o">-</span><span class="mi">10</span> <span class="p">,</span> <span class="n">w_Lya</span><span class="o">+</span><span class="mi">10</span> <span class="p">,</span> <span class="mi">1000</span> <span class="p">)</span> <span class="o">*</span> <span class="mf">1e-10</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wavelength_Arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span> <span class="n">w_Lya</span><span class="o">-</span><span class="mi">10</span> <span class="p">,</span> <span class="n">w_Lya</span><span class="o">+</span><span class="mi">10</span> <span class="p">,</span> <span class="mi">1000</span> <span class="p">)</span> <span class="o">*</span> <span class="mf">1e-10</span>
 </pre></div>
 </div>
 <p>Now he have verything, let’s compute the line simply by doing:</p>

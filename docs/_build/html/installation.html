@@ -58,6 +58,9 @@
           
 
           
+            
+            <img src="_static/fig_log_DOUBLE_COOL_SHELL_EDGE_r_0.8_s_40_WHITE_True.png" class="logo" alt="Logo"/>
+          
           </a>
 
           
@@ -97,6 +100,7 @@
 <li class="toctree-l1"><a class="reference internal" href="Tutorial_ideal.html">Tutorial : Computing ideal line profiles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Tutorial_mock.html">Tutorial : Computing mock line profiles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Tutorial_DNN.html">Tutorial : Fitting a line profile using deep learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tutorial_Train.html">Tutorial : Train your own neural network</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Tutorial_MCMC.html">Tutorial : Fitting a line profile using Monte Carlo Markov Chains</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Tutorial_fesc.html">Tutorial : Computing Lyman-alpha escape fractions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="funcs.html">funcs module</a></li>
@@ -169,7 +173,7 @@
             
   <div class="section" id="installation">
 <span id="target-installation"></span><h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
-<p><cite>zELDA</cite>, installation is divided in two blocks. First you will need to install the python package containing all the scritps. With this you can already use the Deep Neural Network methodologies to extract information from observed Lyman-alpha line profiles. The second block contains all the grids computed from <cite>FLarEON</cite>. This are necessary in order to compute line profiles and escape fractions for all the outflow geometries. As a consequence, the second block is mandatory to make MCMC analysis.</p>
+<p><cite>zELDA</cite>, installation is divided in two blocks. First you will need to install the python package containing all the scritps. With this you can already use the Deep Neural Network methodologies to extract information from observed Lyman-alpha line profiles. The second block contains all the grids computed from <cite>FLarEON</cite>. These are necessary in order to compute line profiles and escape fractions for all the outflow geometries. As a consequence, the second block is mandatory to make MCMC analysis.</p>
 <div class="section" id="python-package">
 <h2>Python package<a class="headerlink" href="#python-package" title="Permalink to this headline">¶</a></h2>
 <p>The simpliest way of installing <cite>zELDA</cite>’s scripts is pip:</p>
@@ -190,7 +194,7 @@ $ pip install .
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span>$ curl -0 --compressed --output Grids.zip https://zenodo.org/record/4733518/files/Grids.zip
 </pre></div>
 </div>
-<p>The download might take a while, as it is about 12Gb, so grab your fauvorite snack and be patience :) .</p>
+<p>The download might take a while, as it is about 12Gb, so grab your fauvorite snack and be patient =D .</p>
 <p>Other way of getting the date is going to the <cite>zenodo</cite>  webpage and download it through your internet borwser. As this is a large file, if you browers is a little bit unstable the download might stop in halfway, causing you to restart the download again.</p>
 <p>Once you have the <cite>Grids.zip</cite> file, unzip it in the place that you want to keep it.</p>
 <p>In order to compute line profiles and escape fraction you will need to indicate <cite>zELDA</cite> the location of grids by doing</p>

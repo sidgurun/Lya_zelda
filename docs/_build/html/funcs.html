@@ -57,6 +57,9 @@
           
 
           
+            
+            <img src="_static/fig_log_DOUBLE_COOL_SHELL_EDGE_r_0.8_s_40_WHITE_True.png" class="logo" alt="Logo"/>
+          
           </a>
 
           
@@ -92,6 +95,7 @@
 <li class="toctree-l1"><a class="reference internal" href="Tutorial_ideal.html">Tutorial : Computing ideal line profiles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Tutorial_mock.html">Tutorial : Computing mock line profiles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Tutorial_DNN.html">Tutorial : Fitting a line profile using deep learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tutorial_Train.html">Tutorial : Train your own neural network</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Tutorial_MCMC.html">Tutorial : Fitting a line profile using Monte Carlo Markov Chains</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Tutorial_fesc.html">Tutorial : Computing Lyman-alpha escape fractions</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">funcs module</a></li>
@@ -297,7 +301,7 @@ outflow</p>
 
 <dl class="function">
 <dt id="funcs.Generate_a_line_for_training">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Generate_a_line_for_training</code><span class="sig-paren">(</span><em class="sig-param">z_t</em>, <em class="sig-param">V_t</em>, <em class="sig-param">log_N_t</em>, <em class="sig-param">t_t</em>, <em class="sig-param">F_t</em>, <em class="sig-param">log_EW_t</em>, <em class="sig-param">W_t</em>, <em class="sig-param">PNR_t</em>, <em class="sig-param">FWHM_t</em>, <em class="sig-param">PIX_t</em>, <em class="sig-param">DATA_LyaRT</em>, <em class="sig-param">Geometry</em>, <em class="sig-param">normed=False</em>, <em class="sig-param">scaled=False</em>, <em class="sig-param">Delta_min=-18.5</em>, <em class="sig-param">Delta_max=18.5</em>, <em class="sig-param">Denser_Center=True</em>, <em class="sig-param">Nbins_tot=1000</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#Generate_a_line_for_training"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.Generate_a_line_for_training" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Generate_a_line_for_training</code><span class="sig-paren">(</span><em class="sig-param">z_t</em>, <em class="sig-param">V_t</em>, <em class="sig-param">log_N_t</em>, <em class="sig-param">t_t</em>, <em class="sig-param">F_t</em>, <em class="sig-param">log_EW_t</em>, <em class="sig-param">W_t</em>, <em class="sig-param">PNR_t</em>, <em class="sig-param">FWHM_t</em>, <em class="sig-param">PIX_t</em>, <em class="sig-param">DATA_LyaRT</em>, <em class="sig-param">Geometry</em>, <em class="sig-param">normed=False</em>, <em class="sig-param">scaled=True</em>, <em class="sig-param">Delta_min=-18.5</em>, <em class="sig-param">Delta_max=18.5</em>, <em class="sig-param">Denser_Center=True</em>, <em class="sig-param">Nbins_tot=1000</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#Generate_a_line_for_training"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.Generate_a_line_for_training" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a mock line profile at the desired redshift and returns all the NN
 products.</p>
 <p><strong>Input</strong></p>
@@ -742,7 +746,7 @@ W_in[1] is the maximum redshift</p>
 
 <dl class="function">
 <dt id="funcs.NN_convert_Obs_Line_to_proxy_rest_line">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">NN_convert_Obs_Line_to_proxy_rest_line</code><span class="sig-paren">(</span><em class="sig-param">w_obs_Arr</em>, <em class="sig-param">f_obs_Arr</em>, <em class="sig-param">s_obs_Arr=None</em>, <em class="sig-param">normed=False</em>, <em class="sig-param">scaled=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#NN_convert_Obs_Line_to_proxy_rest_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.NN_convert_Obs_Line_to_proxy_rest_line" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">NN_convert_Obs_Line_to_proxy_rest_line</code><span class="sig-paren">(</span><em class="sig-param">w_obs_Arr</em>, <em class="sig-param">f_obs_Arr</em>, <em class="sig-param">s_obs_Arr=None</em>, <em class="sig-param">normed=False</em>, <em class="sig-param">scaled=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#NN_convert_Obs_Line_to_proxy_rest_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.NN_convert_Obs_Line_to_proxy_rest_line" title="Permalink to this definition">¶</a></dt>
 <dd><p>Converts an observed line profile to the rest frame of the maximum
 of the line profile.</p>
 <p><strong>Input</strong></p>
@@ -861,7 +865,7 @@ log_W_in[1] is the maximum</p>
 
 <dl class="function">
 <dt id="funcs.NN_measure">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">NN_measure</code><span class="sig-paren">(</span><em class="sig-param">w_tar_Arr</em>, <em class="sig-param">f_tar_Arr</em>, <em class="sig-param">s_tar_Arr</em>, <em class="sig-param">FWHM_tar</em>, <em class="sig-param">PIX_tar</em>, <em class="sig-param">loaded_model</em>, <em class="sig-param">w_rest_Machine_Arr</em>, <em class="sig-param">N_iter=None</em>, <em class="sig-param">normed=False</em>, <em class="sig-param">scaled=False</em>, <em class="sig-param">Delta_min=-18.5</em>, <em class="sig-param">Delta_max=18.5</em>, <em class="sig-param">Nbins_tot=1000</em>, <em class="sig-param">Denser_Center=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#NN_measure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.NN_measure" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">NN_measure</code><span class="sig-paren">(</span><em class="sig-param">w_tar_Arr</em>, <em class="sig-param">f_tar_Arr</em>, <em class="sig-param">s_tar_Arr</em>, <em class="sig-param">FWHM_tar</em>, <em class="sig-param">PIX_tar</em>, <em class="sig-param">loaded_model</em>, <em class="sig-param">w_rest_Machine_Arr</em>, <em class="sig-param">N_iter=None</em>, <em class="sig-param">normed=False</em>, <em class="sig-param">scaled=True</em>, <em class="sig-param">Delta_min=-18.5</em>, <em class="sig-param">Delta_max=18.5</em>, <em class="sig-param">Nbins_tot=1000</em>, <em class="sig-param">Denser_Center=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#NN_measure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.NN_measure" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generates random poperties for the Thin_Shell_Cont</p>
 <p><strong>Input</strong></p>
 <dl>
@@ -1384,7 +1388,7 @@ the escape fraction.</p>
 
 <dl class="function">
 <dt id="funcs.Treat_A_Line_To_NN_Input">
-<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Treat_A_Line_To_NN_Input</code><span class="sig-paren">(</span><em class="sig-param">w_Arr</em>, <em class="sig-param">f_Arr</em>, <em class="sig-param">PIX</em>, <em class="sig-param">FWHM</em>, <em class="sig-param">Delta_min=-18.5</em>, <em class="sig-param">Delta_max=18.5</em>, <em class="sig-param">Nbins_tot=1000</em>, <em class="sig-param">Denser_Center=True</em>, <em class="sig-param">normed=False</em>, <em class="sig-param">scaled=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#Treat_A_Line_To_NN_Input"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.Treat_A_Line_To_NN_Input" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">funcs.</code><code class="sig-name descname">Treat_A_Line_To_NN_Input</code><span class="sig-paren">(</span><em class="sig-param">w_Arr</em>, <em class="sig-param">f_Arr</em>, <em class="sig-param">PIX</em>, <em class="sig-param">FWHM</em>, <em class="sig-param">Delta_min=-18.5</em>, <em class="sig-param">Delta_max=18.5</em>, <em class="sig-param">Nbins_tot=1000</em>, <em class="sig-param">Denser_Center=True</em>, <em class="sig-param">normed=False</em>, <em class="sig-param">scaled=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/funcs.html#Treat_A_Line_To_NN_Input"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#funcs.Treat_A_Line_To_NN_Input" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert a line profile and the usefull information into the INPUT of the NN.</p>
 <p><strong>Input</strong></p>
 <dl>

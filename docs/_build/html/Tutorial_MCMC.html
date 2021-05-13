@@ -40,7 +40,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Tutorial : Computing Lyman-alpha escape fractions" href="Tutorial_fesc.html" />
-    <link rel="prev" title="Tutorial : Fitting a line profile using deep learning" href="Tutorial_DNN.html" /> 
+    <link rel="prev" title="Tutorial : Train your own neural network" href="Tutorial_Train.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -57,6 +57,9 @@
             <a href="index.html" class="icon icon-home"> zELDA
           
 
+          
+            
+            <img src="_static/fig_log_DOUBLE_COOL_SHELL_EDGE_r_0.8_s_40_WHITE_True.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -93,6 +96,7 @@
 <li class="toctree-l1"><a class="reference internal" href="Tutorial_ideal.html">Tutorial : Computing ideal line profiles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Tutorial_mock.html">Tutorial : Computing mock line profiles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Tutorial_DNN.html">Tutorial : Fitting a line profile using deep learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tutorial_Train.html">Tutorial : Train your own neural network</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial : Fitting a line profile using Monte Carlo Markov Chains</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#getting-started">Getting started</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#the-mcmc-anlysis">The MCMC anlysis</a></li>
@@ -179,6 +183,7 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Lya</span><span class="o">.</span><span class="n">funcs</span><span class="o">.</span><span class="n">Data_location</span> <span class="o">=</span> <span class="n">your_grids_location</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Geometry</span> <span class="o">=</span> <span class="s1">&#39;Thin_Shell_Cont&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Lya</span><span class="o">.</span><span class="n">load_Grid_Line</span><span class="p">(</span> <span class="n">Geometry</span> <span class="p">)</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># Defining the model parameters:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">z_t</span>      <span class="o">=</span> <span class="mf">0.5</span>   <span class="c1"># redshift of the source</span>
@@ -483,7 +488,7 @@
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
         <a href="Tutorial_fesc.html" class="btn btn-neutral float-right" title="Tutorial : Computing Lyman-alpha escape fractions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="Tutorial_DNN.html" class="btn btn-neutral float-left" title="Tutorial : Fitting a line profile using deep learning" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Tutorial_Train.html" class="btn btn-neutral float-left" title="Tutorial : Train your own neural network" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

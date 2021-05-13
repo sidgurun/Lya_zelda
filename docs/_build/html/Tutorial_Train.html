@@ -1,0 +1,421 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Tutorial : Train your own neural network &mdash; zELDA 0.0.01 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tutorial : Fitting a line profile using Monte Carlo Markov Chains" href="Tutorial_MCMC.html" />
+    <link rel="prev" title="Tutorial : Fitting a line profile using deep learning" href="Tutorial_DNN.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> zELDA
+          
+
+          
+            
+            <img src="_static/fig_log_DOUBLE_COOL_SHELL_EDGE_r_0.8_s_40_WHITE_True.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="About_the_data_grids.html">About the LyaRT data grids</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tutorial_ideal.html">Tutorial : Computing ideal line profiles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tutorial_mock.html">Tutorial : Computing mock line profiles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tutorial_DNN.html">Tutorial : Fitting a line profile using deep learning</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial : Train your own neural network</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#generating-data-sets-for-the-training">Generating data sets for the training</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#get-your-dnn-ready">Get your DNN ready!</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Tutorial_MCMC.html">Tutorial : Fitting a line profile using Monte Carlo Markov Chains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tutorial_fesc.html">Tutorial : Computing Lyman-alpha escape fractions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="funcs.html">funcs module</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">zELDA</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Tutorial : Train your own neural network</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/Tutorial_Train.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tutorial-train-your-own-neural-network">
+<h1>Tutorial : Train your own neural network<a class="headerlink" href="#tutorial-train-your-own-neural-network" title="Permalink to this headline">¶</a></h1>
+<p>In this tutorial you will, hopefully, learn how to train your own deep neural network to predict the proeprties of outflos/inflows. For this we are going to use the python package <cite>scikitlearn</cite> (<a class="reference external" href="https://scikit-learn.org/stable/">https://scikit-learn.org/stable/</a>).</p>
+<div class="section" id="generating-data-sets-for-the-training">
+<h2>Generating data sets for the training<a class="headerlink" href="#generating-data-sets-for-the-training" title="Permalink to this headline">¶</a></h2>
+<p>Let’s start by loading <cite>zELDA</cite> grid of lines:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">Lya_zelda</span> <span class="kn">as</span> <span class="nn">Lya</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pickle</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.neural_network</span> <span class="kn">import</span> <span class="n">MLPRegressor</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">your_grids_location</span> <span class="o">=</span> <span class="s1">&#39;/This/Folder/Contains/The/Grids/&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Lya</span><span class="o">.</span><span class="n">funcs</span><span class="o">.</span><span class="n">Data_location</span> <span class="o">=</span> <span class="n">your_grids_location</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Geometry</span> <span class="o">=</span> <span class="s1">&#39;Thin_Shell_Cont&#39;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Lya</span><span class="o">.</span><span class="n">load_Grid_Line</span><span class="p">(</span> <span class="n">Geometry</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>And let’s do it for outflows,</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">MODE</span> <span class="o">=</span> <span class="s1">&#39;Outflow&#39;</span> <span class="c1"># &#39;Inflow&#39; for inflows</span>
+</pre></div>
+</div>
+<p>Let’s define the region where we want to generate mock line profiles. You can adjust this to whatever your want. The values presented here are the standard in <cite>zELDA</cite>, but you can change them.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Logarithm of the expansion velocity in [km/s]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">log_V_in</span> <span class="o">=</span> <span class="p">[</span>  <span class="mf">1.0</span>   <span class="p">,</span>  <span class="mf">3.0</span>   <span class="p">]</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Logarithm of the HI column density [cm**-2]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">log_N_in</span> <span class="o">=</span> <span class="p">[</span> <span class="mf">17.0</span>   <span class="p">,</span> <span class="mf">21.5</span>   <span class="p">]</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Logarithm of the dust optical depth</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">log_t_in</span> <span class="o">=</span> <span class="p">[</span> <span class="o">-</span><span class="mf">4.0</span>   <span class="p">,</span> <span class="mf">0.0</span>  <span class="p">]</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Logarithm of the intrinsic equivalent width [A]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">log_E_in</span> <span class="o">=</span> <span class="p">[</span> <span class="mf">0.0</span>    <span class="p">,</span> <span class="mf">2.3</span>  <span class="p">]</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Logarithm of the intrinsic line width [A]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">log_W_in</span> <span class="o">=</span> <span class="p">[</span> <span class="o">-</span><span class="mf">2.</span>    <span class="p">,</span> <span class="mf">0.7</span>  <span class="p">]</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1">#Redshift interval</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">z_in</span> <span class="o">=</span> <span class="p">[</span> <span class="mf">0.0001</span> <span class="p">,</span> <span class="mf">4.00</span> <span class="p">]</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Logarithm of the full width half maximum convolving the spectrum (resolution) [A]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">log_FWHM_in</span> <span class="o">=</span> <span class="p">[</span> <span class="o">-</span><span class="mf">1.</span>  <span class="p">,</span>   <span class="mf">0.3</span>  <span class="p">]</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Logarithm of the pixel size [A]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">log_PIX_in</span>  <span class="o">=</span> <span class="p">[</span> <span class="o">-</span><span class="mf">1.3</span> <span class="p">,</span>   <span class="mf">0.3</span>  <span class="p">]</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Logarithm of the signal to noise of the peak of the line</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">log_PNR_in</span> <span class="o">=</span> <span class="p">[</span> <span class="mf">0.7</span> <span class="p">,</span> <span class="mf">1.6</span> <span class="p">]</span>
+</pre></div>
+</div>
+<p>Each of these lists have 2 elementes. For example, <cite>log_V_in[0]</cite> indicates the lower border of the interval and <cite>log_V_in[1]</cite> the upper limit.</p>
+<p>Let’s set the number of sources that we want in our sample, for example 1000,</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">N_train</span> <span class="o">=</span> <span class="mi">1000</span>
+</pre></div>
+</div>
+<p>Let’s generate the properties of each of the training examples:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">V_Arr</span> <span class="p">,</span> <span class="n">log_N_Arr</span> <span class="p">,</span> <span class="n">log_t_Arr</span> <span class="p">,</span> <span class="n">log_E_Arr</span> <span class="p">,</span> <span class="n">log_W_Arr</span> <span class="o">=</span> <span class="n">Lya</span><span class="o">.</span><span class="n">NN_generate_random_outflow_props_5D</span><span class="p">(</span> <span class="n">N_train</span> <span class="p">,</span> <span class="n">log_V_in</span> <span class="p">,</span> <span class="n">log_N_in</span> <span class="p">,</span> <span class="n">log_t_in</span> <span class="p">,</span> <span class="n">log_E_in</span> <span class="p">,</span> <span class="n">log_W_in</span> <span class="p">,</span> <span class="n">MODE</span><span class="o">=</span><span class="n">MODE</span> <span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">z_Arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span> <span class="n">N_train</span> <span class="p">)</span> <span class="o">*</span> <span class="p">(</span> <span class="n">z_in</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">z_in</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">)</span> <span class="o">+</span> <span class="n">z_in</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">log_FWHM_Arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span> <span class="n">N_train</span> <span class="p">)</span> <span class="o">*</span> <span class="p">(</span> <span class="n">log_FWHM_in</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">log_FWHM_in</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">)</span> <span class="o">+</span> <span class="n">log_FWHM_in</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">log_PIX_Arr</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span> <span class="n">N_train</span> <span class="p">)</span> <span class="o">*</span> <span class="p">(</span>  <span class="n">log_PIX_in</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span>  <span class="n">log_PIX_in</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">)</span> <span class="o">+</span>  <span class="n">log_PIX_in</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">log_PNR_Arr</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span> <span class="n">N_train</span> <span class="p">)</span> <span class="o">*</span> <span class="p">(</span>  <span class="n">log_PNR_in</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span>  <span class="n">log_PNR_in</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">)</span> <span class="o">+</span>  <span class="n">log_PNR_in</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>each of these arrays contains random values that will be used in the training, for example, <cite>V_Arr</cite> contains the expansion velocity, etc.</p>
+<p>Let’s initializate the arrays where we want to store the data that we will need for the training</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">F_t</span> <span class="o">=</span> <span class="mf">1.0</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Delta_True_Lya_Arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span> <span class="n">N_train</span> <span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">N_bins</span> <span class="o">=</span> <span class="mi">1000</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">z_PEAK_Arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span> <span class="n">N_train</span> <span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">LINES_train</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span> <span class="n">N_train</span> <span class="o">*</span> <span class="n">N_bins</span> <span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span> <span class="n">N_train</span> <span class="p">,</span> <span class="n">N_bins</span> <span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">N_bins_input</span> <span class="o">=</span> <span class="n">N_bins</span> <span class="o">+</span> <span class="mi">3</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">INPUT_train</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span> <span class="n">N_train</span> <span class="o">*</span> <span class="n">N_bins_input</span> <span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span> <span class="n">N_train</span> <span class="p">,</span> <span class="n">N_bins_input</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>Let’s generate the lines using the function <cite>Lya.Generate_a_line_for_training</cite>,</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span> <span class="s1">&#39;Generating training set&#39;</span> <span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cc</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span> <span class="mi">0</span><span class="p">,</span> <span class="n">N_train</span> <span class="p">):</span>
+
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">per</span> <span class="o">=</span> <span class="mf">100.</span> <span class="o">*</span> <span class="n">i</span> <span class="o">/</span> <span class="n">N_train</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="k">if</span> <span class="n">per</span> <span class="o">&gt;=</span> <span class="n">cc</span> <span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="k">print</span><span class="p">(</span> <span class="n">cc</span> <span class="p">,</span> <span class="s1">&#39;%&#39;</span> <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="n">cc</span> <span class="o">+=</span> <span class="mf">1.0</span>
+
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">V_t</span> <span class="o">=</span> <span class="n">V_Arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">t_t</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="n">log_t_Arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">log_N_t</span> <span class="o">=</span> <span class="n">log_N_Arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">log_E_t</span> <span class="o">=</span> <span class="n">log_E_Arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">W_t</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="n">log_W_Arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">z_t</span> <span class="o">=</span> <span class="n">z_Arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">FWHM_t</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="n">log_FWHM_Arr</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">PIX_t</span>  <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="n">log_PIX_Arr</span><span class="p">[</span>  <span class="n">i</span> <span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">PNR_t</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="n">log_PNR_Arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">rest_w_Arr</span> <span class="p">,</span> <span class="n">train_line</span> <span class="p">,</span> <span class="n">z_max_i</span> <span class="p">,</span> <span class="n">input_i</span> <span class="o">=</span> <span class="n">Lya</span><span class="o">.</span><span class="n">Generate_a_line_for_training</span><span class="p">(</span> <span class="n">z_t</span> <span class="p">,</span> <span class="n">V_t</span><span class="p">,</span> <span class="n">log_N_t</span><span class="p">,</span> <span class="n">t_t</span><span class="p">,</span> <span class="n">F_t</span><span class="p">,</span> <span class="n">log_E_t</span><span class="p">,</span> <span class="n">W_t</span> <span class="p">,</span> <span class="n">PNR_t</span><span class="p">,</span> <span class="n">FWHM_t</span><span class="p">,</span> <span class="n">PIX_t</span><span class="p">,</span> <span class="n">DATA_LyaRT</span><span class="p">,</span> <span class="n">Geometry</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">z_PEAK_Arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">z_max_i</span>
+
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">Delta_True_Lya_Arr</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span> <span class="o">=</span> <span class="mf">1215.67</span> <span class="o">*</span> <span class="p">(</span> <span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">z_t</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">z_max_i</span><span class="p">)</span> <span class="o">-</span> <span class="mf">1.</span> <span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">LINES_train</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">train_line</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">INPUT_train</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">input_i</span>
+</pre></div>
+</div>
+<p><cite>rest_w_Arr</cite> is the wavelength array where the profiles are evaluated in the rest frame of the peak of the line. <cite>train_line</cite> is the line profile evaluated in <cite>rest_w_Arr</cite>, <cite>z_max_i</cite> is the redshift of the source if the maximum of the line matches the Lyman-alpha line and <cite>input_i</cite> is the actual input that we will use for the DNN.</p>
+<p>Now let’s save all the data</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dic</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dic</span><span class="p">[</span> <span class="s1">&#39;lines&#39;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">LINES_train</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dic</span><span class="p">[</span> <span class="s1">&#39;NN_input&#39;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">INPUT_train</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dic</span><span class="p">[</span><span class="s1">&#39;z_PEAK&#39;</span>         <span class="p">]</span> <span class="o">=</span> <span class="n">z_PEAK_Arr</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dic</span><span class="p">[</span><span class="s1">&#39;z&#39;</span>              <span class="p">]</span> <span class="o">=</span> <span class="n">z_Arr</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dic</span><span class="p">[</span><span class="s1">&#39;Delta_True_Lya&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Delta_True_Lya_Arr</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dic</span><span class="p">[</span><span class="s1">&#39;V&#39;</span>             <span class="p">]</span> <span class="o">=</span> <span class="n">V_Arr</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dic</span><span class="p">[</span><span class="s1">&#39;log_N&#39;</span>         <span class="p">]</span> <span class="o">=</span> <span class="n">log_N_Arr</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dic</span><span class="p">[</span><span class="s1">&#39;log_t&#39;</span>         <span class="p">]</span> <span class="o">=</span> <span class="n">log_t_Arr</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dic</span><span class="p">[</span><span class="s1">&#39;log_PNR&#39;</span>       <span class="p">]</span> <span class="o">=</span> <span class="n">log_PNR_Arr</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dic</span><span class="p">[</span><span class="s1">&#39;log_W&#39;</span>         <span class="p">]</span> <span class="o">=</span> <span class="n">log_W_Arr</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dic</span><span class="p">[</span><span class="s1">&#39;log_E&#39;</span>         <span class="p">]</span> <span class="o">=</span> <span class="n">log_E_Arr</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dic</span><span class="p">[</span><span class="s1">&#39;log_PIX&#39;</span>       <span class="p">]</span> <span class="o">=</span> <span class="n">log_PIX_Arr</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dic</span><span class="p">[</span><span class="s1">&#39;log_FWHM&#39;</span>      <span class="p">]</span> <span class="o">=</span> <span class="n">log_FWHM_Arr</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dic</span><span class="p">[</span><span class="s1">&#39;rest_w&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">rest_w_Arr</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">save</span><span class="p">(</span> <span class="s1">&#39;data_for_training.npy&#39;</span> <span class="p">,</span> <span class="n">dic</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>Done, now you have a set of data that can be used as training set. Of cource we have done it with only 1000 galaxies. In general you want to use about 100 000 or more. You can divide the data in small data sets for parallelitation and then combine them, for example.</p>
+</div>
+<div class="section" id="get-your-dnn-ready">
+<h2>Get your DNN ready!<a class="headerlink" href="#get-your-dnn-ready" title="Permalink to this headline">¶</a></h2>
+<p>Let’s load the data that we have just saved,</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Train_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span> <span class="s1">&#39;data_for_training.npy&#39;</span> <span class="p">,</span> <span class="n">allow_pickle</span><span class="o">=</span><span class="bp">True</span> <span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Let’s get the input that we will use in the training</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Input_train</span> <span class="o">=</span> <span class="n">Train_data</span><span class="p">[</span><span class="s1">&#39;NN_input&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Now let’s load the properties that we want to predict,</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Train_Delta_True_Lya_Arr</span> <span class="o">=</span> <span class="n">Train_data</span><span class="p">[</span><span class="s1">&#39;Delta_True_Lya&#39;</span><span class="p">]</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Train_log_V_Arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span> <span class="n">Train_data</span><span class="p">[</span>    <span class="s1">&#39;V&#39;</span><span class="p">]</span> <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Train_log_N_Arr</span> <span class="o">=</span>           <span class="n">Train_data</span><span class="p">[</span><span class="s1">&#39;log_N&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Train_log_t_Arr</span> <span class="o">=</span>           <span class="n">Train_data</span><span class="p">[</span><span class="s1">&#39;log_t&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Train_log_E_Arr</span> <span class="o">=</span>           <span class="n">Train_data</span><span class="p">[</span><span class="s1">&#39;log_E&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Train_log_W_Arr</span> <span class="o">=</span>           <span class="n">Train_data</span><span class="p">[</span><span class="s1">&#39;log_W&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>and let’s prepare it for skitlearn,</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TRAINS_OBSERVED</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span> <span class="n">N_train</span> <span class="o">*</span> <span class="mi">6</span> <span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span> <span class="n">N_train</span> <span class="p">,</span> <span class="mi">6</span> <span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">TRAINS_OBSERVED</span><span class="p">[</span> <span class="p">:</span> <span class="p">,</span> <span class="mi">0</span> <span class="p">]</span> <span class="o">=</span> <span class="n">Train_Delta_True_Lya_Arr</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">TRAINS_OBSERVED</span><span class="p">[</span> <span class="p">:</span> <span class="p">,</span> <span class="mi">1</span> <span class="p">]</span> <span class="o">=</span> <span class="n">Train_log_V_Arr</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">TRAINS_OBSERVED</span><span class="p">[</span> <span class="p">:</span> <span class="p">,</span> <span class="mi">2</span> <span class="p">]</span> <span class="o">=</span> <span class="n">Train_log_N_Arr</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">TRAINS_OBSERVED</span><span class="p">[</span> <span class="p">:</span> <span class="p">,</span> <span class="mi">3</span> <span class="p">]</span> <span class="o">=</span> <span class="n">Train_log_t_Arr</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">TRAINS_OBSERVED</span><span class="p">[</span> <span class="p">:</span> <span class="p">,</span> <span class="mi">4</span> <span class="p">]</span> <span class="o">=</span> <span class="n">Train_log_E_Arr</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">TRAINS_OBSERVED</span><span class="p">[</span> <span class="p">:</span> <span class="p">,</span> <span class="mi">5</span> <span class="p">]</span> <span class="o">=</span> <span class="n">Train_log_W_Arr</span>
+</pre></div>
+</div>
+<p>Now let’s actually do the training. For this we have to decide what kind of deep learning configuration we want. For this tutorial let’s use 2 hidden layers, each of 100 nodes,</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hidden_shape</span> <span class="o">=</span> <span class="p">(</span> <span class="mi">100</span> <span class="p">,</span> <span class="mi">100</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>And train,</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.neural_network</span> <span class="kn">import</span> <span class="n">MLPRegressor</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">est</span> <span class="o">=</span> <span class="n">MLPRegressor</span><span class="p">(</span> <span class="n">hidden_layer_sizes</span><span class="o">=</span><span class="n">hidden_shape</span> <span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span> <span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">est</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span> <span class="n">Input_train</span> <span class="p">,</span> <span class="n">TRAINS_OBSERVED</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>Done! You have now your custom DNN. Let’s save it now so that you can use it later</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dic</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dic</span><span class="p">[</span><span class="s1">&#39;Machine&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">est</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dic</span><span class="p">[</span><span class="s1">&#39;w_rest&#39;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">rest_w_Arr</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span> <span class="n">dic</span> <span class="p">,</span> <span class="nb">open</span><span class="p">(</span> <span class="s1">&#39;my_custom_DNN.sav&#39;</span> <span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Done! Perfect. Now, remember, if you want to use you custom DNN you can follow all the steps in <a class="reference internal" href="Tutorial_DNN.html"><span class="doc">Fitting a line profile using deep learning</span></a>. The only difference is that, instead of loading the default DNN with <cite>Lya.Load_NN_model()</cite>, you have to load your DNN, which will also have the <cite>dic[‘Machine’]</cite> and <cite>dic[‘w_rest’]</cite> entries, as well the default one. Have fun!</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="Tutorial_MCMC.html" class="btn btn-neutral float-right" title="Tutorial : Fitting a line profile using Monte Carlo Markov Chains" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="Tutorial_DNN.html" class="btn btn-neutral float-left" title="Tutorial : Fitting a line profile using deep learning" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Gurung-Lopez, Siddhartha.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

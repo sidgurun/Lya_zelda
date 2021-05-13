@@ -3,8 +3,11 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to zELDA's documentation! 10_51_342
-=================================
+.. image:: figs_and_codes/fig_log_DOUBLE_COOL_SHELL_EDGE_r_2.0_s_30_WHITE_False.png
+   :width: 1000
+
+zELDA's documentation
+=====================
 
 .. toctree::
    :maxdepth: 2
