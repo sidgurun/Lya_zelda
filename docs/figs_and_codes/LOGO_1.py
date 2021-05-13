@@ -15,7 +15,7 @@ GEO = 'COOL_SHELL_EDGE'#'HALF_SIN_SHELL'#'SIN'#'COOL' #'SHELL' # 'COOL'
 
 LINE_MODEL = 'DOUBLE'#'DOUBLE'#'SINGLE'
 
-LINE_range = 0.8#2.#2#0.80
+LINE_range = 2.#2#0.80
 #LINE_range = 0.8#2#0.80
 
 zELDA = 30
