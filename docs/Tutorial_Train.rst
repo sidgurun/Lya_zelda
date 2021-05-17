@@ -20,7 +20,7 @@ Let's start by loading `zELDA` grid of lines:
 
           >>> Geometry = 'Thin_Shell_Cont'
 
-          >>> Lya.load_Grid_Line( Geometry )
+          >>> DATA_LyaRT = Lya.load_Grid_Line( Geometry )
 
 And let's do it for outflows,
 
@@ -232,19 +232,18 @@ Done! You have now your custom DNN. Let's save it now so that you can use it lat
 
           >>> pickle.dump( dic , open( 'my_custom_DNN.sav' , 'wb'))
 
+Done! Perfect. In this example we have just saved the skitlearn object and the wavelength array where the input for the DNN is computed. In principle you can put more things inside the dictionary. You can record the dynamical range of the parameters used (e.g. `log_V_in`), etc, etc and you can label them in the dictionary as you wish. However, the fundamental variables that must be saved are `'Machine'` and `'w_rest'`.  
 
-Done! Perfect. Now, remember, if you want to use you custom DNN you can follow all the steps in :doc:`Fitting a line profile using deep learning <Tutorial_DNN>`. The only difference is that, instead of loading the default DNN with `Lya.Load_NN_model()`, you have to load your DNN, which will also have the `dic['Machine']` and `dic['w_rest']` entries, as well the default one. Have fun! 
+Using your custom DNN
+*********************
 
+If you want to use you custom DNN you can follow all the steps in :doc:`Fitting a line profile using deep learning <Tutorial_DNN>`. The only difference is that, instead of loading the default DNN with `Lya.Load_NN_model()`, you have to load your DNN, which will also have the `dic['Machine']` and `dic['w_rest']` entries, as well the default one. Let's see an example of how you can load the custom DNN that you have just used:
 
+.. code:: python
 
+          >>> machine_data = pickle.load(open( 'my_custom_DNN.sav' , 'rb'))
 
-
-
-
-
-
-
-
+`machine_data` is a python dictionary, with two entries: `'Machine'` and `'w_rest'`. These are the ones that you need in :doc:`Fitting a line profile using deep learning <Tutorial_DNN>`.
 
 
 

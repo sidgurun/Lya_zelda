@@ -72,9 +72,9 @@ You can check if you have set properly the directoy by loading a grid after sett
 
 .. code:: python
 
-          >>> grid = Lya.load_Grid_Line( 'Thin_Shell' )
+          >>> print( Lya.Check_if_DATA_files_are_found() )
 
-If the location has been properly set the command should run smoothly and `grid` should contain the information for the interpolation.  
+If the location has been properly set the command should return 1. If the data files are not found, then 0 is return. This function will also tell you the current value of `Lya.funcs.Data_location`. If the funtions returns 0 make sure than running `ls` gives you the expected output (see just above). 
 
 
 

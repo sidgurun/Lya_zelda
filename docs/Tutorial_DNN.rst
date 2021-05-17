@@ -15,6 +15,7 @@ Let's start by loading `zELDA` creating a mock line profile that we will fit lat
           >>> Lya.funcs.Data_location = your_grids_location
 
           >>> Geometry = 'Thin_Shell_Cont'
+          >>> LyaRT_Grid = Lya.load_Grid_Line( Geometry )
 
           >>> # Defining the model parameters:
           >>> z_t      = 0.5   # redshift of the source
@@ -42,6 +43,7 @@ Let's have a look to how the line looks:
 
           >>> w_pix_Arr , f_pix_Arr = Lya.plot_a_rebinned_line( w_Arr , f_Arr , PIX_t )
 
+          >>> import pylab as plt
           >>> plt.plot( w_pix_Arr , f_pix_Arr )
           >>> plt.xlabel('wavelength[A]' , size=15 )
           >>> plt.ylabel('Flux density [a.u.]' , size=15 )
@@ -145,6 +147,8 @@ Normally, it is better to do more than one iteration, as it leads to better resu
 The arrays `log_V_Arr`, `log_N_Arr`, `log_t_Arr`, `z_Arr`, `log_E_Arr` and `log_W_Arr` contain the output of the DNN for the iterations for the logarithms of the expansion velocity, the logarithm of the neutral hydrogen column density, the logarithm of the dust optical depth, the redshift, the logarithm of the intrinsic equivalent width and the logarithm of the intrinsic width of the line. From these arrays we can compute the result from the DNN analysis by taking the 50th percentile. The +-1 sigma uncertainty can be computed as the 16th and 84th percentile. 
 
 .. code:: python
+
+          >>> import numpy as np
 
           >>> # Redshitft
           >>> z_50     = np.percentile(    z_Arr , 50 )

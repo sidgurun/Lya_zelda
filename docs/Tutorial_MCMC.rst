@@ -15,7 +15,7 @@ Let's start by loading `zELDA` creating a mock line profile that we will fit lat
           >>> Lya.funcs.Data_location = your_grids_location
 
           >>> Geometry = 'Thin_Shell_Cont'
-          >>> Lya.load_Grid_Line( Geometry )
+          >>> LyaRT_Grid = Lya.load_Grid_Line( Geometry )
 
           >>> # Defining the model parameters:
           >>> z_t      = 0.5   # redshift of the source
@@ -43,6 +43,7 @@ Let's have a look to how the line looks:
 
           >>> w_pix_Arr , f_pix_Arr = Lya.plot_a_rebinned_line( w_Arr , f_Arr , PIX_t )
 
+          >>> import pylab as plt
           >>> plt.plot( w_pix_Arr , f_pix_Arr )
           >>> plt.xlabel('wavelength[A]' , size=15 )
           >>> plt.ylabel('Flux density [a.u.]' , size=15 )
@@ -165,7 +166,7 @@ Now let's plot the lines and see how they compare:
           >>> # Make cooler 
           >>> w_pix_One_Arr , f_pix_One_Arr = Lya.plot_a_rebinned_line( w_One_Arr , f_One_Arr , PIX_t )
 
-          >>>  # Plot
+          >>> # Plot
           >>> plt.plot( w_pix_Arr     , f_pix_Arr     , label='Target' )
           >>> plt.plot( w_pix_One_Arr , f_pix_One_Arr , label='MCMC'   )
           >>> 
@@ -184,7 +185,8 @@ Now let's do a correlation plot to see where the walkers are. For this we will u
 
 .. code:: python
 
-    make_corner_plots( flat_samples )
+          >>> make_corner_plots( flat_samples )
+          >>> plt.show()
 
 And it should give you something like:
 
@@ -203,6 +205,9 @@ This is just a code to plot the walkers and the probability distribution funtion
 .. code:: python
 
           def make_corner_plots( my_chains_matrix ):
+
+              import numpy as np
+              import pylab as plt
           
               N_dim = 6
           

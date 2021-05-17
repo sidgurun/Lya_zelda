@@ -113,7 +113,7 @@ and the wavelength array
 
           >>> import numpy as np
           >>> w_Lya = 1215.68 # Lyman-alpha wavelength in amstrongs
-          >>> np.linspace( w_Lya-10 , w_Lya+10 , 1000 ) * 1e-10
+          >>> wavelength_Arr = np.linspace( w_Lya-10 , w_Lya+10 , 1000 ) * 1e-10
 
 Now let's actually compute the lines:
 
@@ -128,14 +128,12 @@ Let's plot them:
 .. code:: python
 
           >>> import pylab as plt
-          >>>
+
           >>> for i in range( 0 , 3 ) :
-          >>> 
           >>>     plt.plot( wavelength_Arr *1e10 , Line_Matrix[i] )
-          >>> 
+
           >>> plt.xlabel('wavelength[A]'       , size=15 )
           >>> plt.ylabel('Flux density [a.u.]' , size=15 )
-          >>> 
           >>> plt.show()
 
 This should show something like this:

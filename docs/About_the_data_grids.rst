@@ -69,12 +69,13 @@ Then, `LyaRT_Grid['Grid']` are the line profiles in each of the nodes of the 3-D
 `w_Arr` is a 1-D array with the wavelgnths in meters. Let's take a look to the spectrum:
 
 .. code:: python
-
-          plt.plot( w_Arr , LyaRT_Grid['Grid'][0,1,2] )
-          plt.xlim( 1213*1e-10 , 1218*1e-10 )
-          plt.xlabel( 'wavelength [m]' )
-          plt.ylabel( 'Flux density [a.u.]' )
-          plt.show()
+            
+          >>> import pylab as plt
+          >>> plt.plot( w_Arr , LyaRT_Grid['Grid'][0,1,2] )
+          >>> plt.xlim( 1213*1e-10 , 1218*1e-10 )
+          >>> plt.xlabel( 'wavelength [m]' )
+          >>> plt.ylabel( 'Flux density [a.u.]' )
+          >>> plt.show()
 
 .. image:: figs_and_codes/fig_Tutorial_5_1.png
    :width: 600
@@ -149,7 +150,7 @@ Now let's load the lighter grid for `'Thin_Shell_Cont'`,
 
 .. code:: python
 
-          >>> LyaRT_Grid_Full = Lya.load_Grid_Line( 'Thin_Shell_Cont' , MODE='LIGHT' )
+          >>> LyaRT_Grid_Light = Lya.load_Grid_Line( 'Thin_Shell_Cont' , MODE='LIGHT' )
 
 The reduction of the size of the grid is done by reducing the number of bins in `'logEW_Arr'` and `'Wi_Arr'`. You can see the new `'logEW_Arr'` and `'Wi_Arr'` arrays in:
 

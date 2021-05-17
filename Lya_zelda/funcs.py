@@ -50,6 +50,8 @@ def Check_if_DATA_files_are_found():
                     1 if     found.
                     0 if not found.
     '''
+    print( 'Looking for files in... Data_location =' , Data_location )
+
     this_dir, this_filename = os.path.split(__file__)
 
     Bool_1 = True
@@ -88,6 +90,8 @@ def load_machine_fesc( Machine , property_name , Geometry ):
 
         loaded_model : file with all the necesary to do machine learning
     '''
+
+    print( 'Looking for files in... Data_location =' , Data_location )
 
     Machine_Set = [ 'KN' , 'Grad' , 'Tree' , 'Forest'  ]
 
@@ -544,6 +548,8 @@ def load_Grid_fesc( Geometry , MODE ):
 
         loaded_model : file the grid of f_esc parameters/values.
     '''
+
+    print( 'Looking for files in... Data_location =' , Data_location )
 
     Geometry_Set = [ 'Thin_Shell'  , 'Galactic_Wind'  , 'Bicone_X_Slab_In' , 'Bicone_X_Slab_Out']
 
@@ -1082,7 +1088,9 @@ def load_Grid_Line( Geometry , MODE='FULL' ):
                                 loaded_model['logta_Arr'][k]  
     '''
 
-    assert Geometry in [ 'Thin_Shell_Cont' , 'Thin_Shell' , 'Galactic_Wind' , 'Bicone_X_Slab_In' , 'Bicone_X_Slab_Out' ] , 'The requested geoemtry ' + Geometry + '  is not available. The geometries supported are : Thin_Shell , Galactic_Wind , Bicone_X_Slab'
+    print( 'Looking for files in... Data_location =' , Data_location )
+
+    assert Geometry in [ 'Thin_Shell_Cont' , 'Thin_Shell' , 'Galactic_Wind' , 'Bicone_X_Slab_In' , 'Bicone_X_Slab_Out' ] , 'The requested geoemtry ' + Geometry + '  is not available. The geometries supported are : Thin_Shell , Galactic_Wind , Bicone_X_Slab_In, Bicone_X_Slab_Out, Thin_Shell_Cont'
 
     Geometry_Set = [ 'Thin_Shell'  , 'Galactic_Wind'  , 'Bicone_X_Slab_In' , 'Bicone_X_Slab_Out' ]
 
