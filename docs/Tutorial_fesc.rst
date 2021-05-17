@@ -8,19 +8,15 @@ Default computation of escape fractions
 
 Let's move to one of the most powerful products of `FLaREON`: predicting huge amounts of Lyman alpha escape fractions.
 
-In theory only one line is needed to predict the escape fraction for a thin shell geometry with expasion velocity (V) of 200km/s, logarithmic of column density (log    NH) of 19.5 and dust optical depth (ta) of 0.1 :
-
-.. code:: python
-
-          f_esc_Arr = Lya.RT_f_esc( 'Thin_Shell' , [ 200 ] , [ 19.5 ] , [ 0.1 ] )
-
-In this way `f_esc_Arr` is an Array of 1 dimension and length 1 that contains the predicted escape fraction for this configuration.
-
 However, `zELDA` implements several gas geometries and is optimized to obtain large amount of escape fractions with only one line of code, so lets expand this a l    ittle bit more. If we want to compute the escape fraction in a thin shell outflow with the configurations { V , logNH , ta } , { 200 , 19.5 , 0.1 }, { 300 , 20.0 ,     0.01 } and { 400 , 20.5 , 0.001 } we could do
 
 .. code:: python
 
-          >>> Geometry = 'Thin Shell' 
+          >>> import Lya_zelda as Lya
+          >>> your_grids_location = '/This/Folder/Contains/The/Grids/'
+          >>> Lya.funcs.Data_location = your_grids_location
+
+          >>> Geometry = 'Thin_Shell' 
           >>> # Other options: 'Galactic Wind' or 'Bicone_X_Slab_In' or 'Bicone_X_Slab_Out'
 
           >>> # Expansion velocity array in km/s
