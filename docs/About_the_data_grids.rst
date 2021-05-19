@@ -1,7 +1,7 @@
 About the LyaRT data grids
 ==========================
 
-Here we explain a little bit the data grid from `LyaRT`, the Radiative Monte Carlo Code described in Orsi et al. 2012 ( https://github.com/aaorsi/LyaRT ). These grids are the pillars of `zELDA`, so it is good to familiared with them.  
+Here we explain a little bit the data grid from `LyaRT`, the Radiative Monte Carlo Code described in Orsi et al. 2012 ( https://github.com/aaorsi/LyaRT ). These grids are the pillars of `zELDA`, so it is good to familiarized with them.  
 
 Getting started
 ***************
@@ -21,7 +21,7 @@ where `/This/Folder/Contains/The/Grids/` is the place where you store the LyaRT 
 Line profile LyaRT data grids
 *****************************
 
-Let's load a data grid to start working. In particular we are going to load the one for the 'Thin_Shell' geometry. This geometry has 3 varibles for the outflow configuration: expansion velocity, HI column density and dust optical depth. 
+Let's load a data grid to start working. In particular we are going to load the one for the 'Thin_Shell' geometry. This geometry has 3 variables for the outflow configuration: expansion velocity, HI column density and dust optical depth. 
 
 .. code:: python
 
@@ -35,7 +35,7 @@ Let's load a data grid to start working. In particular we are going to load the 
 
           dict_keys(['logNH_Arr', 'logta_Arr', 'Grid', 'x_Arr', 'V_Arr'])
 
-The varibles `'V_Arr'`, `'logNH_Arr'` and `'logta_Arr'` are 1-D numpy arrays that contains the values in which the grid is evaluated for the expansion velocity, the logarithmic of the HI column density and  the logarithmic of the dust optical depth respectively. If you want to check where the grid is evaluated you can do
+The variables `'V_Arr'`, `'logNH_Arr'` and `'logta_Arr'` are 1-D numpy arrays that contains the values in which the grid is evaluated for the expansion velocity, the logarithmic of the HI column density and  the logarithmic of the dust optical depth respectively. If you want to check where the grid is evaluated you can do
 
 .. code:: python
 
@@ -60,13 +60,13 @@ The varibles `'V_Arr'`, `'logNH_Arr'` and `'logta_Arr'` are 1-D numpy arrays tha
            -1.375 -1.25  -1.125 -1.    -0.875 -0.75  -0.625 -0.5   -0.375 -0.25
            -0.125]
 
-Then, `LyaRT_Grid['Grid']` are the line profiles in each of the nodes of the 3-D grid. For example, `LyaRT_Grid['Grid'][0,1,2]` is the line profile with `LyaRT_Grid['V_Arr'][0]`, `LyaRT_Grid['logNH_Arr'][1]` and `LyaRT_Grid['logta_Arr'][2]`. This spectrum is evaluated in `LyaRT_Grid['x_Arr']`, that is the frequency in Doppler units. You can convert from frequency in Doppler units to wavelgnth by doing:
+Then, `LyaRT_Grid['Grid']` are the line profiles in each of the nodes of the 3-D grid. For example, `LyaRT_Grid['Grid'][0,1,2]` is the line profile with `LyaRT_Grid['V_Arr'][0]`, `LyaRT_Grid['logNH_Arr'][1]` and `LyaRT_Grid['logta_Arr'][2]`. This spectrum is evaluated in `LyaRT_Grid['x_Arr']`, that is the frequency in Doppler units. You can convert from frequency in Doppler units to wavelength by doing:
 
 .. code:: python
  
           >>> w_Arr = Lya.convert_x_into_lamda( LyaRT_Grid['x_Arr'] )
 
-`w_Arr` is a 1-D array with the wavelgnths in meters. Let's take a look to the spectrum:
+`w_Arr` is a 1-D array with the wavelengths in meters. Let's take a look to the spectrum:
 
 .. code:: python
             
@@ -84,7 +84,7 @@ Then, `LyaRT_Grid['Grid']` are the line profiles in each of the nodes of the 3-D
 Line profile grids with smaller RAM occupation
 **********************************************
 
-The data grids for the geometries `'Thin_Shell'`, `'Galactic_Wind'`, `'Bicone_X_Slab_In'` and `'Bicone_X_Slab_Out'` are relatively small and they occupy less than 1GB of RAM. These models have 3 dimensions: expansion velocity, HI column density and dust optical depth. However, the model `'Thin_Shell_Cont'` includes different intrinsic line profiles, which increases the number of dimensions to 5. This increase a lot the data volume, interms of paramter space and RAM occupation. Indeed, the default `'Thin_Shell_Cont'` line profile grid is about 11GB. This means that when using this mode you would need to have 11GB of RAM or more. In case that you want to do some tests with a smaller grid (but still 5D) we have included a lighter grid, that is about 2GB of size.  
+The data grids for the geometries `'Thin_Shell'`, `'Galactic_Wind'`, `'Bicone_X_Slab_In'` and `'Bicone_X_Slab_Out'` are relatively small and they occupy less than 1GB of RAM. These models have 3 dimensions: expansion velocity, HI column density and dust optical depth. However, the model `'Thin_Shell_Cont'` includes different intrinsic line profiles, which increases the number of dimensions to 5. This increase a lot the data volume, in terms of parameter space and RAM occupation. Indeed, the default `'Thin_Shell_Cont'` line profile grid is about 11GB. This means that when using this mode you would need to have 11GB of RAM or more. In case that you want to do some tests with a smaller grid (but still 5D) we have included a lighter grid, that is about 2GB of size.  
 
 You can load the default `'Thin_Shell_Cont'` by doing
 
@@ -167,7 +167,7 @@ The reduction of the size of the grid is done by reducing the number of bins in 
           The logarithmic of the intrinsic line width [A] is evaluated in :
           [0.01 0.05 0.1  0.25 0.5  1.   2.   4.   6.  ]
 
-If you want a smaller custom grid, you can build your own data grid by selecting nodes from `LyaRT_Grid_Full`. As long as you keep the format of `LyaRT_Grid_Full`, you will be able to pass your custom grids to the algorithms. Just as a short advice, it would be beneficial in you keep the very extrems in the evlatuion arrays (for example, `LyaRT_Grid_Full['V_Arr'][0]` and `LyaRT_Grid_Full['V_Arr'][-1]`) in your new custom grid. 
+If you want a smaller custom grid, you can build your own data grid by selecting nodes from `LyaRT_Grid_Full`. As long as you keep the format of `LyaRT_Grid_Full`, you will be able to pass your custom grids to the algorithms. Just as a short advice, it would be beneficial in you keep the very extremes in the evaluation arrays (for example, `LyaRT_Grid_Full['V_Arr'][0]` and `LyaRT_Grid_Full['V_Arr'][-1]`) in your new custom grid. 
 
 
 

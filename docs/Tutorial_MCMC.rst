@@ -1,7 +1,7 @@
 Tutorial : Fitting a line profile using Monte Carlo Markov Chains
 =================================================================
 
-In this tutorial you will, hopefully, learn how fit Lyman-alpha line profiles ussing a Monte Carlo Markov Chain with `zELDA`. The MCMC engine is `emcee` (https://emcee.readthedocs.io/en/stable/). 
+In this tutorial you will, hopefully, learn how fit Lyman-alpha line profiles using a Monte Carlo Markov Chain with `zELDA`. The MCMC engine is `emcee` (https://emcee.readthedocs.io/en/stable/). 
 
 Getting started
 ***************
@@ -33,7 +33,7 @@ Let's start by loading `zELDA` creating a mock line profile that we will fit lat
 
           >>> w_Arr , f_Arr , s_Arr = Lya.Generate_a_real_line( z_t , V_t, log_N_t, t_t, F_t, log_EW_t, W_t , PNR_t, FWHM_t, PIX_t, LyaRT_Grid, Geometry )
 
-where `/This/Folder/Contains/The/Grids/` is the place where you store the LyaRT data grids, as shown in the installation section. And... It's done! `w_Arr` is a numpy array that contains the wavelength where the line profile is evaluated. Meanwhile, `f_Arr` is the actuall line profile. `s_Arr` is the uncertainty of the flux density. 
+where `/This/Folder/Contains/The/Grids/` is the place where you store the LyaRT data grids, as shown in the installation section. And... It's done! `w_Arr` is a numpy array that contains the wavelength where the line profile is evaluated. Meanwhile, `f_Arr` is the actual line profile. `s_Arr` is the uncertainty of the flux density. 
 
 Let's have a look to how the line looks:
 
@@ -64,7 +64,7 @@ Let's now set the configuration for the MCMC analysis.
           >>> N_burn    = 200 # Number of steps to burn-in
           >>> N_steps   = 300 # Number of steps to run after burning-in
 
-Now let's choose the method to initializate the walkers. There are absically two method: using the deep neural network or doing a fast particle swarm optimization (PSO). For this tutorias we will use the deep neural network.
+Now let's choose the method to initialize the walkers. There are basically two methods: using the deep neural network or doing a fast particle swarm optimization (PSO). For this tutorial we will use the deep neural network.
 
 .. code:: python
 
@@ -78,7 +78,7 @@ Now let's get the regions where we want to originally spawn our lovely walkers:
 
           >>> log_V_in , log_N_in , log_t_in , log_E_in , W_in , z_in , Best = Lya.MCMC_get_region_6D( MODE , w_Arr , f_Arr , s_Arr , FWHM_t , PIX_t , LyaRT_Grid , Geometry )
 
-The varibles `log_V_in`, `log_N_in`, `log_t_in`, `log_E_in`, `W_in` and `z_in` are python lists of two elements containing the range where to spawn the walkers for the logarithmic of the expasion velocity, the logarithmic of the HI column density, the logarithmic of the dust optical, the logarithmic of the intrinsic equivalent width, the intrinsic width of the line and the redshift. For examplen, `z_in[0]` contains the minimum redshift and `z_in[0]` the maximum. Actually this step is not necessary and if you want you can continue without defininf these varibles or setting them as you please. Also, remember that these list only maker where the walkers are spawned. They might actually get outside this volume if the best fitting region is outside.
+The variables `log_V_in`, `log_N_in`, `log_t_in`, `log_E_in`, `W_in` and `z_in` are python lists of two elements containing the range where to spawn the walkers for the logarithmic of the bulk velocity, the logarithmic of the HI column density, the logarithmic of the dust optical, the logarithmic of the intrinsic equivalent width, the intrinsic width of the line and the redshift. For example, `z_in[0]` contains the minimum redshift and `z_in[0]` the maximum. Actually this step is not necessary and if you want you can continue without defining these variables or setting them as you please. Also, remember that these list only maker where the walkers are spawned. They might actually get outside this volume if the best fitting region is outside.
 
 Let's now run the MCMC:
 
@@ -86,9 +86,9 @@ Let's now run the MCMC:
 
           >>> sampler = Lya.MCMC_Analysis_sampler_5( w_Arr , f_Arr , s_Arr , FWHM_t , N_walkers , N_burn , N_steps , Geometry , LyaRT_Grid , z_in=z_in , log_V_in=log_V_in , log_N_in=log_N_in , log_t_in=log_t_in , log_E_in=log_E_in , W_in=W_in )
 
-`sampler` is an object of the python pakage `emcee`. Note that there is a way of forcing the redshift to be inside `z_in`. We decided to this with only this property in case you know the redshift of the source before hand. you can do this by passing `FORCE_z=True` to `Lya.MCMC_Analysis_sampler_5`.
+`sampler` is an object of the python package `emcee`. Note that there is a way of forcing the redshift to be inside `z_in`. We decided to this with only this property in case you know the redshift of the source before hand. you can do this by passing `FORCE_z=True` to `Lya.MCMC_Analysis_sampler_5`.
 
-Now let's get the actual value of the predicted properties and their 1-sigma undertanty. For this, in this tutorial we chose as our prediction the percentile 50th o the probability distribution function of the varibles. For the +-1-sigma uncertainty we choose the percentiles 16th and 84th.  
+Now let's get the actual value of the predicted properties and their 1-sigma uncertainty. For this, in this tutorial we chose as our prediction the percentile 50th o the probability distribution function of the variables. For the +-1-sigma uncertainty we choose the percentiles 16th and 84th.  
 
 .. code:: python
 
@@ -96,7 +96,7 @@ Now let's get the actual value of the predicted properties and their 1-sigma und
           
           >>> perc_matrix_sol , flat_samples = Lya.get_solutions_from_sampler( sampler , N_walkers , N_burn , N_steps , Q_Arr )
 
-`flat_samples` contains the MCMC chains flatten. `perc_matrix_sol` is a 2-D array with dimensions `6xlen(Q_Arr)` containing the precentiles of the varibles. You can extract the values doing something like:
+`flat_samples` contains the MCMC chains flatten. `perc_matrix_sol` is a 2-D array with dimensions `6xlen(Q_Arr)` containing the percentiles of the variables. You can extract the values doing something like:
 
 .. code:: python
 
@@ -130,7 +130,7 @@ Now let's get the actual value of the predicted properties and their 1-sigma und
           >>> log_N_50 =     perc_matrix_sol[ 1 , 1 ]
           >>> log_N_84 =     perc_matrix_sol[ 1 , 2 ]
 
-Let's compare the MCMC prediction with the actuall input:
+Let's compare the MCMC prediction with the actual input:
 
 .. code:: python
 

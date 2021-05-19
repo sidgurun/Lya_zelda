@@ -1,7 +1,7 @@
 Tutorial : Computing ideal line profiles
 ========================================
 
-In this tutorial you will, hopefully, learn how to compute ideal line Lyman-alpha line profiles with `zELDA`. The lines computed in this turorial are ideal becase they don't suffer from the tipical artifacts casued by the fact the instruments are not perfect. These lines are in the rest frame of the galaxy.
+In this tutorial you will, hopefully, learn how to compute ideal line Lyman-alpha line profiles with `zELDA`. The lines computed in this tutorial are ideal becase they don't suffer from the typical artifacts caused by the fact the instruments are not perfect. These lines are in the rest frame of the galaxy.
 
 Computing one ideal line profile
 ********************************
@@ -18,7 +18,7 @@ Let's start by loading `zELDA` and setting the location of the LyaRT grids:
 
 where `/This/Folder/Contains/The/Grids/` is the place where you store the LyaRT data grids, as shown in the installation section.
 
-Now, let's decide which outflow geometry we want to use. For this tutorial we will use the gas geometry known as Thin Shell in which the instrinsic continum is a gaussian and a continuum with a give equivalent width.
+Now, let's decide which outflow geometry we want to use. For this tutorial we will use the gas geometry known as Thin Shell in which the intrinsic continuum is a gaussian and a continuum with a give equivalent width.
 
 .. code:: python
 
@@ -42,7 +42,7 @@ Now let's define the parameters of the shell model that we want. these are five:
           >>> logEW_Value = 1.5   # Logarithmic the intrinsic equivalent width [A]
           >>> Wi_Value    = 0.5   # Intrinsic width of the line [A]
 
-Now, let's set the wavlength array where we want to put the line in the international system of units (meters). We arbitraly chose to evaluate the line +-10A around Lyman-alpha:
+Now, let's set the wavelength array where we want to put the line in the international system of units (meters). We arbitrarily chose to evaluate the line +-10A around Lyman-alpha:
 
 .. code:: python
 
@@ -50,7 +50,7 @@ Now, let's set the wavlength array where we want to put the line in the internat
           >>> w_Lya = 1215.68 # Lyman-alpha wavelength in amstrongs
           >>> wavelength_Arr = np.linspace( w_Lya-10 , w_Lya+10 , 1000 ) * 1e-10
 
-Now he have verything, let's compute the line simply by doing:
+Now he have everything, let's compute the line simply by doing:
 
 .. code:: python
 
@@ -121,7 +121,7 @@ Now let's actually compute the lines:
 
           >>> Line_Matrix = Lya.RT_Line_Profile( Geometry , wavelength_Arr , V_Arr , logNH_Arr , ta_Arr , logEW_Arr=logEW_Arr , Wi_Arr=Wi_Arr )
 
-`Line_Matrix` is a 2-D numpy array containing the line profiles for teh configurations. For example, `Line_Matrix[0]` has outflow velocity `V_Arr[0]`, neutral hydrogen column density `logNH_Arr[0]` and so on.
+`Line_Matrix` is a 2-D numpy array containing the line profiles for the configurations. For example, `Line_Matrix[0]` has outflow velocity `V_Arr[0]`, neutral hydrogen column density `logNH_Arr[0]` and so on.
 
 Let's plot them:
 

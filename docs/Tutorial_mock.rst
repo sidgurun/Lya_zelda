@@ -1,7 +1,7 @@
 Tutorial : Computing mock line profiles
 ========================================
 
-In this tutorial you will, hopefully, learn how to compute mock line Lyman-alpha line profiles with `zELDA`. The lines computed in this turorial suffer from the tipical artifacts casued by the fact the instruments are not perfect
+In this tutorial you will, hopefully, learn how to compute mock line Lyman-alpha line profiles with `zELDA`. The lines computed in this tutorial suffer from the typical artifacts caused by the fact the instruments are not perfect.
 
 Mocking Lyman-alpha line profiles
 *********************************
@@ -18,7 +18,7 @@ Let's start by loading `zELDA` and setting the location of the LyaRT grids:
 
 where `/This/Folder/Contains/The/Grids/` is the place where you store the LyaRT data grids, as shown in the :doc:`Installation <installation>` section.
 
-Now, let's decide which outflow geometry we want to use. For this tutorial we will use the gas geometry known as Thin Shell in which the instrinsic continum is a gaussian and a continuum with a give equivalent width.
+Now, let's decide which outflow geometry we want to use. For this tutorial we will use the gas geometry known as Thin Shell in which the intrinsic continuum is a gaussian and a continuum with a give equivalent width.
 
 .. code:: python
 
@@ -52,13 +52,13 @@ Now let's set the quality of the line profile:
           >>> FWHM_t = 0.5  # Full width half maximum diluting the line. Mimics finite resolution. [A]
           >>> PIX_t  = 0.2  # Wavelength binning of the line. [A]
 
-Now he have verything, let's compute the line simply by doing:
+Now he have everything, let's compute the line simply by doing:
 
 .. code:: python
 
           >>> w_Arr , f_Arr , _ = Lya.Generate_a_real_line( z_t , V_t, log_N_t, t_t, F_t, log_EW_t, W_t , PNR_t, FWHM_t, PIX_t, LyaRT_Grid, Geometry )
 
-And... It's done! `w_Arr` is a numpy array that contains the wavelength where the line profile is evaluated. Meanwhile, `f_Arr` is the actuall line profile. 
+And... It's done! `w_Arr` is a numpy array that contains the wavelength where the line profile is evaluated. Meanwhile, `f_Arr` is the actual line profile. 
 
 Let's plot the line by doing
 

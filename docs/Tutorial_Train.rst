@@ -1,7 +1,7 @@
 Tutorial : Train your own neural network
 =================================================================
 
-In this tutorial you will, hopefully, learn how to train your own deep neural network to predict the proeprties of outflos/inflows. For this we are going to use the python package `scikitlearn` (https://scikit-learn.org/stable/).
+In this tutorial you will, hopefully, learn how to train your own deep neural network to predict the properties of outflos/inflows. For this we are going to use the python package `scikitlearn` (https://scikit-learn.org/stable/).
 
 Generating data sets for the training
 *************************************
@@ -59,7 +59,7 @@ Let's define the region where we want to generate mock line profiles. You can ad
           >>> # Logarithm of the signal to noise of the peak of the line
           >>> log_PNR_in = [ 0.7 , 1.6 ]
   
-Each of these lists have 2 elementes. For example, `log_V_in[0]` indicates the lower border of the interval and `log_V_in[1]` the upper limit.
+Each of these lists have 2 elements. For example, `log_V_in[0]` indicates the lower border of the interval and `log_V_in[1]` the upper limit.
 
 Let's set the number of sources that we want in our sample, for example 1000,
 
@@ -81,7 +81,7 @@ Let's generate the properties of each of the training examples:
 
 each of these arrays contains random values that will be used in the training, for example, `V_Arr` contains the expansion velocity, etc.
 
-Let's initializate the arrays where we want to store the data that we will need for the training
+Let's initialize the arrays where we want to store the data that we will need for the training
 
 .. code:: python
 
@@ -163,7 +163,7 @@ Now let's save all the data
 
           >>> np.save( 'data_for_training.npy' , dic )
 
-Done, now you have a set of data that can be used as training set. Of cource we have done it with only 1000 galaxies. In general you want to use about 100 000 or more. You can divide the data in small data sets for parallelitation and then combine them, for example.
+Done, now you have a set of data that can be used as training set. Of course we have done it with only 1000 galaxies. In general you want to use about 100 000 or more. You can divide the data in small data sets for parallelization and then combine them, for example.
 
 Get your DNN ready!
 *******************

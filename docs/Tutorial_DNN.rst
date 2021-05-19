@@ -1,7 +1,7 @@
 Tutorial : Fitting a line profile using deep learning
 =====================================================
 
-In this tutorial you will, hopefully, learn how fit Lyman-alpha line profiles ussing deep learning with `zELDA`. 
+In this tutorial you will, hopefully, learn how fit Lyman-alpha line profiles using deep learning with `zELDA`. 
 
 Getting started
 ***************
@@ -33,7 +33,7 @@ Let's start by loading `zELDA` creating a mock line profile that we will fit lat
 
           >>> w_Arr , f_Arr , s_Arr = Lya.Generate_a_real_line( z_t , V_t, log_N_t, t_t, F_t, log_EW_t, W_t , PNR_t, FWHM_t, PIX_t, LyaRT_Grid, Geometry )
 
-where `/This/Folder/Contains/The/Grids/` is the place where you store the LyaRT data grids, as shown in the installation section. And... It's done! `w_Arr` is a numpy array that contains the wavelength where the line profile is evaluated. Meanwhile, `f_Arr` is the actuall line profile. `s_Arr` is the uncertainty of the flux density. 
+where `/This/Folder/Contains/The/Grids/` is the place where you store the LyaRT data grids, as shown in the installation section. And... It's done! `w_Arr` is a numpy array that contains the wavelength where the line profile is evaluated. Meanwhile, `f_Arr` is the actual line profile. `s_Arr` is the uncertainty of the flux density. 
 
 Let's have a look to how the line looks:
 
@@ -59,14 +59,14 @@ Now that we have our mock line profile. Let's load the neural network. As we hav
 
           >>> machine_data =  Lya.Load_NN_model( 'Outflow' ) 
 
-In case you want to do the anlysis for inflows just call `Lya.Load_NN_model( 'Inflow' )`. `machine_data` is a python dictionary that contains all the necessary data for the deep neural network approach. Let's pick up from it two variables:
+In case you want to do the analysis for inflows just call `Lya.Load_NN_model( 'Inflow' )`. `machine_data` is a python dictionary that contains all the necessary data for the deep neural network approach. Let's pick up from it two variables:
 
 .. code:: python
 
           >>> machine    = machine_data['Machine' ]  
           >>> w_rest_Arr = machine_data[ 'w_rest' ]
 
-`machine` is an object from skitlearn with the trained neural netwrok and `w_rest_Arr` is the rest frame wavelength where the line profiles used for the training were evaluated. `w_rest_Arr` is important to check that the neural networks is working in the same wavelength array that the line profiles will be evaluated. In principle you don't have to do anything with `w_rest_Arr`, but we need to pass it to other functions. 
+`machine` is an object from skitlearn with the trained neural network and `w_rest_Arr` is the rest frame wavelength where the line profiles used for the training were evaluated. `w_rest_Arr` is important to check that the neural networks is working in the same wavelength array that the line profiles will be evaluated. In principle you don't have to do anything with `w_rest_Arr`, but we need to pass it to other functions. 
 
 Using the DNN in the un-perturbed line profile
 **********************************************
@@ -138,7 +138,7 @@ You should get something like:
 Using the DNN with Monte Carlo perturbations
 ********************************************
 
-Normally, it is better to do more than one iteration, as it leads to better results. These iterations basically perturb the flux density `f_Arr` by adding gaussian noise with the applitude of `s_Arr` in each wavelength bin. Then, this new perturbed spectrum is send to the DNN. For each of these iterations the output of the DNN is stored. For example for 1000 iterations :
+Normally, it is better to do more than one iteration, as it leads to better results. These iterations basically perturb the flux density `f_Arr` by adding gaussian noise with the amplitude of `s_Arr` in each wavelength bin. Then, this new perturbed spectrum is send to the DNN. For each of these iterations the output of the DNN is stored. For example for 1000 iterations :
 
 .. code:: python
 
@@ -228,7 +228,7 @@ This should give something like:
 
 The particular values that you print will be slightly different when you run it, but more or less it should go in the same direction. 
 
-Tha was fun, hah? Now you know how to use the deep neural network scheme in `zELDA`.
+That was fun, hah? Now you know how to use the deep neural network scheme in `zELDA`.
 
 
 

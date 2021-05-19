@@ -3,12 +3,12 @@
 Installation
 ============
 
-`zELDA`, installation is divided in two blocks. First you will need to install the python package containing all the scritps. With this you can already use the Deep Neural Network methodologies to extract information from observed Lyman-alpha line profiles. The second block contains all the grids computed from `FLarEON`. These are necessary in order to compute line profiles and escape fractions for all the outflow geometries. As a consequence, the second block is mandatory to make MCMC analysis.  
+`zELDA`, installation is divided in two blocks. First you will need to install the python package containing all the scritps. With this you can already use the Deep Neural Network methodologies to extract information from observed Lyman-alpha line profiles. The second block contains all the grids computed from `LyaRT`. These are necessary in order to compute line profiles and escape fractions for all the outflow geometries. As a consequence, the second block is mandatory to make MCMC analysis.  
 
 Python package
 **************
 
-The simpliest way of installing `zELDA`'s scripts is pip:
+The simplest way of installing `zELDA`'s scripts is via pip:
 
 .. code:: python
 
@@ -35,7 +35,7 @@ Next, let's download the data grids necessary for generating mock Lyman-alpha li
 
 The download might take a while, as it is about 12Gb, so grab your fauvorite snack and be patient =D .
 
-Other way of getting the date is going to the `zenodo`  webpage and download it through your internet borwser. As this is a large file, if you browers is a little bit unstable the download might stop in halfway, causing you to restart the download again. 
+Other way of getting the data is going to the `zenodo`  webpage and download it through your internet borwser. As this is a large file, if you brower is a little bit unstable the download might stop in halfway, causing you to restart the download again. 
 
 Once you have the `Grids.zip` file, unzip it in the place that you want to keep it.
 
