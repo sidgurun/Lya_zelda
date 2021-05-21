@@ -24,6 +24,8 @@ An alternative method to install `zELDA`'scripts is downloading the code from Gi
 
 Remember that you can also add the tag ``--user`` ,  if necessary.
 
+`zELDA` uses a specific version of `numpy` and `sci-kit-learn`. This means that most likely `pip` will try to change to those versions when you install `zELDA`. If you want to avoid this you can create a virtual environment, which is always useful to tests installations. 
+
 LyaRT data grids
 ****************
 
