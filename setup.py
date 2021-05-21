@@ -19,7 +19,7 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     #install_requires=[ 'sklearn>=20.0' ],
     #scikit-learn==0.22.1
-    install_requires=[ 'scikit-learn>=0.22.1', 'pyswarms'  , 'emcee'],
+    install_requires=[ 'scikit-learn>=0.22.1', 'pyswarms'  , 'emcee' , 'numpy==1.18.1'],
     include_package_data = True,
     classifiers=(
         "Programming Language :: Python :: 3",
