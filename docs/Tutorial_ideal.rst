@@ -30,7 +30,7 @@ Let's load the data containing the grid:
 
           >>> LyaRT_Grid = Lya.load_Grid_Line( Geometry )
 
-This contains all the necessary information to compute the line profiles. To learn more about the grids of line profiles go to :doc:`Installation <installation>` .
+This contains all the necessary information to compute the line profiles. To learn more about the grids of line profiles go to :doc:`Installation <installation>` . Remeber that if you want to use the line profile grid with lower RAM memory occupation you must pass `MODE='LIGHT'` to `Lya.load_Grid_Line`.
 
 Now let's define the parameters of the shell model that we want. these are five:
 
