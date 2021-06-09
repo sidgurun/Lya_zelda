@@ -3904,7 +3904,7 @@ def NN_generate_random_outflow_props_5D( N_walkers , log_V_in , log_N_in , log_t
 #====================================================================#
 #====================================================================#
 #====================================================================#
-def NN_measure( w_tar_Arr , f_tar_Arr , s_tar_Arr , FWHM_tar , PIX_tar , loaded_model , w_rest_Machine_Arr , N_iter=None , normed=False , scaled=True, Delta_min=-18.5 , Delta_max=18.5 , Nbins_tot=1000 , Denser_Center=True ):
+def NN_measure( w_tar_Arr , f_tar_Arr , s_tar_Arr , FWHM_tar , PIX_tar , loaded_model , w_rest_Machine_Arr , N_iter=None , normed=False , scaled=True, Delta_min=-18.5 , Delta_max=18.5 , Nbins_tot=1000 , Denser_Center=True , Random_z_in=None ):
     '''
         Generates random poperties for the Thin_Shell_Cont
 
@@ -3962,6 +3962,13 @@ def NN_measure( w_tar_Arr , f_tar_Arr , s_tar_Arr , FWHM_tar , PIX_tar , loaded_
         scaled : optinal bool
               If True, divides the line profile by its maximum. 
 
+        Random_z_in : optinal list of legnth=2
+              List with the minimum and maximum redshift for doing Feature importance analysis.
+              For example [0.01,4.0]. This variable will input a random redshift with in the 
+              interval as a proxy redshift. This variable should only be used when doing a 
+              feature importance analysis. If you are not doing it, leave it as None. Otherwide 
+              you will get, probably, bad results. For example [0.01,4.0].
+
         **Output**
 
         if N_iter is None: 
@@ -3998,6 +4005,11 @@ def NN_measure( w_tar_Arr , f_tar_Arr , s_tar_Arr , FWHM_tar , PIX_tar , loaded_
 
     assert np.sum( w_rest_tar_Arr - w_rest_Machine_Arr) == 0 , 'wavelength array of machine and measure dont match. Check that Delta_min, Delta_max, Nbins_tot and Denser_Center are the same in the model and the imput here.'
 
+    if not Random_z_in is None:
+        my_random_z = np.random.rand( ) * ( Random_z_in[1] - Random_z_in[0] ) + Random_z_in[0]  
+        #print( my_random_z)
+        INPUT[0][-3] = my_random_z 
+
     Sol = loaded_model.predict( INPUT )
 
     w_Lya = 1215.673123 #A
@@ -4021,6 +4033,20 @@ def NN_measure( w_tar_Arr , f_tar_Arr , s_tar_Arr , FWHM_tar , PIX_tar , loaded_
             f_obs_i_Arr = f_tar_Arr + np.random.randn( len( f_tar_Arr ) ) * s_tar_Arr
 
             w_rest_i_Arr , f_rest_i_Arr , z_max_i , INPUT_i = Treat_A_Line_To_NN_Input( w_tar_Arr , f_obs_i_Arr , PIX_tar , FWHM_tar , Delta_min=Delta_min , Delta_max=Delta_max , Nbins_tot=Nbins_tot , Denser_Center=Denser_Center , normed=normed, scaled=scaled )
+
+            #print( INPUT_i )
+
+            if not Random_z_in is None:
+
+                my_random_z = np.random.rand( ) * ( Random_z_in[1] - Random_z_in[0] ) + Random_z_in[0]  
+
+                #print( my_random_z)
+
+                INPUT_i[0][-3] = my_random_z 
+
+                #print( 'radom z_in' )
+                #print( INPUT_i )
+                #print('--------------------------')
 
             Sol_i = loaded_model.predict( INPUT_i )
 
