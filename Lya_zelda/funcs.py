@@ -2949,7 +2949,7 @@ def Prior_f_5( theta ):
 #====================================================================#
 #====================================================================#
 #====================================================================#
-def log_likeliehood_of_model_5( theta , w_obs_Arr , f_obs_Arr , s_obs_Arr , FWHM, PIX, w_min, w_max, DATA_LyaRT, Geometry , z_in , FORCE_z=False ):
+def log_likeliehood_of_model_5( theta , w_obs_Arr , f_obs_Arr , s_obs_Arr , FWHM, PIX, w_min, w_max, DATA_LyaRT, Geometry , z_in , FORCE_z=False , Inflow=False ):
     '''
         Logarithm of the likelihood between an observed spectrum and a model 
         configuration defined in theta
@@ -3002,6 +3002,10 @@ def log_likeliehood_of_model_5( theta , w_obs_Arr , f_obs_Arr , s_obs_Arr , FWHM
         FORCE_z : optional bool
                   If True, force the redshift to be inside z_in 
 
+        Inflow : optional bool
+                 If True, fits and inflow instead of an outflow.
+                 Default False. So by default, it fits outflows.
+
         **Output**
 
         log_like : float
@@ -3019,6 +3023,9 @@ def log_likeliehood_of_model_5( theta , w_obs_Arr , f_obs_Arr , s_obs_Arr , FWHM
 
     V_f = 10 ** log_V
     t_f = 10 ** log_t
+
+    if Inflow: 
+        V_f = -1. * ( 10 ** log_V )
 
     FF = 1.
 
@@ -3262,7 +3269,7 @@ def MCMC_get_region_6D( MODE , w_tar_Arr , f_tar_Arr , s_tar_Arr , FWHM , PIX , 
 #====================================================================#
 #====================================================================#
 #====================================================================#
-def MCMC_Analysis_sampler_5( w_target_Arr , f_target_Arr , s_target_Arr , FWHM , N_walkers , N_burn , N_steps , Geometry , DATA_LyaRT , log_V_in=None , log_N_in=None , log_t_in=None , z_in=None , log_E_in=None , W_in=None , progress=True , FORCE_z=False ):
+def MCMC_Analysis_sampler_5( w_target_Arr , f_target_Arr , s_target_Arr , FWHM , N_walkers , N_burn , N_steps , Geometry , DATA_LyaRT , log_V_in=None , log_N_in=None , log_t_in=None , z_in=None , log_E_in=None , W_in=None , progress=True , FORCE_z=False , Inflow=False ):
 
     '''
         Full MCMC anaylsis for the Thin_Shell_Cont
@@ -3337,10 +3344,13 @@ def MCMC_Analysis_sampler_5( w_target_Arr , f_target_Arr , s_target_Arr , FWHM ,
               If True shows the MCMC progress.
               Default True
         
-        
         FORCE_z : optional bool
                   If True, force the redshift to be inside z_in
 
+        Inflow : optional bool
+                 If True, fits and inflow instead of an outflow.
+                 Default False. So by default, it fits outflows.
+        
         **Output**
 
         samples : emcee python packge object.
@@ -3363,7 +3373,7 @@ def MCMC_Analysis_sampler_5( w_target_Arr , f_target_Arr , s_target_Arr , FWHM ,
     w_min = np.amin( w_target_Arr )
     w_max = np.amax( w_target_Arr )
 
-    my_args = ( w_target_Arr , f_target_Arr , s_target_Arr , FWHM, PIX, w_min, w_max, DATA_LyaRT, Geometry , z_in , FORCE_z )
+    my_args = ( w_target_Arr , f_target_Arr , s_target_Arr , FWHM, PIX, w_min, w_max, DATA_LyaRT, Geometry , z_in , FORCE_z , Inflow )
 
     if progress : print( 'defining samples' )
 
