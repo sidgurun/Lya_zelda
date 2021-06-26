@@ -2060,6 +2060,8 @@ def bin_one_line( wave_Arr_line , Line_Prob_Arr , new_wave_Arr , Bin , same_norm
 
     binned_line = np.zeros( len( new_wave_Arr) )
 
+    min_w_bin = 0.02
+
     for i in range( 0 , len( new_wave_Arr) ) :
 
         wave_low = new_wave_Arr[i] - Bin*0.5
@@ -2370,6 +2372,7 @@ def generate_a_REAL_line_Noise_w( z_f , V_f , logNH_f , ta_f , F_line_f , logEW_
                 'Pixelated' : Line profile after the FWHM and PIX have been applyed
                 'Noise'     : Particular noise patern used.
     '''
+
     w_rest_Arr , wavelength_Arr , line_Arr = generate_a_obs_line( z_f , V_f , logNH_f , ta_f , DATA_LyaRT , Geometry , logEW_f=logEW_f , Wi_f=Wi_f )
 
     diluted_Arr = dilute_line( wavelength_Arr , line_Arr , FWHM_f )
