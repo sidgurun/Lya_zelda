@@ -2056,7 +2056,7 @@ def bin_one_line( wave_Arr_line , Line_Prob_Arr , new_wave_Arr , Bin , same_norm
                    Spectrum after the convolution
     '''
 
-    RES = 100
+    RES = 60
 
     binned_line = np.zeros( len( new_wave_Arr) )
 
@@ -2627,6 +2627,110 @@ def Treat_A_Line_To_NN_Input( w_Arr , f_Arr , PIX , FWHM , Delta_min=-18.5 , Del
 #====================================================================#
 #====================================================================#
 #====================================================================#
+def Treat_A_Line_To_NN_Input_II( w_Arr , f_Arr , PIX , FWHM , Delta_min=-10.0 , Delta_max=10.0 , Nbins_tot=500 , Denser_Center=True , normed=False, scaled=True ):
+    '''
+        Convert a line profile and the usefull information into the INPUT of the NN.
+
+        **Input**
+
+        w_Arr : 1-D sequence of floats
+              Wavelgnth of the line profile in the observed frame. [A]
+
+        f_Arr : 1-D sequence of floats
+              Flux density of the observed line profile in arbitrary units.
+
+        FWHM : float
+              Full width half maximum [A] of the experiment.
+
+        PIX : float
+              Pixel size in wavelgnth [A] of the experiment.
+
+        Delta_min : optional float
+              Defines the minimum rest frame wavelegnth with respecto to Lyman-alpha.
+
+              Default = -18.5
+
+        Delta_min : optional float
+              Defines the maximum rest frame wavelegnth with respecto to Lyman-alpha.
+
+              Default = +18.5
+
+        Nbins_tot : optional int
+              Total number of wvelgnths bins.
+
+              Default = 1000
+
+        Denser_Center : optional bool
+              Populates denser the regions close to Lyman-alpha
+
+              Default = True
+
+        normed : optional bool
+              If True, nomalizes the line profile.
+
+        scaled : optinal bool
+              If True, divides the line profile by its maximum.
+
+        **Output**
+
+        rest_w_Arr : 1-D sequence of float
+              Wavelgnth array where the line is evaluated in the rest frame.
+
+        NN_line : 1-D sequence of float
+              Line profile evaluated in rest_w_Arr after normalization or scaling.
+
+        z_max_i : float
+              Redshift of the source if the global maximum of the spectrum is the
+              Lyman-alpha wavelegth.
+
+        INPUT: 1-D secuence of float
+              The actuall input to use in the Neural networks.
+    '''
+    ######## Part 1 : Line profile
+    rest_w_Arr = Define_wavelength_for_NN( Delta_min=Delta_min , Delta_max=Delta_max , Nbins_tot=Nbins_tot , Denser_Center=Denser_Center )
+
+    w_r_i_Arr , Delta_r_i_Arr , f_r_i_Arr , z_max_i = NN_convert_Obs_Line_to_proxy_rest_line( w_Arr, f_Arr, normed=normed , scaled=scaled)
+
+    NN_line = np.interp( rest_w_Arr , w_r_i_Arr , f_r_i_Arr , left=f_r_i_Arr[0] , right=f_r_i_Arr[-1] )
+
+    NN_line = NN_line * 1. / np.amax( NN_line )
+
+    ######## Part 2 : Convolutions
+    Dl_1 = 0.2
+    Dl_2 = 1.0
+
+    w_lya = 1215.67
+
+    Dl_min_conv = -4.5
+    Dl_max_conv =  3.5
+
+    w_pix_1_Arr = np.arange( Dl_min_conv + w_lya , Dl_max_conv + w_lya , Dl_1 )
+    w_pix_2_Arr = np.arange( Dl_min_conv + w_lya , Dl_max_conv + w_lya , Dl_2 )
+
+    f_pix_1_Arr = bin_one_line( rest_w_Arr , NN_line , w_pix_1_Arr , Dl_1 , same_norm=False )
+    f_pix_2_Arr = bin_one_line( rest_w_Arr , NN_line , w_pix_2_Arr , Dl_2 , same_norm=False )
+
+    f_pix_1_Arr = f_pix_1_Arr * 1. / np.amax( f_pix_1_Arr ) 
+    f_pix_2_Arr = f_pix_2_Arr * 1. / np.amax( f_pix_2_Arr ) 
+
+    N_bins_1 = len( f_pix_1_Arr )
+    N_bins_2 = len( f_pix_2_Arr )
+
+    conv_1_mat = np.matmul( f_pix_1_Arr.reshape( N_bins_1 , 1 ) , f_pix_1_Arr.reshape( 1 , N_bins_1 ) ) 
+    conv_2_mat = np.matmul( f_pix_2_Arr.reshape( N_bins_2 , 1 ) , f_pix_2_Arr.reshape( 1 , N_bins_2 ) ) 
+
+    conv_1_Arr = conv_1_mat.reshape( N_bins_1 * N_bins_1 )
+    conv_2_Arr = conv_2_mat.reshape( N_bins_2 * N_bins_2 )
+
+    ######## Part 3 : Feature ingeniering
+
+    ######## Part 4 : stacking 
+    INPUT =  np.array( [ np.hstack( ( NN_line , z_max_i , np.log10( FWHM ) , np.log10( PIX ) , conv_1_Arr , conv_2_Arr ) ) ] )
+
+    return rest_w_Arr , NN_line , z_max_i , w_pix_1_Arr , w_pix_2_Arr , f_pix_1_Arr , f_pix_2_Arr , conv_1_Arr , conv_2_Arr , INPUT
+#====================================================================#
+#====================================================================#
+#====================================================================#
 def Generate_a_line_for_training( z_t , V_t, log_N_t, t_t, F_t, log_EW_t, W_t, PNR_t, FWHM_t, PIX_t, DATA_LyaRT, Geometry, normed=False, scaled=True , Delta_min = -18.5 , Delta_max=18.5 , Denser_Center=True , Nbins_tot=1000 ):
     
     '''
@@ -2718,6 +2822,106 @@ def Generate_a_line_for_training( z_t , V_t, log_N_t, t_t, F_t, log_EW_t, W_t, P
     w_t_Arr , f_t_Arr , Noise_t_Arr = Generate_a_real_line( z_t , V_t, log_N_t, t_t, F_t, log_EW_t, W_t , PNR_t, FWHM_t, PIX_t, DATA_LyaRT, Geometry )
 
     rest_w_Arr , train_line , z_max_i , INPUT = Treat_A_Line_To_NN_Input( w_t_Arr , f_t_Arr , PIX_t , FWHM_t , Delta_min=Delta_min , Delta_max=Delta_max , Nbins_tot=Nbins_tot , Denser_Center=Denser_Center , normed=normed , scaled=scaled )
+
+    return rest_w_Arr , train_line , z_max_i , INPUT
+#====================================================================#
+#====================================================================#
+#====================================================================#
+def Generate_a_line_for_training_II( z_t , V_t, log_N_t, t_t, F_t, log_EW_t, W_t, PNR_t, FWHM_t, PIX_t, DATA_LyaRT, Geometry, normed=False, scaled=True , Delta_min = -10.0 , Delta_max=10.0 , Denser_Center=True , Nbins_tot=500 ):
+
+    '''
+        Creates a mock line profile at the desired redshift and returns all the NN
+        products.
+
+        **Input**
+
+        z_t : float
+              Redshift
+
+        V_t : float
+              Outflow expansion velocity [km/s]
+
+        log_N_t : float
+                  logarithmic of the neutral hydrogen column density in cm**-2
+
+        t_t : float
+              Dust optical depth
+
+        F_t : float
+              Total flux of the line. You can pass 1.
+
+        log_EW_t : optional, float
+                   Logarithmic of the rest frame intrisic equivalent width of the line [A]
+                   Requiered if Geometry == 'Thin_Shell_Cont'
+
+        W_t : optional, float
+               Rest frame intrisic width of the Lyman-alpha line [A]
+               Requiered if Geometry == 'Thin_Shell_Cont'
+
+        PNR_t : float
+                Signal to noise ratio of the global maximum of the line profile.
+
+        FWHM_t : float
+                 Full width half maximum [A] of the experiment. This dilutes the line profile.
+
+        PIX_t : float
+                Pixel size in wavelgnth [A] of the experiment. This binnes the line profile.
+
+        DATA_LyaRT : python dictionary
+                     Contains the grid information.
+
+        Geometry : string
+                   Outflow geometry to use.
+
+        Delta_min : optional float
+              Defines the minimum rest frame wavelegnth with respecto to Lyman-alpha.
+
+              Default = -12.5
+
+        Delta_min : optional float
+              Defines the maximum rest frame wavelegnth with respecto to Lyman-alpha.
+
+              Default = +12.5
+
+        Nbins_tot : optional int
+              Total number of wvelgnths bins.
+
+              Default = 800
+
+        Denser_Center : optional bool
+              Populates denser the regions close to Lyman-alpha
+
+              Default = True
+
+        normed : optional bool
+              If True, nomalizes the line profile.
+
+        scaled : optinal bool
+              If True, divides the line profile by its maximum.
+
+        **Output**
+
+        rest_w_Arr : 1-D sequence of float
+              Wavelgnth array where the line is evaluated in the rest frame.
+
+        train_line : 1-D sequence of float
+              Line profile.
+
+        z_max_i : float
+              Redshift of the source if the global maximum of the spectrum is the
+              Lyman-alpha wavelegth.
+
+        INPUT: 1-D secuence of float
+              The actuall input to use in the Neural networks.
+    '''
+
+    w_t_Arr , f_t_Arr , Noise_t_Arr = Generate_a_real_line( z_t , V_t, log_N_t, t_t, F_t, log_EW_t, W_t , PNR_t, FWHM_t, PIX_t, DATA_LyaRT, Geometry )
+
+    # rest_w_Arr , NN_line , z_max_i , w_pix_1_Arr , w_pix_2_Arr , f_pix_1_Arr , f_pix_2_Arr , conv_1_Arr , conv_2_Arr , INPUT
+
+    #rest_w_Arr , train_line , z_max_i , INPUT = Treat_A_Line_To_NN_Input_II( w_t_Arr , f_t_Arr , PIX_t , FWHM_t , Delta_min=Delta_min , Delta_max=Delta_max , Nbins_tot=Nbins_tot , Denser_Center=Denser_Center , normed=normed , scaled=scaled )
+
+    rest_w_Arr , train_line , z_max_i , w_pix_1_Arr , w_pix_2_Arr , f_pix_1_Arr , f_pix_2_Arr , conv_1_Arr , conv_2_Arr , INPUT = Treat_A_Line_To_NN_Input_II( w_t_Arr , f_t_Arr , PIX_t , FWHM_t , Delta_min=Delta_min , Delta_max=Delta_max , Nbins_tot=Nbins_tot , Denser_Center=Denser_Center , normed=normed , scaled=scaled )
 
     return rest_w_Arr , train_line , z_max_i , INPUT
 #====================================================================#
