@@ -12,13 +12,13 @@ Authors
 | Silvia Bonoli
 | Shun Saito
 
-Publication links:
-******************
+Publication links
+*****************
 
 `zELDA` paper:
 
-| ADS   : ???
-| arXiv : ???
+| ADS   : https://ui.adsabs.harvard.edu/abs/2021arXiv210901680G/abstract
+| arXiv : https://arxiv.org/abs/2109.01680
 
 | `zELDA` is based on its previous version, `FLaREON`. Please, if you used `zELDA` in your project, cite also `FLaREON`:
 

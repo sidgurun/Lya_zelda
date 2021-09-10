@@ -4281,6 +4281,169 @@ def NN_measure( w_tar_Arr , f_tar_Arr , s_tar_Arr , FWHM_tar , PIX_tar , loaded_
 #====================================================================#
 #====================================================================#
 #====================================================================#
+def NN_measure_II( w_tar_Arr , f_tar_Arr , s_tar_Arr , FWHM_tar , PIX_tar , loaded_model , w_rest_Machine_Arr , N_iter=None , normed=False , scaled=True, Delta_min=-10.0 , Delta_max=10.0 , Nbins_tot=500 , Denser_Center=True , Random_z_in=None ):
+    '''
+        Generates random poperties for the Thin_Shell_Cont
+
+        **Input**
+
+        w_tar_Arr : 1-D sequence of floats
+                    wavelength where the densit flux is evaluated
+
+        f_tar_Arr : 1-D sequence of floats
+                    Densit flux is evaluated
+
+        s_tar_Arr : 1-D sequence of floats
+                    Uncertainty of the densit flux is evaluated
+
+        FWHM : float
+              Full width half maximum [A] of the experiment.
+
+        PIX_tar : float
+                  Pixelization of the line profiles due to the experiment [A]
+
+        loaded_model : python dictionaty
+                       Contains all the info for the DNN form Load_NN_model()
+
+        w_rest_Machine_Arr : 1-D sequence of floats
+                             wavelength used by the INPUT of the DNN
+
+        N_iter : optional int
+                 Number of Monte Carlo iterations of the observed espectrum.
+                 If None, no iteration is done.
+                 Default None
+
+        Delta_min : optional float
+              Defines the minimum rest frame wavelegnth with respecto to Lyman-alpha.
+
+              Default = -18.5
+
+        Delta_min : optional float
+              Defines the maximum rest frame wavelegnth with respecto to Lyman-alpha.
+
+              Default = +18.5
+
+        Nbins_tot : optional int
+              Total number of wvelgnths bins.
+
+              Default = 1000
+
+        Denser_Center : optional bool
+              Populates denser the regions close to Lyman-alpha
+
+              Default = True
+
+        normed : optional bool
+              If True, nomalizes the line profile.
+
+        scaled : optinal bool
+              If True, divides the line profile by its maximum.
+
+        Random_z_in : optinal list of legnth=2
+              List with the minimum and maximum redshift for doing Feature importance analysis.
+              For example [0.01,4.0]. This variable will input a random redshift with in the
+              interval as a proxy redshift. This variable should only be used when doing a
+              feature importance analysis. If you are not doing it, leave it as None. Otherwide
+              you will get, probably, bad results. For example [0.01,4.0].
+
+        **Output**
+
+        if N_iter is None:
+            Sol : 1-D sequence of float
+                  Array with the solution of the observed spectrum. No Monte Carlo perturbation.
+
+            z_Sol : float
+                    Best resdhift
+
+        if N_iter is a float:
+            Sol and z_sol and
+
+            log_V_sol_2_Arr : 1-D sequence
+                              Logarithm of the expasion velocity
+
+            log_N_sol_2_Arr : 1-D sequence
+                              Logarithm of the neutral hydrogen column density
+
+            log_t_sol_2_Arr : 1-D sequence
+                              Logarithm of the dust optical depth
+
+            z_sol_2_Arr : 1-D sequence
+                              redshift
+
+            log_E_sol_2_Arr : 1-D sequence
+                              Logarithm of the intrinsic equivalent width
+
+            log_W_sol_2_Arr : 1-D sequence
+                              Logarithm of the instrinsic width of the line
+
+
+    '''
+    #w_rest_tar_Arr , f_rest_tar_Arr , z_max_tar , INPUT = Treat_A_Line_To_NN_Input_II( w_tar_Arr , f_tar_Arr , PIX_tar , FWHM_tar , Delta_min=Delta_min , Delta_max=Delta_max , Nbins_tot=Nbins_tot , Denser_Center=Denser_Center , normed=normed, scaled=scaled )
+    w_rest_tar_Arr , f_rest_tar_Arr , z_max_tar , _ , _ , _ , _ , _ , _ , INPUT = Treat_A_Line_To_NN_Input_II( w_tar_Arr , f_tar_Arr , PIX_tar , FWHM_tar , Delta_min=Delta_min , Delta_max=Delta_max , Nbins_tot=Nbins_tot , Denser_Center=Denser_Center , normed=normed, scaled=scaled )
+
+    assert np.sum( w_rest_tar_Arr - w_rest_Machine_Arr) == 0 , 'wavelength array of machine and measure dont match. Check that Delta_min, Delta_max, Nbins_tot and Denser_Center are the same in the model and the imput here.'
+
+    if not Random_z_in is None:
+        my_random_z = np.random.rand( ) * ( Random_z_in[1] - Random_z_in[0] ) + Random_z_in[0]
+        #print( my_random_z)
+        INPUT[0][-3] = my_random_z
+
+    Sol = loaded_model.predict( INPUT )
+
+    w_Lya = 1215.673123 #A
+
+    z_sol = ( w_Lya + Sol[0,0] ) * ( 1 + z_max_tar ) * 1. / ( w_Lya ) - 1.
+
+    if N_iter is None :
+        return Sol , z_sol
+
+    if N_iter > 0 :
+        log_V_sol_2_Arr = np.zeros( N_iter )
+        log_N_sol_2_Arr = np.zeros( N_iter )
+        log_t_sol_2_Arr = np.zeros( N_iter )
+        log_E_sol_2_Arr = np.zeros( N_iter )
+        log_W_sol_2_Arr = np.zeros( N_iter )
+
+        z_sol_2_Arr = np.zeros( N_iter )
+
+        for i in range( 0 , N_iter ) :
+
+            f_obs_i_Arr = f_tar_Arr + np.random.randn( len( f_tar_Arr ) ) * s_tar_Arr
+
+            #w_rest_i_Arr , f_rest_i_Arr , z_max_i , INPUT_i = Treat_A_Line_To_NN_Input( w_tar_Arr , f_obs_i_Arr , PIX_tar , FWHM_tar , Delta_min=Delta_min , Delta_max=Delta_max , Nbins_tot=Nbins_tot , Denser_Center=Denser_Center , normed=normed, scaled=scaled )
+
+            w_rest_i_Arr , f_rest_i_Arr , z_max_i , _ , _ , _ , _ , _ , _ , INPUT_i = Treat_A_Line_To_NN_Input_II( w_tar_Arr , f_tar_Arr , PIX_tar , FWHM_tar , Delta_min=Delta_min , Delta_max=Delta_max , Nbins_tot=Nbins_tot , Denser_Center=Denser_Center , normed=normed, scaled=scaled ) 
+
+            #print( INPUT_i )
+
+            if not Random_z_in is None:
+
+                my_random_z = np.random.rand( ) * ( Random_z_in[1] - Random_z_in[0] ) + Random_z_in[0]
+
+                #print( my_random_z)
+
+                INPUT_i[0][-3] = my_random_z
+
+                #print( 'radom z_in' )
+                #print( INPUT_i )
+                #print('--------------------------')
+
+            Sol_i = loaded_model.predict( INPUT_i )
+
+            z_sol_i = ( w_Lya + Sol_i[0,0] ) * ( 1 + z_max_i ) * 1. / ( w_Lya ) - 1.
+
+            log_V_sol_2_Arr[i] = Sol_i[0,1]
+            log_N_sol_2_Arr[i] = Sol_i[0,2]
+            log_t_sol_2_Arr[i] = Sol_i[0,3]
+            log_E_sol_2_Arr[i] = Sol_i[0,4]
+            log_W_sol_2_Arr[i] = Sol_i[0,5]
+
+            z_sol_2_Arr[i] = z_sol_i
+
+        return Sol , z_sol , log_V_sol_2_Arr , log_N_sol_2_Arr , log_t_sol_2_Arr , z_sol_2_Arr , log_E_sol_2_Arr , log_W_sol_2_Arr
+#====================================================================#
+#====================================================================#
+#====================================================================#
 # PSO
 #====================================================================#
 #====================================================================#
