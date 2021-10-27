@@ -2132,52 +2132,52 @@ def plot_a_rebinned_line( new_wave_Arr , binned_line , Bin ):
 #====================================================================#
 #====================================================================#
 #====================================================================#
-def Add_noise_to_line( wave_Arr_line , Line_Prob_Arr , SN , same_norm=False ):
-    '''
-        This functions adds noise to a line profile.
-
-        **Input**
-
-        wave_Arr_line : 1-D sequence of float
-                   Array with the Wavelength where the spectrum is evaluated.
-                   Same units as Bin. This has to be sorted.
-
-        Line_Prob_Arr : 1-D sequence of float
-                   Arrays with the flux of the spectrum.
-
-        SN : float
-                   Signal to noise of the desire line.
-
-        same_norm : optional bool.
-                    If true return a line with the same normalization as the input
-
-        **Output**
-
-         Noisy_Line_Arr : 1-D sequence of float
-                   Spectrum with the noise
-
-        Noise_Arr : 1-D sequence of float
-                   Particular flux density of the noise applyed
-    '''
-    mask = Line_Prob_Arr > 0.05 * np.amax( Line_Prob_Arr )
-
-    SS = np.mean( Line_Prob_Arr[ mask ] )
-
-    Noise_level = SS * 1. / SN 
-
-    Noise_Arr = np.random.randn( len(Line_Prob_Arr) ) * Noise_level 
-
-    Noisy_Line_Arr = Line_Prob_Arr + Noise_Arr
-
-    if same_norm :
-
-        I_init = np.trapz( Line_Prob_Arr , wave_Arr_line )
-
-        I_noise = np.trapz( Noisy_Line_Arr , wave_Arr_line )
-
-        Noisy_Line_Arr = Noisy_Line_Arr * I_init * 1. / I_noise 
-
-    return Noisy_Line_Arr , Noise_Arr
+#def Add_noise_to_line( wave_Arr_line , Line_Prob_Arr , SN , same_norm=False ):
+#    '''
+#        This functions adds noise to a line profile.
+#
+#        **Input**
+#
+#        wave_Arr_line : 1-D sequence of float
+#                   Array with the Wavelength where the spectrum is evaluated.
+#                   Same units as Bin. This has to be sorted.
+#
+#        Line_Prob_Arr : 1-D sequence of float
+#                   Arrays with the flux of the spectrum.
+#
+#        SN : float
+#                   Signal to noise of the desire line.
+#
+#        same_norm : optional bool.
+#                    If true return a line with the same normalization as the input
+#
+#        **Output**
+#
+#         Noisy_Line_Arr : 1-D sequence of float
+#                   Spectrum with the noise
+#
+#        Noise_Arr : 1-D sequence of float
+#                   Particular flux density of the noise applyed
+#    '''
+#    mask = Line_Prob_Arr > 0.05 * np.amax( Line_Prob_Arr )
+#
+#    SS = np.mean( Line_Prob_Arr[ mask ] )
+#
+#    Noise_level = SS * 1. / SN 
+#
+#    Noise_Arr = np.random.randn( len(Line_Prob_Arr) ) * Noise_level 
+#
+#    Noisy_Line_Arr = Line_Prob_Arr + Noise_Arr
+#
+#    if same_norm :
+#
+#        I_init = np.trapz( Line_Prob_Arr , wave_Arr_line )
+#
+#        I_noise = np.trapz( Noisy_Line_Arr , wave_Arr_line )
+#
+#        Noisy_Line_Arr = Noisy_Line_Arr * I_init * 1. / I_noise 
+#
+#    return Noisy_Line_Arr , Noise_Arr
 #====================================================================#
 #====================================================================#
 #====================================================================#
@@ -2247,7 +2247,7 @@ def Signal_to_noise_estimator( w_Arr , Line_Arr , w_line ):
 #====================================================================#
 #====================================================================#
 #====================================================================#
-def generate_a_obs_line( z_f , V_f , logNH_f , ta_f , DATA_LyaRT , Geometry , logEW_f=None , Wi_f=None ):
+def generate_a_obs_line( z_f , V_f , logNH_f , ta_f , DATA_LyaRT , Geometry , logEW_f=None , Wi_f=None , T_IGM_Arr=None , w_IGM_Arr=None , RETURN_ALL=False ):
     '''
         Moves in redshift a line profile.
 
@@ -2299,11 +2299,23 @@ def generate_a_obs_line( z_f , V_f , logNH_f , ta_f , DATA_LyaRT , Geometry , lo
 
     wavelength_Arr = ( 1 + z_f ) * w_rest_Arr
 
-    return w_rest_Arr , wavelength_Arr , line_Arr
+    line_no_IGM_Arr = np.copy( line_Arr )
+
+    if not T_IGM_Arr is None and not w_IGM_Arr is None:
+
+        rebinned_T_IGM_Arr = np.interp( w_rest_Arr , w_IGM_Arr , T_IGM_Arr , left=T_IGM_Arr[0] , right=T_IGM_Arr[-1] ) 
+
+        line_Arr = line_Arr * rebinned_T_IGM_Arr
+
+    if not RETURN_ALL :
+        return w_rest_Arr , wavelength_Arr , line_Arr
+
+    if     RETURN_ALL :
+        return w_rest_Arr , wavelength_Arr , line_Arr , line_no_IGM_Arr
 #====================================================================#
 #====================================================================#
 #====================================================================#
-def generate_a_REAL_line_Noise_w( z_f , V_f , logNH_f , ta_f , F_line_f , logEW_f , Wi_f , Noise_w_Arr , Noise_Arr , FWHM_f , PIX_f , w_min , w_max , DATA_LyaRT , Geometry ):
+def generate_a_REAL_line_Noise_w( z_f , V_f , logNH_f , ta_f , F_line_f , logEW_f , Wi_f , Noise_w_Arr , Noise_Arr , FWHM_f , PIX_f , w_min , w_max , DATA_LyaRT , Geometry ,  T_IGM_Arr=None , w_IGM_Arr=None ):
     '''
         Makes a mock line profile for the Thin_Shell_Cont geometry.
 
@@ -2373,7 +2385,7 @@ def generate_a_REAL_line_Noise_w( z_f , V_f , logNH_f , ta_f , F_line_f , logEW_
                 'Noise'     : Particular noise patern used.
     '''
 
-    w_rest_Arr , wavelength_Arr , line_Arr = generate_a_obs_line( z_f , V_f , logNH_f , ta_f , DATA_LyaRT , Geometry , logEW_f=logEW_f , Wi_f=Wi_f )
+    w_rest_Arr , wavelength_Arr , line_Arr , line_No_IGM_Arr = generate_a_obs_line( z_f , V_f , logNH_f , ta_f , DATA_LyaRT , Geometry , logEW_f=logEW_f , Wi_f=Wi_f ,  T_IGM_Arr=T_IGM_Arr , w_IGM_Arr=w_IGM_Arr , RETURN_ALL=True )
 
     diluted_Arr = dilute_line( wavelength_Arr , line_Arr , FWHM_f )
 
@@ -2393,18 +2405,21 @@ def generate_a_REAL_line_Noise_w( z_f , V_f , logNH_f , ta_f , F_line_f , logEW_
 
     dic = {}
 
-    dic[ 'w_rest'    ] = w_rest_Arr
-    dic[ 'w_obs'     ] = wavelength_Arr
-    dic[ 'Intrinsic' ] = line_Arr
-    dic[ 'Diluted'   ] = diluted_Arr
-    dic[ 'Pixelated' ] = F_lambda_Arr
-    dic[ 'Noise'     ] = noise_Arr
+    dic[ 'w_rest'        ] = w_rest_Arr
+    dic[ 'w_obs'         ] = wavelength_Arr
+    dic[ 'Intrinsic_IGM' ] = line_Arr
+    dic[ 'Intrinsic'     ] = line_No_IGM_Arr
+    dic[ 'Diluted'       ] = diluted_Arr
+    dic[ 'Pixelated'     ] = F_lambda_Arr
+    dic[ 'w_pix'         ] = wave_pix_Arr
+    dic[ 'Noise'         ] = noise_Arr
+    #dic[ 'Obs_line'      ] = noisy_Line_Arr
 
     return wave_pix_Arr , noisy_Line_Arr , dic
 #====================================================================#
 #====================================================================#
 #====================================================================#
-def Generate_a_real_line( z_t , V_t, log_N_t, t_t, F_t, log_EW_t, W_t , PNR_t, FWHM_t, PIX_t, DATA_LyaRT, Geometry ):
+def Generate_a_real_line( z_t , V_t, log_N_t, t_t, F_t, log_EW_t, W_t , PNR_t, FWHM_t, PIX_t, DATA_LyaRT, Geometry ,  T_IGM_Arr=None , w_IGM_Arr=None , RETURN_ALL=False ):
     '''
         Makes a mock line profile for the Thin_Shell_Cont geometry.
 
@@ -2467,7 +2482,7 @@ def Generate_a_real_line( z_t , V_t, log_N_t, t_t, F_t, log_EW_t, W_t , PNR_t, F
 
     tmp_Noise_Arr = w_Noise_Arr * 0.0
 
-    w_Arr , f_noiseless_Arr , _ = generate_a_REAL_line_Noise_w( z_t, V_t, log_N_t, t_t , F_t , log_EW_t , W_t, w_Noise_Arr, tmp_Noise_Arr , FWHM_t , PIX_t ,  w_min, w_max, DATA_LyaRT, Geometry )
+    w_Arr , f_noiseless_Arr , dic = generate_a_REAL_line_Noise_w( z_t, V_t, log_N_t, t_t , F_t , log_EW_t , W_t, w_Noise_Arr, tmp_Noise_Arr , FWHM_t , PIX_t ,  w_min, w_max, DATA_LyaRT, Geometry ,  T_IGM_Arr=T_IGM_Arr , w_IGM_Arr=w_IGM_Arr)
 
     noise_Amplitude = np.amax( f_noiseless_Arr ) * 1. / PNR_t
 
@@ -2477,7 +2492,13 @@ def Generate_a_real_line( z_t , V_t, log_N_t, t_t, F_t, log_EW_t, W_t , PNR_t, F
 
     f_Arr = f_noiseless_Arr + noise_Arr
 
-    return w_Arr , f_Arr , noise_Amplitude_Arr
+    dic['Noise_II'] = noise_Arr
+    dic['Obs_line'] = f_Arr
+
+    if RETURN_ALL:
+        return w_Arr , f_Arr , noise_Amplitude_Arr , dic
+    else:
+        return w_Arr , f_Arr , noise_Amplitude_Arr 
 #====================================================================#
 #====================================================================#
 #====================================================================#
@@ -2731,7 +2752,7 @@ def Treat_A_Line_To_NN_Input_II( w_Arr , f_Arr , PIX , FWHM , Delta_min=-10.0 , 
 #====================================================================#
 #====================================================================#
 #====================================================================#
-def Generate_a_line_for_training( z_t , V_t, log_N_t, t_t, F_t, log_EW_t, W_t, PNR_t, FWHM_t, PIX_t, DATA_LyaRT, Geometry, normed=False, scaled=True , Delta_min = -18.5 , Delta_max=18.5 , Denser_Center=True , Nbins_tot=1000 ):
+def Generate_a_line_for_training( z_t , V_t, log_N_t, t_t, F_t, log_EW_t, W_t, PNR_t, FWHM_t, PIX_t, DATA_LyaRT, Geometry, normed=False, scaled=True , Delta_min = -18.5 , Delta_max=18.5 , Denser_Center=True , Nbins_tot=1000 ,  T_IGM_Arr=None , w_IGM_Arr=None , RETURN_ALL=False ):
     
     '''
         Creates a mock line profile at the desired redshift and returns all the NN
@@ -2819,15 +2840,19 @@ def Generate_a_line_for_training( z_t , V_t, log_N_t, t_t, F_t, log_EW_t, W_t, P
               The actuall input to use in the Neural networks.
     '''
 
-    w_t_Arr , f_t_Arr , Noise_t_Arr = Generate_a_real_line( z_t , V_t, log_N_t, t_t, F_t, log_EW_t, W_t , PNR_t, FWHM_t, PIX_t, DATA_LyaRT, Geometry )
+    w_t_Arr , f_t_Arr , Noise_t_Arr , dic = Generate_a_real_line( z_t , V_t, log_N_t, t_t, F_t, log_EW_t, W_t , PNR_t, FWHM_t, PIX_t, DATA_LyaRT, Geometry , T_IGM_Arr=T_IGM_Arr , w_IGM_Arr=w_IGM_Arr , RETURN_ALL=True )
 
     rest_w_Arr , train_line , z_max_i , INPUT = Treat_A_Line_To_NN_Input( w_t_Arr , f_t_Arr , PIX_t , FWHM_t , Delta_min=Delta_min , Delta_max=Delta_max , Nbins_tot=Nbins_tot , Denser_Center=Denser_Center , normed=normed , scaled=scaled )
 
-    return rest_w_Arr , train_line , z_max_i , INPUT
+    if RETURN_ALL==False :
+        return rest_w_Arr , train_line , z_max_i , INPUT 
+
+    if RETURN_ALL==True:
+        return rest_w_Arr , train_line , z_max_i , INPUT , dic
 #====================================================================#
 #====================================================================#
 #====================================================================#
-def Generate_a_line_for_training_II( z_t , V_t, log_N_t, t_t, F_t, log_EW_t, W_t, PNR_t, FWHM_t, PIX_t, DATA_LyaRT, Geometry, normed=False, scaled=True , Delta_min = -10.0 , Delta_max=10.0 , Denser_Center=True , Nbins_tot=500 ):
+def Generate_a_line_for_training_II( z_t , V_t, log_N_t, t_t, F_t, log_EW_t, W_t, PNR_t, FWHM_t, PIX_t, DATA_LyaRT, Geometry, normed=False, scaled=True , Delta_min = -10.0 , Delta_max=10.0 , Denser_Center=True , Nbins_tot=500 ,  T_IGM_Arr=None , w_IGM_Arr=None ):
 
     '''
         Creates a mock line profile at the desired redshift and returns all the NN
@@ -2915,11 +2940,7 @@ def Generate_a_line_for_training_II( z_t , V_t, log_N_t, t_t, F_t, log_EW_t, W_t
               The actuall input to use in the Neural networks.
     '''
 
-    w_t_Arr , f_t_Arr , Noise_t_Arr = Generate_a_real_line( z_t , V_t, log_N_t, t_t, F_t, log_EW_t, W_t , PNR_t, FWHM_t, PIX_t, DATA_LyaRT, Geometry )
-
-    # rest_w_Arr , NN_line , z_max_i , w_pix_1_Arr , w_pix_2_Arr , f_pix_1_Arr , f_pix_2_Arr , conv_1_Arr , conv_2_Arr , INPUT
-
-    #rest_w_Arr , train_line , z_max_i , INPUT = Treat_A_Line_To_NN_Input_II( w_t_Arr , f_t_Arr , PIX_t , FWHM_t , Delta_min=Delta_min , Delta_max=Delta_max , Nbins_tot=Nbins_tot , Denser_Center=Denser_Center , normed=normed , scaled=scaled )
+    w_t_Arr , f_t_Arr , Noise_t_Arr = Generate_a_real_line( z_t , V_t, log_N_t, t_t, F_t, log_EW_t, W_t , PNR_t, FWHM_t, PIX_t, DATA_LyaRT, Geometry ,  T_IGM_Arr=T_IGM_Arr , w_IGM_Arr=w_IGM_Arr )
 
     rest_w_Arr , train_line , z_max_i , w_pix_1_Arr , w_pix_2_Arr , f_pix_1_Arr , f_pix_2_Arr , conv_1_Arr , conv_2_Arr , INPUT = Treat_A_Line_To_NN_Input_II( w_t_Arr , f_t_Arr , PIX_t , FWHM_t , Delta_min=Delta_min , Delta_max=Delta_max , Nbins_tot=Nbins_tot , Denser_Center=Denser_Center , normed=normed , scaled=scaled )
 
@@ -2927,83 +2948,83 @@ def Generate_a_line_for_training_II( z_t , V_t, log_N_t, t_t, F_t, log_EW_t, W_t
 #====================================================================#
 #====================================================================#
 #====================================================================#
-def generate_a_REAL_line_SN( z_f , V_f , logNH_f , ta_f , F_line_f , SN_f , FWHM_f , PIX_f , w_min , w_max , DATA_LyaRT , Geometry ):
-    '''
-        Makes a mock line profile for the other geometries that are not Thin_Shell_Cont geometry.
-
-        **Input**
-
-        z_t : float
-              Redshift
-
-        V_t : float
-              Outflow expansion velocity [km/s]
-
-        log_N_t : float
-                  logarithmic of the neutral hydrogen column density in cm**-2
-
-        t_t : float
-              Dust optical depth
-
-        F_line_f : float
-              Total flux of the line. You can pass 1.
-
-        SN_t : float
-                Signal to noise ratio.
-
-        FWHM_t : float
-                 Full width half maximum [A] of the experiment. This dilutes the line profile.
-
-        PIX_t : float
-                Pixel size in wavelgnth [A] of the experiment. This binnes the line profile.
-
-        DATA_LyaRT : python dictionary
-                     Contains the grid information.
-
-        Geometry : string
-                   Outflow geometry to use.
-
-        **Output**
-
-        wave_pix_Arr : 1-D sequence of float
-                     Wavelgnth array where the line is evaluated in the observed frame.
-
-        noisy_Line_Arr : 1-D sequence of float
-                   Line profile flux density in arbitrary units.
-
-        dic : python dictionaty.
-              Contains all the meta data used to get the line profiles:
-                'w_rest'    : restframe wavelength of line before reducing quality
-                'w_obs'     : wavelength of line before reducing quality
-                'Intrinsic' : line profile before quality reduction
-                'Diluted'   : Line profile after the FWHM has been applyed.
-                'Pixelated' : Line profile after the FWHM and PIX have been applyed
-                'Noise'     : Particular noise patern used.
-    '''
-
-    w_rest_Arr , wavelength_Arr , line_Arr = generate_a_obs_line( z_f , V_f , logNH_f , ta_f , DATA_LyaRT , Geometry )
-
-    diluted_Arr = dilute_line( wavelength_Arr , line_Arr , FWHM_f )
-
-    wave_pix_Arr = np.arange( w_min , w_max , PIX_f )
-
-    pixled_Arr = bin_one_line( wavelength_Arr , diluted_Arr , wave_pix_Arr , PIX_f )
-
-    pixled_Arr = pixled_Arr * F_line_f * 1. / np.trapz( pixled_Arr , wave_pix_Arr )
-
-    noisy_Line_Arr , noise_Arr = Add_noise_to_line( wave_pix_Arr , pixled_Arr , SN_f , same_norm=False )
-
-    # Other usful things :
-
-    dic = {}
-
-    dic[ 'w_rest'    ] = w_rest_Arr
-    dic[ 'w_obs'     ] = wavelength_Arr
-    dic[ 'Intrinsic' ] = line_Arr
-    dic[ 'Diluted'   ] = diluted_Arr
-    dic[ 'Pixelated' ] = pixled_Arr
-
-    return wave_pix_Arr , noisy_Line_Arr , dic
+#def generate_a_REAL_line_SN( z_f , V_f , logNH_f , ta_f , F_line_f , SN_f , FWHM_f , PIX_f , w_min , w_max , DATA_LyaRT , Geometry ,  T_IGM_Arr=None , w_IGM_Arr=None ):
+#    '''
+#        Makes a mock line profile for the other geometries that are not Thin_Shell_Cont geometry.
+#
+#        **Input**
+#
+#        z_t : float
+#              Redshift
+#
+#        V_t : float
+#              Outflow expansion velocity [km/s]
+#
+#        log_N_t : float
+#                  logarithmic of the neutral hydrogen column density in cm**-2
+#
+#        t_t : float
+#              Dust optical depth
+#
+#        F_line_f : float
+#              Total flux of the line. You can pass 1.
+#
+#        SN_t : float
+#                Signal to noise ratio.
+#
+#        FWHM_t : float
+#                 Full width half maximum [A] of the experiment. This dilutes the line profile.
+#
+#        PIX_t : float
+#                Pixel size in wavelgnth [A] of the experiment. This binnes the line profile.
+#
+#        DATA_LyaRT : python dictionary
+#                     Contains the grid information.
+#
+#        Geometry : string
+#                   Outflow geometry to use.
+#
+#        **Output**
+#
+#        wave_pix_Arr : 1-D sequence of float
+#                     Wavelgnth array where the line is evaluated in the observed frame.
+#
+#        noisy_Line_Arr : 1-D sequence of float
+#                   Line profile flux density in arbitrary units.
+#
+#        dic : python dictionaty.
+#              Contains all the meta data used to get the line profiles:
+#                'w_rest'    : restframe wavelength of line before reducing quality
+#                'w_obs'     : wavelength of line before reducing quality
+#                'Intrinsic' : line profile before quality reduction
+#                'Diluted'   : Line profile after the FWHM has been applyed.
+#                'Pixelated' : Line profile after the FWHM and PIX have been applyed
+#                'Noise'     : Particular noise patern used.
+#    '''
+#
+#    w_rest_Arr , wavelength_Arr , line_Arr = generate_a_obs_line( z_f , V_f , logNH_f , ta_f , DATA_LyaRT , Geometry ,  T_IGM_Arr=T_IGM_Arr , w_IGM_Arr=w_IGM_Arr )
+#
+#    diluted_Arr = dilute_line( wavelength_Arr , line_Arr , FWHM_f )
+#
+#    wave_pix_Arr = np.arange( w_min , w_max , PIX_f )
+#
+#    pixled_Arr = bin_one_line( wavelength_Arr , diluted_Arr , wave_pix_Arr , PIX_f )
+#
+#    pixled_Arr = pixled_Arr * F_line_f * 1. / np.trapz( pixled_Arr , wave_pix_Arr )
+#
+#    noisy_Line_Arr , noise_Arr = Add_noise_to_line( wave_pix_Arr , pixled_Arr , SN_f , same_norm=False )
+#
+#    # Other usful things :
+#
+#    dic = {}
+#
+#    dic[ 'w_rest'    ] = w_rest_Arr
+#    dic[ 'w_obs'     ] = wavelength_Arr
+#    dic[ 'Intrinsic' ] = line_Arr
+#    dic[ 'Diluted'   ] = diluted_Arr
+#    dic[ 'Pixelated' ] = pixled_Arr
+#
+#    return wave_pix_Arr , noisy_Line_Arr , dic
 #====================================================================#
 #====================================================================#
 #====================================================================#
@@ -3156,7 +3177,7 @@ def Prior_f_5( theta ):
 #====================================================================#
 #====================================================================#
 #====================================================================#
-def log_likeliehood_of_model_5( theta , w_obs_Arr , f_obs_Arr , s_obs_Arr , FWHM, PIX, w_min, w_max, DATA_LyaRT, Geometry , z_in , FORCE_z=False , Inflow=False ):
+def log_likeliehood_of_model_5( theta , w_obs_Arr , f_obs_Arr , s_obs_Arr , FWHM, PIX, w_min, w_max, DATA_LyaRT, Geometry , z_in , FORCE_z=False , Inflow=False ,  T_IGM_Arr=None , w_IGM_Arr=None ):
     '''
         Logarithm of the likelihood between an observed spectrum and a model 
         configuration defined in theta
@@ -3236,7 +3257,7 @@ def log_likeliehood_of_model_5( theta , w_obs_Arr , f_obs_Arr , s_obs_Arr , FWHM
 
     FF = 1.
 
-    w_model_Arr , f_model_Arr , _ = generate_a_REAL_line_Noise_w( redshift, V_f, log_N, t_f, FF , log_EW , Wi , w_obs_Arr , s_obs_Arr*0.0, FWHM, PIX, w_min, w_max, DATA_LyaRT, Geometry )
+    w_model_Arr , f_model_Arr , _ = generate_a_REAL_line_Noise_w( redshift, V_f, log_N, t_f, FF , log_EW , Wi , w_obs_Arr , s_obs_Arr*0.0, FWHM, PIX, w_min, w_max, DATA_LyaRT, Geometry ,  T_IGM_Arr=T_IGM_Arr , w_IGM_Arr=w_IGM_Arr )
 
     f_model_Arr = f_model_Arr * 1. / np.amax( f_model_Arr ) 
 
@@ -4448,7 +4469,7 @@ def NN_measure_II( w_tar_Arr , f_tar_Arr , s_tar_Arr , FWHM_tar , PIX_tar , load
 #====================================================================#
 #====================================================================#
 #====================================================================#
-def PSO_compute_xi_2_ONE_6D( x , w_tar_Arr , f_tar_Arr , FWHM , PIX , DATA_LyaRT, Geometry ):
+def PSO_compute_xi_2_ONE_6D( x , w_tar_Arr , f_tar_Arr , FWHM , PIX , DATA_LyaRT, Geometry , T_IGM_Arr=None , w_IGM_Arr=None ):
     '''
         Compute the chi esquare for the PSO analysis
 
@@ -4515,7 +4536,7 @@ def PSO_compute_xi_2_ONE_6D( x , w_tar_Arr , f_tar_Arr , FWHM , PIX , DATA_LyaRT
                                                                 10**log_W_pso , w_s_tar_Arr ,
                                                                  s_tar_Arr    , FWHM         , PIX        , 
                                                                  w_min        , w_max        , DATA_LyaRT , 
-                                                                 Geometry     )
+                                                                 Geometry     ,  T_IGM_Arr=T_IGM_Arr , w_IGM_Arr=w_IGM_Arr)
 
     my_f_pso_Arr = f_pso_Arr * 1. / np.amax( f_pso_Arr)
 

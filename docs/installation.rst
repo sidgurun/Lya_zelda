@@ -33,7 +33,7 @@ Next, let's download the data grids necessary for generating mock Lyman-alpha li
 
 .. code:: python
 
-          $ curl -0 --compressed --output Grids.zip https://zenodo.org/record/4733518/4890276/Grids.zip
+          $ curl --cookie zenodo-cookies.txt "https://zenodo.org/record/4733518/files/Grids.zip?download=1" --output Grids.zip
 
 The download might take a while, as it is about 13Gb, so grab your fauvorite snack and be patient =D .
 
